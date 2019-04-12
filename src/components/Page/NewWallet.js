@@ -4,7 +4,7 @@ import * as bip39 from 'bip39';
 import HDKey from 'hdkey';
 import keythereum from 'keythereum';
 
-class CreateWallet extends React.Component {
+class NewWallet extends React.Component {
   constructor (props) {
     super(props);
     this.state = { cSelected: [] };
@@ -85,6 +85,6 @@ class CreateWallet extends React.Component {
     );
   }
 }
-export default CreateWallet;
+export default NewWallet;
 
 // CreateWallet
