@@ -45,15 +45,6 @@
   }
 }
 
-.header {
-  font-size: 24px;
-  font-weight: bold;
-  margin-top: 10px;
-  padding-bottom: 18px;
-  text-align: center;
-  font-family: DIN;
-}
-
 .header2 {
   font-size: 16px;
   color: rgb(132, 142, 156);
@@ -120,7 +111,7 @@ p {
 }
 input {
   transition: all .3s ease-in;
-  -webkit-appearance: none;
+  /* -webkit-appearance: none; */
 }
 input[type="password" i] {
   -webkit-text-security: disc !important;
