@@ -279,3 +279,8 @@
     border-image: initial;
     outline: none;
 }
+
+.form-warning {
+    color: red;
+    margin-top: 10px;
+  }

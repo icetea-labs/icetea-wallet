@@ -10,8 +10,8 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route exact path={`/create` } component={NewWallet} />
-            <Route exact path={`/unlock` } component={UnlockWallet} />
+            <Route path={`/create` } component={NewWallet} />
+            <Route path={`/unlock` } component={UnlockWallet} />
           </Switch>
         </Router>
       </div>
