@@ -29,7 +29,7 @@ class NewWallet03 extends React.Component {
     return (
       <div className="box2" >
         <div>
-          <h3 className='text-center'>Create New Wallet</h3>
+          <div className="header1">Create New Wallet</div>
         </div>
         <div>
           <div className='header2' >

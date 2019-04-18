@@ -4,6 +4,7 @@ import * as actions from '../../actions'
 import NewWallet01 from './NewWallet01'
 import NewWallet02 from './NewWallet02'
 import NewWallet03 from './NewWallet03'
+import NewWallet04 from './NewWallet04'
 
 class NewWallet extends React.Component {
   constructor (props) {
@@ -19,13 +20,15 @@ class NewWallet extends React.Component {
       return <NewWallet02/>;
     } else if(this.props.formNo === '03') {
       return <NewWallet03/>;
+    } else if(this.props.formNo === '04') {
+      return <NewWallet04/>;
     }
   }
   
 
   render() {
-    var {formNo} = this.props;
-    console.log(formNo); 
+    // var {formNo} = this.props;
+    // console.log(formNo);
     return (
         <div className="wallet" >
           <div className="logo" >

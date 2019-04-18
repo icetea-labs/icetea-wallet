@@ -4,6 +4,24 @@
   min-width: 320px;
 }
 
+@font-face {
+  font-family: 'DIN';
+  src:  url('./../font/DINPro.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ProximaNova';
+  src:  url('./../font/ProximaNova-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iconfont';
+  src:  url('./../font/iconfont.woff');
+}
+
 body {
   font-family: ProximaNova;
   font-size: 12px;
@@ -15,6 +33,7 @@ body {
   font-kerning: normal;
   touch-action: manipulation;
 }
+
 .container {
   position: absolute;
   top: 130px;
@@ -58,4 +77,12 @@ body {
   .box2 {
     width: 600px;
   }
+}
+.header1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 10px;
+  padding-bottom: 18px;
+  text-align: center;
+  font-family: DIN;
 }
