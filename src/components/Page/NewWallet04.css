@@ -5,7 +5,6 @@
   font-weight: 500;
   margin: 20px 0px;
 }
-
 .mnemonicConfirm {
   position: relative;
   min-height: 100px;
@@ -13,7 +12,7 @@
   border-width: 1px;
   border-style: dashed;
   border-image: initial;
-  /* border-color: rgb(223, 226, 231); */
+  border-color: rgb(223, 226, 231);
   padding: 10px;
   overflow: hidden;
 }
@@ -30,7 +29,6 @@
   margin-top: 20px;
   margin-left: -5px;
 }
-
 .mnemonicItem {
   display: flex;
   flex-wrap: wrap;
@@ -47,27 +45,10 @@
   background: rgb(255, 255, 255);
   margin: 5px;
 }
-
 .incorrectMnemonic {
   font-size: 12px;
   color: rgb(242, 48, 81);
   line-height: 13px;
-}
-.mnemonicItem {
-  display: flex;
-  flex-wrap: wrap;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 6px 0px;
-  font-size: 14px;
-  max-height: 27px;
-  color: rgb(33, 40, 51);
-  align-items: center;
-  cursor: pointer;
-  box-sizing: border-box;
-  font-weight: 600;
-  float: left;
-  padding: 3px 8px;
-  background: rgb(255, 255, 255);
-  margin: 5px;
 }
 .removeMnemoItem {
   margin-left: 5px;
