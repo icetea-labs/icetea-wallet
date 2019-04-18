@@ -37,14 +37,14 @@ class NewWallet03 extends React.Component {
             <span className="page totalPage">/2</span>
             <span className="title" >Choose Secondary Access</span>
           </div>
-          <div className="sc-jAaTju fnWXYz">
+          <div className="textNote">
             <span>Back up the text below on paper and keep it somewhere secret and safe.</span>
           </div>
-          <div className="sc-jDwBTQ dUwgbJ">
+          <div className="showMnemonic">
             <p data-cy="mnemonic">{ this.props.wallet.mnemonic }</p>
           </div>
-          <div className="sc-gPEVay iYjXjI">
-            <div onClick={() => this.viewPrivate()} >View my Private Key</div>&nbsp;<span>&gt;&gt;</span>
+          <div className="showPrivate">
+            <div onClick={() => this.viewPrivate()} >View my Private Key &gt;&gt;</div>
           </div>
           <div className="downloadkey">
             <div className="unlock" onClick={() => this.previousClick()} >Previous</div>

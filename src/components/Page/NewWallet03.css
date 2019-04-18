@@ -1,11 +1,11 @@
-.fnWXYz {
+.textNote {
   text-align: left;
   font-size: 16px;
   display: flex;
   margin: 20px 0px;
 }
 
-.dUwgbJ {
+.showMnemonic {
   text-align: center;
   position: relative;
   background: rgb(249, 249, 249);
@@ -15,8 +15,14 @@
   border-image: initial;
   padding: 20px;
 }
-
-.iYjXjI {
+.showMnemonic p {
+  line-height: 25px;
+  font-size: 18px;
+  word-spacing: 6px;
+  font-family: DIN;
+  font-weight: 900;
+}
+.showPrivate {
   text-align: right;
   cursor: pointer;
   color: rgb(72, 81, 93);
