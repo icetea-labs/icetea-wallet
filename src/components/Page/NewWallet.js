@@ -40,7 +40,6 @@ class NewWallet extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.formNo)
   return {
     formNo: state.formNo
   };

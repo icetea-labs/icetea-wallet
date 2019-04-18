@@ -6,7 +6,7 @@ import { Home, NewWallet, UnlockWallet } from './components/Page';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <span>
         <Router>
           <Switch>
             <Route exact path='/' component={Home} />
@@ -14,7 +14,7 @@ class App extends Component {
             <Route path={`/unlock` } component={UnlockWallet} />
           </Switch>
         </Router>
-      </div>
+      </span>
     );
   }
 }

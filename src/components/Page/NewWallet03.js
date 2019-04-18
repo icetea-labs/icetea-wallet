@@ -15,7 +15,7 @@ class NewWallet03 extends React.Component {
 
   continueClick() {
       // Change form no
-      this.props.onChangeForm('03');
+      this.props.onChangeForm('04');
   }
 
   viewPrivate() {
@@ -33,7 +33,7 @@ class NewWallet03 extends React.Component {
         </div>
         <div>
           <div className='header2' >
-            <span className="page" >1</span>
+            <span className="page" >2</span>
             <span className="page totalPage">/2</span>
             <span className="title" >Choose Secondary Access</span>
           </div>
