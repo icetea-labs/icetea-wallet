@@ -1,11 +1,11 @@
 import React from "react"
 // import { Button, ButtonGroup } from 'reactstrap';
-import { Link } from 'react-router-dom';  
+// import { Link } from 'react-router-dom';  
 import { codec } from 'icetea-common'
 import * as bip39 from 'bip39';
 import HDKey from 'hdkey';
-import keythereum from 'keythereum';
-import { encode, decode } from '../../utils';
+// import keythereum from 'keythereum';
+import { encode} from '../../utils';
 import { connect } from 'react-redux';
 import './NewWallet01.css'
 import * as actions from '../../actions'
@@ -28,14 +28,13 @@ class NewWallet01 extends React.Component {
   }
 
   downloadKeyClick() {
+    var isShowBoxRePass= false;
     if(!this.state.cbConfirmRecover) {
       window.alert("Confirm check box")
     } else if(this.state.password && this.state.confirmPassword && this.state.password !== this.state.confirmPassword) {
-      this.state.isShowBoxRePass = true;
-      window.alert("fdsafsdafsad")
+      isShowBoxRePass = true;
     } else {
-      window.alert("222222")
-      this.state.isShowBoxRePass = false;
+      isShowBoxRePass = false;
       var mnemonic = bip39.generateMnemonic();
       var seed = bip39.mnemonicToSeed(mnemonic);
       var hdkey = HDKey.fromMasterSeed(seed);
@@ -50,7 +49,9 @@ class NewWallet01 extends React.Component {
       // Change form no
       this.props.onChangeForm('02');
     }
-    console.log(this.state)
+    this.setState({
+      isShowBoxRePass
+    })
   }
 
   handleChange(e) {
@@ -60,32 +61,35 @@ class NewWallet01 extends React.Component {
     this.setState({
       [name]: value
     })
-    this.validatePassword(name, value)
+    if (name === 'password') this.validatePassword(value)
   }
 
-  validatePassword = (name, value) => {
-    if (name === 'password') {
-      if (value.length < 8) {
-        this.state.isPassValid.length = false;
-      } else {
-        this.state.isPassValid.length = true;
-      }
+  validatePassword = (value) => {
+    var {isPassValid, isShowBoxPass } = this.state;
+    if (value.length < 8) {
+      isPassValid.length = false;
+    } else {
+      isPassValid.length = true;
+    }
 
-      var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])");
-      // console.log('value--',value,'---',regex.test(value))
-      if(regex.test(value)) {
-        this.state.isPassValid.text = true;
-      } else {
-        this.state.isPassValid.text = false;
-      }
+    var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#])"); //[!@#\$%\^&\*]
+    // console.log('value--',value,'---',regex.test(value))
+    if(regex.test(value)) {
+      isPassValid.text = true;
+    } else {
+      isPassValid.text = false;
+    }
 
-      if (this.state.isPassValid.length && this.state.isPassValid.text) {
-        this.state.isShowBoxPass = false;
-      } else {
-        this.state.isShowBoxPass = true;
-      }
-      
-    } 
+    if (this.state.isPassValid.length && this.state.isPassValid.text) {
+      isShowBoxPass = false;
+    } else {
+      isShowBoxPass = true;
+    }
+    // update state
+    this.setState({
+      isPassValid,
+      isShowBoxPass
+    })
   }
 
   unlockKeyClick = () => {

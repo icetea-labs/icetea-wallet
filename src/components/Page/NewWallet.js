@@ -8,7 +8,7 @@ import NewWallet03 from './NewWallet03'
 class NewWallet extends React.Component {
   constructor (props) {
     super(props);
-    this.props.onChangeForm('01');
+    this.props.onChangeForm('02');
     this.selectDisplayForm = this.selectDisplayForm.bind(this);
   }
 
@@ -29,7 +29,7 @@ class NewWallet extends React.Component {
     return (
         <div className="wallet" >
           <div className="logo" >
-            <img src="https://trada.tech/assets/img/logo.svg"/>  
+            <img src="https://trada.tech/assets/img/logo.svg" alt="log"/>  
           </div>
           <div className="box1" >
             { this.selectDisplayForm() }

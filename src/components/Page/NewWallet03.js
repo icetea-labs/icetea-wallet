@@ -44,7 +44,7 @@ class NewWallet03 extends React.Component {
             <p data-cy="mnemonic">{ this.props.wallet.mnemonic }</p>
           </div>
           <div className="sc-gPEVay iYjXjI">
-            <a rel="noopener" onClick={() => this.viewPrivate()} >View my Private Key</a>&nbsp;<span>&gt;&gt;</span>
+            <div onClick={() => this.viewPrivate()} >View my Private Key</div>&nbsp;<span>&gt;&gt;</span>
           </div>
           <div className="downloadkey">
             <div className="unlock" onClick={() => this.previousClick()} >Previous</div>
