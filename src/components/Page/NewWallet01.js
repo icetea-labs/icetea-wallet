@@ -22,12 +22,11 @@ class NewWallet01 extends React.Component {
       cbConfirmRecover:false,
     };//{ cSelected: [] };
 
-    this.downloadKeyClick = this.downloadKeyClick.bind(this);
     this.unlockKeyClick = this.unlockKeyClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  downloadKeyClick() {
+  continueClick = () => {
     var isShowBoxRePass= false;
     if(!this.state.cbConfirmRecover) {
       window.alert("Confirm check box")
@@ -61,7 +60,15 @@ class NewWallet01 extends React.Component {
     this.setState({
       [name]: value
     })
-    if (name === 'password') this.validatePassword(value)
+    if (name === 'password') {
+      this.validatePassword(value)
+    } else if (name === 'confirmPassword' && this.state.password === value) {
+      console.log('value',value)
+      // update state
+      this.setState({
+        isShowBoxRePass: false
+      })
+    }
   }
 
   validatePassword = (value) => {
@@ -113,12 +120,11 @@ class NewWallet01 extends React.Component {
                         this.state.isPassValid.text ? 'pass':'invalid' }>An upper-case letter, symbol and a number</li>
                     </ul>
                   </div>
-
     var boxErrorConfirmPass = <p className="rePasswordinvalid">The password entered does not match</p>
-    
     var boxValiConfirmPass = this.state.isShowBoxRePass ? boxErrorConfirmPass : ''
     var boxValiPass = this.state.isShowBoxPass ? boxMsg : ''
-    console.log(boxValiConfirmPass)
+    // console.log(boxValiConfirmPass)
+
     return (
           <div className="box2" >
             <div>
@@ -146,11 +152,14 @@ class NewWallet01 extends React.Component {
                 </div>
                   { boxValiConfirmPass }
               </div>
-              <div className="downloadkey">
+              <div className="btControlArea">
                 <div className="unlock">Unlock an Existing Wallet</div>
-                <button width="200px" className="continueBt" onClick={() => this.downloadKeyClick()}>
-                  <span>Download Keystore File</span>
-                  <i className="iconfont icon-continue icon" size="20" color="inherit"></i>
+                <button onClick={() => this.continueClick()}
+                  className= {this.state.cbConfirmRecover && !this.state.isShowBoxPass && this.state.confirmPassword !=='' ? 'continueBt height':'continueBt'}>
+                  <div>
+                    <span>Download Keystore File</span>
+                    <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
+                  </div>
                 </button>
               </div>
               <div className="footer">

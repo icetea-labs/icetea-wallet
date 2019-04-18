@@ -26,7 +26,6 @@
 .mnemonicContent {
   display: flex;
   flex-wrap: wrap;
-  -webkit-box-pack: start;
   justify-content: flex-start;
   margin-top: 20px;
   margin-left: -5px;
@@ -39,7 +38,6 @@
   font-size: 14px;
   max-height: 27px;
   color: rgb(33, 40, 51);
-  -webkit-box-align: center;
   align-items: center;
   cursor: pointer;
   box-sizing: border-box;
@@ -62,7 +60,6 @@
   font-size: 14px;
   max-height: 27px;
   color: rgb(33, 40, 51);
-  -webkit-box-align: center;
   align-items: center;
   cursor: pointer;
   box-sizing: border-box;

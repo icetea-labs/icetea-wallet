@@ -12,8 +12,8 @@ class NewWallet02 extends React.Component {
   }
 
   continueClick() {
-      // Change form no
-      this.props.onChangeForm('03');
+    // Change form no
+    this.props.onChangeForm('03');
     // save to state
     var wallet = {
       mnemonic: "outdoor special balance estate eager siege ghost eight baby ancient mandate index",
@@ -45,14 +45,16 @@ class NewWallet02 extends React.Component {
             </div>
             <div className="text">We are about to show your mnemonic phrase, please ensure that no one else is looking at your screen.</div>
           </div>
-          <div className="downloadkey">
-            <div className="previousBt"  >
+          <div className="btControlArea">
+            <div className="previousBt">
               <i className="fa fa-long-arrow-left" aria-hidden="true"></i>
               <div className="unlock" onClick={() => this.previousClick()} >Previous</div>
             </div>
-            <button width="200px" className="continueBt" onClick={() => this.continueClick()}>
-              <span>Continue</span>
-              <i className="iconfont icon-continue icon" size="20" color="inherit"></i>
+            <button onClick={() => this.continueClick()} className='continueBt height mini'>
+              <div>
+                <span>Continue</span>
+                <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
+              </div>
             </button>
           </div>
         </div>

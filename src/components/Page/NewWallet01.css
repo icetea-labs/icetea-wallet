@@ -1,21 +1,3 @@
-.header2 {
-  font-size: 16px;
-  color: rgb(132, 142, 156);
-  font-weight: bold;
-  margin: 40px 0px;
-}
-.header2 span {
-  font-size: 16px;
-}
-.header2 .totalPage {
-  color: rgb(234, 236, 239);
-}
-.header2 .title {
-  font-size: 18px;
-  color: rgb(72, 81, 93);
-  margin-left: 8px;
-}
-
 .passwordInput {
   margin-top: 20px;
   position: relative;
@@ -33,37 +15,17 @@
   color: rgb(72, 81, 93);
   font-size: 12px;
 }
-
-p {
-  display: block;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
 .passwordInput .inputWrap {
   position: relative;
   z-index: 300;
 }
 .passwordInput input {
-  border-top-width: initial;
-  border-right-width: initial;
-  border-left-width: initial;
-  border-top-color: initial;
-  border-right-color: initial;
-  border-left-color: initial;
   width: 100%;
   height: 100%;
   font-size: 14px;
   caret-color: rgb(21, 181, 221);
   color: rgb(72, 81, 93);
-  position: relative;
   border-style: none none solid;
-  border-image: initial;
-  border-radius: 0px;
   outline: none;
   border-bottom: 1px solid rgba(234, 236, 239, 0.5);
   padding: 0px 0px 10px;
@@ -90,7 +52,17 @@ p {
   border-color: rgba(234, 236, 239, 0.5);
   border-image: initial;
 }
-
+.checkPassword ul {
+  color: rgb(38, 49, 71);
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 15px;
+}
+@media (max-width: 623px) and (min-width: 320px) {
+  .checkPassword ul {
+    flex-direction: column;
+  }
+}
 .checkPassword ul li:first-child {
   margin-right: 60px;
 }
@@ -117,15 +89,6 @@ p {
   left: -15px;
   border-radius: 50%;
   background: rgb(132, 142, 156);
-}
-
-.downloadkey {
-  display: flex;
-  flex-direction: row;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-  font-size: 14px;
-  padding: 20px 0px 0px;
 }
 
 .unlock {

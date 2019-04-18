@@ -1,9 +1,3 @@
-#root, body, html {
-  height: 100%;
-  box-sizing: border-box;
-  min-width: 320px;
-}
-
 @font-face {
   font-family: 'DIN';
   src:  url('./../font/DINPro.otf');
@@ -22,8 +16,27 @@
   src:  url('./../font/iconfont.woff');
 }
 
-body {
+#root, body, html {
+  height: 100%;
+  box-sizing: border-box;
+  min-width: 320px;
+}
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body,
+canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed,
+fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, 
+html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output,
+p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, 
+tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: initial;
   font-family: ProximaNova;
+}
+
+body {
   font-size: 12px;
   font-weight: 400;
   line-height: 1.5;
@@ -75,9 +88,17 @@ body {
 }
 @media (min-width: 624px) {
   .box2 {
-    width: 600px;
+    width: 500px;
   }
 }
+@media (max-width: 623px) and (min-width: 320px) {
+  .box2 {
+    box-shadow: none;
+    box-sizing: border-box;
+    padding: 5px 20px;
+  }
+}
+
 .header1 {
   font-size: 24px;
   font-weight: bold;
@@ -85,6 +106,38 @@ body {
   padding-bottom: 18px;
   text-align: center;
   font-family: DIN;
+}
+.header2 {
+  font-size: 16px;
+  color: rgb(132, 142, 156);
+  font-weight: bold;
+  margin: 40px 0px;
+}
+.header2 span {
+  font-size: 16px;
+}
+.header2 .totalPage {
+  color: rgb(234, 236, 239);
+}
+.header2 .title {
+  font-size: 18px;
+  color: rgb(72, 81, 93);
+  margin-left: 8px;
+}
+.btControlArea {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 14px;
+  padding: 20px 0px 0px;
+}
+@media (max-width: 623px) and (min-width: 320px) {
+  .btControlArea {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 70px;
+  }
 }
 .previousBt {
   cursor: pointer;
@@ -101,32 +154,62 @@ body {
 .previousBt div {
   color: inherit;
 }
-.previousBt:hover div, .previous-button:hover i {
+.previousBt:hover div, .previousBt:hover i {
   color: rgb(240, 185, 11);
 }
-.continueBt:hover {
-  transform: scale(1);
+.previousBt:hover div {
+  text-decoration: underline;
+}
+@media (max-width: 623px) and (min-width: 320px) {
+  .unlock {
+    order: 1;
+  }
+  .previousBt {
+    order: 1;
+  }
 }
 .continueBt {
   height: 40px;
   line-height: 40px;
-  text-align: center;
   font-size: 14px;
   font-weight: bold;
+  cursor: pointer;
   color: rgb(255, 255, 255);
+  display: flex;
   justify-content: center;
-  box-sizing: border-box;
-  box-shadow: none;
   width: 200px;
   border-radius: 3px;
-  overflow: hidden;
-  border-width: initial;
   border-style: none;
-  border-color: initial;
-  border-image: initial;
-  background: rgb(132, 142, 156);
   outline: none;
+  background: rgb(132, 142, 156);
 }
-.continueBt.pass {
+.continueBt.mini {
+  width: 120px;
+}
+.continueBt.height {
   background: linear-gradient(90deg, rgb(239, 184, 11) 0%, rgb(251, 218, 60) 100%);
 }
+@media (max-width: 768px) {
+  .continueBt {
+    width: 100%;
+  }
+  .continueBt.mini {
+    width: 100%;
+  }
+}
+.continueBt span {
+  margin-right: 10px;
+}
+.continueBt:hover div {
+  transform: scale(1);
+}
+.continueBt div {
+  transition: transform 0.2s ease 0s;
+}
+.continueBt:hover div {
+  transform: scale(0.9);
+}
+.continueBt:hover div {
+  transition: transform 0.2s ease 0s;
+}
+
