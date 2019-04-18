@@ -135,28 +135,6 @@ p {
   align-items: center;
   color: rgb(21, 181, 221)
 }
-.btUnlock {
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-  font-size: 14px;
-  cursor: pointer;
-  color: rgb(255, 255, 255);
-  display: flex;
-  justify-content: center;
-  position: relative;
-  box-sizing: border-box;
-  box-shadow: none;
-  width: 200px;
-  border-radius: 3px;
-  overflow: hidden;
-  border-width: initial;
-  border-style: none;
-  border-color: initial;
-  border-image: initial;
-  outline: none;
-  background: rgb(132, 142, 156);
-}
 
 .footer {
   font-size: 12px;

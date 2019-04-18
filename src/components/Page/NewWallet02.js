@@ -39,13 +39,20 @@ class NewWallet02 extends React.Component {
             <span className="title" >Create Keystore File + Password</span>
           </div>
           <div className="textContent">
+            <div className="shield" >
+              <i className="fa fa-shield"></i>
+              <i className="fa fa-desktop"></i>
+            </div>
             <div className="text">We are about to show your mnemonic phrase, please ensure that no one else is looking at your screen.</div>
           </div>
           <div className="downloadkey">
-            <div className="unlock" onClick={() => this.previousClick()} >Previous</div>
-            <button width="200px" className="btUnlock" onClick={() => this.continueClick()}>
+            <div className="previousBt"  >
+              <i className="fa fa-long-arrow-left" aria-hidden="true"></i>
+              <div className="unlock" onClick={() => this.previousClick()} >Previous</div>
+            </div>
+            <button width="200px" className="continueBt" onClick={() => this.continueClick()}>
               <span>Continue</span>
-            <i className="iconfont icon-continue icon" size="20" color="inherit"></i>
+              <i className="iconfont icon-continue icon" size="20" color="inherit"></i>
             </button>
           </div>
         </div>

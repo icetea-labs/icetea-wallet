@@ -86,3 +86,47 @@ body {
   text-align: center;
   font-family: DIN;
 }
+.previousBt {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: rgb(132, 142, 156);
+}
+.previousBt i {
+  margin-right: 10px;
+  color: inherit;
+  /* font-size: 20px; */
+}
+.previousBt div {
+  color: inherit;
+}
+.previousBt:hover div, .previous-button:hover i {
+  color: rgb(240, 185, 11);
+}
+.continueBt:hover {
+  transform: scale(1);
+}
+.continueBt {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  justify-content: center;
+  box-sizing: border-box;
+  box-shadow: none;
+  width: 200px;
+  border-radius: 3px;
+  overflow: hidden;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+  background: rgb(132, 142, 156);
+  outline: none;
+}
+.continueBt.pass {
+  background: linear-gradient(90deg, rgb(239, 184, 11) 0%, rgb(251, 218, 60) 100%);
+}

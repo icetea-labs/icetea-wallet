@@ -38,6 +38,7 @@ class NewWallet03 extends React.Component {
             <span className="title" >Choose Secondary Access</span>
           </div>
           <div className="textNote">
+            <i className="fa fa-pencil-square-o"></i>
             <span>Back up the text below on paper and keep it somewhere secret and safe.</span>
           </div>
           <div className="showMnemonic">
@@ -47,8 +48,11 @@ class NewWallet03 extends React.Component {
             <div onClick={() => this.viewPrivate()} >View my Private Key &gt;&gt;</div>
           </div>
           <div className="downloadkey">
-            <div className="unlock" onClick={() => this.previousClick()} >Previous</div>
-            <button width="200px" className="btUnlock" onClick={() => this.continueClick()}>
+            <div className="previousBt"  >
+              <i className="fa fa-long-arrow-left" aria-hidden="true"></i>
+              <div className="unlock" onClick={() => this.previousClick()} >Previous</div>
+            </div>
+            <button width="200px" className="continueBt" onClick={() => this.continueClick()}>
               <span>Continue</span>
             <i className="iconfont icon-continue icon" size="20" color="inherit"></i>
             </button>

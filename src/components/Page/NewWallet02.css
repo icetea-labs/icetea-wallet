@@ -23,7 +23,9 @@
   -webkit-box-align: center;
   align-items: center;
 }
-
+.textContent .shield {
+  font-size: 70px;
+}
 .textContent .text {
   font-size: 16px;
   margin-top: 40px;

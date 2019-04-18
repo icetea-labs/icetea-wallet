@@ -148,9 +148,9 @@ class NewWallet01 extends React.Component {
               </div>
               <div className="downloadkey">
                 <div className="unlock">Unlock an Existing Wallet</div>
-                <button width="200px" className="btUnlock" onClick={() => this.downloadKeyClick()}>
-                <span>Download Keystore File</span>
-                <i className="iconfont icon-continue icon" size="20" color="inherit"></i>
+                <button width="200px" className="continueBt" onClick={() => this.downloadKeyClick()}>
+                  <span>Download Keystore File</span>
+                  <i className="iconfont icon-continue icon" size="20" color="inherit"></i>
                 </button>
               </div>
               <div className="footer">
