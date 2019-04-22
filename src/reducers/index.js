@@ -13,6 +13,11 @@ const myReducer = (state = initialState, action) => {
         formNo: action.formNo
       }
       return state
+    case types.CHANGE_PU:
+      state = {...state,
+        puNo: action.puNo
+      }
+      return state
     default: return state;
   }
 }

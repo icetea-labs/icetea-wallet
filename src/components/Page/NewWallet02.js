@@ -15,11 +15,11 @@ class NewWallet02 extends React.Component {
     // Change form no
     this.props.onChangeForm('03');
     // save to state
-    var wallet = {
-      mnemonic: "outdoor special balance estate eager siege ghost eight baby ancient mandate index",
-      privateKey: "5wGNDfgSX6rt7LYT41vsjHLVxLDLVtMGtuttroWFiEK6"
-    }
-    this.props.onSaveWallet(wallet);
+  //   var wallet = {
+  //     mnemonic: "outdoor special balance estate eager siege ghost eight baby ancient mandate index",
+  //     privateKey: "5wGNDfgSX6rt7LYT41vsjHLVxLDLVtMGtuttroWFiEK6"
+  //   }
+  //   this.props.onSaveWallet(wallet);
   }
 
   previousClick() {

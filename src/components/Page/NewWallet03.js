@@ -15,7 +15,8 @@ class NewWallet03 extends React.Component {
 
   continueClick() {
       // Change form no
-      this.props.onChangeForm('04');
+      // this.props.onChangeForm('04');
+      this.props.onChangePopup('02');
   }
 
   viewPrivate() {
@@ -78,6 +79,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onChangeForm: (formNo) => {
       dispatch(actions.changeForm(formNo))
+    },
+    onChangePopup: (puNo) => {
+      dispatch(actions.changePopup(puNo))
     }
   }
 }

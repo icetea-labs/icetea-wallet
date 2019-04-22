@@ -1,6 +1,7 @@
 import React from "react"
 // import { Button, ButtonGroup } from 'reactstrap';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'
 import * as actions from '../../actions'
 import './NewWallet04.css'
 
@@ -17,14 +18,6 @@ class NewWallet04 extends React.Component {
     this.viewPrivate = this.viewPrivate.bind(this);
   }
 
-  // componentDidMount() {
-  //   var { renderMnemonic } = this.state;
-  //   // update state
-  //   this.setState({
-  //     renderMnemonic,
-  //   })
-  // }
-
   componentWillMount() {
     var { renderMnemonic } = this.state;
     if (!renderMnemonic.length) {
@@ -38,7 +31,8 @@ class NewWallet04 extends React.Component {
 
   continueClick() {
     // Change form no
-    this.props.onChangeForm('03');
+    // this.props.onChangeForm('03');
+    this.props.history.push("/Home");
   }
 
   viewPrivate() {
@@ -47,15 +41,6 @@ class NewWallet04 extends React.Component {
   previousClick() {
     this.props.onChangeForm('03');
   }
-
-  // renderMnemonic = () => {
-  //   var items = [];
-  //   var { renderMnemonic } = this.state;
-  //   for (var i = 0; i < renderMnemonic.length; i++) {
-  //     items.push(<div className="mnemonicItem" key={i} onClick={() => this.confirmMnemonic(i)} >{renderMnemonic[i]}</div>);
-  //   }
-  //   return items
-  // }
 
   picMnemonic = (index) => {
     console.log(index)
@@ -156,6 +141,7 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewWallet04);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewWallet04))
+// export default connect(mapStateToProps, mapDispatchToProps)(NewWallet04);
 // export default NewWallet; mapStateToProps
+

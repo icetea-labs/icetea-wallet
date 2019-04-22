@@ -107,19 +107,19 @@ body {
   text-align: center;
   font-family: DIN;
 }
-.header2 {
+.header21 {
   font-size: 16px;
   color: rgb(132, 142, 156);
   font-weight: bold;
   margin: 40px 0px;
 }
-.header2 span {
+.header21 span1 {
   font-size: 16px;
 }
-.header2 .totalPage {
+.header21 .totalPage1 {
   color: rgb(234, 236, 239);
 }
-.header2 .title {
+.header21 .title1 {
   font-size: 18px;
   color: rgb(72, 81, 93);
   margin-left: 8px;
