@@ -11,9 +11,13 @@ const myReducer = (state = initialState, action) => {
       state.wallet = action.wallet
       return state
     case types.CHANGE_FORM:
-      state = {...state,
+      state = {
+        ...state,
         formNo: action.formNo
       }
+      return state
+    case types.CHANGE_UL_TYPE:
+      state = { ...state, ulType: action.ulType }
       return state
     default: return state;
   }

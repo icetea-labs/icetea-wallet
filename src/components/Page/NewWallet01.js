@@ -18,12 +18,12 @@ class NewWallet01 extends React.Component {
       cbConfirmRecover:false,
     };//{ cSelected: [] };
 
-    this.downloadKeyClick = this.downloadKeyClick.bind(this);
+    // this.downloadKeyClick = this.downloadKeyClick.bind(this);
     this.unlockKeyClick = this.unlockKeyClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  downloadKeyClick() {
+  downloadKeyClick= async() => {
     console.log(this.state)
     if(!this.state.cbConfirmRecover) {
       window.alert("Confirm check box")
@@ -31,7 +31,7 @@ class NewWallet01 extends React.Component {
       window.alert("Re-Passwork don't match")
     } else {
       var mnemonic = bip39.generateMnemonic();
-      var seed = bip39.mnemonicToSeed(mnemonic);
+      var seed = await bip39.mnemonicToSeed(mnemonic);
       var hdkey = HDKey.fromMasterSeed(seed);
       var keyObject = encode(hdkey.privateKey, this.state.password);
       this.download(JSON.stringify(keyObject), keyObject.address + '_keystore.txt', 'text/plain');
