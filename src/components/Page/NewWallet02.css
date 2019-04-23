@@ -1,0 +1,17 @@
+.textContent {
+  -webkit-box-pack: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.textContent .shield {
+  font-size: 70px;
+}
+.textContent .text {
+  font-size: 16px;
+  margin-top: 40px;
+  color: rgb(72, 81, 93);
+  text-align: center;
+}

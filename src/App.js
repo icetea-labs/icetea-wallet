@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
-import 'font-awesome/css/font-awesome.min.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+<<<<<<< HEAD
 import { Home, NewWallet, UnlockWallet} from './components/Page';
+=======
+import { Home, NewWallet, UnlockWallet } from './components/page';
+>>>>>>> master
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <span>
         <Router>
           <Switch>
-            <Route exact path='/' component={Home} />
+            <Route exact path='/' component={NewWallet} />
+            <Route path={`/Home` } component={Home} />
             <Route path={`/create` } component={NewWallet} />
             <Route path={`/unlock` } component={UnlockWallet} />
           </Switch>
         </Router>
-      </div>
+      </span>
     );
   }
 }

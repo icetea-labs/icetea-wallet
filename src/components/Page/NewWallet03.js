@@ -15,7 +15,8 @@ class NewWallet03 extends React.Component {
 
   continueClick() {
       // Change form no
-      this.props.onChangeForm('03');
+      // this.props.onChangeForm('04');
+      this.props.onChangePopup('02');
   }
 
   viewPrivate() {
@@ -29,28 +30,34 @@ class NewWallet03 extends React.Component {
     return (
       <div className="box2" >
         <div>
-          <h3 className='text-center'>Create New Wallet</h3>
+          <div className="header1">Create New Wallet</div>
         </div>
         <div>
           <div className='header2' >
-            <span className="page" >1</span>
+            <span className="page" >2</span>
             <span className="page totalPage">/2</span>
             <span className="title" >Choose Secondary Access</span>
           </div>
-          <div className="sc-jAaTju fnWXYz">
+          <div className="textNote">
+            <i className="fa fa-pencil-square-o"></i>
             <span>Back up the text below on paper and keep it somewhere secret and safe.</span>
           </div>
-          <div className="sc-jDwBTQ dUwgbJ">
+          <div className="showMnemonic">
             <p data-cy="mnemonic">{ this.props.wallet.mnemonic }</p>
           </div>
-          <div className="sc-gPEVay iYjXjI">
-            <a rel="noopener" onClick={() => this.viewPrivate()} >View my Private Key</a>&nbsp;<span>&gt;&gt;</span>
+          <div className="showPrivate">
+            <div onClick={() => this.viewPrivate()} >View my Private Key &gt;&gt;</div>
           </div>
-          <div className="downloadkey">
-            <div className="unlock" onClick={() => this.previousClick()} >Previous</div>
-            <button width="200px" className="btUnlock" onClick={() => this.continueClick()}>
-              <span>Continue</span>
-            <i className="iconfont icon-continue icon" size="20" color="inherit"></i>
+          <div className="btControlArea">
+            <div className="previousBt">
+              <i className="fa fa-long-arrow-left" aria-hidden="true"></i>
+              <div className="unlock" onClick={() => this.previousClick()} >Previous</div>
+            </div>
+            <button onClick={() => this.continueClick()} className='continueBt height mini'>
+              <div>
+                <span>Continue</span>
+                <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
+              </div>
             </button>
           </div>
         </div>
@@ -72,6 +79,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onChangeForm: (formNo) => {
       dispatch(actions.changeForm(formNo))
+    },
+    onChangePopup: (puNo) => {
+      dispatch(actions.changePopup(puNo))
     }
   }
 }

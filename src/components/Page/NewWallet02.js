@@ -2,6 +2,7 @@ import React from "react"
 // import { Button, ButtonGroup } from 'reactstrap';
 import { connect } from 'react-redux';
 import * as actions from '../../actions'
+import './NewWallet02.css'
 
 class NewWallet02 extends React.Component {
   constructor(props) {
@@ -11,8 +12,14 @@ class NewWallet02 extends React.Component {
   }
 
   continueClick() {
-      // Change form no
-      this.props.onChangeForm('03');
+    // Change form no
+    this.props.onChangeForm('03');
+    // save to state
+  //   var wallet = {
+  //     mnemonic: "outdoor special balance estate eager siege ghost eight baby ancient mandate index",
+  //     privateKey: "5wGNDfgSX6rt7LYT41vsjHLVxLDLVtMGtuttroWFiEK6"
+  //   }
+  //   this.props.onSaveWallet(wallet);
   }
 
   previousClick() {
@@ -23,21 +30,31 @@ class NewWallet02 extends React.Component {
     return (
       <div className="box2" >
         <div>
-          <h3 className='text-center'>Create New Wallet</h3>
-          <p>{this.props.name}</p>
+          <div className="header1">Create New Wallet</div>
         </div>
         <div>
           <div className='header2' >
-            <span className="page" >1</span>
+            <span className="page" >2</span>
             <span className="page totalPage">/2</span>
             <span className="title" >Create Keystore File + Password</span>
           </div>
-          <div className="text">We are about to show your mnemonic phrase, please ensure that no one else is looking at your screen.</div>
-          <div className="downloadkey">
-            <div className="unlock" onClick={() => this.previousClick()} >Previous</div>
-            <button width="200px" className="btUnlock" onClick={() => this.continueClick()}>
-              <span>Continue</span>
-            <i className="iconfont icon-continue icon" size="20" color="inherit"></i>
+          <div className="textContent">
+            <div className="shield" >
+              <i className="fa fa-shield"></i>
+              <i className="fa fa-desktop"></i>
+            </div>
+            <div className="text">We are about to show your mnemonic phrase, please ensure that no one else is looking at your screen.</div>
+          </div>
+          <div className="btControlArea">
+            <div className="previousBt">
+              <i className="fa fa-long-arrow-left" aria-hidden="true"></i>
+              <div className="unlock" onClick={() => this.previousClick()} >Previous</div>
+            </div>
+            <button onClick={() => this.continueClick()} className='continueBt height mini'>
+              <div>
+                <span>Continue</span>
+                <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
+              </div>
             </button>
           </div>
         </div>
