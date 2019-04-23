@@ -32,7 +32,7 @@ class NewWallet01 extends React.Component {
     };//{ cSelected: [] };
 
     // this.downloadKeyClick = this.downloadKeyClick.bind(this);
-    this.unlockKeyClick = this.unlockKeyClick.bind(this);
+    // this.unlockKeyClick = this.unlockKeyClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -118,10 +118,6 @@ class NewWallet01 extends React.Component {
     })
   }
 
-  unlockKeyClick = () => {
-    this.props.history.push(`/unlock`)
-  }
-
   download(content, fileName, contentType) {
     var a = document.createElement("a");
     var file = new Blob([content], { type: contentType });
@@ -179,7 +175,7 @@ class NewWallet01 extends React.Component {
           </InputConfirmPass>
 
           <DivControlBtn>
-            <DivUnlockLink>Unlock an Existing Wallet</DivUnlockLink>
+            <DivUnlockLink><Link className="unlock" to="/unlock">Unlock an Existing Wallet</Link></DivUnlockLink>
             <Button
               width={'200px'}
               onClick={() => this.continueClick()}
