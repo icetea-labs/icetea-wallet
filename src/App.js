@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-<<<<<<< HEAD
-import { Home, NewWallet, UnlockWallet} from './components/Page';
-=======
-import { Home, NewWallet, UnlockWallet } from './components/page';
->>>>>>> master
+import { Home, NewWallet, UnlockWallet } from './components/Page';
 
 class App extends Component {
   render() {
