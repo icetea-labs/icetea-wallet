@@ -1,67 +1,111 @@
 import React from "react"
-// import { Button, ButtonGroup } from 'reactstrap';
 import { connect } from 'react-redux';
 import * as actions from '../../actions'
-import './NewWallet03.css'
+import styled from 'styled-components'
+// Import custom component
+import { Button } from './../elements'
+// Style component
+import {
+  DivBox2, Header1, Header2,
+  DivContentW2, InputConfirmPass, DivControlBtn,
+  DivUnlockLink, DivFooter, DivValidPass, DivPreviousBt
+} from './../elements/utils'
+
+const DivTextNote = styled.div`
+  text-align: left;
+  font-size: 16px;
+  display: flex;
+  margin: 20px 0px;
+  & i {
+    margin-top: 5px;
+    margin-right: 15px;
+    font-size: 20px;
+  }
+`;
+const DivShowMnemonic = styled.div`
+  text-align: center;
+  position: relative;
+  background: rgb(249, 249, 249);
+  border-width: 1px;
+  border-style: dashed;
+  border-color: rgb(216, 216, 216);
+  border-image: initial;
+  padding: 20px;
+  & p {
+    line-height: 25px;
+    font-size: 18px;
+    word-spacing: 6px;
+    font-family: DIN;
+    font-weight: 900;
+  }
+`;
+
+const DivShowPrivate = styled.div`
+  text-align: right;
+  cursor: pointer;
+  color: rgb(72, 81, 93);
+  padding: 10px 0px;
+`;
 
 class NewWallet03 extends React.Component {
   constructor(props) {
     super(props);
-    this.continueClick = this.continueClick.bind(this);
-    this.previousClick = this.previousClick.bind(this);
-    this.viewPrivate = this.viewPrivate.bind(this);
-    
   }
 
-  continueClick() {
+  continueClick = () => {
       // Change form no
       // this.props.onChangeForm('04');
       this.props.onChangePopup('02');
   }
 
-  viewPrivate() {
+  viewPrivate = () => {
     window.alert("Private key: " + this.props.wallet.privateKey)
   }
-  previousClick() {
+  previousClick = ()=> {
     this.props.onChangeForm('02');
   }
 
   render() {
+    var isActive ='active';
     return (
-      <div className="box2" >
+      <DivBox2>
         <div>
-          <div className="header1">Create New Wallet</div>
+          <Header1>Create New Wallet</Header1>
         </div>
         <div>
-          <div className='header2' >
+          <Header2>
             <span className="page" >2</span>
             <span className="page totalPage">/2</span>
             <span className="title" >Choose Secondary Access</span>
-          </div>
-          <div className="textNote">
+          </Header2>
+          <DivTextNote>
             <i className="fa fa-pencil-square-o"></i>
             <span>Back up the text below on paper and keep it somewhere secret and safe.</span>
-          </div>
-          <div className="showMnemonic">
+          </DivTextNote>
+          <DivShowMnemonic>
             <p data-cy="mnemonic">{ this.props.wallet.mnemonic }</p>
-          </div>
-          <div className="showPrivate">
+          </DivShowMnemonic>
+          <DivShowPrivate>
             <div onClick={() => this.viewPrivate()} >View my Private Key &gt;&gt;</div>
-          </div>
-          <div className="btControlArea">
-            <div className="previousBt">
+          </DivShowPrivate>
+
+          <DivControlBtn>
+            <DivPreviousBt className="previousBt" >               
               <i className="fa fa-long-arrow-left" aria-hidden="true"></i>
               <div className="unlock" onClick={() => this.previousClick()} >Previous</div>
-            </div>
-            <button onClick={() => this.continueClick()} className='continueBt height mini'>
+            </DivPreviousBt>
+            <Button
+              width={'120px'}
+              onClick={() => this.continueClick()}
+              className={isActive}>
               <div>
-                <span>Continue</span>
-                <i className="fa fa-long-arrow-right" aria-hidden="true"></i>
+                <span style={{ 'marginRight': '10px' }} >Continue</span>
+                <i className="fa fa-long-arrow-right"></i>
               </div>
-            </button>
-          </div>
+            </Button>
+          </DivControlBtn>
         </div>
-      </div>
+      </DivBox2>
     );
   }
 }

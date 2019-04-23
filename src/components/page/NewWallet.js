@@ -42,7 +42,7 @@ const DivBox1 = styled.div`
 class NewWallet extends React.Component {
   constructor(props) {
     super(props);
-    this.props.onChangeForm('01');
+    this.props.onChangeForm('02');
   }
 
   selectDisplayForm = () => {
