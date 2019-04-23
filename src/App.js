@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import 'font-awesome/css/font-awesome.min.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Home, NewWallet, UnlockWallet } from './components/Page';
+import { Home, NewWallet, UnlockWallet } from './components/page';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <span>
         <Router>
           <Switch>
-            <Route exact path='/' component={Home} />
-            <Route exact path={`/create` } component={NewWallet} />
-            <Route exact path={`/unlock` } component={UnlockWallet} />
+            <Route exact path='/' component={NewWallet} />
+            <Route path={`/Home` } component={Home} />
+            <Route path={`/create` } component={NewWallet} />
+            <Route path={`/unlock` } component={UnlockWallet} />
           </Switch>
         </Router>
-      </div>
+      </span>
     );
   }
 }

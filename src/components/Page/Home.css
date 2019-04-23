@@ -1,0 +1,146 @@
+ol, ul {
+  list-style: none;
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+}
+.gWEMEs {
+  height: 50px;
+  line-height: 50px;
+  color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 1100;
+  background: rgb(18, 22, 28);
+  padding: 0px 15px;
+}
+.jNhSkT {
+  display: flex;
+}
+.gTInge {
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+  display: flex;
+  position: absolute;
+  right: 15px;
+}
+.cOXWZm {
+  display: flex;
+  flex-direction: row;
+}
+.cOXWZm li:hover {
+  color: rgb(240, 185, 11);
+  background: rgb(37, 45, 56);
+}
+.cOXWZm li:hover ul {
+  display: block;
+}
+.cOXWZm li {
+  height: 50px;
+  line-height: 50px;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  position: relative;
+  padding: 0px 15px;
+}
+.cOXWZm li a {
+  height: 100%;
+  display: block;
+  color: rgb(255, 255, 255);
+  font-size: 13px;
+}
+.wCTXT {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 0px;
+}
+.wCTXT li {
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  white-space: nowrap;
+  background: rgb(37, 45, 56);
+  padding: 0px 20px;
+  color: rgb(255, 255, 255);
+}
+.izmNVh {
+  width: 52px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+}
+.izmNVh:hover {
+  color: rgb(240, 185, 11);
+  background: rgb(37, 45, 56);
+}
+.izmNVh:hover ul {
+  display: flex;
+}
+.cnUGfj {
+  display: none;
+  flex-direction: column;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  background: rgb(37, 45, 56);
+}
+.cnUGfj li:hover {
+  color: rgb(240, 185, 11);
+  background: rgb(18, 22, 28);
+}
+.cnUGfj li.wallet-address {
+  display: flex;
+  height: 40px;
+  -webkit-box-align: center;
+  align-items: center;
+  background: rgba(72, 81, 93, 0.3);
+}
+.cnUGfj li {
+  width: 290px;
+  text-align: left;
+  height: 20px;
+  line-height: 20px;
+  text-indent: 10px;
+  font-size: 13px;
+  padding: 10px;
+  background: rgb(37, 45, 56);
+}
+.cnUGfj li.wallet-address .title1 {
+  color: rgb(72, 81, 93);
+  width: 100px;
+  white-space: nowrap;
+}
+.cnUGfj li.wallet-address .address {
+  width: 180px;
+  text-overflow: ellipsis;
+  position: relative;
+  overflow: hidden;
+}
+.cnUGfj li.wallet-address .op {
+  display: flex;
+  margin-top: 10px;
+  margin-left: 30px;
+}
+.cnUGfj li.wallet-address .op span {
+  position: relative;
+}
+.cnUGfj li.wallet-address .op i {
+  margin-right: 10px;
+}
+.iiYHFz {
+  font-size: 16px;
+}
+.hykyIA {
+  cursor: pointer;
+  padding: 0px 15px;
+}

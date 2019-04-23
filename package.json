@@ -5,15 +5,22 @@
   "dependencies": {
     "bip39": "^3.0.1",
     "bootstrap": "^4.3.1",
+    "classnames": "^2.2.6",
     "font-awesome": "^4.7.0",
     "hdkey": "^1.1.1",
+    "icetea-common": "github:TradaTech/icetea-common",
     "keythereum": "^1.0.4",
     "node-sass": "^4.11.0",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-jss": "^8.6.1",
+    "react-redux": "^7.0.1",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
-    "reactstrap": "^8.0.0"
+    "reactstrap": "^8.0.0",
+    "redux": "^4.0.1",
+    "styled-components": "^4.2.0"
   },
   "scripts": {
     "start": "PORT=4000 react-scripts start",

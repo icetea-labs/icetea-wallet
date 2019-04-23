@@ -1,0 +1,490 @@
+@font-face {
+  font-family: iconfont;
+  src: url(./../font/iconfont.eot);
+  src: url(./../font/iconfont.woff) format("woff"),
+  url(./../font/iconfont.ttf) format("truetype"),
+  url(./../font/iconfont.svg) format("svg")
+}
+
+.iconfont {
+  font-family: iconfont!important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale
+}
+
+.icon-icon02:before {
+  content: "\E604"
+}
+
+.icon-loading:before {
+  content: "\E60D"
+}
+
+.icon-withDraw:before {
+  content: "\E650"
+}
+
+.icon-deposit:before {
+  content: "\E654"
+}
+
+.icon-calendar:before {
+  content: "\E69F"
+}
+
+.icon-facebook:before {
+  content: "\E634"
+}
+
+.icon-weibo:before {
+  content: "\E641"
+}
+
+.icon-steemit:before {
+  content: "\E642"
+}
+
+.icon-instagram:before {
+  content: "\E64C"
+}
+
+.icon-medium:before {
+  content: "\E64E"
+}
+
+.icon-rise:before {
+  content: "\E661"
+}
+
+.icon-drop:before {
+  content: "\E662"
+}
+
+.icon-sanjiaojiantouxia-B:before {
+  content: "\E664"
+}
+
+.icon-telegram:before {
+  content: "\E67F"
+}
+
+.icon-twitter:before {
+  content: "\E683"
+}
+
+.icon-xuanzeqizhankai:before {
+  content: "\EB15"
+}
+
+.icon-reddit:before {
+  content: "\E646"
+}
+
+.icon-red:before {
+  content: "\E6B5"
+}
+
+.icon-red-green:before {
+  content: "\E6B6"
+}
+
+.icon-green:before {
+  content: "\E6B7"
+}
+
+.icon-wallet-D:before {
+  content: "\E6BA"
+}
+
+.icon-link:before {
+  content: "\E6B8"
+}
+
+.icon-close:before {
+  content: "\E6B9"
+}
+
+.icon-moving-D:before {
+  content: "\E6BD"
+}
+
+.icon-offfull:before {
+  content: "\E6C0"
+}
+
+.icon-language-D:before {
+  content: "\E6C1"
+}
+
+.icon-full:before {
+  content: "\E6C2"
+}
+
+.icon-account:before {
+  content: "\E6C3"
+}
+
+.icon-success:before {
+  content: "\E6C6"
+}
+
+.icon-fail-black:before {
+  content: "\E6C8"
+}
+
+.icon-failwhite-D:before {
+  content: "\E6C7"
+}
+
+.icon-success-black:before {
+  content: "\E6C9"
+}
+
+.icon-continue:before {
+  content: "\E6A8"
+}
+
+.icon-recommend:before {
+  content: "\E6A9"
+}
+
+.icon-upload:before {
+  content: "\E6AA"
+}
+
+.icon-weibiaoti--3:before {
+  content: "\E6AB"
+}
+
+.icon-weibiaoti--4:before {
+  content: "\E6AC"
+}
+
+.icon-weibiaoti--5:before {
+  content: "\E6AD"
+}
+
+.icon-keystore:before {
+  content: "\E6AE"
+}
+
+.icon-pencil:before {
+  content: "\E6AF"
+}
+
+.icon-lock:before {
+  content: "\E6B0"
+}
+
+.icon-blind-eye:before {
+  content: "\E6B1"
+}
+
+.icon-eye:before {
+  content: "\E6B2"
+}
+
+.icon-pencil2:before {
+  content: "\E6B3"
+}
+
+.icon-cancelallwhite-D:before {
+  content: "\E6CB"
+}
+
+.icon-cancelallblack-D:before {
+  content: "\E6CC"
+}
+
+.icon-loginblack-D:before {
+  content: "\E6CD"
+}
+
+.icon-logoutblack-D:before {
+  content: "\E6CE"
+}
+
+.icon-detail-D:before {
+  content: "\E6CF"
+}
+
+.icon-copy:before {
+  content: "\E6D0"
+}
+
+.icon-exclamation-cycle:before {
+  content: "\E6B4"
+}
+
+.icon-weibiaoti--13:before {
+  content: "\E6BB"
+}
+
+.icon-selected:before {
+  content: "\E6BC"
+}
+
+.icon-add:before {
+  content: "\E6BE"
+}
+
+.icon-back:before {
+  content: "\E6BF"
+}
+
+.icon-DEXIOCN-:before {
+  content: "\E6C4"
+}
+
+.icon-clear:before {
+  content: "\E6D2"
+}
+
+.icon-search:before {
+  content: "\E6C5"
+}
+
+.icon-norecord:before {
+  content: "\E715"
+}
+
+.icon-qrcode:before {
+  content: "\E724"
+}
+
+.icon-reddit-copy:before {
+  content: "\E725"
+}
+
+.icon-Binance-Dex-Horizont:before {
+  content: "\E6CA"
+}
+
+.icon-download:before {
+  content: "\E6D1"
+}
+
+.icon-menu:before {
+  content: "\E6D3"
+}
+
+.icon-delete:before {
+  content: "\E68D"
+}
+
+.icon-qizhibiaojibiaozhu:before {
+  content: "\E68E"
+}
+
+.icon-ConnectAddress:before {
+  content: "\E68F"
+}
+
+.icon-collpase:before {
+  content: "\E732"
+}
+
+.icon-expand:before {
+  content: "\E733"
+}
+
+@font-face {
+  font-family: ProximaNova;
+  src: url(./../font/ProximaNova-Regular.ttf) format("opentype")
+}
+
+@font-face {
+  font-family: NumberFont;
+  src: url(./../font/DINPro.otf) format("opentype");
+  unicode-range: u+30-39
+}
+
+@font-face {
+  font-family: DIN;
+  src: url(./../font/DINPro.otf) format("opentype")
+}
+
+a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: initial;
+  font-family: ProximaNova
+}
+
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+  display: block
+}
+
+body {
+  line-height: 1
+}
+
+ol,ul {
+  list-style: none
+}
+
+blockquote,q {
+  quotes: none
+}
+
+blockquote:after,blockquote:before,q:after,q:before {
+  content: "";
+  content: none
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0
+}
+
+#root,body,html {
+  height: 100%;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+  min-width: 320px
+}
+
+body {
+  font-family: ProximaNova;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #555!important;
+  background-color: #fff;
+  -webkit-font-feature-settings: "kern";
+  font-feature-settings: "kern";
+  -webkit-font-kerning: normal;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  touch-action: manipulation;
+  scrollbar-width: thin;
+  scrollbar-color: #848e9c #12161c
+}
+
+ul {
+  margin: 0;
+  padding: 0
+}
+
+h1,h2,h3,h4,h5,h6 {
+  color: inherit!important
+}
+
+a {
+  text-decoration: none
+}
+
+a:hover {
+  text-decoration: underline
+}
+
+.number {
+  font-family: NumberFont!important
+}
+
+input {
+  transition: all .3s ease-in;
+  -webkit-appearance: none
+}
+
+textarea {
+  font-family: ProximaNova
+}
+
+input:focus,textarea:focus {
+  border-color: #f0b90b
+}
+
+::-webkit-input-placeholder {
+  color: #999
+}
+
+:-moz-placeholder,::-moz-placeholder {
+  color: #999
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  border-radius: 2px;
+  background-color: #848e9c
+}
+
+::-webkit-scrollbar-track {
+  background-color: #fff
+}
+
+::-webkit-scrollbar-thumb,::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  border-radius: 2px
+}
+
+::-webkit-scrollbar-corner,::-webkit-scrollbar-thumb {
+  background-color: #848e9c
+}
+
+.rc-notification {
+  z-index: 11000!important
+}
+
+.notification {
+  display: flex;
+  align-items: center
+}
+
+.notification img {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px
+}
+
+.alert {
+  padding: 15px;
+  background: #212833;
+  box-shadow: 0 2px 4px 0 rgba(11,14,19,.3);
+  border-radius: 3px;
+  opacity: .9;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  text-align: center;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  z-index: 11000;
+  min-width: 180px
+}
+
+a:active,a:focus,button::-moz-focus-inner,input[type=button]::-moz-focus-inner,input[type=file]>input[type=button]::-moz-focus-inner,input[type=reset]::-moz-focus-inner,input[type=submit]::-moz-focus-inner,select::-moz-focus-inner {
+  border: 0;
+  outline: 0
+}
+
+.progressive-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(239,241,243,.5);
+  border-radius: 50%
+}
+
+@media screen and (max-width: 1000px) {
+  .tradeOrdersWrap {
+      overflow:hidden
+  }
+}
+
+@-moz-document url-prefix() {
+  tbody tr td.tr-shadow {
+      top: 0
+  }
+}

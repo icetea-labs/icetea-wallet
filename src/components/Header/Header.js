@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../../assets/img/logo.png';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 import {
   Collapse,
@@ -10,7 +11,7 @@ import {
   NavItem,
   NavLink } from 'reactstrap';
 
-class Header extends React.Component {
+class Header extends Component {
   constructor(props) {
     super(props);
 

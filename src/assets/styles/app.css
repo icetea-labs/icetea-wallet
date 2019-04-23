@@ -1,3 +1,52 @@
+@font-face {
+  font-family: 'DIN';
+  src:  url('./../font/DINPro.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ProximaNova';
+  src:  url('./../font/ProximaNova-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iconfont';
+  src:  url('./../font/iconfont.woff');
+}
+
+#root, body, html {
+  height: 100%;
+  box-sizing: border-box;
+  min-width: 320px;
+}
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body,
+canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed,
+fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, 
+html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output,
+p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, 
+tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: initial;
+  font-family: ProximaNova;
+}
+
+body {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #555!important;
+  background-color: #fff;
+  font-feature-settings: "kern";
+  font-kerning: normal;
+  touch-action: manipulation;
+}
+
 .container {
   position: absolute;
   top: 130px;
@@ -9,11 +58,9 @@
   height: 100%;
   display: flex;
   padding-bottom: 50px;
-  -webkit-box-pack: center;
   justify-content: center;
 }
 .logo {
-  color: rgb(240, 185, 11);
   height: 80px;
   cursor: pointer;
   position: absolute;
@@ -41,11 +88,18 @@
 }
 @media (min-width: 624px) {
   .box2 {
-    width: 600px;
+    width: 500px;
+  }
+}
+@media (max-width: 623px) and (min-width: 320px) {
+  .box2 {
+    box-shadow: none;
+    box-sizing: border-box;
+    padding: 5px 20px;
   }
 }
 
-.header {
+.header1 {
   font-size: 24px;
   font-weight: bold;
   margin-top: 10px;
@@ -53,173 +107,109 @@
   text-align: center;
   font-family: DIN;
 }
-
-.header2 {
+.header21 {
   font-size: 16px;
   color: rgb(132, 142, 156);
   font-weight: bold;
   margin: 40px 0px;
 }
-.header2 span {
+.header21 span1 {
   font-size: 16px;
 }
-.header2 .totalPage {
+.header21 .totalPage1 {
   color: rgb(234, 236, 239);
 }
-.header2 .title {
+.header21 .title1 {
   font-size: 18px;
   color: rgb(72, 81, 93);
   margin-left: 8px;
 }
-
-.pass {
-  margin-top: 20px;
-  position: relative;
-}
-.label-value {
-  transform: translateY(-20px);
-  color: rgb(72, 81, 93);
-  font-size: 12px;
-}
-.pass .label {
-  font-size: 16px;
-  position: absolute;
-  transform: translateY(0px);
-  z-index: 100;
-  color: rgb(132, 142, 156);
-  transition: all 0.2s ease 0s;
-}
-.pass input {
-  border-top-width: initial;
-  border-right-width: initial;
-  border-left-width: initial;
-  border-top-color: initial;
-  border-right-color: initial;
-  border-left-color: initial;
-  width: 100%;
-  height: 100%;
-  font-size: 14px;
-  caret-color: rgb(240, 185, 11);
-  color: rgb(72, 81, 93);
-  position: relative;
-  border-style: none none solid;
-  border-image: initial;
-  border-radius: 0px;
-  outline: none;
-  border-bottom: 1px solid rgba(234, 236, 239, 0.5);
-  padding: 0px 0px 10px;
-  background: inherit;
-}
-
-p {
-  display: block;
-  /* margin-block-start: 1em; */
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-}
-input {
-  transition: all .3s ease-in;
-  -webkit-appearance: none;
-}
-input[type="password" i] {
-  -webkit-text-security: disc !important;
-}
-input, textarea, select, button {
-  text-rendering: auto;
-  color: initial;
-  letter-spacing: normal;
-  word-spacing: normal;
-  text-transform: none;
-  text-indent: 0px;
-  text-shadow: none;
-  display: inline-block;
-  text-align: start;
-  margin: 0em;
-  font: 400 11px system-ui;
-}
-.pass .inputWrap {
-  position: relative;
-  z-index: 300;
-}
-.downloadkey {
+.btControlArea {
   display: flex;
   flex-direction: row;
-  -webkit-box-pack: justify;
   justify-content: space-between;
   font-size: 14px;
   padding: 20px 0px 0px;
 }
-.unlock {
+@media (max-width: 623px) and (min-width: 320px) {
+  .btControlArea {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 70px;
+  }
+}
+.previousBt {
   cursor: pointer;
   display: flex;
-  -webkit-box-align: center;
   align-items: center;
+  font-size: 14px;
+  color: rgb(132, 142, 156);
+}
+.previousBt i {
+  margin-right: 10px;
+  color: inherit;
+  /* font-size: 20px; */
+}
+.previousBt div {
+  color: inherit;
+}
+.previousBt:hover div, .previousBt:hover i {
   color: rgb(240, 185, 11);
 }
-.btUnlock {
+.previousBt:hover div {
+  text-decoration: underline;
+}
+@media (max-width: 623px) and (min-width: 320px) {
+  .unlock {
+    order: 1;
+  }
+  .previousBt {
+    order: 1;
+  }
+}
+.continueBt {
   height: 40px;
   line-height: 40px;
-  text-align: center;
   font-size: 14px;
+  font-weight: bold;
   cursor: pointer;
   color: rgb(255, 255, 255);
   display: flex;
-  -webkit-box-pack: center;
   justify-content: center;
-  position: relative;
-  box-sizing: border-box;
-  box-shadow: none;
   width: 200px;
   border-radius: 3px;
-  overflow: hidden;
-  border-width: initial;
   border-style: none;
-  border-color: initial;
-  border-image: initial;
   outline: none;
   background: rgb(132, 142, 156);
 }
-.icon {
-  color: inherit;
-  font-size: 20px;
+.continueBt.mini {
+  width: 120px;
 }
-.iconfont {
-  font-family: iconfont!important;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.continueBt.height {
+  background: linear-gradient(90deg, rgb(239, 184, 11) 0%, rgb(251, 218, 60) 100%);
 }
-.icon-continue {
-  content: "\E6A8";
+@media (max-width: 768px) {
+  .continueBt {
+    width: 100%;
+  }
+  .continueBt.mini {
+    width: 100%;
+  }
 }
-.footer {
-  font-size: 12px;
-  color: rgb(132, 142, 156);
-  padding: 20px 0px;
+.continueBt span {
+  margin-right: 10px;
 }
-.footer label span {
-  white-space: normal;
+.continueBt:hover div {
+  transform: scale(1);
 }
-.lbFooter {
-  user-select: none;
-  cursor: pointer;
-  display: flex;
-  margin: auto;
+.continueBt div {
+  transition: transform 0.2s ease 0s;
 }
-.lbFooter span:last-child {
-  padding-left: 5px;
-  line-height: 20px;
-  width: 90%;
+.continueBt:hover div {
+  transform: scale(0.9);
 }
-.lbFooter span {
-  display: inline-block;
-  vertical-align: middle;
-  transform: translate3d(0px, 0px, 0px);
+.continueBt:hover div {
+  transition: transform 0.2s ease 0s;
 }
-.textFooter {
-  font-size: 12px;
-  color: rgb(132, 142, 156);
-  line-height: 14px;
-  white-space: nowrap;
-}
+
