@@ -1,3 +1,7 @@
+import React from "react";
+// import { Button, ButtonGroup } from 'reactstrap';
+import { codec } from 'icetea-common';
+import { Link } from 'react-router-dom';
 import React from "react"
 // import { Link } from 'react-router-dom';  
 import { codec, utils } from 'icetea-common'
@@ -6,8 +10,7 @@ import HDKey from 'hdkey';
 // import keythereum from 'keythereum';
 import { encode } from '../../utils';
 import { connect } from 'react-redux';
-// import './NewWallet01.css'
-import * as actions from '../../actions'
+import * as actions from '../../actions';
 
 import { Button } from './../elements'
 import {
@@ -28,6 +31,7 @@ class NewWallet01 extends React.Component {
       cbConfirmRecover: false,
     };//{ cSelected: [] };
 
+    // this.downloadKeyClick = this.downloadKeyClick.bind(this);
     this.unlockKeyClick = this.unlockKeyClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -200,6 +204,7 @@ class NewWallet01 extends React.Component {
 
 const mapStateToProps = state => {
   return {
+  name: state.Name
   };
 }
 

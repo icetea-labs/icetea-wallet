@@ -65,7 +65,7 @@ class NewWallet02 extends React.Component {
 
 const mapStateToProps = state => {
   return {
-
+    name: state.Name
   };
 }
 
