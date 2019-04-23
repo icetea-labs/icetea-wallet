@@ -1,8 +1,8 @@
 import React from "react";
 // import { Button, ButtonGroup } from 'reactstrap';
-import { codec } from 'icetea-common';
+
 import { Link } from 'react-router-dom';
-import React from "react"
+
 // import { Link } from 'react-router-dom';  
 import { codec, utils } from 'icetea-common'
 import * as bip39 from 'bip39';
