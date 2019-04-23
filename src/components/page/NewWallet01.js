@@ -1,18 +1,15 @@
 import React from "react";
-// import { Button, ButtonGroup } from 'reactstrap';
-
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
-// import { Link } from 'react-router-dom';  
-import { codec, utils } from 'icetea-common'
 import * as bip39 from 'bip39';
 import HDKey from 'hdkey';
-// import keythereum from 'keythereum';
+import { codec, utils } from 'icetea-common'
 import { encode } from '../../utils';
-import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
+// Import custom component
 import { Button } from './../elements'
+// Style component
 import {
   DivBox2, Header1, Header2,
   InputPass, InputConfirmPass, DivControlBtn,

@@ -33,6 +33,9 @@ export const Button = styled.button`
     & div {
     transition: transform 0.2s ease 0s;
     }
+    @media (max-width: 768px) {
+      width: 100%;
+    }
 `;
 // export const Button = styled(Btn)`
 // `;

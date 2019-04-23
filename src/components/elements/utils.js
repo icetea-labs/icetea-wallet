@@ -139,6 +139,9 @@ export const DivControlBtn = styled.div`
     justify-content: space-around;
     align-items: center;
     height: 70px;
+    & .previousBt {
+      order: 1;
+    }
   }
 `;
 export const DivUnlockLink = styled.div`
@@ -167,5 +170,40 @@ export const DivFooter = styled.div`
     padding-left: 5px;
     line-height: 20px;
     width: 90%;
+  }
+`;
+export const DivPreviousBt = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: rgb(132, 142, 156);
+  & i {
+    margin-right: 10px;
+    color: inherit;
+  }
+  & div {
+    color: inherit;
+  }
+  &:hover div, &:hover i {
+    color: rgb(240, 185, 11);
+  }
+  &:hover div {
+    text-decoration: underline;
+  }
+`;
+export const DivContentW2 = styled.div`
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  & .shield {
+    font-size: 70px;
+  }
+  & .text {
+    font-size: 16px;
+    margin-top: 40px;
+    color: rgb(72, 81, 93);
+    text-align: center;
   }
 `;
