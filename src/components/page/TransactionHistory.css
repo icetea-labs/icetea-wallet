@@ -1,0 +1,67 @@
+.gUtTAS {
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  background: rgb(253, 253, 253);
+}
+.kCJCmb {
+  width: 1200px;
+  min-width: 960px;
+}
+.hpRMTi {
+  width: 100%;
+  display: none;
+  min-width: 320px;
+  padding: 0px 20px 20px;
+}
+.kOwkAM {
+  color: rgb(33, 40, 51);
+  font-size: 20px;
+  height: 40px;
+  line-height: 40px;
+  background: rgb(255, 255, 255);
+}
+.iCZsOJ {
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+  box-shadow: rgba(90, 102, 124, 0.08) 0px 1px 20px 0px;
+  height: 40px;
+  background: rgb(255, 255, 255);
+  padding: 0px 5px 0px 15px;
+}
+.gRnqNO {
+  position: relative;
+}
+.bkihkp {
+  width: 100%;
+  border-collapse: separate;
+  border-color: rgb(253, 253, 253);
+  border-spacing: 0px 5px;
+}
+.gTmcD {
+  background:  0% 0% / auto 100% rgb(253, 253, 253);
+}
+.gTmcD tr {
+  font-size: 13px;
+  color: rgb(72, 81, 93);
+  box-shadow: none;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+}
+.gTmcD th:first-child {
+  text-indent: 10px;
+}
+.gTmcD th {
+  background-color: rgb(253, 253, 253);
+  word-break: break-all;
+  cursor: pointer;
+  color: rgb(132, 142, 156);
+  height: 40px;
+  text-align: left;
+  line-height: 40px;
+}
