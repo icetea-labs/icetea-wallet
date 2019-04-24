@@ -22,6 +22,13 @@ a {
   background: rgb(18, 22, 28);
   padding: 0px 15px;
 }
+@media (max-width: 768px) {
+  .gWEMEs {
+    height: 44px;
+    line-height: 44px;
+  }
+}
+
 .jNhSkT {
   display: flex;
 }
@@ -77,6 +84,11 @@ a {
   text-align: center;
   cursor: pointer;
   position: relative;
+}
+@media (max-width: 768px){
+  .gTIngem{
+      display: none;
+  }
 }
 .izmNVh:hover {
   color: rgb(240, 185, 11);

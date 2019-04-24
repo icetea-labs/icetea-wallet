@@ -1,3 +1,7 @@
 export { default as Home } from './Home.js'
 export { default as NewWallet } from './NewWallet.js'
 export { default as UnlockWallet } from './UnlockWallet.js'
+export { default as Balances } from './Balances.js'
+export { default as Transaction } from './Transaction.js'
+export { default as TransactionHistory } from './TransactionHistory.js'
+export { default as BotStore } from './BotStore.js'

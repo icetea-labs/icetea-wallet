@@ -98,7 +98,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onChangeForm: (formNo) => {
-      dispatch(actions.changeForm(formNo))
+      dispatch(actions.setStep(formNo))
     }
   };
 }
