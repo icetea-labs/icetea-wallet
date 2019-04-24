@@ -5,7 +5,6 @@ class Transaction extends Component {
   render() {
     return (
       <div>
-        <h1>Transaction</h1>
         <div className="transContents">
           <div className="addressContainer">
           <div>

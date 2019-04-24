@@ -42,17 +42,17 @@ const DivBox1 = styled.div`
 class NewWallet extends React.Component {
   constructor(props) {
     super(props);
-    this.props.onChangeForm('02');
+    this.props.onChangeForm('01');
   }
 
   selectDisplayForm = () => {
-    if (!this.props.formNo || this.props.formNo === '01') {
+    if (!this.props.step || this.props.step === '01') {
       return <NewWallet01 />;
-    } else if (this.props.formNo === '02') {
+    } else if (this.props.step === '02') {
       return <NewWallet02 />;
-    } else if (this.props.formNo === '03') {
+    } else if (this.props.step === '03') {
       return <NewWallet03 />;
-    } else if (this.props.formNo === '04') {
+    } else if (this.props.step === '04') {
       return <NewWallet04 />;
     }
   }
@@ -90,15 +90,15 @@ class NewWallet extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    formNo: state.formNo,
+    step: state.step,
     puNo: state.puNo
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onChangeForm: (formNo) => {
-      dispatch(actions.setStep(formNo))
+    onChangeForm: (step) => {
+      dispatch(actions.setStep(step))
     }
   };
 }

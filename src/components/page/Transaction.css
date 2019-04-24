@@ -1,6 +1,9 @@
 .transContents {
     width: 1200px;
     min-width: 960px;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    padding: 60px 0px;
 }
 
 .addressContainer {
@@ -37,4 +40,8 @@
     display: -ms-flexbox;
     display: flex;
     padding: 15px 0;
+}
+
+.send-form {
+    padding: 40px 40px;
 }
