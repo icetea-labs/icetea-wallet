@@ -81,11 +81,11 @@ class TransactionHistory extends Component {
       var form = (current - 1) * pageSize;
       var to = form + pageSize;
       if(to > transactions.length) to = transactions.length;
-      transactions = transactions.slice(form, to)
+      var txTmp = transactions.slice(form, to)
       // this will re render the view with new data
       this.setState({
         transactions: transactions,
-        txToTable: transactions.map((tx, index) => (
+        txToTable: txTmp.map((tx, index) => (
           <tr key={index}>
             <td><div className="sc-gojNiO jQgIyo" onClick={() => this.goDetailHash(tx.hash)}>{tx.hash}</div></td>
             <td><div>{tx.txType}</div></td>
