@@ -121,8 +121,8 @@ const mapDispatchToProps = (dispatch) => {
     onSaveWallet: (data) => {
       dispatch(actions.saveWallet(data))
     },
-    onChangeForm: (formNo) => {
-      dispatch(actions.setStep(formNo))
+    onChangeForm: (step) => {
+      dispatch(actions.setStep(step))
     },
     onChangePopup: (puNo) => {
       dispatch(actions.changePopup(puNo))

@@ -33,9 +33,9 @@ class NewWallet01 extends React.Component {
     var isShowBoxRePass = false;
     if (!this.state.cbConfirmRecover) {
       window.alert("Confirm check box")
-    } else if (this.state.password && this.state.confirmPassword && this.state.password !== this.state.confirmPassword) {
+    } else if (this.state.password !== this.state.confirmPassword) {
       isShowBoxRePass = true;
-    } else {
+    } else if(this.state.password !== '') {
       this.props.onChangePopup('01');
       isShowBoxRePass = false;
       setTimeout(() => {
@@ -169,7 +169,6 @@ class NewWallet01 extends React.Component {
           <DivControlBtn>
             <DivUnlockLink><Link className="unlock" to="/unlock">Unlock an Existing Wallet</Link></DivUnlockLink>
             <Button
-              disabled = {true}
               width={'200px'}
               onClick={() => this.continueClick()}
               className={isActive}>
@@ -202,8 +201,8 @@ const mapDispatchToProps = (dispatch) => {
     onSaveWallet: (data) => {
       dispatch(actions.saveWallet(data))
     },
-    onChangeForm: (formNo) => {
-      dispatch(actions.setStep(formNo))
+    onChangeForm: (step) => {
+      dispatch(actions.setStep(step))
     },
     onChangePopup: (puNo) => {
       dispatch(actions.changePopup(puNo))
