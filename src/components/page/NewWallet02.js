@@ -8,8 +8,7 @@ import { Button } from './../elements'
 // Style component
 import {
   DivBox2, Header1, Header2,
-  DivContentW2, InputConfirmPass, DivControlBtn,
-  DivUnlockLink, DivFooter, DivValidPass, DivPreviousBt
+  DivContentW2, DivControlBtn, DivPreviousBt
 } from './../elements/utils'
 
 class NewWallet02 extends React.Component {
@@ -85,8 +84,8 @@ const mapDispatchToProps = (dispatch) => {
     onSaveWallet: (data) => {
       dispatch(actions.saveWallet(data))
     },
-    onChangeForm: (formNo) => {
-      dispatch(actions.setStep(formNo))
+    onChangeForm: (step) => {
+      dispatch(actions.setStep(step))
     }
   }
 }

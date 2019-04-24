@@ -127,6 +127,12 @@ a {
   padding: 10px;
   background: rgb(37, 45, 56);
 }
+.cnUGfj li a {
+  height: 100%;
+  display: block;
+  color: inherit;
+  font-size: 13px;
+}
 .cnUGfj li.wallet-address .title1 {
   color: rgb(72, 81, 93);
   width: 100px;
