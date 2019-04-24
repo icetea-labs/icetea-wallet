@@ -10,10 +10,10 @@ const myReducer = (state = initialState, action) => {
     case types.SAVE_WALLET:
       state.wallet = action.wallet
       return state
-    case types.CHANGE_FORM:
+    case types.SET_STEP:
       state = {
         ...state,
-        formNo: action.formNo
+        step: action.step
       }
       return state
     case types.CHANGE_UL_TYPE:

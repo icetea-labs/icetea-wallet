@@ -52,20 +52,16 @@ class Home extends Component {
         </div>
         <div className="sc-jnlKLf gTInge">
           <ul className="sc-fYxtnH cOXWZm">
-            <li><a href="/trade">Exchange</a></li>
-            <li className="withSubMenus">Orders<ul className="subMenus sc-iELTvK wCTXT">
-              <li>
-                < a href="/openOrders">Open Orders</a>
-              </li>
-              <li><a href="/orderHistory">Order History</a></li>
-              <li><a href="/tradeHistory">Trade History</a></li>
-              <li>
-                <a href="/feeHistory">Fee History</a></li>
-            </ul>
+            <li className="withSubMenus">
+              <a href="/sentTransaction">Transaction</a>
+              <ul className="subMenus sc-iELTvK wCTXT">
+                <li>< a href="/sentTransaction">Sent Transaction</a></li>
+                <li><a href="/transactionHistory">Transaction History</a></li>
+              </ul>
             </li>
             <li>
-              <a href="/transactionHistory">Transactions</a></li>
-            <li><a href="/balances">Balances</a></li>
+              <a href="/botStore">BotStore</a></li>
+              <li><a href="/balances">Balances</a></li>
           </ul>
           <div className="sc-ktHwxA izmNVh">
             {/* <i className="iconfont icon-account sc-dnqmqq iiYHFz" size="16" color=""></i> */}
@@ -94,7 +90,6 @@ class Home extends Component {
               <li>Close Wallet</li>
             </ul>
           </div>
-          <div className="sc-kafWEX hykyIA">English</div>
           <div className="sc-tilXH Sxoxk"><i className="iconfont icon-menu sc-dnqmqq eAXZfv" size="20" color=""></i></div>
         </div>
       </div>
@@ -114,7 +109,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.saveWallet(data))
     },
     onChangeForm: (formNo) => {
-      dispatch(actions.changeForm(formNo))
+      dispatch(actions.setStep(formNo))
     },
     onChangePopup: (puNo) => {
       dispatch(actions.changePopup(puNo))
