@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import './Home.css'
 import * as actions from '../../actions'
 import { connect } from 'react-redux';
+import QRCode from 'qrcode.react';
 
 class Home extends Component {
   render() {
     var address ='';
     if(this.props.wallet) address = this.props.wallet.address;
+    console.log('address', address);
     return (
       <div className="sc-jqCOkK gWEMEs">
         <div className="sc-uJMKN jNhSkT">
@@ -74,7 +76,7 @@ class Home extends Component {
               <li className="wallet-address">
                 <div>
                   <div className="title1">Wallet</div>
-                  <div className="address">{address}</div>
+                  <div className="address"><QRCode size={50} value={address} /></div>
                 </div>
                 <div className="op"><span title="copy address">
                   {/* <i className="iconfont icon-copy sc-dnqmqq iiYHFz" size="16" color=""></i> */}

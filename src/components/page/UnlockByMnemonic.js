@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { codec } from 'icetea-common';
-import * as actions from '../../actions'
+import { codec, utils } from 'icetea-common';
+import * as actions from '../../actions';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import './UnlockWallet.css';
 import * as bip39 from 'bip39';
 import HDKey from 'hdkey';
@@ -47,10 +48,12 @@ class UnlockByMnemonic extends Component {
             mnemonic: this.state.mnemonic,
             privateKey: codec.toString(privateKey),
             password: this.state.password,
+            address: utils.getAccount(privateKey).address
         }
         this.props.onSaveWallet(wallet);
 
         console.log('Wallet check', wallet);
+        this.props.history.push("/Home");
     }
 
     render() {
@@ -108,4 +111,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UnlockByMnemonic);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UnlockByMnemonic));
