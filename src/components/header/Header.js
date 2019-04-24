@@ -13,42 +13,6 @@ class Header extends Component {
           <div className="sc-bbmXgH gZQuSA">
             <img src="/static/images/logo/testnet.svg" alt="" />
           </div>
-          <div className="sc-gGBfsJ ksQZeF">
-            <div className="sc-csuQGl iLOzDx"></div>
-            <div className="sc-Rmtcm ioeILa">
-              <div className="sc-bRBYWo FnAxk">
-              </div><span></span>&nbsp;&nbsp;<span>▾</span>
-              <ul className="sc-hzDkRC jrhGN">
-                <li className="on">
-                  <div className="cycle  sc-bRBYWo FnAxk"></div>
-                  <div>
-                    <div className="name"></div>
-                    <div className="url">testnet-dex.binance.org</div>
-                  </div>
-                </li>
-                <li className="">
-                  <div className="cycle  sc-bRBYWo FnAxk"></div>
-                  <div>
-                    <div className="name">Accelerated 2</div>
-                    <div className="url">testnet-dex-asiapacific.binance.org</div>
-                  </div>
-                </li>
-                <li className="">
-                  <div className="cycle  sc-bRBYWo FnAxk"></div>
-                  <div>
-                    <div className="name">Accelerated 3</div>
-                    <div className="url">testnet-dex-atlantic.binance.org</div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="sc-cmTdod dUvHel">
-            <div className="trade-pair"><div className="more-trade-pair">
-              <i className="iconfont icon-sanjiaojiantouxia-B sc-dnqmqq cCVZOs" size="16" color="#f0b90b"></i>
-            </div>
-            </div>
-          </div>
         </div>
         <div className="sc-jnlKLf gTInge">
           <ul className="sc-fYxtnH cOXWZm">
