@@ -45,7 +45,7 @@ class Pu02 extends Component {
 
 const mapStateToProps = state => {
   return {
-    formNo: state.formNo,
+    step: state.step,
     puNo: state.puNo
   };
 }
@@ -55,8 +55,8 @@ const mapDispatchToProps = (dispatch) => {
     onSaveWallet: (data) => {
       dispatch(actions.saveWallet(data))
     },
-    onChangeForm: (formNo) => {
-      dispatch(actions.changeForm(formNo))
+    onChangeForm: (step) => {
+      dispatch(actions.setStep(step))
     },
     onChangePopup: (puNo) => {
       dispatch(actions.changePopup(puNo))

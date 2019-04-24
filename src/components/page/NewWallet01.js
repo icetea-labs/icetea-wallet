@@ -27,10 +27,6 @@ class NewWallet01 extends React.Component {
       isShowBoxRePass: false,
       cbConfirmRecover: false,
     };//{ cSelected: [] };
-
-    // this.downloadKeyClick = this.downloadKeyClick.bind(this);
-    // this.unlockKeyClick = this.unlockKeyClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   continueClick = () => {
@@ -69,7 +65,7 @@ class NewWallet01 extends React.Component {
     this.props.onChangeForm('02');
   }
 
-  handleChange(e) {
+  handleChange = (e)=> {
     let target = e.target;
     let value = target.type === 'checkbox' ? target.checked : target.value.trim();
     let name = target.name;
@@ -142,7 +138,6 @@ class NewWallet01 extends React.Component {
     // console.log(boxValiConfirmPass)
     var { cbConfirmRecover, isShowBoxPass, confirmPassword } = this.state;
     var isActive = (cbConfirmRecover && !isShowBoxPass && confirmPassword !== '') ? 'active' : ''
-    console.log('isActive', isActive)
     return (
       <DivBox2>
         <div>
@@ -174,6 +169,7 @@ class NewWallet01 extends React.Component {
           <DivControlBtn>
             <DivUnlockLink><Link className="unlock" to="/unlock">Unlock an Existing Wallet</Link></DivUnlockLink>
             <Button
+              disabled = {true}
               width={'200px'}
               onClick={() => this.continueClick()}
               className={isActive}>
@@ -207,7 +203,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.saveWallet(data))
     },
     onChangeForm: (formNo) => {
-      dispatch(actions.changeForm(formNo))
+      dispatch(actions.setStep(formNo))
     },
     onChangePopup: (puNo) => {
       dispatch(actions.changePopup(puNo))

@@ -1,0 +1,40 @@
+.transContents {
+    width: 1200px;
+    min-width: 960px;
+}
+
+.addressContainer {
+    color: rgb(33, 40, 51);
+    font-size: 20px;
+    height: 40px;
+    line-height: 30px;
+    display: flex;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    background: rgb(255, 255, 255);
+}
+
+.addressContainer .text-address {
+    font-size: 14px;
+    margin-left: 20px;
+    color: rgb(132, 142, 156);
+}
+
+.sendCurrency {
+    border-radius: 5px;
+    grid-area: main;
+    overflow: hidden;
+    background: #fff;
+}
+
+.content-title {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #fff;
+    border-bottom: 2px solid #f9f9f9;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 15px 0;
+}

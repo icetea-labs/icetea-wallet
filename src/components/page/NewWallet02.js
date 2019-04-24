@@ -86,7 +86,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.saveWallet(data))
     },
     onChangeForm: (formNo) => {
-      dispatch(actions.changeForm(formNo))
+      dispatch(actions.setStep(formNo))
     }
   }
 }
