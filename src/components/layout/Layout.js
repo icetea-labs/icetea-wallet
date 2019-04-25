@@ -18,7 +18,7 @@ class Layout extends Component {
           </DivPage>
         <Footer />
       </div>
-    );
+    );  
   }
 }
 
