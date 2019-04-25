@@ -6,6 +6,7 @@
     "bip39": "^3.0.1",
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
+    "dateformat": "^3.0.3",
     "font-awesome": "^4.7.0",
     "hdkey": "^1.1.1",
     "i": "^0.3.6",

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import dateFormat from 'dateformat';
 import './TransactionHistory.css';
 import { decodeTX } from 'icetea-web3/src/utils';
 import { ecc } from 'icetea-common';
@@ -8,8 +9,9 @@ import PuViewTx from './poup/PuViewTx';
 import Select from 'rc-select';
 import Pagination from 'rc-pagination';
 import localeInfo from 'rc-pagination/lib/locale/en_US';
-import './../../assets/styles/pagination.css'
-import './../../assets/styles/locale.css'
+import './../../assets/styles/pagination.css';
+import './../../assets/styles/locale.css';
+
 
 class TransactionHistory extends Component {
   constructor() {
@@ -62,6 +64,10 @@ class TransactionHistory extends Component {
   //   c = c || 4
   //   return hex.substr(0, c) + '…' + hex.substr(-c)
   // }
+  fmtTime = (tm) => {
+    var d = (typeof tm === 'number') ? tm * 1000 : Date.parse(tm);
+    return dateFormat(new Date(d),"mm - dd h:MM:ss")
+  }
   goDetailHash = (hash) => {
     console.log(hash)
   }
@@ -69,15 +75,39 @@ class TransactionHistory extends Component {
     console.log('-viewDetail-', hash)
     this.setState({ showDetailTx: true, hashValue: hash });
   }
-  closeViewDetail() {
+  closeViewDetail = () => {
     this.setState({
       showDetailTx: !this.state.showDetailTx
     });
   }
+
+  addTimeToTx = async(transactions) => {
+    var blocksNum = [];
+    transactions.forEach(el=>{
+      if(blocksNum.indexOf(el.height) < 0) blocksNum.push(parseInt(el.height));
+    });
+    var option = {
+      minHeight: Math.min(...blocksNum),
+      maxHeight: Math.max(...blocksNum)
+    };
+    var blocksInfo = await tweb3.getBlocks(option);
+    var blocksInfoToObj = {};
+    blocksInfo.block_metas.forEach(el => {
+      blocksInfoToObj[el.header.height] = {time: this.fmtTime(el.header.time)}
+    });
+    transactions.forEach(el=>{
+      el.time = blocksInfoToObj[el.height].time;
+    });
+    // console.log(transactions)
+    return transactions;
+  }
+
   renderTransactions = async (current=this.state.current, pageSize=this.state.pageSize) => {
     try {
       var myTxs = await tweb3.searchTransactions('tx.height>0');
       var transactions = this.fmtTxs(myTxs.txs);
+      //
+      transactions = await this.addTimeToTx(transactions);
       var form = (current - 1) * pageSize;
       var to = form + pageSize;
       if(to > transactions.length) to = transactions.length;
@@ -88,7 +118,7 @@ class TransactionHistory extends Component {
         txToTable: txTmp.map((tx, index) => (
           <tr key={index}>
             <td><div className="sc-gojNiO jQgIyo" onClick={() => this.goDetailHash(tx.hash)}>{tx.hash}</div></td>
-            <td><div>{tx.txType}</div></td>
+            <td><div>{tx.time}</div></td>
             <td><div>{tx.status}</div></td>
             <td><div>{tx.txType}</div></td>
             <td><div>{tx.value}</div></td>
@@ -118,6 +148,7 @@ class TransactionHistory extends Component {
       current: current
     });
   }
+
   onChange = (page) => {
     // console.log(page);
     this.renderTransactions(page);
@@ -171,7 +202,7 @@ class TransactionHistory extends Component {
             />
             </div>
           </div>
-          {this.state.showDetailTx ? <PuViewTx tx={this.getTxByHash(this.state.hashValue)} closeViewDetail={this.closeViewDetail.bind(this)} /> : ''}
+          {this.state.showDetailTx ? <PuViewTx tx={this.getTxByHash(this.state.hashValue)} closePoup={() => this.closeViewDetail()} /> : ''}
         </div>
       </div>
     );

@@ -48,7 +48,7 @@ class PuViewTx extends Component {
                 </div>
               </div>
               <div className="sc-jgVwMx hcRqDo">
-                <i className="fa fa-times dJRkzW" size={18} aria-hidden="true" onClick={this.props.closeViewDetail} ></i>
+                <i className="fa fa-times dJRkzW" size={18} aria-hidden="true" onClick={this.props.closePoup} ></i>
               </div>
             </div>
           </div>
