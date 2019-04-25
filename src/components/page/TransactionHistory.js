@@ -66,7 +66,7 @@ class TransactionHistory extends Component {
   // }
   fmtTime = (tm) => {
     var d = (typeof tm === 'number') ? tm * 1000 : Date.parse(tm);
-    return dateFormat(new Date(d),"mm - dd h:MM:ss")
+    return dateFormat(new Date(d), "mm-dd  h:MM:ss")
   }
   goDetailHash = (hash) => {
     console.log(hash)
@@ -81,28 +81,29 @@ class TransactionHistory extends Component {
     });
   }
 
-  addTimeToTx = async(transactions) => {
+  addTimeToTx = async (transactions) => {
     var blocksNum = [];
-    transactions.forEach(el=>{
-      if(blocksNum.indexOf(el.height) < 0) blocksNum.push(parseInt(el.height));
+    transactions.forEach(el => {
+      if (blocksNum.indexOf(el.height) < 0) blocksNum.push(parseInt(el.height));
     });
     var option = {
       minHeight: Math.min(...blocksNum),
       maxHeight: Math.max(...blocksNum)
     };
     var blocksInfo = await tweb3.getBlocks(option);
+    // console.log(blocksInfo)
     var blocksInfoToObj = {};
     blocksInfo.block_metas.forEach(el => {
-      blocksInfoToObj[el.header.height] = {time: this.fmtTime(el.header.time)}
+      blocksInfoToObj[el.header.height] = { time: this.fmtTime(el.header.time) }
     });
-    transactions.forEach(el=>{
+    transactions.forEach(el => {
       el.time = blocksInfoToObj[el.height].time;
     });
-    // console.log(transactions)
+    // console.log(blocksInfo)
     return transactions;
   }
 
-  renderTransactions = async (current=this.state.current, pageSize=this.state.pageSize) => {
+  renderTransactions = async (current = this.state.current, pageSize = this.state.pageSize) => {
     try {
       var myTxs = await tweb3.searchTransactions('tx.height>0');
       var transactions = this.fmtTxs(myTxs.txs);
@@ -110,7 +111,7 @@ class TransactionHistory extends Component {
       transactions = await this.addTimeToTx(transactions);
       var form = (current - 1) * pageSize;
       var to = form + pageSize;
-      if(to > transactions.length) to = transactions.length;
+      if (to > transactions.length) to = transactions.length;
       var txTmp = transactions.slice(form, to)
       // this will re render the view with new data
       this.setState({
@@ -118,7 +119,10 @@ class TransactionHistory extends Component {
         txToTable: txTmp.map((tx, index) => (
           <tr key={index}>
             <td><div className="sc-gojNiO jQgIyo" onClick={() => this.goDetailHash(tx.hash)}>{tx.hash}</div></td>
-            <td><div>{tx.time}</div></td>
+            <td><div className="sc-evWYkj fIPZMa" >
+              <span className="sc-tilXH yKCJu">{tx.time}</span>
+            </div>
+            </td>
             <td><div>{tx.status}</div></td>
             <td><div>{tx.txType}</div></td>
             <td><div>{tx.value}</div></td>
@@ -131,15 +135,15 @@ class TransactionHistory extends Component {
       console.log(err);
     }
   }
-  
+
   getTxByHash = (hash) => {
     var tx = this.state.transactions.filter(el => {
       return el.shash === hash;
     })
     return tx[0];
   }
-  
-  onShowSizeChange=(current, pageSize)=> {
+
+  onShowSizeChange = (current, pageSize) => {
     // console.log(current);
     // console.log(pageSize);
     this.renderTransactions(current, pageSize);
@@ -189,17 +193,17 @@ class TransactionHistory extends Component {
           </div>
           <div className="sc-jDwBTQ leNfoz">
             <div className="sc-hMqMXs djyRfV">
-            <Pagination
-              selectComponentClass={Select}
-              showQuickJumper
-              showSizeChanger
-              defaultPageSize={this.state.pageSize}
-              defaultCurrent={this.state.current}
-              onShowSizeChange={this.onShowSizeChange}
-              onChange={this.onChange}
-              total={this.state.transactions.length}
-              locale={localeInfo}
-            />
+              <Pagination
+                selectComponentClass={Select}
+                showQuickJumper
+                showSizeChanger
+                defaultPageSize={this.state.pageSize}
+                defaultCurrent={this.state.current}
+                onShowSizeChange={this.onShowSizeChange}
+                onChange={this.onChange}
+                total={this.state.transactions.length}
+                locale={localeInfo}
+              />
             </div>
           </div>
           {this.state.showDetailTx ? <PuViewTx tx={this.getTxByHash(this.state.hashValue)} closePoup={() => this.closeViewDetail()} /> : ''}
