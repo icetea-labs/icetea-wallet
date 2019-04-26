@@ -90,14 +90,20 @@ class TransactionHistory extends Component {
       minHeight: Math.min(...blocksNum),
       maxHeight: Math.max(...blocksNum)
     };
+
+    console.log("option ", option)
     var blocksInfo = await tweb3.getBlocks(option);
-    // console.log(blocksInfo)
+
+    console.log(blocksInfo)
     var blocksInfoToObj = {};
     blocksInfo.block_metas.forEach(el => {
       blocksInfoToObj[el.header.height] = { time: this.fmtTime(el.header.time) }
     });
+    console.log("transaction", transactions)
+    console.log("blocksInfoToObj", blocksInfoToObj)
     transactions.forEach(el => {
-      el.time = blocksInfoToObj[el.height].time;
+      el.time = '12:00:00';
+      el.time = !!(blocksInfoToObj[el.height]) && blocksInfoToObj[el.height].time;
     });
     // console.log(blocksInfo)
     return transactions;
@@ -107,6 +113,7 @@ class TransactionHistory extends Component {
     try {
       var myTxs = await tweb3.searchTransactions('tx.height>0');
       var transactions = this.fmtTxs(myTxs.txs);
+
       //
       transactions = await this.addTimeToTx(transactions);
       var form = (current - 1) * pageSize;
@@ -114,6 +121,7 @@ class TransactionHistory extends Component {
       if (to > transactions.length) to = transactions.length;
       var txTmp = transactions.slice(form, to)
       // this will re render the view with new data
+      console.log('transaction', transactions);
       this.setState({
         transactions: transactions,
         txToTable: txTmp.map((tx, index) => (

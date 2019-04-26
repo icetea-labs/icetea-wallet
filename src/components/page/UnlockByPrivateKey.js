@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import * as actions from '../../actions'
+import { utils } from 'icetea-common';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import './UnlockWallet.css';
 
 class UnlockByPrivateKey extends Component {
@@ -35,10 +37,12 @@ class UnlockByPrivateKey extends Component {
         var wallet = {
             privateKey: privateKey,
             password: this.state.password,
+            address: utils.getAccount(privateKey).address
         }
         this.props.onSaveWallet(wallet);
 
         console.log('Wallet check', wallet);
+        this.props.history.push("/Home");
     }
 
     render() {
@@ -93,4 +97,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UnlockByPrivateKey);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UnlockByPrivateKey));

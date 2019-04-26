@@ -1,0 +1,408 @@
+.bound {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    background: rgb(253, 253, 253);
+}
+
+.transContents {
+    width: 1200px;
+    min-width: 960px;
+}
+
+.addressContainer {
+    color: rgb(33, 40, 51);
+    font-size: 20px;
+    height: 40px;
+    line-height: 30px;
+    display: flex;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    background: rgb(255, 255, 255);
+}
+
+.addressContainer .text-address {
+    font-size: 14px;
+    margin-left: 20px;
+    color: rgb(132, 142, 156);
+}
+
+.sendCurrency {
+    border-radius: 5px;
+    grid-area: main;
+    overflow: hidden;
+    background: #fff;
+}
+
+.content-title {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #fff;
+    border-bottom: 2px solid #f9f9f9;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 15px 0;
+}
+
+.content-title h2 {
+    border-left: 5px solid #059bc0;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 37px;
+    margin: 0;
+    padding: 0;
+    padding-left: 27px;
+}
+
+.send-form {
+    padding: 40px 40px;
+}
+
+.form-amount-to-add {
+    display: block;
+}
+
+.amount {
+    position: relative;
+}
+
+.toAddress {
+    position: relative;
+}
+
+.amount .title {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+}
+
+.toAddress .title {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+}
+
+.amount .title h4 {
+    position: relative;
+}
+
+.toAddress .title h4 {
+    position: relative;
+}
+
+.amount .amountText {
+    position: relative;
+}
+
+.toAddress .addressText {
+    position: relative;
+}
+
+.amount .amountText input {
+    background-color: transparent;
+    border: 0;
+    padding: 13px 45px 13px 15px;
+    resize: none;
+    width: 100%;
+}
+
+.toAddress .addressText input {
+    background-color: transparent;
+    border: 0;
+    padding: 13px 45px 13px 15px;
+    resize: none;
+    width: 100%;
+}
+
+.submit-button-container {
+    margin-top: 60px;
+    text-align: center;
+    padding: 0 10px 40px 10px;
+}
+
+.submit-button {
+    width: 170px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    background: linear-gradient(90deg, rgb(34, 11, 239) 0%, rgb(60, 136, 251) 100%);
+    border-radius: 3px;
+    overflow: hidden;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    outline: none;
+}
+
+.qrIcLayout {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.qrIc {
+    width: 25px;
+    height: 25px;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    margin-left: 10px;
+    position: relative;
+    z-index: 100;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(132, 142, 156);
+    border-image: initial;
+    border-radius: 3px;
+}
+
+.kWvvtK {
+    opacity: 1;
+    transform: translate(-245px, 0px);
+    min-width: 320px;
+    max-width: 650px;
+    box-shadow: rgba(90, 102, 124, 0.2) 0px 3px 20px 0px;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    padding: 20px;
+    background: rgb(255, 255, 255);
+}
+
+.esTWxZ {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.hQTvNh {
+    font-size: 16px;
+    padding: 30px 0px 10px;
+}
+
+.jPpgi {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    color: rgb(132, 142, 156);
+}
+
+
+.kOhtc {
+    display: flex;
+}
+
+.cDKtWs {
+    width: 60px;
+    height: 3px;
+    margin-right: 10px;
+    background: rgb(240, 185, 11);
+}
+
+.ibjfRk {
+    width: 60px;
+    height: 3px;
+    margin-right: 10px;
+    background: rgb(223, 226, 231);
+}
+
+.hoKJiD {
+    width: 450px;
+    margin-top: 30px;
+    position: relative;
+}
+
+.cyWHjc {
+    position: relative;
+}
+
+.cyWHjc .label {
+    color: rgb(72, 81, 93);
+    font-size: 16px;
+    position: absolute;
+    transform: translate(0px, 30px);
+    opacity: 0;
+    transition: all 0.25s ease 0s;
+}
+
+.cyWHjc .label-value {
+    transform: translateY(-20px);
+    color: rgb(72, 81, 93);
+    font-size: 12px;
+  }
+.hoKJiD input {
+    width: 90%;
+    height: 30px;
+    font-size: 16px;
+    font-family: DIN;
+    outline: none;
+}
+
+.cyWHjc input {
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    caret-color: rgb(240, 185, 11);
+    color: rgb(33, 40, 51);
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    outline: none;
+    background: inherit;
+    padding: 5px 0px 10px;
+}
+
+.cyWHjc .border-bottom {
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    bottom: 0px;
+    background: rgba(234, 236, 239, 0.5);
+    transition: background 0.2s ease 0s;
+}
+
+.tXGYI {
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+    color: rgb(240, 185, 11);
+    cursor: pointer;
+}
+
+.hoKJiD .title {
+    color: rgb(132, 142, 156);
+    font-size: 14px;
+    line-height: 30px;
+}
+
+.hoKJiD .textarea {
+    width: 100%;
+    height: 50px;
+    font-size: 14px;
+    outline: none;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(223, 226, 231);
+    border-image: initial;
+}
+
+.cPxcHa {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.jNKIKp {
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    height: 34px;
+    line-height: 34px;
+    width: 90px;
+    background: linear-gradient(90deg,rgb(239, 184, 11) 0%, rgb(251, 218, 60) 100%);
+    border-radius: 3px;
+    overflow: hidden;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    outline: none;
+    padding: 0px 20px;
+}
+
+.jNKIKp span {
+    transition: transform 0.2s ease 0s;
+}
+
+.iBVLYA {
+    position: relative;
+    text-indent: 10px;
+    font-size: 12px;
+    color: rgb(132, 142, 156);
+    height: 22px;
+    line-height: 22px;
+    display: inline-block;
+    cursor: pointer;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+    z-index: 1000;
+    width: 100%;
+    border-radius: 0px;
+    background: rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(223, 226, 231);
+}
+.kViODF {
+    opacity: 1;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 1100;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.bkSpCY{
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.clrIxQ {
+    font-size: 14px;
+}
+
+.clrIxQ .fee-title {
+    color: rgb(72, 81, 93);
+    margin-right: 5px;
+}
+
+.clrIxQ .fee-value {
+    color: rgb(33, 40, 51);
+}
+
+.yKCJu {
+    font-family: DIN;
+}
+
+.iRFfLO {
+    font-size: 14px;
+}
+
+.iRFfLO .Available-title {
+    color: rgb(72, 81, 93);
+    margin-right: 5px;
+}
+
+.iRFfLO .Available-value {
+    color: rgb(33, 40, 51);
+}

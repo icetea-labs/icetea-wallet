@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 
 class Header extends Component {
   render() {
-    var address ='';
-    if(this.props.wallet) address = this.props.wallet.address;
+    var address = '';
+    if (this.props.wallet) address = this.props.wallet.address;
     return (
       <div className="sc-jqCOkK gWEMEs">
         <div className="sc-uJMKN jNhSkT">
@@ -25,7 +25,7 @@ class Header extends Component {
             </li>
             <li>
               <a href="/botStore">BotStore</a></li>
-              <li><a href="/balances">Balances</a></li>
+            <li><a href="/balances">Balances</a></li>
           </ul>
           <div className="sc-ktHwxA izmNVh">
             {/* <i className="iconfont icon-account sc-dnqmqq iiYHFz" size="16" color=""></i> */}
@@ -55,7 +55,7 @@ class Header extends Component {
           <div className="sc-tilXH Sxoxk"><i className="iconfont icon-menu sc-dnqmqq eAXZfv" size="20" color=""></i></div>
         </div>
       </div>
-    
+
     );
   }
 }
