@@ -1,0 +1,60 @@
+.dKVYOG {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 1100;
+  background: rgba(0, 0, 0, 0.5);
+}
+.jhkZnM {
+  min-width: 320px;
+  max-width: 550px;
+  box-sizing: border-box;
+  box-shadow: rgba(90, 102, 124, 0.2) 0px 3px 20px 0px;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 30px 30px 0px;
+  background: rgb(255, 255, 255);
+}
+.kyNWzm {
+  font-size: 14px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  cursor: pointer;
+}
+.bwTAQT {
+  font-size: 16px;
+  padding: 20px 0px;
+}
+.hcRqDo {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  cursor: pointer;
+  color: rgb(132, 142, 156);
+}
+.doLgQs {
+  display: flex;
+  font-size: 14px;
+  padding: 5px 0px;
+}
+.doLgQs .title1 {
+  color: rgb(132, 142, 156);
+  width: 30%;
+}
+.doLgQs .value {
+  color: rgb(33, 40, 51);
+  width: 70%;
+  word-break: break-all;
+}
+.doLgQs .value a {
+  color: inherit;
+}
+.doLgQs .value a:hover {
+  color: rgb(240, 185, 11);
+}

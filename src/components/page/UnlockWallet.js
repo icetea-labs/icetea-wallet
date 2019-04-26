@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { codec } from 'icetea-common';
 import * as actions from '../../actions'
 import { connect } from 'react-redux';
-import logo from '../page/logo.png';
+import logo from '../../assets/img/logo.png';
 import { decode } from '../../utils';
 import './UnlockWallet.css';
 import * as ct from './../../constants';

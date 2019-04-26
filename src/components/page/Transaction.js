@@ -15,13 +15,17 @@ class Transaction extends Component {
     super(props);
     this.state = {
       amountText: '',
-      addressText: ''
+      addressText: '',
+      balance:''
     };
   }
   componentWillMount = async () => {
     var balanceofVip = '';
     balanceofVip = await tweb3.getBalance('tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx');
     console.log("I want to see BL:", balanceofVip)
+    this.setState({
+      balance: balanceofVip.balance
+    })
   }
 
   handleChange = (e) => {
@@ -53,7 +57,9 @@ class Transaction extends Component {
     } else { return false; }
 
     var balanceofVip = await tweb3.getBalance('tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx');
-    console.log("I want to see BL:", balanceofVip)
+    console.log("I want to see BL:", balanceofVip);
+    this.props.onSendSuccess();
+    this.props.closePoup();
   }
 
   onSelect({ key }) {
@@ -131,7 +137,7 @@ class Transaction extends Component {
                     <div className="sc-kbGplQ clrIxQ"><span className="fee-title">Fee:</span><span className="fee-value"><span
                                     className="sc-tilXH yKCJu">0.000000</span> ICETEA</span></div>
                         <div className="sc-exdmVY iRFfLO"><span className="Available-title">Available:</span><span
-                                className="Available-value"><span className="sc-tilXH yKCJu">0.00000000</span></span></div>
+                                className="Available-value"><span className="sc-tilXH yKCJu">{this.state.balance}</span></span></div>
                     </div>
                   </div>
                   <div className="sc-jDwBTQ cPxcHa"><button
@@ -140,7 +146,7 @@ class Transaction extends Component {
               </div>
             </div>
             <div className="sc-lkqHmb jPpgi">
-            <i className="fa fa-times dJRkzW" aria-hidden="true" onClick={() => this.closeClick()} ></i></div>
+            <i className="fa fa-times dJRkzW" aria-hidden="true" onClick={() => this.props.closePoup()} ></i></div>
           </div>
         </div>
       </div>
