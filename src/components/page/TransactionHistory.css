@@ -128,12 +128,35 @@
 .djyRfV .rc-pagination-item:hover {
   border-color: rgb(240, 185, 11);
 }
+.djyRfV .rc-pagination-options:hover {
+  border-color: rgb(240, 185, 11);
+}
+
 .djyRfV .rc-pagination-item:hover a {
   color: rgb(240, 185, 11);
+}
+.djyRfV .rc-pagination-options-quick-jumper input:hover {
+  border-color: rgb(240, 185, 11);
+}
+.djyRfV .rc-select-enabled .rc-select-selection:hover {
+  border-color:  rgb(240, 185, 11);
+  box-shadow: 0 0 2px  rgb(240, 185, 11);
 }
 .djyRfV .rc-pagination-item-active:hover a {
   color: rgb(255, 255, 255);
 }
+.djyRfV .rc-pagination-item {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 13px;
+  border-width: 1px;
+  border-style: solid;
+  /* border-color: rgb(132, 142, 156); */
+  border-image: initial;
+  outline: none;
+}
+
 .fIPZMa {
   color: rgb(132, 142, 156);
 }
