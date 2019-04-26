@@ -16,7 +16,12 @@ class Transaction extends Component {
     this.state = {
       amountText: '',
       addressText: '',
-      balance: ''
+      balance: '',
+      coins:[
+        { name: 'Ice Tea Chain',symbol: 'ITEA' },
+        { name: 'BTC Coin',symbol: 'BTC' },
+        { name: 'ETH Coin',symbol: 'ETH' },
+      ]
     };
   }
   componentWillMount = async () => {
@@ -76,9 +81,20 @@ class Transaction extends Component {
         <i className="fa fa-search iiYHFz" aria-hidden="true" size="16" ></i>
         <input placeholder="Search Asset"></input>
       </MenuItem>
-      <MenuItem key="1">ICETEA</MenuItem>
+      <MenuItem key="1">
+        <span className="sc-hORach chrZLH">ICETEA</span>&nbsp;&nbsp;
+        <span className="sc-bMVAic kVNwVp">Ice Tea Chain</span>
+      </MenuItem>
       <Divider />
-      <MenuItem key="2">BTC</MenuItem>
+      <MenuItem key="2">
+        <span className="sc-hORach chrZLH">BTC</span>&nbsp;&nbsp;
+        <span className="sc-bMVAic kVNwVp">BTC Coin</span>
+      </MenuItem>
+      <Divider />
+      <MenuItem key="3">
+        <span className="sc-hORach chrZLH">ETH</span>&nbsp;&nbsp;
+        <span className="sc-bMVAic kVNwVp">ETH Coin</span>
+      </MenuItem>
     </Menu>
   );
 

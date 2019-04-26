@@ -436,3 +436,37 @@
 input {
     transition: all .3s ease-in;
 }
+.rc-dropdown .rc-dropdown-menu .rc-dropdown-menu-item:hover {
+    color: rgb(240, 185, 11);
+    /* background: rgba(234, 236, 239, 0.2); */
+}
+.rc-dropdown .rc-dropdown-menu .rc-dropdown-menu-item:hover span {
+    color: rgb(240, 185, 11);
+    background: rgba(234, 236, 239, 0.2);
+}
+
+.rc-dropdown .search-box {
+    position: relative;
+    border-bottom: 1px solid rgb(223, 226, 231);
+}
+.rc-dropdown {
+    max-height: 180px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 10px 0px;
+    z-index: 1100 !important;
+    overflow: auto;
+    border-radius: 3px;
+  }
+  .rc-dropdown .rc-dropdown-menu .rc-dropdown-menu-item {
+    cursor: pointer;
+    color: rgb(132, 142, 156);
+    background: rgb(255, 255, 255);
+  }
+  .chrZLH {
+    font-size: 16px;
+    color: rgb(33, 40, 51);
+    font-weight: bold;
+}
+.kVNwVp {
+    font-size: 12px;
+    color: rgb(132, 142, 156);
+}
