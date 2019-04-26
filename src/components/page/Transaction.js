@@ -16,7 +16,12 @@ class Transaction extends Component {
     this.state = {
       amountText: '',
       addressText: '',
-      balance:''
+      balance: '',
+      coins:[
+        { name: 'Ice Tea Chain',symbol: 'ITEA' },
+        { name: 'BTC Coin',symbol: 'BTC' },
+        { name: 'ETH Coin',symbol: 'ETH' },
+      ]
     };
   }
   componentWillMount = async () => {
@@ -72,10 +77,24 @@ class Transaction extends Component {
 
   menu = () => (
     <Menu onSelect={this.onSelect}>
-      <MenuItem disabled>disabled</MenuItem>
-      <MenuItem key="1">Selection One</MenuItem>
+      <MenuItem key="0" disabled className="search-box" >
+        <i className="fa fa-search iiYHFz" aria-hidden="true" size="16" ></i>
+        <input placeholder="Search Asset"></input>
+      </MenuItem>
+      <MenuItem key="1">
+        <span className="sc-hORach chrZLH">ICETEA</span>&nbsp;&nbsp;
+        <span className="sc-bMVAic kVNwVp">Ice Tea Chain</span>
+      </MenuItem>
       <Divider />
-      <MenuItem key="2">Selection Two</MenuItem>
+      <MenuItem key="2">
+        <span className="sc-hORach chrZLH">BTC</span>&nbsp;&nbsp;
+        <span className="sc-bMVAic kVNwVp">BTC Coin</span>
+      </MenuItem>
+      <Divider />
+      <MenuItem key="3">
+        <span className="sc-hORach chrZLH">ETH</span>&nbsp;&nbsp;
+        <span className="sc-bMVAic kVNwVp">ETH Coin</span>
+      </MenuItem>
     </Menu>
   );
 
@@ -109,14 +128,16 @@ class Transaction extends Component {
                         >
                           <div className="selectValue"><span className="sc-evWYkj eUyRlB">ICETEA</span>&nbsp;&nbsp;</div>
                         </Dropdown>
+                        <i className="sc-hZSUBg kpQUwp" onClick={() => this.menu} ></i>
                       </div>
                     </div>
                   </div>
                   <div className="sc-eTyWNx hoKJiD">
                     <div className="sc-cLxPOX cyWHjc">
                       <p className="">To Address</p>
-                      <div><input type="text" placeholder="To Address" name="addressText"
-                        onChange={this.handleChange} />
+                      <div>
+                        <input type="text" placeholder="To Address" name="addressText"
+                          onChange={this.handleChange} />
                         <div className="border-bottom"></div>
                       </div>
                     </div>
@@ -130,23 +151,34 @@ class Transaction extends Component {
                     </div>
                   </div>
                   <div className="sc-eTyWNx hoKJiD">
-                    <p className="titleM">Memo</p><textarea className="textarea"></textarea>
+                    <p className="titleM">Memo</p>
+                    <textarea className="textarea"></textarea>
                   </div>
                   <div className="sc-eTyWNx hoKJiD">
                     <div className="sc-bsVVwV bkSpCY">
-                    <div className="sc-kbGplQ clrIxQ"><span className="fee-title">Fee:</span><span className="fee-value"><span
-                                    className="sc-tilXH yKCJu">0.000000</span> ICETEA</span></div>
-                        <div className="sc-exdmVY iRFfLO"><span className="Available-title">Available:</span><span
-                                className="Available-value"><span className="sc-tilXH yKCJu">{this.state.balance}</span></span></div>
+                      <div className="sc-kbGplQ clrIxQ">
+                        <span className="fee-title">Fee:</span>
+                        <span className="fee-value">
+                          <span className="sc-tilXH yKCJu">0.000000</span> ICETEA</span>
+                      </div>
+                      <div className="sc-exdmVY iRFfLO">
+                        <span className="Available-title">Available:</span>
+                        <span className="Available-value">
+                          <span className="sc-tilXH yKCJu">{this.state.balance}</span>
+                        </span>
+                      </div>
                     </div>
                   </div>
-                  <div className="sc-jDwBTQ cPxcHa"><button
-                    className="sc-bZQynM sc-fHlXLc jNKIKp" onClick={() => this.sendTransaction()}><span>Send</span></button></div>
+                  <div className="sc-jDwBTQ cPxcHa">
+                    <button className="sc-bZQynM sc-fHlXLc jNKIKp" onClick={() => this.sendTransaction()}>
+                      <span>Send</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
             <div className="sc-lkqHmb jPpgi">
-            <i className="fa fa-times dJRkzW" aria-hidden="true" onClick={() => this.props.closePoup()} ></i></div>
+              <i className="fa fa-times dJRkzW" aria-hidden="true" onClick={() => this.props.closePoup()} ></i></div>
           </div>
         </div>
       </div>
