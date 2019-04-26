@@ -18,6 +18,7 @@ const myReducer = (state = initialState, action) => {
       return state
     case types.CHANGE_UL_TYPE:
       state = { ...state, ulType: action.ulType }
+      return state
     case types.CHANGE_PU:
       state = {...state,
         puNo: action.puNo

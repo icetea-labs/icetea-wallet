@@ -17,15 +17,14 @@ class Header extends Component {
         <div className="sc-jnlKLf gTInge">
           <ul className="sc-fYxtnH cOXWZm">
             <li className="withSubMenus">
-              <a href="/sentTransaction">Transaction</a>
-              <ul className="subMenus sc-iELTvK wCTXT">
+              <a href="/transactionHistory">Transaction</a>
+              {/* <ul className="subMenus sc-iELTvK wCTXT">
                 <li>< a href="/sentTransaction">Sent Transaction</a></li>
                 <li><a href="/transactionHistory">Transaction History</a></li>
-              </ul>
+              </ul> */}
             </li>
-            <li>
-              <a href="/botStore">BotStore</a></li>
-              <li><a href="/balances">Balances</a></li>
+            <li><a href="/botStore">IceteaStore</a></li>
+            <li><a href="/balances">Balances</a></li>
           </ul>
           <div className="sc-ktHwxA izmNVh">
             {/* <i className="iconfont icon-account sc-dnqmqq iiYHFz" size="16" color=""></i> */}

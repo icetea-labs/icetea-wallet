@@ -7,8 +7,7 @@ import { Button } from './../elements'
 // Style component
 import {
   DivBox2, Header1, Header2,
-  DivContentW2, InputConfirmPass, DivControlBtn,
-  DivUnlockLink, DivFooter, DivValidPass, DivPreviousBt
+  DivControlBtn, DivPreviousBt
 } from './../elements/utils'
 
 const DivTextNote = styled.div`
@@ -48,9 +47,6 @@ const DivShowPrivate = styled.div`
 `;
 
 class NewWallet03 extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   continueClick = () => {
       // Change form no
