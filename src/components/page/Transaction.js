@@ -73,7 +73,7 @@ class Transaction extends Component {
   menu = () => (
     <Menu onSelect={this.onSelect}>
       <MenuItem key="0" disabled className="search-box" >
-        <i class="fa fa-search iiYHFz" aria-hidden="true" size="16" ></i>
+        <i className="fa fa-search iiYHFz" aria-hidden="true" size="16" ></i>
         <input placeholder="Search Asset"></input>
       </MenuItem>
       <MenuItem key="1">ICETEA</MenuItem>
