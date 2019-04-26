@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './BotStore.css';
 import tweb3 from '../../service/tweb3';
+import { callbackify } from 'util';
 
 
 class BotStore extends Component {
@@ -26,12 +27,20 @@ class BotStore extends Component {
           <div key={index} >
             <article color="#fff" data-testid="series" className="SeriesCard__Card-sedkn5-0 bWCvDb">
               <div className="SeriesCard__CardLayout-sedkn5-1 ePsksC">
-                {/* <img className="float-left" style={{ width: '50px', height: '50px' }} src={bot.icon} alt="Material Dashboard"></img> */}
-                <span className="SeriesCard__Level-sedkn5-2 kClzgQ">{bot.name}</span>
-                <div style={{ textAlign: 'right' }}>
-                  <button className="SeriesCard__Badge-sedkn5-3 fTfjsA">Get</button>
+                <div style={{ display: 'flex', }} >
+                  <img className="float-left" style={{ width: '50px', height: '50px' }} src={bot.icon} alt="Material Dashboard" />
+                  <div className="botName" >
+                    <div>
+                      <p>{bot.name}</p>
+                      <p>@{bot.alias}</p>
+                    </div>
+                    <button className="sc-bZQynM sc-MYvYT sc-jbWsrJ ircCEl1" onClick={this.viewSendForm}>Get</button>
+                  </div>
                 </div>
-                <h1 data-testid="series-name" className="SeriesCard__Title-sedkn5-5 cceqce">{bot.description}</h1>
+                <hr></hr>
+                <div>
+                  <p className="SeriesCard__Title-sedkn5-5 cceqce" >{bot.description}</p>
+                </div>
               </div>
             </article>
           </div>
@@ -79,7 +88,6 @@ class BotStore extends Component {
             <input type="text" data-testid="search-bar-input" onChange={() => this.onChange()} value="" placeholder="Filter Series" />
             <div className="underline"></div>
           </div>
-
           <div className="Layouts__TutorialGrid-fbi9rv-11 jxllbm">
             {this.state.botStore}
           </div>

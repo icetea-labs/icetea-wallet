@@ -64,7 +64,7 @@ button, input, optgroup, select, textarea {
 }
 .jxllbm {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   padding: 20px 15px;
   gap: 20px 20px;
 }
@@ -72,9 +72,9 @@ button, input, optgroup, select, textarea {
 .bWCvDb {
   font-size: 16px;
   position: relative;
-  box-shadow: rgba(0, 0, 0, 0.25) 6px 8px 20px;
+  box-shadow: rgba(0, 0, 0, 0.25) 1px 2px 2px;
   font-family: "Open Sans";
-  max-width: 250px;
+  max-width: 230px;
   overflow: hidden;
   border-radius: 15px;
   padding: 1em;
@@ -83,7 +83,7 @@ button, input, optgroup, select, textarea {
   border: 1px solid rgba(0,0,0,.125);
 }
 .ePsksC {
-  display: grid;
+  /* display: grid; */
   min-height: 120px;
   z-index: 1;
   position: relative;
@@ -100,15 +100,10 @@ button, input, optgroup, select, textarea {
   text-align: right;
 }
 .fTfjsA {
-  font-weight: 900;
-  font-size: 1.2em;
-  color: rgb(82, 71, 99);
   margin-left: auto;
-  display: inline-block;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-  background: rgb(130, 216, 216);
-  border-radius: 10px;
-  padding: 5px;
+  border-radius: 5px;
+  float: right;
+  height: 2em;
 }
 .cceqce {
   font-weight: 900;
@@ -117,4 +112,40 @@ button, input, optgroup, select, textarea {
 .hoFFgT svg {
   max-width: 100%;
   filter: drop-shadow(rgba(0, 0, 0, 0.3) 1px 1px 2px);
+}
+.botName {
+  width: calc(100% - 50px);
+  margin-left: 10px;
+  display: flex;
+}
+.botName div :first-child {
+  font-size: 17px;
+  color: rgb(33, 40, 51);
+}
+.botName div :last-child {
+  color: #6c757d!important;
+}
+.ircCEl1 {
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  width: auto;
+  height: 24px;
+  line-height: 23px;
+  box-sizing: border-box;
+  font-size: 13px;
+  color: rgb(240, 185, 11);
+  border-radius: 3px;
+  outline: none;
+  background: rgb(255, 255, 255);
+  padding: 0px 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-image: initial;
+  border-color: rgb(240, 185, 11);
+  margin-left: auto;
+}
+.ircCEl1:hover {
+  color: rgb(255, 255, 255);
+  background: rgb(240, 185, 11);
 }
