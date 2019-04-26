@@ -169,6 +169,7 @@ class NewWallet01 extends React.Component {
           <DivControlBtn>
             <DivUnlockLink><Link className="unlock" to="/unlock">Unlock an Existing Wallet</Link></DivUnlockLink>
             <Button
+              // disabled = {true}
               width={'200px'}
               onClick={() => this.continueClick()}
               className={isActive}>

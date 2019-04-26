@@ -1,25 +1,102 @@
 import React, { Component } from 'react';
 import './Balances.css';
+import Transaction from './Transaction';
+import tweb3 from './../../service/tweb3';
+import QRCode from 'qrcode.react'
 
 class Balances extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      showSendForm: false,
+      showTbl: [],
+    }
+  }
+  componentDidMount() {
+    this.renderTbl();
+    console.log('state', this.state)
+  }
+
+  viewSendForm = () => {
+    this.setState({ showSendForm: true });
+  }
+
+  closeViewForm = () => {
+    this.setState({
+      showSendForm: !this.state.showSendForm
+    });
+
+  }
+
+  renderTbl = async () => {
+    try {
+      var result = await tweb3.getBalance('tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx');
+      console.log("I want to see balance:", result.balance)
+      var tblTmp = [{
+        name: 'ICETEA COIN',
+        symbo: 'ICETEA',
+        totalBalance: result.balance,
+        availableBalance: result.balance
+      }];
+      this.setState({
+        showTbl: tblTmp.map((data, index) => (
+          <tr key={index}>
+            <td style={{ width: '15%' }}>
+              <div className="sc-hkaZBZ jvVxXM">{data.symbo}</div>
+            </td>
+            <td style={{ width: '15%' }}>
+              <div className="sc-hkaZBZ jvVxXM">{data.name}</div>
+            </td>
+            <td style={{ width: '15%' }}>
+              <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">{data.totalBalance}</span></div>
+            </td>
+            <td style={{ width: '15%' }}>
+              <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">{data.availableBalance}</span></div>
+            </td>
+            <td style={{ width: '10%' }}>
+              <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">0</span></div>
+            </td>
+            <td style={{ width: '10%' }}>
+              <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">0</span></div>
+            </td>
+            <td style={{ width: '10%' }}>
+              <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">0.0</span></div>
+            </td>
+            <td style={{ width: '10%' }}>
+              <div className="sc-hkaZBZ sc-hqGPoI feIRPa"><button
+                className="sc-bZQynM sc-MYvYT sc-jbWsrJ ircCEl" onClick={this.viewSendForm}>Send</button></div>
+            </td>
+          </tr>
+        ))
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   render() {
     return (
       <div className="sc-lnrBVv kvEeOF">
         <div className="sc-kIWQTW jfuazO">
           <div className="sc-hMjcWo jvYfux">
             <div className="sc-gCwZxT iWYAnd">
-              <div><span>Balances</span><span className="text-address"><i>tbnb1ll03gn7gkmuzaygs3kv6x3uswh4nep5u3r5tua</i></span>
+              <div><span>Balances</span><span className="text-address"><i className="copyText">tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx</i></span>
               </div>
               <div className="sc-jDwBTQ cPxcHa">
                 <div className="sc-fATqzn cNStFF">
-                <i class="fa fa-qrcode sc-dnqmqq dJRkzW" aria-hidden="true" size="18"></i>
+                  <i className="fa fa-qrcode sc-dnqmqq dJRkzW" aria-hidden="true" size="18"></i>
                   <div className="qrCode">
-                    <div size="174" className="qrcode-box sc-iSDuPN iulYhq"><canvas height="174" width="174"
-                      style={{height: '174px', width: '174px' }}></canvas></div>
+                    <div size="174" className="qrcode-box sc-iSDuPN iulYhq">
+                      <QRCode className="qrForm" value="tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx" >
+                        <canvas height="174" width="174"
+                          style={{ height: '174px', width: '174px' }}></canvas>
+                      </QRCode>
+                    </div>
                   </div>
                 </div>
                 <div className="sc-fATqzn cNStFF">
-                <i class="fa fa-clone" aria-hidden="true" size="18"></i>
+                  <i className="fa fa-clone" aria-hidden="true" size="18"></i>
                 </div>
               </div>
             </div>
@@ -39,65 +116,13 @@ class Balances extends Component {
                     </tr>
                   </thead>
                   <tbody className="sc-fvLVrH gjcHsq">
-                    <tr>
-                      <td style={{width: '15%'}}>
-                        <div className="sc-hkaZBZ jvVxXM">007-749</div>
-                      </td>
-                      <td style={{width: '15%'}}>
-                        <div className="sc-hkaZBZ jvVxXM">007 Token</div>
-                      </td>
-                      <td style={{width: '15%'}}>
-                        <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">0.193</span></div>
-                      </td>
-                      <td style={{width: '15%'}}>
-                        <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">0.193</span></div>
-                      </td>
-                      <td style={{width: '10%'}}>
-                        <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">0</span></div>
-                      </td>
-                      <td style={{width: '10%'}}>
-                        <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">0</span></div>
-                      </td>
-                      <td style={{width: '10%'}}>
-                        <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">0.03573549</span></div>
-                      </td>
-                      <td style={{width: '10%'}}>
-                        <div className="sc-hkaZBZ sc-hqGPoI feIRPa"><button
-                          className="sc-bZQynM sc-MYvYT sc-jbWsrJ ircCEl">Send</button></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style={{width: '15%'}}>
-                        <div className="sc-hkaZBZ jvVxXM">BNB</div>
-                      </td>
-                      <td style={{width: '15%'}}>
-                        <div className="sc-hkaZBZ jvVxXM">Binance Chain Native Token</div>
-                      </td>
-                      <td style={{width: '15%'}}>
-                        <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">172.274412</span></div>
-                      </td>
-                      <td style={{width: '15%'}}>
-                        <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">168.274412</span></div>
-                      </td>
-                      <td style={{width: '10%'}}>
-                        <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">0</span></div>
-                      </td>
-                      <td style={{width: '10%'}}>
-                        <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">4</span></div>
-                      </td>
-                      <td style={{width: '10%'}}>
-                        <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">0.79744963</span></div>
-                      </td>
-                      <td style={{width: '10%'}}>
-                        <div className="sc-hkaZBZ sc-hqGPoI feIRPa"><button
-                          className="sc-bZQynM sc-MYvYT sc-jbWsrJ ircCEl">Send</button></div>
-                      </td>
-                    </tr>
+                    {this.state.showTbl}
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
+          {this.state.showSendForm ? <Transaction closePoup={() => this.closeViewForm()} onSendSuccess={() => this.renderTbl()} /> : ''}
         </div>
       </div>
     );

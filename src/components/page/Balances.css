@@ -83,6 +83,14 @@
   position: relative;
   z-index: 100;
 }
+
+.qrForm {
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  text-align: center;
+}
+
 .cOshIS {
   position: relative;
 }

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { decode } from '../../utils';
 import { Link } from 'react-router-dom';
-import { codec } from 'icetea-common';
+import { codec, utils } from 'icetea-common';
 import * as actions from '../../actions'
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'
 import './UnlockWallet.css';
 
 class UnlockByJson extends Component {
@@ -29,10 +30,12 @@ class UnlockByJson extends Component {
         var wallet = {
             privateKey: codec.toString(privateKey),
             password: this.state.password,
+            address: utils.getAccount(privateKey).address
         }
         this.props.onSaveWallet(wallet);
 
         console.log('Wallet check', wallet);
+        this.props.history.push("/Home");
     }
 
     cntReader = (event) => {
@@ -93,6 +96,7 @@ class UnlockByJson extends Component {
 
 const mapStateToProps = state => {
     return {
+        wallet: state.wallet
     };
 }
 
@@ -107,4 +111,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UnlockByJson);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UnlockByJson));
