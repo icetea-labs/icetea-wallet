@@ -12,9 +12,6 @@ import {
 } from './../elements/utils'
 
 class NewWallet02 extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   continueClick = ()=> {
     // Change form no

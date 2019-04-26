@@ -9,7 +9,7 @@ import NewWallet04 from './NewWallet04'
 // Popup
 import Pu01 from './poup/Pu01'
 import Pu02 from './poup/Pu02'
-import Pu03 from './poup/Pu03'
+// import Pu03 from './poup/Pu03'
 
 // button
 // import { Button } from './../elements'

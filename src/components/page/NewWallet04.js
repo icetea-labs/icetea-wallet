@@ -8,9 +8,7 @@ import styled from 'styled-components'
 import { Button } from './../elements'
 // Style component
 import {
-  DivBox2, Header1, Header2,
-  DivContentW2, InputConfirmPass, DivControlBtn,
-  DivUnlockLink, DivFooter, DivValidPass, DivPreviousBt
+  DivBox2, Header1, Header2, DivControlBtn, DivPreviousBt
 } from './../elements/utils'
 
 const DivH3 = styled.div`

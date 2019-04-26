@@ -4,6 +4,7 @@ import './PuViewTx.css'
 class PuViewTx extends Component {
   render() {
     var { tx } = this.props;
+    var path ='#';
     return (
       <div>
         <div className="sc-hCbubC dKVYOG" style={{ opacity: 1 }}>
@@ -13,26 +14,29 @@ class PuViewTx extends Component {
               <div className="sc-dBfaGr bwTAQT">
                 <div className="sc-kWHCRG doLgQs">
                   <div className="title1">Tx Hash:</div>
-                  <div className="value"><a
-                    href="#"
-                    rel="noopener">{tx.hash}</a></div>
+                  <div className="value">
+                  <a href={path} rel="noopener">{tx.hash}</a>
+                  </div>
                 </div>
                 <div className="sc-kWHCRG doLgQs">
                   <div className="title1">Block#:</div>
-                  <div className="value"><a
-                    href="#" rel="noopener"><span
-                      className="sc-dqBHgY igApRg">{tx.blockHeight}</span></a></div>
+                  <div className="value">
+                  <a href={path} rel="noopener">
+                    <span className="sc-dqBHgY igApRg">{tx.blockHeight}</span>
+                  </a>
+                  </div>
                 </div>
                 <div className="sc-kWHCRG doLgQs">
                   <div className="title1">To:</div>
-                  <div className="value"><a
-                    href="#" rel="noopener">{tx.to}</a></div>
+                  <div className="value">
+                    <a href={path} rel="noopener">{tx.to}</a>
+                  </div>
                 </div>
                 <div className="sc-kWHCRG doLgQs">
                   <div className="title1">From:</div>
-                  <div className="value"><a
-                    href="#"
-                    rel="noopener">{tx.from}</a></div>
+                  <div className="value">
+                    <a href={path} rel="noopener">{tx.from}</a>
+                  </div>
                 </div>
                 <div className="sc-kWHCRG doLgQs">
                   <div className="title1">Confirm Time:</div>

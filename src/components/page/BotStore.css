@@ -1,0 +1,120 @@
+.bUAaOS {
+  background: white;
+}
+.playlists-wrapper {
+  grid-column: 2 / 3;
+  grid-row: 1 / -1;
+}
+.gGysvU {
+  display: flex;
+  position: relative;
+  margin: 60px 20px 20px;
+  border-bottom: 2px solid rgb(82, 71, 99);
+}
+.gGysvU svg {
+  position: relative;
+  top: 4px;
+}
+.gGysvU .underline {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  width: 100%;
+  transform: scale(0);
+  height: 4px;
+  display: block;
+  transition: all 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0s;
+  background: rgb(130, 216, 216);
+}
+input, select, textarea {
+  color: rgb(82, 71, 99);
+  font-weight: 800;
+  margin-bottom: 10px;
+  background: rgb(255, 255, 255);
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(82, 71, 99);
+  border-image: initial;
+  border-radius: 2px;
+  padding: 6px 10px;
+}
+button, input, optgroup, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0px;
+}
+.gGysvU > input {
+  border-top-width: initial;
+  border-right-width: initial;
+  border-left-width: initial;
+  border-top-color: initial;
+  border-right-color: initial;
+  border-left-color: initial;
+  max-width: none;
+  width: 100%;
+  margin-bottom: 0.5rem !important;
+  border-style: none none none;
+  border-image: initial;
+  background: transparent;
+  border-bottom: none !important;
+}
+.gGysvU > input:focus {
+  outline: none;
+}
+.jxllbm {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 20px 15px;
+  gap: 20px 20px;
+}
+
+.bWCvDb {
+  font-size: 16px;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.25) 6px 8px 20px;
+  font-family: "Open Sans";
+  max-width: 250px;
+  overflow: hidden;
+  border-radius: 15px;
+  padding: 1em;
+  transition: all 0.3s ease 0s;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,.125);
+}
+.ePsksC {
+  display: grid;
+  min-height: 120px;
+  z-index: 1;
+  position: relative;
+  grid-template: auto 1fr 4fr 1fr none;
+  gap: 0.625em 0.625em;
+}
+.kClzgQ {
+  font-size: 1em;
+  letter-spacing: 1px;
+  text-align: left;
+}
+.hoFFgT {
+  align-self: end;
+  text-align: right;
+}
+.fTfjsA {
+  font-weight: 900;
+  font-size: 1.2em;
+  color: rgb(82, 71, 99);
+  margin-left: auto;
+  display: inline-block;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  background: rgb(130, 216, 216);
+  border-radius: 10px;
+  padding: 5px;
+}
+.cceqce {
+  font-weight: 900;
+  text-align: left;
+}
+.hoFFgT svg {
+  max-width: 100%;
+  filter: drop-shadow(rgba(0, 0, 0, 0.3) 1px 1px 2px);
+}

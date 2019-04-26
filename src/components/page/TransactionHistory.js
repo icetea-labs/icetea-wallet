@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import dateFormat from 'dateformat';
 import './TransactionHistory.css';
 import { decodeTX } from 'icetea-web3/src/utils';
@@ -72,7 +71,7 @@ class TransactionHistory extends Component {
     console.log(hash)
   }
   viewDetail = (hash) => {
-    console.log('-viewDetail-', hash)
+    // console.log('-viewDetail-', hash)
     this.setState({ showDetailTx: true, hashValue: hash });
   }
   closeViewDetail = () => {
@@ -102,7 +101,6 @@ class TransactionHistory extends Component {
     console.log("transaction", transactions)
     console.log("blocksInfoToObj", blocksInfoToObj)
     transactions.forEach(el => {
-      el.time = '12:00:00';
       el.time = !!(blocksInfoToObj[el.height]) && blocksInfoToObj[el.height].time;
     });
     // console.log(blocksInfo)
@@ -113,7 +111,7 @@ class TransactionHistory extends Component {
     try {
       var myTxs = await tweb3.searchTransactions('tx.height>0');
       var transactions = this.fmtTxs(myTxs.txs);
-
+      // console.log('transactions',transactions);
       //
       transactions = await this.addTimeToTx(transactions);
       var form = (current - 1) * pageSize;
