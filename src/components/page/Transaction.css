@@ -299,7 +299,7 @@
 }
 
 .hoKJiD .textarea {
-    width: 100%;
+    width: 95%;
     height: 50px;
     font-size: 14px;
     outline: none;
@@ -405,4 +405,34 @@
 
 .iRFfLO .Available-value {
     color: rgb(33, 40, 51);
+}
+.cyWHjc input:focus + .border-bottom {
+    background: rgb(240, 185, 11);
+}
+.kpQUwp {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translate(0px, -50%);
+    width: 0px;
+    height: 0px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid rgb(102, 102, 102);
+}
+.rc-dropdown .search-box input {
+    height: 26px;
+    line-height: 26px;
+    pointer-events: auto;
+    width: 80%;
+    font-size: 14px;
+    text-indent: 10px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    outline: none;
+}
+input {
+    transition: all .3s ease-in;
 }

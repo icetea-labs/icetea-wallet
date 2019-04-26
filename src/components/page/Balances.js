@@ -88,10 +88,7 @@ class Balances extends Component {
                   <i className="fa fa-qrcode sc-dnqmqq dJRkzW" aria-hidden="true" size="18"></i>
                   <div className="qrCode">
                     <div size="174" className="qrcode-box sc-iSDuPN iulYhq">
-                      <QRCode className="qrForm" value="tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx" >
-                        <canvas height="174" width="174"
-                          style={{ height: '174px', width: '174px' }}></canvas>
-                      </QRCode>
+                      <QRCode size={174} className="qrForm" value="tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx" />
                     </div>
                   </div>
                 </div>

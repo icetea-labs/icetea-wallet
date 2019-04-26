@@ -54,3 +54,15 @@ body {
   left: 50%;
   transform: translateX(-50%);
 }
+.rc-dropdown {
+  max-height: 180px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 10px 0px;
+  z-index: 1100 !important;
+  overflow: auto;
+  border-radius: 3px;
+}
+.rc-dropdown .rc-dropdown-menu .rc-dropdown-menu-item {
+  cursor: pointer;
+  color: rgb(132, 142, 156);
+  background: rgb(255, 255, 255);
+}
