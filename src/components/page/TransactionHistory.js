@@ -17,6 +17,7 @@ class TransactionHistory extends Component {
     super();
     this.state = {
       transactions: [],
+      totalTx: 0,
       txToTable: [],
       showDetailTx: false,
       current: 1,
@@ -90,16 +91,13 @@ class TransactionHistory extends Component {
       maxHeight: Math.max(...blocksNum)
     };
 
-    console.log("option ", option)
+    // console.log("option ", option)
     var blocksInfo = await tweb3.getBlocks(option);
 
-    console.log(blocksInfo)
     var blocksInfoToObj = {};
     blocksInfo.block_metas.forEach(el => {
       blocksInfoToObj[el.header.height] = { time: this.fmtTime(el.header.time) }
     });
-    console.log("transaction", transactions)
-    console.log("blocksInfoToObj", blocksInfoToObj)
     transactions.forEach(el => {
       el.time = !!(blocksInfoToObj[el.height]) && blocksInfoToObj[el.height].time;
     });
@@ -109,20 +107,23 @@ class TransactionHistory extends Component {
 
   renderTransactions = async (current = this.state.current, pageSize = this.state.pageSize) => {
     try {
-      var myTxs = await tweb3.searchTransactions('tx.height>0');
+      var op = {prove: false, page: current, per_page: pageSize};
+      // var myTxs = await tweb3.searchTransactions('tx.height > 0', op);
+      var myTxs = await tweb3.getPastEvents('Transferred', 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx', 'tx.height > 0', op);
       var transactions = this.fmtTxs(myTxs.txs);
-      // console.log('transactions',transactions);
+      console.log('myTxs',myTxs);
       //
       transactions = await this.addTimeToTx(transactions);
-      var form = (current - 1) * pageSize;
-      var to = form + pageSize;
-      if (to > transactions.length) to = transactions.length;
-      var txTmp = transactions.slice(form, to)
+      // var form = (current - 1) * pageSize;
+      // var to = form + pageSize;
+      // if (to > transactions.length) to = transactions.length;
+      // var txTmp = transactions.slice(form, to)
       // this will re render the view with new data
-      console.log('transaction', transactions);
+      // console.log('transaction', transactions);
       this.setState({
+        totalTx: parseInt(myTxs.total_count),
         transactions: transactions,
-        txToTable: txTmp.map((tx, index) => (
+        txToTable: transactions.map((tx, index) => (
           <tr key={index}>
             <td><div className="sc-gojNiO jQgIyo" onClick={() => this.goDetailHash(tx.hash)}>{tx.hash}</div></td>
             <td><div className="sc-evWYkj fIPZMa" >
@@ -155,7 +156,7 @@ class TransactionHistory extends Component {
     this.renderTransactions(current, pageSize);
     this.setState({
       pageSize: pageSize,
-      current: current
+      current: current,
     });
   }
 
@@ -207,7 +208,7 @@ class TransactionHistory extends Component {
                 defaultCurrent={this.state.current}
                 onShowSizeChange={this.onShowSizeChange}
                 onChange={this.onChange}
-                total={this.state.transactions.length}
+                total={this.state.totalTx}
                 locale={localeInfo}
               />
             </div>

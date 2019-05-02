@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'font-awesome/css/font-awesome.min.css';
-import './assets/styles/app.css';
+import './assets/styles/app.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import myReducer from './reducers';
