@@ -160,7 +160,7 @@ export const DivFooter = styled.div`
   & .lbFooter{
     user-select: none;
     cursor: pointer;
-    /* display: flex; */
+    display: flex;
     margin: auto;
   }
   & .textFooter{
@@ -170,6 +170,13 @@ export const DivFooter = styled.div`
     padding-left: 5px;
     line-height: 20px;
     width: 90%;
+  }
+`;
+export const DivFooterCheckBox = styled.div`
+  & input:checked + label span:first-child {
+      background: rgb(240, 185, 10);
+      border-color: rgb(240, 185, 10);
+      animation: 0.4s ease 0s 1 normal none running wave;
   }
 `;
 export const DivPreviousBt = styled.div`
@@ -206,4 +213,7 @@ export const DivContentW2 = styled.div`
     color: rgb(72, 81, 93);
     text-align: center;
   }
+`;
+export const Icon = styled.i`
+  font-size : ${props => props.size + 'px' || "10px"};
 `;

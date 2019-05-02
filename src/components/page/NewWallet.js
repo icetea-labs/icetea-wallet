@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components'
 import * as actions from '../../actions'
 import NewWallet01 from './NewWallet01'
@@ -103,5 +104,5 @@ const mapDispatchToProps = (dispatch) => {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewWallet);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewWallet));
 // export default NewWallet; mapStateToProps

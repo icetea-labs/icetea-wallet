@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { Button } from './../elements'
 // Style component
 import {
-  DivBox2, Header1, Header2, DivControlBtn, DivPreviousBt
+  DivBox2, Header1, Header2, DivControlBtn, DivPreviousBt, Icon
 } from './../elements/utils'
 
 const DivH3 = styled.div`
@@ -200,10 +200,8 @@ class NewWallet04 extends React.Component {
               width={'120px'}
               onClick={() => this.continueClick()}
               className={isActive}>
-              <div>
                 <span style={{ 'marginRight': '10px' }} >Continue</span>
-                <i className="fa fa-long-arrow-right"></i>
-              </div>
+                <Icon className="iconfont icon-continue" size="20" color="inherit"></Icon>
             </Button>
           </DivControlBtn>
         </div>

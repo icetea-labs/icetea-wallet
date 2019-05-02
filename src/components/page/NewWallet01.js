@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import * as bip39 from 'bip39';
 import HDKey from 'hdkey';
 import { codec, utils } from 'icetea-common'
@@ -8,34 +10,45 @@ import { encode } from '../../utils';
 import * as actions from '../../actions';
 
 // Import custom component
-import { Button } from './../elements'
+import { Button, WarningRecover, InputPassword } from './../elements'
 // Style component
 import {
   DivBox2, Header1, Header2,
   InputPass, InputConfirmPass, DivControlBtn,
-  DivUnlockLink, DivFooter, DivValidPass
+  DivUnlockLink, DivFooter, DivFooterCheckBox, DivValidPass, Icon
 } from './../elements/utils'
+
+const DivAgree = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: rgb(132, 142, 156);
+  & label span {
+    white-space: normal;
+  }
+`;
 
 class NewWallet01 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      agree: false,
       password: '',
       isPassValid: {},
       isShowBoxPass: false,
       confirmPassword: '',
       isShowBoxRePass: false,
-      cbConfirmRecover: false,
     };//{ cSelected: [] };
   }
 
   continueClick = () => {
     var isShowBoxRePass = false;
-    if (!this.state.cbConfirmRecover) {
+    if (!this.state.agree) {
       window.alert("Confirm check box")
     } else if (this.state.password !== this.state.confirmPassword) {
       isShowBoxRePass = true;
-    } else if(this.state.password !== '') {
+    } else if (this.state.password !== '') {
       this.props.onChangePopup('01');
       isShowBoxRePass = false;
       setTimeout(() => {
@@ -65,7 +78,7 @@ class NewWallet01 extends React.Component {
     this.props.onChangeForm('02');
   }
 
-  handleChange = (e)=> {
+  handleChange = (e) => {
     let target = e.target;
     let value = target.type === 'checkbox' ? target.checked : target.value.trim();
     let name = target.name;
@@ -83,6 +96,18 @@ class NewWallet01 extends React.Component {
     }
   }
 
+  handleCheckChange = (e) => {
+    this.setState({
+      agree: !this.state.agree
+    })
+  }
+  
+  handlePasswordChange = (value) => {
+    this.setState({
+      password: value
+    });
+  }
+  
   validatePassword = (value) => {
     var { isPassValid, isShowBoxPass } = this.state;
     if (value.length < 8) {
@@ -136,8 +161,8 @@ class NewWallet01 extends React.Component {
     var boxValiConfirmPass = this.state.isShowBoxRePass ? boxErrorConfirmPass : ''
     var boxValiPass = this.state.isShowBoxPass ? boxMsg : ''
     // console.log(boxValiConfirmPass)
-    var { cbConfirmRecover, isShowBoxPass, confirmPassword } = this.state;
-    var isActive = (cbConfirmRecover && !isShowBoxPass && confirmPassword !== '') ? 'active' : ''
+    var { agree, isShowBoxPass, confirmPassword } = this.state;
+    var isActive = (agree && !isShowBoxPass && confirmPassword !== '') ? 'active' : ''
     return (
       <DivBox2>
         <div>
@@ -149,13 +174,9 @@ class NewWallet01 extends React.Component {
             <span className="page totalPage">/2</span>
             <span className="title" >Create Keystore File + Password</span>
           </Header2>
-          <InputPass>
-            <p className={this.state.password.trim() === '' ? 'label' : 'label label-value'}>Set a New Password</p>
-            <div className="inputWrap">
-              <input type="password" name="password" onChange={this.handleChange} />
-            </div>
-            {boxValiPass}
-          </InputPass>
+
+          <InputPassword withRules={!!password} warning={false} onChange={this.handlePasswordChange} />
+
           <InputConfirmPass>
             <InputPass>
               <p className={this.state.confirmPassword.trim() === '' ? 'label' : 'label label-value'}>Re-enter Password</p>
@@ -173,18 +194,13 @@ class NewWallet01 extends React.Component {
               width={'200px'}
               onClick={() => this.continueClick()}
               className={isActive}>
-              <div>
-                <span style={{ 'marginRight': '10px' }} >Download Keystore File</span>
-                <i className="fa fa-long-arrow-right"></i>
-              </div>
+              <span style={{ 'marginRight': '10px' }} >Download Keystore File</span>
+              <Icon className="iconfont icon-continue" size="20" color="inherit"></Icon>
             </Button>
           </DivControlBtn>
-          <DivFooter>
-            <label htmlFor="cbx" className="lbFooter">
-              <input id="cbx" type="checkbox" name="cbConfirmRecover" onChange={this.handleChange} />
-              <span className="textFooter">I understand that icetea cannot recover or reset my password or the keystore file. I will make a backup of the keystore file/password, keep them secret, complete all wallet creation steps and agree to all the terms.</span>
-            </label>
-          </DivFooter>
+          <DivAgree>
+            <WarningRecover defaultChecked={ agree } handleCheckChange={this.handleCheckChange } />
+          </DivAgree>
         </div>
       </DivBox2>
     );
@@ -193,7 +209,7 @@ class NewWallet01 extends React.Component {
 
 const mapStateToProps = state => {
   return {
-  name: state.Name
+    name: state.Name
   };
 }
 
@@ -211,5 +227,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewWallet01);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewWallet01));
+
 // export default NewWallet; mapStateToProps

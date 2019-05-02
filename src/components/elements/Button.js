@@ -27,11 +27,14 @@ export const Button = styled.button`
     &.active {
       background: linear-gradient(90deg, rgb(239, 184, 11) 0%, rgb(251, 218, 60) 100%)
     }
-    :hover div {
-    transform: scale(0.9);
+    &:hover {
+      transform: scale(1);
     }
-    & div {
-    transition: transform 0.2s ease 0s;
+    &:hover span, &:hover i {
+      transform: scale(0.9);
+    }
+    & span,& i {
+      transition: transform 0.2s ease 0s;
     }
     @media (max-width: 768px) {
       width: 100%;
