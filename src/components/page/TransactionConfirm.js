@@ -12,7 +12,7 @@ class TransactionConfirm extends Component {
 
         var answer = window.confirm("Are you sure to transfer?")
 
-        if (answer == true) {
+        if (answer === true) {
             await tweb3.transfer(this.props.wallet.toAdd, this.props.wallet.amount);
             window.alert("Transfer Success")
         } else { return false; }
@@ -28,8 +28,8 @@ class TransactionConfirm extends Component {
         var wallet = {
             fromAdd: this.props.wallet.fromAdd,
             toAdd: this.props.wallet.toAdd,
-            amount: this.props.wallet.amount,
-            memo: this.props.wallet.memo
+            amount: this.state.amountText,
+            memo: this.state.memo
           }
       
           this.props.onSaveWallet(wallet);

@@ -43,7 +43,10 @@ class UnlockByJson extends Component {
         var reader = new FileReader();
         reader.onload = (event) => {
             console.log('abc', event.target.result);
-            this.state.keyStorefile = JSON.parse(event.target.result);
+            this.setState({
+                keyStorefile: JSON.parse(event.target.result)
+            })
+            // this.state.keyStorefile = JSON.parse(event.target.result);
         };
 
         reader.readAsText(file);

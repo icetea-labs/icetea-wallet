@@ -6,7 +6,6 @@ import * as actions from '../../actions';
 import Dropdown from 'rc-dropdown';
 import Menu, { Item as MenuItem, Divider } from 'rc-menu';
 import './../../assets/styles/dropdown.css'
-import TransactionConfirm from './TransactionConfirm';
 
 class Transaction extends Component {
 
@@ -65,7 +64,7 @@ class Transaction extends Component {
 
     var answer = window.confirm("Are you sure to transfer?")
 
-    if (answer == true) {
+    if (answer === true) {
       await tweb3.transfer(this.state.addressText, this.state.amountText);
       window.alert("Transfer Success")
     } else { return false; }

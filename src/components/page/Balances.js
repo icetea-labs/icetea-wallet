@@ -6,6 +6,12 @@ import tweb3 from './../../service/tweb3';
 import QRCode from 'qrcode.react'
 import { connect } from 'react-redux';
 import TransactionHistory from './TransactionHistory'
+import Notification from 'rc-notification';
+import '../../assets/styles/notification.css'
+import successIc from '../../assets/img/success-icon.png'
+
+let notification = null;
+Notification.newInstance({}, (n) => notification = n);
 
 class Balances extends Component {
 
@@ -21,7 +27,7 @@ class Balances extends Component {
   componentDidMount() {
     this.renderTbl();
     console.log('state', this.state);
-    this.setState({ value: 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx'});
+    this.setState({ value: 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx' });
   }
 
   viewSendForm = () => {
@@ -53,23 +59,34 @@ class Balances extends Component {
       range.moveToElementText(copyText);
       range.select();
     } else if (window.getSelection) {
-      selection = window.getSelection();        
+      selection = window.getSelection();
       range = document.createRange();
       range.selectNodeContents(copyText);
       selection.removeAllRanges();
       selection.addRange(range);
     }
 
-    try {  
+    try {
       // Now that we've selected the anchor text, execute the copy command  
-      var successful = document.execCommand('copy');  
-      var msg = successful ? 'successful' : 'unsuccessful';  
-      console.log('Copy command was ' + msg);  
-      window.alert("Copied the text: " + this.state.value);
-    } catch(err) {  
-      console.log('Oops, unable to copy');  
-    }  
-  
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'successful' : 'unsuccessful';
+      console.log('Copy command was ' + msg + " " + this.state.value);
+      // window.alert("Copied the text: " + this.state.value);
+
+      notification.notice({
+        content: 
+          <span className="notification">
+            <img width={25} height={25} src={successIc} alt="" />Copy successful!
+          </span>,
+        onClose() {
+          console.log('notify  close');
+        },
+      });
+
+    } catch (err) {
+      console.log('Oops, unable to copy');
+    }
+
   }
 
   renderTbl = async () => {
@@ -127,7 +144,7 @@ class Balances extends Component {
             <div className="sc-gCwZxT iWYAnd">
               <div><span>Balances</span>
                 <span className="text-address">
-                <i className="copyText" id="copyText">{value}</i>
+                  <i className="copyText" id="copyText">{value}</i>
                 </span>
               </div>
               <div className="sc-jDwBTQ cPxcHa">
@@ -172,7 +189,7 @@ class Balances extends Component {
         </div>
         <div><TransactionHistory></TransactionHistory></div>
       </div>
-      
+
     );
   }
 }
