@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import './Balances.css';
 import Transaction from './Transaction';
+import TransactionConfirm from './TransactionConfirm';
 import tweb3 from './../../service/tweb3';
 import QRCode from 'qrcode.react'
+import { connect } from 'react-redux';
+import TransactionHistory from './TransactionHistory'
 
 class Balances extends Component {
 
@@ -10,23 +13,63 @@ class Balances extends Component {
     super();
     this.state = {
       showSendForm: false,
+      showCFForm: false,
       showTbl: [],
+      value: '',
     }
   }
   componentDidMount() {
     this.renderTbl();
-    console.log('state', this.state)
+    console.log('state', this.state);
+    this.setState({ value: 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx'});
   }
 
   viewSendForm = () => {
-    this.setState({ showSendForm: true });
+    this.setState({ showSendForm: true, showCFForm: false });
   }
 
   closeViewForm = () => {
     this.setState({
-      showSendForm: !this.state.showSendForm
+      showSendForm: !this.state.showSendForm,
     });
 
+  }
+
+  closeCFForm = () => {
+    this.setState({
+      showCFForm: !this.state.showCFForm,
+    });
+  }
+
+  onCallCFForm = () => {
+    this.setState({ showSendForm: false, showCFForm: true });
+  }
+
+  copyText = () => {
+    var copyText = document.getElementById("copyText");
+    var range, selection;
+    if (document.body.createTextRange) {
+      range = document.body.createTextRange();
+      range.moveToElementText(copyText);
+      range.select();
+    } else if (window.getSelection) {
+      selection = window.getSelection();        
+      range = document.createRange();
+      range.selectNodeContents(copyText);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+
+    try {  
+      // Now that we've selected the anchor text, execute the copy command  
+      var successful = document.execCommand('copy');  
+      var msg = successful ? 'successful' : 'unsuccessful';  
+      console.log('Copy command was ' + msg);  
+      window.alert("Copied the text: " + this.state.value);
+    } catch(err) {  
+      console.log('Oops, unable to copy');  
+    }  
+  
   }
 
   renderTbl = async () => {
@@ -76,12 +119,16 @@ class Balances extends Component {
   }
 
   render() {
+    const { value } = this.state;
     return (
       <div className="sc-lnrBVv kvEeOF">
         <div className="sc-kIWQTW jfuazO">
           <div className="sc-hMjcWo jvYfux">
             <div className="sc-gCwZxT iWYAnd">
-              <div><span>Balances</span><span className="text-address"><i className="copyText">tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx</i></span>
+              <div><span>Balances</span>
+                <span className="text-address">
+                <i className="copyText" id="copyText">{value}</i>
+                </span>
               </div>
               <div className="sc-jDwBTQ cPxcHa">
                 <div className="sc-fATqzn cNStFF">
@@ -93,7 +140,7 @@ class Balances extends Component {
                   </div>
                 </div>
                 <div className="sc-fATqzn cNStFF">
-                  <i className="fa fa-clone" aria-hidden="true" size="18"></i>
+                  <i className="fa fa-clone" aria-hidden="true" size="18" onClick={this.copyText} ></i>
                 </div>
               </div>
             </div>
@@ -119,11 +166,26 @@ class Balances extends Component {
               </div>
             </div>
           </div>
-          {this.state.showSendForm ? <Transaction closePoup={() => this.closeViewForm()} onSendSuccess={() => this.renderTbl()} /> : ''}
+          {this.state.showSendForm ? <Transaction closePoup={() => this.closeViewForm()} onCallCFForm={() => this.onCallCFForm()} /> : ''}
+          {this.state.showCFForm ? <TransactionConfirm closePoup={() => this.closeCFForm()}
+            onCallTransForm={() => this.viewSendForm()} onSendSuccess={() => this.renderTbl()} /> : ''}
         </div>
+        <div><TransactionHistory></TransactionHistory></div>
       </div>
+      
     );
   }
 }
 
-export default Balances;
+const mapStateToProps = state => {
+  return {
+    wallet: state.wallet
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Balances);
