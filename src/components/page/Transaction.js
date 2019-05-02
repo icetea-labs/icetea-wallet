@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import './Transaction.css';
 import tweb3 from './../../service/tweb3';
-import QRCode from 'qrcode.react'
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import Dropdown from 'rc-dropdown';
 import Menu, { Item as MenuItem, Divider } from 'rc-menu';
 import './../../assets/styles/dropdown.css'
-
+import TransactionConfirm from './TransactionConfirm';
 
 class Transaction extends Component {
 
@@ -17,11 +16,13 @@ class Transaction extends Component {
       amountText: '',
       addressText: '',
       balance: '',
-      coins:[
-        { name: 'Ice Tea Chain',symbol: 'ITEA' },
-        { name: 'BTC Coin',symbol: 'BTC' },
-        { name: 'ETH Coin',symbol: 'ETH' },
-      ]
+      memo: '',
+      coins: [
+        { name: 'Ice Tea Chain', symbol: 'ITEA' },
+        { name: 'BTC Coin', symbol: 'BTC' },
+        { name: 'ETH Coin', symbol: 'ETH' },
+      ],
+      showCFForm: false
     };
   }
   componentWillMount = async () => {
@@ -31,6 +32,14 @@ class Transaction extends Component {
     this.setState({
       balance: balanceofVip.balance
     })
+  }
+
+  componentWillReceiveProps = () => {
+    this.setState({
+      addressText: this.props.wallet.toAdd
+
+    })
+
   }
 
   handleChange = (e) => {
@@ -67,6 +76,32 @@ class Transaction extends Component {
     this.props.closePoup();
   }
 
+
+  confirmTrans = () => {
+    if (this.state.addressText === '') {
+      window.alert("Please input To Address")
+      return
+    } else if (this.state.amountText === '') {
+      window.alert("Please input amount to send")
+      return
+    }
+
+    this.props.onCallCFForm();
+
+    // save to store
+    var wallet = {
+      fromAdd: 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx',
+      toAdd: this.state.addressText,
+      amount: this.state.amountText,
+      memo: this.state.memo
+    }
+
+    this.props.onSaveWallet(wallet);
+
+    console.log('Wallet check', wallet);
+  }
+
+
   onSelect({ key }) {
     console.log(`${key} selected`);
   }
@@ -98,8 +133,11 @@ class Transaction extends Component {
     </Menu>
   );
 
-  closeClick() {
-    this.props.onChangePopup('');
+  closeViewForm = () => {
+    this.setState({
+      showCFForm: !this.state.showCFForm
+    });
+
   }
 
   render() {
@@ -137,6 +175,7 @@ class Transaction extends Component {
                       <p className="">To Address</p>
                       <div>
                         <input type="text" placeholder="To Address" name="addressText"
+                        value={this.state.toAdd}
                           onChange={this.handleChange} />
                         <div className="border-bottom"></div>
                       </div>
@@ -152,7 +191,7 @@ class Transaction extends Component {
                   </div>
                   <div className="sc-eTyWNx hoKJiD">
                     <p className="titleM">Memo</p>
-                    <textarea className="textarea"></textarea>
+                    <textarea className="textarea" name="memo" onChange={this.handleChange}></textarea>
                   </div>
                   <div className="sc-eTyWNx hoKJiD">
                     <div className="sc-bsVVwV bkSpCY">
@@ -170,8 +209,8 @@ class Transaction extends Component {
                     </div>
                   </div>
                   <div className="sc-jDwBTQ cPxcHa">
-                    <button className="sc-bZQynM sc-fHlXLc jNKIKp" onClick={() => this.sendTransaction()}>
-                      <span>Send</span>
+                    <button className="sc-bZQynM sc-fHlXLc jNKIKp" onClick={this.confirmTrans}>
+                      <span>Next</span>
                     </button>
                   </div>
                 </div>
@@ -194,8 +233,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onChangePopup: (puNo) => {
-      dispatch(actions.changePopup(puNo))
+    onSaveWallet: (data) => {
+      dispatch(actions.saveWallet(data))
     }
   }
 }
