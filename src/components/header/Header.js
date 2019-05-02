@@ -2,33 +2,80 @@ import React, { Component } from 'react';
 import './Header.css'
 import * as actions from '../../actions'
 import { connect } from 'react-redux';
+import styled from 'styled-components'
 
+const DivWapper = styled.div`
+  height: 50px;
+  line-height: 50px;
+  color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 1100;
+  background: rgb(18, 22, 28);
+  padding: 0px 15px;
+  @media (max-width: 768px) {
+    height: 44px;
+    line-height: 44px;
+  }
+`;
+const DivMenuLink = styled.div`
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+  display: flex;
+  position: absolute;
+  right: 15px;
+  @media (max-width: 768px){
+      display: none;
+  }
+`;
+const UlLink = styled.ul`
+  display: flex;
+  flex-direction: row;
+  & li {
+    height: 50px;
+    line-height: 50px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    position: relative;
+    padding: 0px 15px;
+  }
+  & li a {
+    height: 100%;
+    display: block;
+    color: rgb(255, 255, 255);
+    font-size: 13px;
+  }
+  & li:hover {
+    color: rgb(240, 185, 11);
+    background: rgb(37, 45, 56);
+  }
+  & li:hover ul {
+    display: block;
+  }
+`;
 class Header extends Component {
   render() {
     var address = '';
     if (this.props.wallet) address = this.props.wallet.address;
     return (
-      <div className="sc-jqCOkK gWEMEs">
+      <DivWapper>
         <div className="sc-uJMKN jNhSkT">
           <div className="sc-bbmXgH gZQuSA">
             <img src="/static/images/logo/testnet.svg" alt="" />
           </div>
         </div>
-        <div className="sc-jnlKLf gTInge">
-          <ul className="sc-fYxtnH cOXWZm">
-            <li className="withSubMenus">
-              <a href="/transactionHistory">Transaction</a>
-              {/* <ul className="subMenus sc-iELTvK wCTXT">
-                <li>< a href="/sentTransaction">Sent Transaction</a></li>
-                <li><a href="/transactionHistory">Transaction History</a></li>
-              </ul> */}
-            </li>
+        <DivMenuLink>
+          <UlLink>
+            <li><a href="/transactionHistory">Transaction</a></li>
             <li><a href="/botStore">IceteaStore</a></li>
             <li><a href="/balances">Balances</a></li>
-          </ul>
+          </UlLink>
           <div className="sc-ktHwxA izmNVh">
-            {/* <i className="iconfont icon-account sc-dnqmqq iiYHFz" size="16" color=""></i> */}
-            <i className="iconfont fa fa-user-circle iiYHFz" aria-hidden="true"></i>
+            <i className="iconfont icon-account sc-dnqmqq iiYHFz" size="16" color=""></i>
             <ul className="sc-hEsumM cnUGfj">
               <li className="wallet-address">
                 <div>
@@ -36,12 +83,10 @@ class Header extends Component {
                   <div className="address">{address}</div>
                 </div>
                 <div className="op"><span title="copy address">
-                  {/* <i className="iconfont icon-copy sc-dnqmqq iiYHFz" size="16" color=""></i> */}
-                  <i className="iconfont fa fa-clone iiYHFz" aria-hidden="true"></i>
+                  <i className="iconfont icon-copy sc-dnqmqq iiYHFz" size="16" color=""></i>
                 </span>
                   <span title="go to explorer">
-                    {/* <i className="iconfont icon-link sc-dnqmqq iiYHFz" size="16" color=""></i> */}
-                    <i className="iconfont fa fa-external-link iiYHFz" aria-hidden="true"></i>
+                    <i className="iconfont icon-link sc-dnqmqq iiYHFz" size="16" color=""></i>
                   </span>
                 </div>
               </li>
@@ -52,8 +97,8 @@ class Header extends Component {
             </ul>
           </div>
           <div className="sc-tilXH Sxoxk"><i className="iconfont icon-menu sc-dnqmqq eAXZfv" size="20" color=""></i></div>
-        </div>
-      </div>
+        </DivMenuLink>
+      </DivWapper>
 
     );
   }
