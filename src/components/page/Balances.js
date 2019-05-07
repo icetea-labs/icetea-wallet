@@ -6,6 +6,13 @@ import tweb3 from './../../service/tweb3';
 import QRCode from 'qrcode.react'
 import { connect } from 'react-redux';
 import TransactionHistory from './TransactionHistory'
+// import Notification from 'rc-notification';
+// import '../../assets/styles/notification.css'
+// import successIc from '../../assets/img/success-icon.png'
+import CopyText from  './CopyText'
+
+// let notification = null;
+// Notification.newInstance({}, (n) => notification = n);
 
 class Balances extends Component {
 
@@ -21,7 +28,7 @@ class Balances extends Component {
   componentDidMount() {
     this.renderTbl();
     console.log('state', this.state);
-    this.setState({ value: 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx'});
+    this.setState({ value: 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx' });
   }
 
   viewSendForm = () => {
@@ -45,32 +52,43 @@ class Balances extends Component {
     this.setState({ showSendForm: false, showCFForm: true });
   }
 
-  copyText = () => {
-    var copyText = document.getElementById("copyText");
-    var range, selection;
-    if (document.body.createTextRange) {
-      range = document.body.createTextRange();
-      range.moveToElementText(copyText);
-      range.select();
-    } else if (window.getSelection) {
-      selection = window.getSelection();        
-      range = document.createRange();
-      range.selectNodeContents(copyText);
-      selection.removeAllRanges();
-      selection.addRange(range);
-    }
+  // copyText = () => {
+  //   var copyText = document.getElementById("copyText");
+  //   var range, selection;
+  //   if (document.body.createTextRange) {
+  //     range = document.body.createTextRange();
+  //     range.moveToElementText(copyText);
+  //     range.select();
+  //   } else if (window.getSelection) {
+  //     selection = window.getSelection();
+  //     range = document.createRange();
+  //     range.selectNodeContents(copyText);
+  //     selection.removeAllRanges();
+  //     selection.addRange(range);
+  //   }
 
-    try {  
-      // Now that we've selected the anchor text, execute the copy command  
-      var successful = document.execCommand('copy');  
-      var msg = successful ? 'successful' : 'unsuccessful';  
-      console.log('Copy command was ' + msg);  
-      window.alert("Copied the text: " + this.state.value);
-    } catch(err) {  
-      console.log('Oops, unable to copy');  
-    }  
-  
-  }
+  //   try {
+  //     // Now that we've selected the anchor text, execute the copy command  
+  //     var successful = document.execCommand('copy');
+  //     var msg = successful ? 'successful' : 'unsuccessful';
+  //     console.log('Copy command was ' + msg + " " + this.state.value);
+  //     // window.alert("Copied the text: " + this.state.value);
+
+  //     notification.notice({
+  //       content: 
+  //         <span className="notification">
+  //           <img width={25} height={25} src={successIc} alt="" />Copy successful!
+  //         </span>,
+  //       onClose() {
+  //         console.log('notify  close');
+  //       },
+  //     });
+
+  //   } catch (err) {
+  //     console.log('Oops, unable to copy');
+  //   }
+
+  // }
 
   renderTbl = async () => {
     try {
@@ -98,15 +116,6 @@ class Balances extends Component {
               <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">{data.availableBalance}</span></div>
             </td>
             <td style={{ width: '10%' }}>
-              <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">0</span></div>
-            </td>
-            <td style={{ width: '10%' }}>
-              <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">0</span></div>
-            </td>
-            <td style={{ width: '10%' }}>
-              <div className="sc-hkaZBZ jvVxXM"><span className="sc-tilXH yKCJu">0.0</span></div>
-            </td>
-            <td style={{ width: '10%' }}>
               <div className="sc-hkaZBZ sc-hqGPoI feIRPa"><button
                 className="sc-bZQynM sc-MYvYT sc-jbWsrJ ircCEl" onClick={this.viewSendForm}>Send</button></div>
             </td>
@@ -127,7 +136,7 @@ class Balances extends Component {
             <div className="sc-gCwZxT iWYAnd">
               <div><span>Balances</span>
                 <span className="text-address">
-                <i className="copyText" id="copyText">{value}</i>
+                  <i id="copyText">{value}</i>
                 </span>
               </div>
               <div className="sc-jDwBTQ cPxcHa">
@@ -139,9 +148,10 @@ class Balances extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="sc-fATqzn cNStFF">
+                {/* <div className="sc-fATqzn cNStFF">
                   <i className="fa fa-clone" aria-hidden="true" size="18" onClick={this.copyText} ></i>
-                </div>
+                </div> */}
+                <CopyText text={this.state.value} ></CopyText>
               </div>
             </div>
             <div>
@@ -153,9 +163,6 @@ class Balances extends Component {
                       <th>Name</th>
                       <th>Total Balance</th>
                       <th>Available Balance</th>
-                      <th>Frozen</th>
-                      <th>In Order</th>
-                      <th>BTC Value</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -172,7 +179,7 @@ class Balances extends Component {
         </div>
         <div><TransactionHistory></TransactionHistory></div>
       </div>
-      
+
     );
   }
 }

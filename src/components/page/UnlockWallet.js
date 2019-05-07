@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { codec } from 'icetea-common';
 import * as actions from '../../actions'
 import { connect } from 'react-redux';
 import logo from '../../assets/img/logo.png';
-import { decode } from '../../utils';
 import './UnlockWallet.css';
 import * as ct from './../../constants';
 import UnlockByJson from './UnlockByJson.js';
 import UnlockByMnemonic from './UnlockByMnemonic.js';
 import UnlockByPrivateKey from './UnlockByPrivateKey.js';
-import styled from 'styled-components';
 
 class UnlockWallet extends Component {
 

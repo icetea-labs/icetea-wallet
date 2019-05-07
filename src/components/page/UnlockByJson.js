@@ -6,14 +6,29 @@ import * as actions from '../../actions'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import './UnlockWallet.css';
+import PropTypes from 'prop-types';
 
+const propTypes = {
+    setAccount: PropTypes.func,
+    getAccount: PropTypes.func,
+    formatI18nText: PropTypes.func,
+}
+
+const defaultProps = {
+    setAccount: () => {},
+    getAccount: () => {},
+    formatI18nText: () => {},
+}
 class UnlockByJson extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             password: '',
-            keyStorefile: ''
+            keyStoreFile: '',
+            errMsg: '',
+            loading: false,
+            showTextArea: false
         };
     }
 
@@ -38,12 +53,15 @@ class UnlockByJson extends Component {
         this.props.history.push("/Home");
     }
 
-    cntReader = (event) => {
+    fileChange = (event) => {
         var file = event.target.files[0]
         var reader = new FileReader();
         reader.onload = (event) => {
             console.log('abc', event.target.result);
-            this.state.keyStorefile = JSON.parse(event.target.result);
+            this.setState({
+                keyStorefile: JSON.parse(event.target.result)
+            })
+            // this.state.keyStorefile = JSON.parse(event.target.result);
         };
 
         reader.readAsText(file);
@@ -68,7 +86,7 @@ class UnlockByJson extends Component {
                     <span>Upload keystore file</span>
                     <input type="file"
                         name="keyStorefile"
-                        onChange={this.cntReader} />
+                        onChange={this.fileChange} />
                 </div>
                 <div className="passBox">
                     <div className="passInput">
@@ -110,5 +128,8 @@ const mapDispatchToProps = (dispatch) => {
         }
     }
 }
+
+UnlockByJson.propTypes = propTypes;
+UnlockByJson.defaultProps = defaultProps;   
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UnlockByJson));

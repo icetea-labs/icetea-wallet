@@ -28,7 +28,7 @@ class TransactionConfirm extends Component {
         var wallet = {
             fromAdd: this.props.wallet.fromAdd,
             toAdd: this.props.wallet.toAdd,
-            amount: this.props.wallet.amount,
+            amount: this.props.wallet.amountText,
             memo: this.props.wallet.memo
           }
       
