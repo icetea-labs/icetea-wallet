@@ -1,4 +1,4 @@
-import React from "react"
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions'
 import styled from 'styled-components'
@@ -6,9 +6,8 @@ import styled from 'styled-components'
 import { Button } from './../elements'
 // Style component
 import {
-  DivBox2, Header1, Header2,
-  DivControlBtn, DivPreviousBt, Icon
-} from './../elements/utils'
+  Header2, DivControlBtn, DivPreviousBt, Icon
+ } from './../elements/utils'
 
 const DivTextNote = styled.div`
   text-align: left;
@@ -46,28 +45,20 @@ const DivShowPrivate = styled.div`
   padding: 10px 0px;
 `;
 
-class NewWallet03 extends React.Component {
+class NewWallet03 extends PureComponent {
 
-  continueClick = () => {
-      // Change form no
-      // this.props.onChangeForm('04');
-      this.props.onChangePopup('02');
+  _showPrivatekey = () => {
+    this.props.setShowPrivateKey(true);
   }
-
-  viewPrivate = () => {
-    window.alert("Private key: " + this.props.wallet.privateKey)
+  _goback = ()=> {
+    this.props.setStep('stepTwo');
   }
-  previousClick = ()=> {
-    this.props.onChangeForm('02');
+  _show = () => {
+    this.props.setConfirmMnemonic(true);
   }
-
   render() {
     var isActive ='active';
     return (
-      <DivBox2>
-        <div>
-          <Header1>Create New Wallet</Header1>
-        </div>
         <div>
           <Header2>
             <span className="page" >2</span>
@@ -82,47 +73,53 @@ class NewWallet03 extends React.Component {
             <p data-cy="mnemonic">{ this.props.wallet.mnemonic }</p>
           </DivShowMnemonic>
           <DivShowPrivate>
-            <div onClick={() => this.viewPrivate()} >View my Private Key &gt;&gt;</div>
+            <div onClick={() => this._showPrivatekey()} >View my Private Key &gt;&gt;</div>
           </DivShowPrivate>
 
           <DivControlBtn>
             <DivPreviousBt className="previousBt" >               
               <i className="fa fa-long-arrow-left" aria-hidden="true"></i>
-              <div className="unlock" onClick={() => this.previousClick()} >Previous</div>
+              <div className="unlock" onClick={() => this._goback()} >Previous</div>
             </DivPreviousBt>
             <Button
               width={'120px'}
-              onClick={() => this.continueClick()}
+              onClick={() => this._show()}
               className={isActive}>
                 <span style={{ 'marginRight': '10px' }} >Continue</span>
                 <Icon className="iconfont icon-continue" size="20" color="inherit"></Icon>
             </Button>
           </DivControlBtn>
         </div>
-      </DivBox2>
     );
   }
 }
 
+NewWallet03.defaultProps = {
+  mnemonic: "",
+  privateKey: "",
+  setStep: function() {},
+  setShowPrivateKey: function() {},
+  setConfirmMnemonic: function() {}
+}
+
 const mapStateToProps = state => {
   return {
-    wallet: state.wallet
+    mnemonic: state.create.mnemonic,
+    privateKey: state.create.privateKey
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSaveWallet: (data) => {
-      dispatch(actions.saveWallet(data))
-    },
-    onChangeForm: (step) => {
+    setStep: (step) => {
       dispatch(actions.setStep(step))
     },
-    onChangePopup: (puNo) => {
-      dispatch(actions.changePopup(puNo))
+    setShowPrivateKey: (value) => {
+      dispatch(actions.setShowPrivateKey(value))
+    },
+    setConfirmMnemonic: (value) => {
+      dispatch(actions.setConfirmMnemonic(value))
     }
   }
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(NewWallet03);
-// export default NewWallet; mapStateToProps

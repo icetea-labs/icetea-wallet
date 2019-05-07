@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -84,18 +85,22 @@ const DivText = styled.div`
   }
 `;
 
-export class WarningRecover extends Component {
-
-  handleCheckChange = (e) => {
-    this.props.handleCheckChange(!this.props.defaultChecked)
+export class WarningRecover extends PureComponent {
+  static defaultProps = {
+    defaultChecked: PropTypes.bool.isRequired,
+    handleCheckChange: PropTypes.func.isRequired
   }
 
+  static defaultProps = {
+    defaultChecked: false,
+    handleCheckChange: function() {}
+  }
+  
   render() {
-    var { defaultChecked } = this.props;
     return (
       <Container>
-        <input id="cbx" type="checkbox" checked={defaultChecked}
-          style={{ display: 'none' }} onChange={this.handleCheckChange} />
+        <input id="cbx" type="checkbox" checked={this.props.defaultChecked}
+          style={{ display: 'none' }} onChange={this.props.handleCheckChange} />
         <Label htmlFor="cbx">
           <span>
             <svg width="12px" height="10px" viewBox="0 0 12 10">

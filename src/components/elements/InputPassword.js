@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Container = styled.div`
   margin-top: 20px;
@@ -37,7 +38,7 @@ const Container = styled.div`
     border-color: rgb(21, 181, 221);
   }
 `;
-const DivValidPass = styled.div`
+const DivRulePassword = styled.div`
   margin-top: 5px;
   background: rgb(251, 251, 251);
   padding: 10px;
@@ -84,51 +85,61 @@ const DivValidPass = styled.div`
     }
   }
 `;
-export class InputPassword extends Component {
+
+export class InputPassword extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       agree: false,
       password: '',
-      isPassValid: {},
-      isShowBoxPass: false,
-      confirmPassword: '',
-      isShowBoxRePass: false,
-    };//{ cSelected: [] };
-  }
+    };
+    // props.onChange("", false);
+  };
+  
+  static propTypes = {
+    onChange: PropTypes.func,
+    withRules: PropTypes.bool,
+  };
 
-  handleChange = (e) => {
-    var value = e.currentTarget.value.trim()
+  static defaultProps = {
+    onChange: function() {},
+    withRules: false,
+  };
+
+  _passwordChange = (e) => {
+    var value = e.currentTarget.value.trim();
+    var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#])"); //[!@#\$%\^&\*]
+    var classRule1 = value ? value.length >= 8 ? 'pass' : 'invalid' : 'empty';
+    var classRule2 = value ? regex.test(value) ? 'pass' : 'invalid' : 'empty';
     this.setState({
       password: value
-    })
-    this.props.onChange(value);
-  }
+    },() => this.props.onChange(value, "pass" === classRule1 && "pass" === classRule2));
+  };
 
   render() {
-    var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#])"); //[!@#\$%\^&\*]
     var { password } = this.state;
     var { withRules } = this.props;
+    var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#])"); //[!@#\$%\^&\*]
+    var classRule1 = password ? password.length >= 8 ? 'pass' : 'invalid' : 'empty';
+    var classRule2 = password ? regex.test(password) ? 'pass' : 'invalid' : 'empty';
 
     return (
       <Container>
-        <p className={this.state.password.trim() === '' ? 'label' : 'label label-value'}>Set a New Password</p>
+        <p className={password ? 'label label-value': 'label'}>Set a New Password</p>
         <div className="inputWrap">
-          <input type="password" name="password" value={ password } onChange={this.handleChange} />
+          <input type="password" name="password" autoFocus={false} autoComplete="off" value={ password } onChange={this._passwordChange} />
         </div>
         {
           withRules &&
-          <DivValidPass>
+          <DivRulePassword>
             <div className="text">Your password must include the following properties: </div>
             <ul>
-              <li className={password.trim() === '' ? 'empty' :
-                password.length < 8 ? 'invalid' : 'pass'}>8 or more characters</li>
-              <li className={password.trim() === '' ? 'empty' :
-                regex.test(password) ? 'pass' : 'invalid'}>An upper-case letter, symbol and a number</li>
+              <li className={ classRule1 }>8 or more characters</li>
+              <li className={ classRule2 }>An upper-case letter, symbol and a number</li>
             </ul>
-          </DivValidPass>
+          </DivRulePassword>
         }
       </Container>
-    );
+  );
   }
 }

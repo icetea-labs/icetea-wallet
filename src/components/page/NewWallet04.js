@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { Button } from './../elements'
 // Style component
 import {
-  DivBox2, Header1, Header2, DivControlBtn, DivPreviousBt, Icon
+ Header2, DivControlBtn, DivPreviousBt, Icon
 } from './../elements/utils'
 
 const DivH3 = styled.div`
@@ -159,10 +159,6 @@ class NewWallet04 extends React.Component {
   render() {
     var isActive ='active';
     return (
-      <DivBox2 >
-        <div>
-          <Header1>Create New Wallet</Header1>
-        </div>
         <div>
           <Header2>
             <span className="page" >2</span>
@@ -205,7 +201,6 @@ class NewWallet04 extends React.Component {
             </Button>
           </DivControlBtn>
         </div>
-      </DivBox2>
     );
   }
 }

@@ -1,11 +1,10 @@
-import React from "react";
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import * as bip39 from 'bip39';
 import HDKey from 'hdkey';
-import { codec, utils } from 'icetea-common'
 import { encode } from '../../utils';
 import * as actions from '../../actions';
 
@@ -13,220 +12,208 @@ import * as actions from '../../actions';
 import { Button, WarningRecover, InputPassword } from './../elements'
 // Style component
 import {
-  DivBox2, Header1, Header2,
-  InputPass, InputConfirmPass, DivControlBtn,
-  DivUnlockLink, DivFooter, DivFooterCheckBox, DivValidPass, Icon
-} from './../elements/utils'
-
-const DivAgree = styled.div`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  color: rgb(132, 142, 156);
+  Header2, DivControlBtn, DivUnlockLink, DivPreviousBt, Icon
+ } from './../elements/utils'
+ 
+const WrapperAgree = styled.div`
+  font-size:12px;
+  padding:20px 0;
+  color:#848e9c;
   & label span {
     white-space: normal;
   }
 `;
-
-class NewWallet01 extends React.Component {
+const WrapperRePassword = styled.div`
+  margin:40px 0 20px;
+`;
+const WrapperRePassErr = styled.p`
+  color:#F23051;
+  font-size:14px;
+  margin-top:5px;
+`;
+class NewWallet01 extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       agree: false,
-      password: '',
-      isPassValid: {},
-      isShowBoxPass: false,
-      confirmPassword: '',
-      isShowBoxRePass: false,
-    };//{ cSelected: [] };
+      loading: false,
+      isPasswordValid: true,
+      rePassErr: "",
+      rePassword: ""
+    };
   }
 
-  continueClick = () => {
-    var isShowBoxRePass = false;
-    if (!this.state.agree) {
-      window.alert("Confirm check box")
-    } else if (this.state.password !== this.state.confirmPassword) {
-      isShowBoxRePass = true;
-    } else if (this.state.password !== '') {
-      this.props.onChangePopup('01');
-      isShowBoxRePass = false;
-      setTimeout(() => {
-        this.generateAccount()
-      }, 500);
-    }
+  static propTypes = {
+    password: PropTypes.string,
+    privateKey: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object]),
+    mnemonic: PropTypes.string,
+    address: PropTypes.string,
+    keyStore: PropTypes.string,
+    autoFocus: PropTypes.bool,
+    setPassword: PropTypes.func,
+    setAccount: PropTypes.func,
+    setStep: PropTypes.func,
+    setLoading: PropTypes.func,
+    setShowKeystoreText: PropTypes.func,
+  };
+
+  static defaultProps = {
+    password: "",
+    privateKey: "",
+    mnemonic: "",
+    address: "",
+    keyStore: null,
+    autoFocus: false,
+    setPassword: function() {},
+    setAccount: function() {},
+    setStep: function() {},
+    setLoading: function() {},
+    setShowKeystoreText: function() {}
+  };
+
+  _passwordChange = (value, isPasswordValid) => {
+    this.props.setPassword(value);
     this.setState({
-      isShowBoxRePass
+        isPasswordValid: isPasswordValid
     })
-  }
+  };
 
-  generateAccount = async () => {
-    var mnemonic = bip39.generateMnemonic();
-    var seed = await bip39.mnemonicToSeed(mnemonic);
-    var hdkey = HDKey.fromMasterSeed(seed);
-    var keyObject = encode(hdkey.privateKey, this.state.password);
-    this.download(JSON.stringify(keyObject), keyObject.address + '_keystore.txt', 'text/plain');
-    // save to state
-    var wallet = {
-      mnemonic: mnemonic,
-      privateKey: codec.toString(hdkey.privateKey),
-      address: utils.getAccount(hdkey.privateKey).address
-    }
-    this.props.onSaveWallet(wallet);
-    this.props.onChangePopup('00');
-    // Change form no
-    this.props.onChangeForm('02');
-  }
+  _rePasswordChange = (value) => {
+    var t = {
+      rePassword: value,
+      // ...this.state
+    };
+    this.props.password === value && (t.rePassErr = "");
+    this.setState(t);
+  };
 
-  handleChange = (e) => {
-    let target = e.target;
-    let value = target.type === 'checkbox' ? target.checked : target.value.trim();
-    let name = target.name;
+  _handleCheckChange = (e) => {
+    document.activeElement.blur();
     this.setState({
-      [name]: value
+        agree: e.target.checked
     })
-    if (name === 'password') {
-      this.validatePassword(value)
-    } else if (name === 'confirmPassword' && this.state.password === value) {
-      console.log('value', value)
-      // update state
+  };
+
+  _gotoNext = function(e) {
+    document.activeElement.blur();
+    var { password } = this.props;
+    var { rePassword } = this.state;
+    if (password.length < 8 ) {
+      alert("invalid password, reset again");
+    } else if (password === rePassword) {
+      this.props.setLoading(true);
+      setTimeout(async() => {
+        var account = await this._createAccountWithMneomnic();
+        this._downloadKeyStore(account.keyStore);
+        this.props.setAccount({
+            privateKey: account.privateKey,
+            mnemonic: account.mnemonic,
+            address: account.address,
+            keyStore: account.keyStore,
+            step: "stepTwo"
+          }
+        )
+        console.log(account);
+        this.props.setLoading(false);
+      }, 100)
+    } else {
       this.setState({
-        isShowBoxRePass: false
+        rePassErr: "The password entered does not match"
       })
     }
   }
 
-  handleCheckChange = (e) => {
-    this.setState({
-      agree: !this.state.agree
-    })
-  }
-  
-  handlePasswordChange = (value) => {
-    this.setState({
-      password: value
-    });
-  }
-  
-  validatePassword = (value) => {
-    var { isPassValid, isShowBoxPass } = this.state;
-    if (value.length < 8) {
-      isPassValid.length = false;
-    } else {
-      isPassValid.length = true;
+  _createAccountWithMneomnic = async() => {
+    var mnemonic = bip39.generateMnemonic();
+    var seed = await bip39.mnemonicToSeed(mnemonic);
+    var hdkey = HDKey.fromMasterSeed(seed);
+    var keyObject = encode(hdkey.privateKey, 'a');
+    return {
+        privateKey: hdkey.privateKey.toString("hex"),
+        address: keyObject.address,
+        mnemonic: mnemonic,
+        keyStore: keyObject
     }
-
-    var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#])"); //[!@#\$%\^&\*]
-    // console.log('value--',value,'---',regex.test(value))
-    if (regex.test(value)) {
-      isPassValid.text = true;
-    } else {
-      isPassValid.text = false;
-    }
-
-    if (this.state.isPassValid.length && this.state.isPassValid.text) {
-      isShowBoxPass = false;
-    } else {
-      isShowBoxPass = true;
-    }
-    // update state
-    this.setState({
-      isPassValid,
-      isShowBoxPass
-    })
   }
 
-  download(content, fileName, contentType) {
-    var a = document.createElement("a");
-    var file = new Blob([content], { type: contentType });
+  _downloadKeyStore = (keyObject) => {
+    var a = document.createElement("a")
+      , file = new Blob([JSON.stringify(keyObject)]);
     a.href = URL.createObjectURL(file);
-    a.download = fileName;
+    a.download = "".concat(keyObject.address , "_keystore");
+    document.body.appendChild(a);
     a.click();
+    window.URL.revokeObjectURL(a.href);
+    a.remove()
+  }
+
+  _gotoUnlock = () => {
+    this.props.history.push("/unlock");
   }
 
   render() {
-    var { password, isPassValid } = this.state;
-    var boxMsg =
-      <DivValidPass>
-        <div className="text">Your password must include the following properties: </div>
-        <ul>
-          <li className={password.trim() === '' ? 'empty' :
-            isPassValid.length ? 'pass' : 'invalid'}>8 or more characters</li>
-          <li className={password.trim() === '' ? 'empty' :
-            isPassValid.text ? 'pass' : 'invalid'}>An upper-case letter, symbol and a number</li>
-        </ul>
-      </DivValidPass>
-
-    var boxErrorConfirmPass = <p className="rePasswordinvalid">The password entered does not match</p>
-    var boxValiConfirmPass = this.state.isShowBoxRePass ? boxErrorConfirmPass : ''
-    var boxValiPass = this.state.isShowBoxPass ? boxMsg : ''
-    // console.log(boxValiConfirmPass)
-    var { agree, isShowBoxPass, confirmPassword } = this.state;
-    var isActive = (agree && !isShowBoxPass && confirmPassword !== '') ? 'active' : ''
+    var {       
+      agree,
+      loading,
+      isPasswordValid,
+      rePassErr,
+      rePassword
+    } = this.state;
     return (
-      <DivBox2>
-        <div>
-          <Header1>Create New Wallet</Header1>
-        </div>
         <div>
           <Header2>
             <span className="page" >1</span>
             <span className="page totalPage">/2</span>
             <span className="title" >Create Keystore File + Password</span>
           </Header2>
-
-          <InputPassword withRules={!!password} warning={false} onChange={this.handlePasswordChange} />
-
-          <InputConfirmPass>
-            <InputPass>
-              <p className={this.state.confirmPassword.trim() === '' ? 'label' : 'label label-value'}>Re-enter Password</p>
-              <div className="inputWrap">
-                <input type="password" name="confirmPassword" onChange={this.handleChange} />
-              </div>
-            </InputPass>
-            {boxValiConfirmPass}
-          </InputConfirmPass>
-
+          <InputPassword withRules={ !isPasswordValid } onChange={this._passwordChange} />
+          <WrapperRePassword>
+            <InputPassword withRules={ false } warning={ !!rePassErr } onChange={this._rePasswordChange} />
+            { rePassErr && <WrapperRePassErr>{ rePassErr }</WrapperRePassErr> }
+          </WrapperRePassword>
           <DivControlBtn>
-            <DivUnlockLink><Link className="unlock" to="/unlock">Unlock an Existing Wallet</Link></DivUnlockLink>
+            <DivUnlockLink onClick={ this._gotoUnlock} className="previous-button">Unlock an Existing Wallet</DivUnlockLink>
             <Button
-              // disabled = {true}
+              disabled={!agree || !isPasswordValid || !rePassword}
               width={'200px'}
-              onClick={() => this.continueClick()}
-              className={isActive}>
+              onClick={() => this._gotoNext()}
+              // className="download-keystore"
+              >
               <span style={{ 'marginRight': '10px' }} >Download Keystore File</span>
               <Icon className="iconfont icon-continue" size="20" color="inherit"></Icon>
             </Button>
           </DivControlBtn>
-          <DivAgree>
-            <WarningRecover defaultChecked={ agree } handleCheckChange={this.handleCheckChange } />
-          </DivAgree>
+          <WrapperAgree>
+            <WarningRecover defaultChecked={agree} handleCheckChange={this._handleCheckChange} />
+          </WrapperAgree>
         </div>
-      </DivBox2>
     );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    name: state.Name
+    password: state.create.password
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSaveWallet: (data) => {
-      dispatch(actions.saveWallet(data))
+    setPassword: (value) => {
+      dispatch(actions.setPassword(value));
     },
-    onChangeForm: (step) => {
-      dispatch(actions.setStep(step))
+    setAccount: (value) => {
+      dispatch(actions.setAccount(value));
     },
-    onChangePopup: (puNo) => {
-      dispatch(actions.changePopup(puNo))
+    setStep: (value) => {
+      dispatch(actions.setStep(value));
+    },
+    setLoading: (value) => {
+      dispatch(actions.setLoading(value));
     }
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewWallet01));
-
-// export default NewWallet; mapStateToProps
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NewWallet01));

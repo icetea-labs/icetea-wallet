@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
   Home,
-  NewWallet,
+  NewWalletMaster,
   UnlockWallet,
   Balances,
   Transaction,
@@ -17,8 +17,8 @@ class App extends Component {
       <span>
         <Router>
           <Switch>
-            <Route exact path='/' component={NewWallet} />
-            <Route path={`/create`} component={NewWallet} />
+            <Route exact path='/' component={NewWalletMaster} />
+            <Route path={`/create`} component={NewWalletMaster} />
             <Route path={`/unlock`} component={UnlockWallet} />
             <Layout>
               <Route path={`/Home`} component={Home} />
