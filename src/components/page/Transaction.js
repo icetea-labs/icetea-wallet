@@ -64,7 +64,7 @@ class Transaction extends Component {
 
     var answer = window.confirm("Are you sure to transfer?")
 
-    if (answer === true) {
+    if (answer) {
       await tweb3.transfer(this.state.addressText, this.state.amountText);
       window.alert("Transfer Success")
     } else { return false; }

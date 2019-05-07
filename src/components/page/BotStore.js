@@ -31,7 +31,6 @@ class BotStore extends Component {
                 <div style={{ textAlign: 'right' }}>
                   <button className="SeriesCard__Badge-sedkn5-3 fTfjsA" onClick={() => this.connectBot(bot.address)}>Get</button>
                 </div>
-                <h1 data-testid="series-name" className="SeriesCard__Title-sedkn5-5 cceqce">{bot.description}</h1>
               </div>
             </article>
           </div>
@@ -96,7 +95,6 @@ class BotStore extends Component {
             <input type="text" data-testid="search-bar-input" onChange={() => this.onChange()} value="" placeholder="Filter Series" />
             <div className="underline"></div>
           </div>
-
           <div className="Layouts__TutorialGrid-fbi9rv-11 jxllbm">
             {this.state.botStore}
           </div>

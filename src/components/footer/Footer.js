@@ -8,7 +8,7 @@ class Footer extends Component {
         <div className="sc-cIShpX cGiNMj">
           <ul className="sc-kafWEX cEyVCf"></ul>
           <div className="sc-feJyhm hlyVZS">
-            <div className="sc-iELTvK kJqula">© 2018 - 2019 Binance.org. All rights reserved.</div>
+            <div className="sc-iELTvK kJqula">© 2018 - 2019 Ice Tea. All rights reserved.</div>
             <ul className="sc-cmTdod eNsIra">
               <li><a href="https://t.me/BinanceDEXchange " target="blank" rel="noopener"><i
                 className="iconfont icon-telegram sc-dnqmqq caBmDY" size="14" color=""></i></a></li>
