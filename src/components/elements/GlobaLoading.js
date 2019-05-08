@@ -49,7 +49,7 @@ const Rect = styled.div`
     }
 `;
 
-class Loading extends Component {
+export class GlobaLoading extends Component {
   render() {
     return (
       <Wrapper>
@@ -63,5 +63,3 @@ class Loading extends Component {
     );
   }
 }
-
-export default Loading;
