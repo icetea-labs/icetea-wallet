@@ -12,7 +12,7 @@ import NewWallet03 from './NewWallet03';
 import NewWallet04 from './NewWallet04';
 import NewWallet05 from './NewWallet05';
 import pencil from './../../../assets/img/pencil.svg';
-import logo from './../../../assets/img/logo01.svg';
+import logo from './../../../assets/img/logo.svg';
 
 import { Header1 } from '../../elements/utils'
 import {
