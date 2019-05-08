@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './BotStore.css';
 import tweb3 from '../../service/tweb3';
-import { callbackify } from 'util';
-
+// import PuBot from './PuBot';
 
 class BotStore extends Component {
   constructor() {
@@ -27,19 +26,10 @@ class BotStore extends Component {
           <div key={index} >
             <article color="#fff" data-testid="series" className="SeriesCard__Card-sedkn5-0 bWCvDb">
               <div className="SeriesCard__CardLayout-sedkn5-1 ePsksC">
-                <div style={{ display: 'flex', }} >
-                  <img className="float-left" style={{ width: '50px', height: '50px' }} src={bot.icon} alt="Material Dashboard" />
-                  <div className="botName" >
-                    <div>
-                      <p>{bot.name}</p>
-                      <p>@{bot.alias}</p>
-                    </div>
-                    <button className="sc-bZQynM sc-MYvYT sc-jbWsrJ ircCEl1" onClick={this.viewSendForm}>Get</button>
-                  </div>
-                </div>
-                <hr></hr>
-                <div>
-                  <p className="SeriesCard__Title-sedkn5-5 cceqce" >{bot.description}</p>
+                {/* <img className="float-left" style={{ width: '50px', height: '50px' }} src={bot.icon} alt="Material Dashboard"></img> */}
+                <span className="SeriesCard__Level-sedkn5-2 kClzgQ">{bot.name}</span>
+                <div style={{ textAlign: 'right' }}>
+                  <button className="SeriesCard__Badge-sedkn5-3 fTfjsA" onClick={() => this.connectBot(bot.address)}>Get</button>
                 </div>
               </div>
             </article>
@@ -48,6 +38,7 @@ class BotStore extends Component {
       })
     });
   }
+
   getBotList = async () => {
     var address = 'system.botstore';
     const contract = tweb3.contract(address);
@@ -74,6 +65,22 @@ class BotStore extends Component {
     }
     return resInfo;
   }
+
+  connectBot = (address) => {
+    // var url = 'index.html' + '?address=' + address;
+    var url = 'http://localhost:3001/botpoup.html' + '?address=' + address;
+    // var url = '?address=' + address;
+    console.log('Address ' + address);
+    return this.popupwindow(url, 'nothing', 800, 600);
+    // return <PuBot botAdd={address}></PuBot>
+  }
+
+  popupwindow = (url, title, w, h) => {
+    var left = (window.screen.width / 2) - (w / 2)
+    var top = (window.screen.height / 2) - (h / 2)
+    return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left)
+  }
+
   render() {
     return (
       <div className="Playlists__PlaylistsPageLayout-sc-17pexn-0 bUAaOS" >

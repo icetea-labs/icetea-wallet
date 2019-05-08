@@ -10,6 +10,7 @@
     "antd": "^3.17.0",
     "bip39": "^3.0.1",
     "bootstrap": "^4.3.1",
+    "botui": "^0.3.8",
     "classnames": "^2.2.6",
     "dateformat": "^3.0.3",
     "font-awesome": "^4.7.0",
@@ -25,6 +26,7 @@
     "qrcode.react": "^0.9.3",
     "rc-dropdown": "^2.4.1",
     "rc-menu": "^7.4.22",
+    "rc-notification": "^3.3.1",
     "rc-pagination": "^1.17.14",
     "rc-queue-anim": "^1.6.12",
     "rc-select": "^9.1.0",
@@ -35,9 +37,11 @@
     "react-redux": "^7.0.1",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
+    "react-vue": "0.0.5",
     "reactstrap": "^8.0.0",
     "redux": "^4.0.1",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "vue": "^2.6.10"
   },
   "scripts": {
     "start": "PORT=4000 react-scripts start",

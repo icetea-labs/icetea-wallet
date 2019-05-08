@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Header.css'
 import * as actions from '../../actions'
 import { connect } from 'react-redux';
+import CopyText from  '../page/CopyText'
 import styled from 'styled-components'
 
 const DivWapper = styled.div`
@@ -83,7 +84,9 @@ class Header extends Component {
                   <div className="address">{address}</div>
                 </div>
                 <div className="op"><span title="copy address">
-                  <i className="iconfont icon-copy sc-dnqmqq iiYHFz" size="16" color=""></i>
+                  {/* <i className="iconfont icon-copy sc-dnqmqq iiYHFz" size="16" color=""></i> */}
+                  {/* <i className="iconfont fa fa-clone iiYHFz" aria-hidden="true"></i> */}
+                  <CopyText text={address} ></CopyText>
                 </span>
                   <span title="go to explorer">
                     <i className="iconfont icon-link sc-dnqmqq iiYHFz" size="16" color=""></i>
