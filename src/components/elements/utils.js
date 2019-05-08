@@ -109,8 +109,8 @@ export const DivValidPass = styled.div`
   }
 }
 `;
-export const DivControlBtn = styled.div`
-  /* display:flex;
+export const DivControlBtnKeystore = styled.div`
+  display:flex;
   flex-direction:row;
   justify-content:space-between;
   padding:20px 0 0 0;
@@ -118,10 +118,13 @@ export const DivControlBtn = styled.div`
   @media (min-width:320px) and (max-width:623px){
     flex-direction:column;
     justify-content:space-around;
-    align-items:center;height:70px;
+    align-items:center;
+    height:70px;
     .previous-button{order:1;}
     .download-keystore{order:0;margin-top:20px;}
-  } */
+  }
+`;
+export const DivControlBtn = styled.div`
   a{
     color:inherit;
     &:hover{color:#f0b90b;}
