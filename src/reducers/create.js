@@ -1,28 +1,28 @@
 import * as types from '../constants/ActionTypes'
 
-// const initialState = {
-//   password: "",
-//   address: "",
-//   privateKey: "",
-//   keyStore: "",
-//   step: "inputPassword",
-//   mnemonic: "",
-//   keyStoreText: "",
-//   showPrivateKey: false,
-//   confirmMnemonic: false
-// };
-
 const initialState = {
   password: "",
   address: "",
   privateKey: "",
   keyStore: "",
-  step: "confirmMnemonic", // confirmMnemonic stepTwo
-  mnemonic: "taxi sing imitate select scale oak asset puppy remove position jacket hair retire another medal clump heavy lecture exercise home drive recipe dwarf unaware",
+  step: "inputPassword",
+  mnemonic: "",
   keyStoreText: "",
   showPrivateKey: false,
   confirmMnemonic: false
 };
+
+// const initialState = {
+//   password: "",
+//   address: "",
+//   privateKey: "",
+//   keyStore: "",
+//   step: "confirmMnemonic", // confirmMnemonic stepTwo
+//   mnemonic: "taxi sing imitate select scale oak asset puppy remove position jacket hair retire another medal clump heavy lecture exercise home drive recipe dwarf unaware",
+//   keyStoreText: "",
+//   showPrivateKey: false,
+//   confirmMnemonic: false
+// };
 
 const create = ( state = initialState, action ) => {
   switch (action.type) {

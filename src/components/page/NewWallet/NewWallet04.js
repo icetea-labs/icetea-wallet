@@ -91,7 +91,7 @@ class NewWallet04 extends React.Component {
     var selectItem = this.state.selectedWords
       , mnemonic = this.props.mnemonic.split(" ");
     this.setState({
-      isSequenceCorrect: true//_.isEqual(mnemonic.slice(0, selectItem.length), selectItem)
+      isSequenceCorrect: _.isEqual(mnemonic.slice(0, selectItem.length), selectItem)
     })
   };
 
