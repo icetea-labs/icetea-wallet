@@ -19,6 +19,7 @@
 }
 
 .container {
+    width: 830px;
     box-shadow: rgb(228, 228, 228) 0px 0px 10px;
     background: rgb(255, 255, 255);
     padding: 40px 60px;
@@ -161,6 +162,27 @@
     cursor: pointer;
 }
 
+.upload img {
+    width: 24px;
+    margin-right: 5px;
+}
+
+.ipCh {
+    color: rgb(242, 48, 81);
+    position: absolute;
+    bottom: 45px;
+    left: 0px;
+    right: 0px;
+    font-size: 14px;
+    display: flex;
+    height: 20px;
+}
+
+.ipCh img {
+    width: 15px;
+    margin-right: 5px;
+}
+
 .opt2 {
     font-size: 14px;
     display: flex;
@@ -254,6 +276,7 @@
 .createNew {
     font-size: 14px;
     color: rgb(240, 185, 11);
+    cursor: pointer;
 }
 
 .unlockBtn {
@@ -278,6 +301,11 @@
     border-color: initial;
     border-image: initial;
     outline: none;
+}
+
+.unlockBtn span {
+    width: 100%;
+    transition: transform 0.2s ease 0s;
 }
 
 .mnemonicTitle {
@@ -369,4 +397,9 @@
     border-bottom: 1px solid rgba(234, 236, 239, 0.5);
     padding: 0px 0px 10px;
     background: inherit;
+}
+
+.wP {
+    font-size: 14px;
+    margin: 40px 0px;
 }

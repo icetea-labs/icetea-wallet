@@ -95,9 +95,9 @@ class Transaction extends Component {
       memo: this.state.memo
     }
 
-    this.props.onSaveWallet(wallet);
+    this.props.sendInfo(wallet);
 
-    console.log('Wallet check', wallet);
+    console.log('sendInfo check', wallet);
   }
 
 
@@ -232,7 +232,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSaveWallet: (data) => {
+    sendInfo: (data) => {
       dispatch(actions.saveWallet(data))
     }
   }

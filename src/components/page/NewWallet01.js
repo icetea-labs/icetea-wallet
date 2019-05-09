@@ -168,9 +168,9 @@ class NewWallet01 extends PureComponent {
             <span className="page totalPage">/2</span>
             <span className="title" >Create Keystore File + Password</span>
           </Header2>
-          <InputPassword withRules={ !isPasswordValid } onChange={this._passwordChange} />
+          <InputPassword title="Set a New Password" withRules={ !isPasswordValid } onChange={this._passwordChange} />
           <WrapperRePassword>
-            <InputPassword withRules={ false } warning={ !!rePassErr } onChange={this._rePasswordChange} />
+            <InputPassword title="Re-enter Password" withRules={ false } warning={ !!rePassErr } onChange={this._rePasswordChange} />
             { rePassErr && <WrapperRePassErr>{ rePassErr }</WrapperRePassErr> }
           </WrapperRePassword>
           <DivControlBtn>

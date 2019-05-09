@@ -6,6 +6,10 @@ import * as actions from '../../actions';
 
 class TransactionConfirm extends Component {
 
+    componentDidMount = () => {
+        console.log('CK props', this.props)
+    }
+
     sendTransaction = async () => {
 
         tweb3.wallet.importAccount('CJUPdD38vwc2wMC3hDsySB7YQ6AFLGuU6QYQYaiSeBsK')

@@ -4,53 +4,77 @@ import { Link } from 'react-router-dom';
 import { codec, utils } from 'icetea-common';
 import * as actions from '../../actions'
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 import './UnlockWallet.css';
 import PropTypes from 'prop-types';
+import upload from '../../assets/img/upload.png';
+import FormError from './FormError.js';
+
+// Import custom component
+import { Button, InputPassword } from './../elements'
+// Style component
+import {
+    Header2, DivControlBtn, Icon
+} from './../elements/utils'
 
 const propTypes = {
+    password: PropTypes.string,
     setAccount: PropTypes.func,
     getAccount: PropTypes.func,
     formatI18nText: PropTypes.func,
 }
 
 const defaultProps = {
-    setAccount: () => {},
-    getAccount: () => {},
-    formatI18nText: () => {},
+    password: "",
+    setAccount: () => { },
+    getAccount: () => { },
+    formatI18nText: () => { },
 }
+
 class UnlockByJson extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            password: '',
+            password:'',
             keyStoreFile: '',
             errMsg: '',
             loading: false,
-            showTextArea: false
+            showTextArea: false,
+            isPasswordValid: true,
         };
     }
 
     unlockWalletClick = () => {
-        console.log(this.state);
-        console.log('I want to see keyStoreFile', this.state.keyStorefile);
+        console.log('Check State',this.state);
+        // console.log('I want to see keyStoreFile', this.state.keyStorefile);
+        // console.log('checkPass props', this.props.password);
 
-        var account = decode(this.state.password, this.state.keyStorefile);
-        var privateKey = codec.toString(account.privateKey);
-        console.log('Private Key', privateKey);
-        window.alert("Privatekey: " + privateKey);
-
-        // save to store
-        var wallet = {
-            privateKey: codec.toString(privateKey),
-            password: this.state.password,
-            address: utils.getAccount(privateKey).address
+        try {
+            var account = decode(this.state.password, this.state.keyStorefile);
+            var privateKey = codec.toString(account.privateKey);
+            console.log('Private Key', privateKey);
+            window.alert("Privatekey: " + privateKey);
+    
+            // save to store
+            var wallet = {
+                privateKey: codec.toString(privateKey),
+                password: this.state.password,
+                address: utils.getAccount(privateKey).address
+            }
+            this.props.onSaveWallet(wallet);
+    
+            console.log('Wallet check', wallet);
+            this.props.history.push("/Home");
+        } catch {
+            this.setState({
+                errMsg: "Keystore mac check failed - wrong password?",
+                isPasswordValid: false
+            })
         }
-        this.props.onSaveWallet(wallet);
 
-        console.log('Wallet check', wallet);
-        this.props.history.push("/Home");
+        // console.log('Recheck State',this.state);
+        
     }
 
     fileChange = (event) => {
@@ -76,36 +100,48 @@ class UnlockByJson extends Component {
         })
     }
 
+    _gotoCreate = (e) => {
+        e.preventDefault();
+        this.props.history.push("/create")
+    }
+
+    _passwordChange = (value, isPasswordValid) => {
+        this.props.setPassword(value);
+        this.setState({
+            isPasswordValid: !isPasswordValid,
+            password: value
+        })
+        console.log('checkP', value)
+    };
+
     render() {
+        var isPasswordValid = this.state;   
         return (
             <div>
                 <div className="opt1">
                     <span className="show">Select your keystore file</span>
                 </div>
                 <div className="upload">
+                    <img src={upload} alt="" />
                     <span>Upload keystore file</span>
                     <input type="file"
                         name="keyStorefile"
                         onChange={this.fileChange} />
                 </div>
-                <div className="passBox">
-                    <div className="passInput">
-                        <p className="label">Enter your wallet password</p>
-                        <div className="inputWrap">
-                            <input type="password"
-                                name="password"
-                                placeholder="Your password"
-                                onChange={this.handleChange}
-                                required
-                            />
-                        </div>
-                    </div>
+                <div className="wP">
+                    <InputPassword title="Enter your wallet password" withRules={ !isPasswordValid } onChange={this._passwordChange} />
                 </div>
+              
+                <FormError isHidden={this.state.isPasswordValid} errorMessage={this.state.errMsg} />
+               
                 <div className="formFooter">
-                    <Link className="createNew" to="/create">Create a New Wallet</Link>
-                    <button className="unlockBtn" onClick={() => this.unlockWalletClick()}>
-                        <span>Unlock Wallet Now</span>
-                    </button>
+                    <a className="createNew" onClick={this._gotoCreate}><span>Create a New Wallet</span></a>
+                    <Button
+                        width={'170px'}
+                        onClick={() => this.unlockWalletClick()}>
+                    <span style={{ 'marginRight': '10px' }} >Unlock Wallet Now</span>
+                    <Icon className="iconfont icon-continue" size="20" color="inherit"></Icon>
+                    </Button>
                 </div>
             </div>
         );
@@ -120,6 +156,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        setPassword: (value) => {
+            dispatch(actions.setPassword(value));
+        },
         onChangeULType: (ulType) => {
             dispatch(actions.changeULType(ulType))
         },
@@ -130,6 +169,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 UnlockByJson.propTypes = propTypes;
-UnlockByJson.defaultProps = defaultProps;   
+UnlockByJson.defaultProps = defaultProps;
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UnlockByJson));

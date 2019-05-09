@@ -108,7 +108,7 @@ class NewWalletMaster extends PureComponent {
           </DivBox1>
         </DivWallet>
         { isLoading && <Loading/> }
-        { <PuShowPrivateKey/> }
+        {/* { <PuShowPrivateKey/> } */}
 
         {/* { confirmMnemonic || true && <Pu01/> } */}
         { showPrivateKey && <Pu02/> }

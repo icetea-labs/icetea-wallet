@@ -125,7 +125,7 @@ export class InputPassword extends PureComponent {
 
     return (
       <Container>
-        <p className={password ? 'label label-value': 'label'}>Set a New Password</p>
+        <p className={password ? 'label label-value': 'label'}>{this.props.title}</p>
         <div className="inputWrap">
           <input type="password" name="password" autoFocus={false} autoComplete="off" value={ password } onChange={this._passwordChange} />
         </div>
