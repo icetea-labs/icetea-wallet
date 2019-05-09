@@ -10,3 +10,9 @@ export const SET_CONFIRM_MNEMONIC     = 'createAccount/SET_CONFIRM_MNEMONIC';
 export const SET_SHOW_KEYSTORE_TEXT   = 'createAccount/SET_SHOW_KEYSTORE_TEXT';
 // globalData
 export const SET_GLOBAL_LOADING = 'SET_GLOBAL_LOADING';
+
+//account
+export const SET_ACCOUNT_1  = 'account/SET_ACCOUNT';
+export const SET_USER_INFO  = 'account/SET_USER_INFO';
+export const SET_NEEDAUTH   = 'account/SET_NEEDAUTH';
+export const SET_WALLETCONNECT_URI  = 'account/SET_WALLETCONNECT_URI';

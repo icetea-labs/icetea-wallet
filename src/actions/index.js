@@ -11,3 +11,9 @@ export const setShowPrivateKey  = data =>     ({ type: types.SET_SHOW_PRIVATEKEY
 export const setConfirmMnemonic = data =>     ({ type: types.SET_CONFIRM_MNEMONIC, data: data });
 // golobal
 export const setLoading         = data =>     ({ type: types.SET_GLOBAL_LOADING , data: data });
+
+// Save account
+export const setAccount1        = data => ({ type: types.SET_ACCOUNT_1, data: data});
+export const setUserInfo        = data => ({ type: types.SET_USER_INFO, data: data});
+export const setNeedAuth        = data => ({ type: types.SET_NEEDAUTH, data: data});
+export const setWalletConUri    = data => ({ type: types.SET_WALLETCONNECT_URI, data: data});
