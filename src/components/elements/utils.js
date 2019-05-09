@@ -1,7 +1,6 @@
-import styled from 'styled-components'
-import { zIndex } from './../../constants';
-import { Button } from './Button';
-
+import React from 'react';
+import styled from 'styled-components';
+import { zIndex } from './../../constants/Styles';
 // For create keystore
 export const Header1 = styled.div`
   font-size: 24px;
@@ -196,20 +195,143 @@ export const DivContentW2 = styled.div`
     text-align: center;
   }
 `;
-export const Icon = styled.i`
-  font-size : ${props => props.size + 'px' || "10px"};
-`;
 
+const IconBase = styled.i`
+  color: ${props => props.color };
+  font-size: ${props => "".concat(props.size, "px") };
+  &:hover {
+    color: ${props => props.hoverColor ? props.hoverColor : props.color };
+  };
+`;
+export const Icon = (props) => {
+  var {size, color, type} = props;
+  return (
+    <IconBase 
+      className={ "iconfont icon-".concat(type) }
+      size  = { size || "16px" }
+      color = { color }
+    >
+    </IconBase>
+    );
+}
+Icon.defaultProps = {
+  size: 16,
+  color: "",
+  hoverColor: ""
+}
+// For create 
+export const BtnActive = styled.button`
+  width: ${props => props.width ? props.width : "100px"};
+  height: ${props => props.height ? props.height : "40px"};
+  line-height: ${props => props.height ? props.height : "40px"};
+  text-align:center;
+  font-size:14px;
+  font-weight:bold;
+  background:linear-gradient(90deg,rgba(239,184,11,1) 0%,rgba(251,218,60,1) 100%);
+  border-radius:3px;
+  cursor:pointer;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  border:none;
+  outline:none;
+  box-sizing:border-box;
+  &:after{
+    content:"";
+    display:block;
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    pointer-events:none;
+    background-image:radial-gradient(circle,#999 10%,transparent 10.01%);
+    background-repeat:no-repeat;
+    background-position:50%;
+    transform:scale(10,10);
+    opacity:0;
+    transition:transform .3s,opacity .5s;
+  }
+  &:active:after{
+    transform:scale(0,0);opacity:.6;transition:0s;
+  }
+  span {
+    transition:transform 0.2s ease;
+    @media (max-width:768px) {
+      width:100%;
+    }
+  }
+  a {
+    transition:transform 0.2s ease;
+    @media (max-width:768px){
+      width:100%;
+    }
+  }
+  i {
+    @media (max-width:768px){
+      display:none;
+    }
+  }
+  &:hover span{
+    transform:scale(0.9);
+  }
+  &:hover a{
+    transform:scale(0.9);
+  }
+  &:hover i{
+    transform:scale(0.9);
+  }
+  @media (max-width:768px){
+    width:100%;
+  }
+`;
+export const BtnInactive = styled(BtnActive)`
+background:#848E9C;
+box-shadow:none;
+width: ${props => props.width ? props.width : "100px"};
+&:hover{
+  transform:scale(1);
+  }
+`;
+export const Loading = styled.div`
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  border:1px solid #fff;
+  border-left:1px solid transparent;
+  animation:load 0.8s infinite linear;
+  align-self:center;
+  @keyframes load{
+    0%{ transform:rotate(0deg); }
+    50%{ transform:rotate(180deg); }
+    100%{ transform:rotate(360deg); }
+  }
+`;
 // For Popup
-export const PuContainer = styled.div`
+export const PuLayout = styled.div`
   position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
+  top:0px;
+  left:0px;
+  right:0px;
+  bottom:0px;
   z-index: ${ zIndex.modal };
   background:rgba(0,0,0,0.5);
 `;
+export const PuContainer = styled.div`
+  color:${ props => props.theme.fontColor || "black" };
+  min-width:320px;
+  padding:30px;
+  box-sizing:border-box;
+  background:${ props => props.theme.popupBg || "#fff" };
+  box-shadow:${ props => props.theme.boxShadow };
+  position:fixed;
+  top:20%;
+  left:50%;
+  transform:translate(-50%,-50%);
+`;
+
 export const PuHeader = styled.div`
   font-size:14px;
   font-weight:bold;
@@ -229,19 +351,30 @@ export const PuFooterBtn = styled.div`
   flex-direction:row;
   justify-content:${ props=> props.align };
 `;
-export const PuBtnCancel = styled(Button)`
+export const PuBtnNext = styled(BtnActive)`
   height:34px;
   line-height:34px;
   padding:0 20px;
 `;
-export const PuBtnNext = styled(Button)`
+export const PuBtnCancel = styled(BtnActive)`
   height:34px;
   line-height:34px;
   background:#fff;
   border:1px solid #F0B90B;color:#F0B90B;
   margin-right:10px;box-sizing:border-box;
 `;
-export const DivBtnClose = styled.div`
+export const PuBtnGoback = styled(BtnActive)`
+  background:inherit;
+  color:#F0B90B;
+  border:1px solid #F0B90B;
+  box-shadow:none;
+  height:34px;
+  line-height:34px;
+  margin-right:25px;
+  box-sizing:border-box;
+`;
+
+export const WrapperBtnClose = styled.div`
   position:absolute;
   top:5px;
   right:8px;

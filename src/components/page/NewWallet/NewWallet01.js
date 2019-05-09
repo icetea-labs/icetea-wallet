@@ -1,19 +1,21 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import styled from 'styled-components';
 import * as bip39 from 'bip39';
 import HDKey from 'hdkey';
-import { encode } from '../../utils';
-import * as actions from '../../actions';
-
-// Import custom component
-import { Button, WarningRecover, InputPassword } from './../elements'
-// Style component
+import { encode } from '../../../utils';
+import * as actions from '../../../actions';
+import { 
+  Button, 
+  WarningRecover, 
+  InputPassword } from '../../elements'
 import {
-  Header2, DivControlBtn, DivUnlockLink, DivPreviousBt, Icon
- } from './../elements/utils'
+  Header2, 
+  DivControlBtn, 
+  DivUnlockLink, Icon
+ } from '../../elements/utils';
  
 const WrapperAgree = styled.div`
   font-size:12px;
@@ -170,19 +172,26 @@ class NewWallet01 extends PureComponent {
           </Header2>
           <InputPassword title="Set a New Password" withRules={ !isPasswordValid } onChange={this._passwordChange} />
           <WrapperRePassword>
-            <InputPassword title="Re-enter Password" withRules={ false } warning={ !!rePassErr } onChange={this._rePasswordChange} />
+            <InputPassword 
+              withRules={ false }
+              warning={ !!rePassErr }
+              onChange={this._rePasswordChange}
+              title={'Re-enter Password'}
+            />
             { rePassErr && <WrapperRePassErr>{ rePassErr }</WrapperRePassErr> }
           </WrapperRePassword>
           <DivControlBtn>
-            <DivUnlockLink onClick={ this._gotoUnlock} className="previous-button">Unlock an Existing Wallet</DivUnlockLink>
+            <DivUnlockLink onClick={this._gotoUnlock} className="previous-button">Unlock an Existing Wallet</DivUnlockLink>
             <Button
               disabled={!agree || !isPasswordValid || !rePassword}
               width={'200px'}
               onClick={() => this._gotoNext()}
               // className="download-keystore"
               >
-              <span style={{ 'marginRight': '10px' }} >Download Keystore File</span>
-              <Icon className="iconfont icon-continue" size="20" color="inherit"></Icon>
+              <React.Fragment>
+                <span style={{ 'marginRight': '10px' }} >Download Keystore File</span>
+                <Icon type="continue" size="20" color="inherit"></Icon>
+              </React.Fragment>
             </Button>
           </DivControlBtn>
           <WrapperAgree>

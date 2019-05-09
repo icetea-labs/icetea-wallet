@@ -1,5 +1,17 @@
 import * as types from '../constants/ActionTypes'
 
+// const initialState = {
+//   password: "",
+//   address: "a2ee28854fe92c312238b5f0b650bfe9411e35e980bb5ccd6fb82869123bef66",
+//   privateKey: "a2ee28854fe92c312238b5f0b650bfe9411e35e980bb5ccd6fb82869123bef66",//a2ee28854fe92c312238b5f0b650bfe9411e35e980bb5ccd6fb82869123bef66
+//   keyStore: "",
+//   step: "inputPassword",
+//   mnemonic: "segment salmon arena shallow recycle silent captain dream history chalk able neutral injury picnic key survey toss crazy arctic cheap story exact off multiply",
+//   keyStoreText: "",
+//   showPrivateKey: false,
+//   confirmMnemonic: false
+// };
+
 const initialState = {
   password: "",
   address: "",

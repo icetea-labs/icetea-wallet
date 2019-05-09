@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { PuCommont } from './PuCommont';
+import {
+  Icon,
+} from './utils';
 
 const Container = styled.div`
   display:flex;
@@ -26,17 +29,18 @@ const DivPrivateKey = styled.div`
 export class PuShowPrivateKey extends PureComponent {
   render() {
     return (
-      <PuCommont close={() => this.props.close} title={'Your Private Key'}>
+      <PuCommont close={this.props.close} title={'Your Private Key'}>
         <Container>
+          <Icon type="pencil" size="26" color="#848e9c"></Icon>
           <span>Back up the text below on paper and keep it somewhere secret and safe.</span>
-          <DivPrivateKey>{this.props.privateKey}</DivPrivateKey>
         </Container>
+        <DivPrivateKey>{this.props.privateKey}</DivPrivateKey>
       </PuCommont>
     );
   }
 }
 
 PuShowPrivateKey.defaultProps = {
-  privateKey: "a2ee28854fe92c312238b5f0b650bfe9411e35e980bb5ccd6fb82869123bef66",
+  privateKey: "",
   close: function() {}
 };
