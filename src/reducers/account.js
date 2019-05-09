@@ -1,35 +1,22 @@
 import * as types from '../constants/ActionTypes'
 
 const initialState = {
-  create: {
-    password: "''",
-    step: "inputPassword",
-    privateKey: "",
-    keyStoreText: "",
-    showPrivateKey: false,
-    confirmMnemonic: false
-  }
+  mnemonic: '',
+  password: '',
+  privateKey: '',
+  address: ''
 };
 
 const account = ( state = initialState, action ) => {
   switch (action.type) {
     case types.SET_ACCOUNT_1:
-      state.wallet = action.wallet
-      return state
-    case types.SET_STEP:
-      state = {
-        ...state,
-        step: action.step
-      }
-      return state
-    case types.CHANGE_UL_TYPE:
-      state = { ...state, ulType: action.ulType }
-      return state
-    case types.CHANGE_PU:
-      state = {...state,
-        puNo: action.puNo
-      }
-      return state
+      return Object.assign({}, state, action.data);
+    case types.SET_USER_INFO:
+      return Object.assign({}, state, action.data);
+    case types.SET_NEEDAUTH:
+      return Object.assign({}, state, action.data);
+    case types.SET_WALLETCONNECT_URI:
+      return Object.assign({}, state, action.data);
     default: return state;
   }
 }

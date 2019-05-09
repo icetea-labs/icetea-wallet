@@ -60,8 +60,8 @@ const UlLink = styled.ul`
 `;
 class Header extends Component {
   render() {
-    var address = '';
-    if (this.props.wallet) address = this.props.wallet.address;
+    var address = this.props.address;
+    console.log('CheckA', address)
     return (
       <DivWapper>
         <div className="sc-uJMKN jNhSkT">
@@ -109,7 +109,7 @@ class Header extends Component {
 
 const mapStateToProps = state => {
   return {
-    wallet: state.wallet
+    address: state.account.address
   };
 }
 

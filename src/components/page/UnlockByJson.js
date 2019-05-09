@@ -11,11 +11,9 @@ import upload from '../../assets/img/upload.png';
 import FormError from './FormError.js';
 
 // Import custom component
-import { Button, InputPassword } from './../elements'
+import { Button, InputPassword } from './../elements';
 // Style component
-import {
-    Header2, DivControlBtn, Icon
-} from './../elements/utils'
+import { Icon} from './../elements/utils';
 
 const propTypes = {
     password: PropTypes.string,
@@ -140,7 +138,7 @@ class UnlockByJson extends Component {
                         width={'170px'}
                         onClick={() => this.unlockWalletClick()}>
                     <span style={{ 'marginRight': '10px' }} >Unlock Wallet Now</span>
-                    <Icon className="iconfont icon-continue" size="20" color="inherit"></Icon>
+                    <Icon type="continue" size="20" color="inherit"></Icon>
                     </Button>
                 </div>
             </div>

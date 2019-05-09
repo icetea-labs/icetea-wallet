@@ -14,8 +14,8 @@ class UnlockWallet extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedItem: ct.UNLOCK_BY_KEYSTORE
-            // selectedItem: ct.UNLOCK_BY_MNEMONIC
+            // selectedItem: ct.UNLOCK_BY_KEYSTORE
+            selectedItem: ct.UNLOCK_BY_MNEMONIC
         };
 
         // this.cntReader = this.cntReader.bind(this);
