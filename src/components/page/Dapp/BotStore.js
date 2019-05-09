@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import './BotStore.css';
-import tweb3 from '../../service/tweb3';
-// import PuBot from './PuBot';
+import BotShow from './BotShow';
+import tweb3 from '../../../service/tweb3';
 
 class BotStore extends Component {
   constructor() {
     super();
     this.state = {
       bots: [],
-      botStore: []
+      botStore: [],
+      isRunBot: false,
+      botAddress:""
     }
   }
 
@@ -29,7 +31,7 @@ class BotStore extends Component {
                 {/* <img className="float-left" style={{ width: '50px', height: '50px' }} src={bot.icon} alt="Material Dashboard"></img> */}
                 <span className="SeriesCard__Level-sedkn5-2 kClzgQ">{bot.name}</span>
                 <div style={{ textAlign: 'right' }}>
-                  <button className="SeriesCard__Badge-sedkn5-3 fTfjsA" onClick={() => this.connectBot(bot.address)}>Get</button>
+                  <button className="SeriesCard__Badge-sedkn5-3 fTfjsA" onClick={() => this.connectBot(bot.address)}>Open</button>
                 </div>
               </div>
             </article>
@@ -66,13 +68,12 @@ class BotStore extends Component {
     return resInfo;
   }
 
-  connectBot = (address) => {
-    // var url = 'index.html' + '?address=' + address;
-    var url = 'http://localhost:3001/botpoup.html' + '?address=' + address;
-    // var url = '?address=' + address;
-    console.log('Address ' + address);
-    return this.popupwindow(url, 'nothing', 800, 600);
-    // return <PuBot botAdd={address}></PuBot>
+  connectBot = (botAddress) => {
+    this.setState({
+      isRunBot: true,
+      botAddress: botAddress
+    });
+    console.log(this.state)
   }
 
   popupwindow = (url, title, w, h) => {
@@ -80,25 +81,34 @@ class BotStore extends Component {
     var top = (window.screen.height / 2) - (h / 2)
     return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left)
   }
+  _onCloseBot = (e) => {
+    this.setState({
+      isRunBot: false,
+      botAddress: ""
+    });
+  }
 
   render() {
     return (
-      <div className="Playlists__PlaylistsPageLayout-sc-17pexn-0 bUAaOS" >
-        <section className="playlists-wrapper">
-          <div data-testid="search-bar" className="SearchBar__SearchWrapper-sc-1xki62n-0 gGysvU">
-            <svg x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" enableBackground="new 0 0 24 24">
-              <circle fill="none" stroke="#000" strokeLinejoin="round" strokeMiterlimit="10" cx="8.5" cy="8.5" r="8"></circle>
-              <line fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" x1="14.156"
-                y1="14.156" x2="23.5" y2="23.5">
-              </line>
-            </svg>
-            <input type="text" data-testid="search-bar-input" onChange={() => this.onChange()} value="" placeholder="Filter Series" />
-            <div className="underline"></div>
-          </div>
-          <div className="Layouts__TutorialGrid-fbi9rv-11 jxllbm">
-            {this.state.botStore}
-          </div>
-        </section>
+      <div>
+        <div className="Playlists__PlaylistsPageLayout-sc-17pexn-0 bUAaOS" >
+          <section className="playlists-wrapper">
+            <div data-testid="search-bar" className="SearchBar__SearchWrapper-sc-1xki62n-0 gGysvU">
+              <svg x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" enableBackground="new 0 0 24 24">
+                <circle fill="none" stroke="#000" strokeLinejoin="round" strokeMiterlimit="10" cx="8.5" cy="8.5" r="8"></circle>
+                <line fill="none" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" x1="14.156"
+                  y1="14.156" x2="23.5" y2="23.5">
+                </line>
+              </svg>
+              <input type="text" data-testid="search-bar-input" onChange={() => this.onChange()} value="" placeholder="Filter Series" />
+              <div className="underline"></div>
+            </div>
+            <div className="Layouts__TutorialGrid-fbi9rv-11 jxllbm">
+              {this.state.botStore}
+            </div>
+          </section>
+        </div>
+        { this.state.isRunBot && <BotShow onClose={this._onCloseBot}  botAddress={this.state.botAddress} /> }
       </div>
     );
   }

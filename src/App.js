@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import { theme } from './constants/Styles';
 import {
   Home,
   NewWalletMaster,
@@ -14,7 +16,7 @@ import Layout from './components/layout';
 class App extends Component {
   render() {
     return (
-      <span>
+      <ThemeProvider theme={ theme }>
         <Router>
           <Switch>
             <Route exact path='/' component={NewWalletMaster} />
@@ -29,7 +31,7 @@ class App extends Component {
             </Layout>
           </Switch>
         </Router>
-      </span>
+      </ThemeProvider>
     );
   }
 }
