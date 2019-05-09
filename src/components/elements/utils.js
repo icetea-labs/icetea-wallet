@@ -11,20 +11,16 @@ export const Header1 = styled.div`
   font-family: DIN;
 `;
 export const Header2 = styled.div`
-  font-size: 16px;
-  color: rgb(132, 142, 156);
-  font-weight: bold;
-  margin: 40px 0px;
-  & span {
-    font-size: 16px;
-  }
-  & .totalPage {
-    color: rgb(234, 236, 239);
-  }
-  & .title {
-    font-size: 18px;
-    color: rgb(72, 81, 93);
-    margin-left: 8px;
+  font-size:16px;
+  color:#848E9C;
+  margin:40px 0 20px;
+  font-weight:bold;
+  span{font-size:16px;}
+  .totalPage{color:#EAECEF;}
+  .title{
+    font-size:18px;
+    color:#48515D;
+    margin-left:8px;
   }
 `;
 export const InputPass = styled.div`
@@ -113,7 +109,7 @@ export const DivValidPass = styled.div`
   }
 }
 `;
-export const DivControlBtn = styled.div`
+export const DivControlBtnKeystore = styled.div`
   display:flex;
   flex-direction:row;
   justify-content:space-between;
@@ -122,11 +118,31 @@ export const DivControlBtn = styled.div`
   @media (min-width:320px) and (max-width:623px){
     flex-direction:column;
     justify-content:space-around;
-    align-items:center;height:70px;
+    align-items:center;
+    height:70px;
     .previous-button{order:1;}
-    /* .download-keystore{order:0;margin-top:20px;} */
+    .download-keystore{order:0;margin-top:20px;}
   }
 `;
+export const DivControlBtn = styled.div`
+  a{
+    color:inherit;
+    &:hover{color:#f0b90b;}
+  }
+  margin-top:40px;
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  @media (min-width:320px) and (max-width:623px){
+    flex-direction:column;
+    justify-content:space-around;
+    align-items:center;
+    height:70px;
+    padding-bottom:40px;
+    .previous-button{order:1;}
+    .continue{order:0;margin-top:20px;}}
+`;
+
 export const DivUnlockLink = styled.div`
   cursor:pointer;
   display:flex;
@@ -161,7 +177,7 @@ export const DivFooterCheckBox = styled.div`
   }
 `;
 export const DivPreviousBt = styled.div`
-  cursor: pointer;
+  /* cursor: pointer;
   display: flex;
   align-items: center;
   font-size: 14px;
@@ -178,7 +194,15 @@ export const DivPreviousBt = styled.div`
   }
   &:hover div {
     text-decoration: underline;
-  }
+  } */
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  font-size:14px;
+  color:#848e9c;
+  &:hover{color:#f0b90b;}
+  a{color:inherit;}
+  i{margin-right:10px;}
 `;
 export const DivContentW2 = styled.div`
   justify-content: center;
@@ -381,4 +405,27 @@ export const WrapperBtnClose = styled.div`
   cursor:pointer;
   color:#848E9C;
   &:hover{ color:#F0B90B; }
+`;
+// For DivSelectWord
+export const DivSelectWordBase = styled.div`
+  align-items:${props => props.align};
+  background:${props => "theme" == props.bg ? props.theme.bg : ""};
+  display:flex;
+  flex:${props => props.flex};
+  flex-basis:${props => props.basis};
+  flex-direction:${props => props.direction};
+  flex-wrap:${props => props.wrap || "wrap"};
+  height:${props => props.height};
+  justify-content:${props => props.justify};
+  margin:${props => props.margin};
+  padding:${props => props.padding};
+  align-content:${props => props.content};
+`;
+// MnemonicItem
+export const MnemonicItemBase = styled.div`
+  border:1px solid ${props => props.theme.border || "#eee"};
+  height:${props => props.height};
+  padding:0;
+  margin:${props => props.margin || "5px"};
+  user-select:none;
 `;

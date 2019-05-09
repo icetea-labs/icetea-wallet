@@ -62,8 +62,8 @@ class NewWallet05 extends React.Component {
         <WrapperImg>
           <img src={success} />
           <Title>You're all set!</Title>
-          <Desc><li>You are ready to use the Binance Chain Wallet and</li></Desc>
-          <Desc><li>Decentralized Exchange!</li></Desc>
+          <Desc><li>You are ready to use the Ice-Tea Wallet and</li></Desc>
+          <Desc><li>Ice-Tea Chain!</li></Desc>
           <FoolterBtn>
             <Button
               width={'170px'}

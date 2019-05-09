@@ -4,4 +4,5 @@ export * from './InputPassword.js';
 export * from './PuConfirmMnemonic.js';
 export * from './PuShowPrivateKey.js';
 export * from './GlobaLoading.js';
+export * from './MnemonicItem.js';
 export * from './utils';

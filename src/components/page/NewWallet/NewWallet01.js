@@ -7,16 +7,17 @@ import * as bip39 from 'bip39';
 import HDKey from 'hdkey';
 import { encode } from '../../../utils';
 import * as actions from '../../../actions';
-import { 
-  Button, 
-  WarningRecover, 
-  InputPassword } from '../../elements'
 import {
-  Header2, 
-  DivControlBtn, 
+  Button,
+  WarningRecover,
+  InputPassword
+} from '../../elements'
+import {
+  Header2,
+  DivControlBtnKeystore,
   DivUnlockLink, Icon
- } from '../../elements/utils';
- 
+} from '../../elements/utils';
+
 const WrapperAgree = styled.div`
   font-size:12px;
   padding:20px 0;
@@ -68,17 +69,17 @@ class NewWallet01 extends PureComponent {
     address: "",
     keyStore: null,
     autoFocus: false,
-    setPassword: function() {},
-    setAccount: function() {},
-    setStep: function() {},
-    setLoading: function() {},
-    setShowKeystoreText: function() {}
+    setPassword: function () { },
+    setAccount: function () { },
+    setStep: function () { },
+    setLoading: function () { },
+    setShowKeystoreText: function () { }
   };
 
   _passwordChange = (value, isPasswordValid) => {
     this.props.setPassword(value);
     this.setState({
-        isPasswordValid: isPasswordValid
+      isPasswordValid: isPasswordValid
     })
   };
 
@@ -94,28 +95,28 @@ class NewWallet01 extends PureComponent {
   _handleCheckChange = (e) => {
     document.activeElement.blur();
     this.setState({
-        agree: e.target.checked
+      agree: e.target.checked
     })
   };
 
-  _gotoNext = function(e) {
+  _gotoNext = function (e) {
     document.activeElement.blur();
     var { password } = this.props;
     var { rePassword } = this.state;
-    if (password.length < 8 ) {
+    if (password.length < 8) {
       alert("invalid password, reset again");
     } else if (password === rePassword) {
       this.props.setLoading(true);
-      setTimeout(async() => {
+      setTimeout(async () => {
         var account = await this._createAccountWithMneomnic();
-        this._downloadKeyStore(account.keyStore);
+        // this._downloadKeyStore(account.keyStore);
         this.props.setAccount({
-            privateKey: account.privateKey,
-            mnemonic: account.mnemonic,
-            address: account.address,
-            keyStore: account.keyStore,
-            step: "stepTwo"
-          }
+          privateKey: account.privateKey,
+          mnemonic: account.mnemonic,
+          address: account.address,
+          keyStore: account.keyStore,
+          step: "stepTwo"
+        }
         )
         console.log(account);
         this.props.setLoading(false);
@@ -125,38 +126,38 @@ class NewWallet01 extends PureComponent {
         rePassErr: "The password entered does not match"
       })
     }
-  }
+  };
 
-  _createAccountWithMneomnic = async() => {
+  _createAccountWithMneomnic = async () => {
     var mnemonic = bip39.generateMnemonic();
     var seed = await bip39.mnemonicToSeed(mnemonic);
     var hdkey = HDKey.fromMasterSeed(seed);
     var keyObject = encode(hdkey.privateKey, 'a');
     return {
-        privateKey: hdkey.privateKey.toString("hex"),
-        address: keyObject.address,
-        mnemonic: mnemonic,
-        keyStore: keyObject
+      privateKey: hdkey.privateKey.toString("hex"),
+      address: keyObject.address,
+      mnemonic: mnemonic,
+      keyStore: keyObject
     }
-  }
+  };
 
   _downloadKeyStore = (keyObject) => {
     var a = document.createElement("a")
       , file = new Blob([JSON.stringify(keyObject)]);
     a.href = URL.createObjectURL(file);
-    a.download = "".concat(keyObject.address , "_keystore");
+    a.download = "".concat(keyObject.address, "_keystore");
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(a.href);
     a.remove()
-  }
+  };
 
   _gotoUnlock = () => {
     this.props.history.push("/unlock");
   }
 
   render() {
-    var {       
+    var {
       agree,
       loading,
       isPasswordValid,
@@ -164,40 +165,40 @@ class NewWallet01 extends PureComponent {
       rePassword
     } = this.state;
     return (
-        <div>
-          <Header2>
-            <span className="page" >1</span>
-            <span className="page totalPage">/2</span>
-            <span className="title" >Create Keystore File + Password</span>
-          </Header2>
-          <InputPassword title="Set a New Password" withRules={ !isPasswordValid } onChange={this._passwordChange} />
-          <WrapperRePassword>
-            <InputPassword 
-              withRules={ false }
-              warning={ !!rePassErr }
-              onChange={this._rePasswordChange}
-              title={'Re-enter Password'}
-            />
-            { rePassErr && <WrapperRePassErr>{ rePassErr }</WrapperRePassErr> }
-          </WrapperRePassword>
-          <DivControlBtn>
-            <DivUnlockLink onClick={this._gotoUnlock} className="previous-button">Unlock an Existing Wallet</DivUnlockLink>
-            <Button
-              disabled={!agree || !isPasswordValid || !rePassword}
-              width={'200px'}
-              onClick={() => this._gotoNext()}
-              // className="download-keystore"
-              >
-              <React.Fragment>
-                <span style={{ 'marginRight': '10px' }} >Download Keystore File</span>
-                <Icon type="continue" size="20" color="inherit"></Icon>
-              </React.Fragment>
-            </Button>
-          </DivControlBtn>
-          <WrapperAgree>
-            <WarningRecover defaultChecked={agree} handleCheckChange={this._handleCheckChange} />
-          </WrapperAgree>
-        </div>
+      <div>
+        <Header2>
+          <span className="page" >1</span>
+          <span className="page totalPage">/2</span>
+          <span className="title" >Create Keystore File + Password</span>
+        </Header2>
+        <InputPassword withRules={!isPasswordValid} onChange={this._passwordChange} />
+        <WrapperRePassword>
+          <InputPassword
+            withRules={false}
+            warning={!!rePassErr}
+            onChange={this._rePasswordChange}
+            title={'Re-enter Password'}
+          />
+          {rePassErr && <WrapperRePassErr>{rePassErr}</WrapperRePassErr>}
+        </WrapperRePassword>
+        <DivControlBtnKeystore>
+          <DivUnlockLink onClick={this._gotoUnlock} className="previous-button">Unlock an Existing Wallet</DivUnlockLink>
+          <Button
+            disabled={!agree || !isPasswordValid || !rePassword}
+            width={'200px'}
+            onClick={() => this._gotoNext()}
+          // className="download-keystore"
+          >
+            <React.Fragment>
+              <span style={{ 'marginRight': '10px' }} >Next</span>
+              <Icon type="continue" size="20" color="inherit"></Icon>
+            </React.Fragment>
+          </Button>
+        </DivControlBtnKeystore>
+        <WrapperAgree>
+          <WarningRecover defaultChecked={agree} handleCheckChange={this._handleCheckChange} />
+        </WrapperAgree>
+      </div>
     );
   }
 }

@@ -5,14 +5,14 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import QueueAnim from 'rc-queue-anim';
 import * as actions from '../../../actions';
-import { theme, zIndex } from './../../../constants/Styles';
+// import { theme, zIndex } from './../../../constants/Styles';
 import NewWallet01 from './NewWallet01';
 import NewWallet02 from './NewWallet02';
 import NewWallet03 from './NewWallet03';
 import NewWallet04 from './NewWallet04';
 import NewWallet05 from './NewWallet05';
 import pencil from './../../../assets/img/pencil.svg';
-import logo from './../../../assets/img/logo01.svg';
+import logo from './../../../assets/img/logo.svg';
 
 import { Header1 } from '../../elements/utils'
 import {
@@ -119,7 +119,7 @@ class index extends PureComponent {
     var { confirmMnemonic, showPrivateKey, privateKey, step, isLoading } = this.props;
     // console.log('00-step', showPrivateKey);
     return (
-      <ThemeProvider theme={ theme }>
+      // <ThemeProvider theme={ theme }>
         <div>
           <QueueAnim delay={200} type={["top", "bottom"]} >
             <DivWallet key={1}>
@@ -159,7 +159,7 @@ class index extends PureComponent {
             </PuConfirmMnemonic>
           }
         </div>
-      </ThemeProvider>
+      // </ThemeProvider>
     );
   }
 }
