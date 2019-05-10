@@ -13,6 +13,9 @@ import { Button, InputPassword } from './../elements';
 import { Icon } from './../elements/utils';
 import FormError from './FormError.js';
 
+
+
+
 class UnlockByMnemonic extends Component {
 
     constructor(props) {

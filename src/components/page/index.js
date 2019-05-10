@@ -1,6 +1,6 @@
 export { default as Home } from './Home.js'
 export { default as NewWalletMaster } from './NewWallet'
-export { default as UnlockWallet } from './UnlockWallet.js'
+export { default as UnlockWallet } from './Unlock'
 export { default as Balances } from './Balances.js'
 export { default as Transaction } from './Transaction.js'
 export { default as TransactionHistory } from './TransactionHistory.js'
