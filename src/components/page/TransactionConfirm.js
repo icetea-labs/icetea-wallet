@@ -17,7 +17,7 @@ class TransactionConfirm extends Component {
         var answer = window.confirm("Are you sure to transfer?")
 
         if (answer) {
-            await tweb3.transfer(this.props.wallet.toAdd, this.props.wallet.amount);
+            await tweb3.transfer(this.props.toAdd, this.props.amount);
             window.alert("Transfer Success")
         } else { return false; }
 
@@ -29,22 +29,22 @@ class TransactionConfirm extends Component {
 
     sendTransForm = () => {
         this.props.onCallTransForm();
-        var wallet = {
-            fromAdd: this.props.wallet.fromAdd,
-            toAdd: this.props.wallet.toAdd,
-            amount: this.props.wallet.amountText,
-            memo: this.props.wallet.memo
+        var userInfo = {
+            fromAdd: this.props.fromAdd,
+            toAdd: this.props.toAdd,
+            amount: this.props.amountText,
+            memo: this.props.memo
           }
       
-          this.props.onSaveWallet(wallet);
+          this.props.sendInfo(userInfo);
     }
 
     render() {
 
-        if (this.props.wallet) var fromAdd = this.props.wallet.fromAdd;
-        if (this.props.wallet) var toAdd = this.props.wallet.toAdd;
-        if (this.props.wallet) var amount = this.props.wallet.amount;
-        if (this.props.wallet) var memo = this.props.wallet.memo;
+        var fromAdd = this.props.fromAdd;
+        var toAdd = this.props.toAdd;
+        var amount = this.props.amount;
+        var memo = this.props.memo;
 
         return (
             <div className="sc-cQFLBn kViODF">
@@ -102,14 +102,17 @@ class TransactionConfirm extends Component {
 
 const mapStateToProps = state => {
     return {
-        wallet: state.wallet
+        fromAdd: state.account.fromAdd,
+        toAdd: state.account.toAdd,
+        amount: state.account.amount,
+        memo: state.account.memo
     };
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSaveWallet: (data) => {
-            dispatch(actions.saveWallet(data))
+        sendInfo: (data) => {
+            dispatch(actions.setUserInfo(data))
           }
     }
 }
