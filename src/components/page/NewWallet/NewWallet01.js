@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as bip39 from 'bip39';
 import HDKey from 'hdkey';
-import { encode } from '../../../utils';
+import { encode, utils } from '../../../utils';
 import * as actions from '../../../actions';
 import {
   Button,
@@ -128,15 +128,13 @@ class NewWallet01 extends PureComponent {
     }
   };
 
-  _createAccountWithMneomnic = async () => {
-    var mnemonic = bip39.generateMnemonic();
-    var seed = await bip39.mnemonicToSeed(mnemonic);
-    var hdkey = HDKey.fromMasterSeed(seed);
-    var keyObject = encode(hdkey.privateKey, 'a');
+  _createAccountWithMneomnic = () => {
+    var resp =  utils.createAccountWithMneomnic();
+    var keyObject = encode(resp.privateKey, 'a');
     return {
-      privateKey: hdkey.privateKey.toString("hex"),
-      address: keyObject.address,
-      mnemonic: mnemonic,
+      privateKey: resp.privateKey,
+      address: resp.address,
+      mnemonic: resp.mnemonic,
       keyStore: keyObject
     }
   };
