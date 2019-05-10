@@ -33,12 +33,12 @@ export default class SendTransaction extends PureComponent {
                 <DisplayTab>
                   <Tab bg = {"one" === step ? "" : "#DFE2E7"}  ></Tab>
                   <Tab bg = {"two" === step ? "" : "#DFE2E7"}  ></Tab>
-                  <div>
+                </DisplayTab>
+                <div>
                     <SendTransactionOne>
 
                     </SendTransactionOne>
                   </div>
-                </DisplayTab>
               </WrapperTab>
             </OutBox>
           </QueueAnim>

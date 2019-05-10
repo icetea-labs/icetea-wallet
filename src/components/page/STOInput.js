@@ -73,13 +73,26 @@ export default class STOInput extends PureComponent {
   _textChange = (e) => {
     var stateValue = this.state.value;
     var value = e.currentTarget.value.trim();
+
+    // this.setState({
+    //   value: e.target.value
+    // })
+
     if(this._getDecimal(value) <= 8){
       stateValue = value;
       this.setState({
         value: stateValue
-      }, () => this.props.onChange(stateValue));
+      }, () => this.props.onChange(stateValue, false));
     }
   }
+
+  // componentWillReceiveProps(nextProps){
+  //   if (this.props !== nextProps){
+  //     this.setState({
+  //       value: 
+  //     })
+  //   }
+  // }
 
   _clear = (e) => {
     this.setState({

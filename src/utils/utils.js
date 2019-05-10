@@ -30,3 +30,18 @@ export const utils = {
     // return privateKey ? u.default.fromSeed(privateKey).derivePath("44'/714'/0'/0/0").privateKey.toString("hex") : privateKey.toString("hex")
   },
 }
+
+export const sendTranAmount = {
+  checkDecimal(number) {
+    var reg = new RegExp("/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/");
+    var temp = "".concat(number).match(reg);
+    if (!temp)
+        return 0;
+    var num = temp[1];
+    if (num && num.endsWith(0)) {
+        var a = num.indexOf(1);
+        num = num.substring(0, a + 1)
+    }
+    return Math.max(0, (num ? num.length : 0) - (temp[2] ? +temp[2] : 0))
+  }
+}

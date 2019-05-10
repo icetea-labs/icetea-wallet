@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import {zIndex} from './../../constants/Styles';
+import {DivSelectWordBase} from './../elements/utils'
 
 export const Wrapper = styled.div`
   width:450px;
   margin-top:30px;
   position:relative;
   
-  .title {S
+  .title {
     color:#848E9C;
     font-size:14px;
     line-height:30px;
@@ -25,10 +26,11 @@ export const Wrapper = styled.div`
     opacity:0;
   }
   .textarea {
-    width:100%;
+    width:95%;
     outline:none;
     height:50px;
-    border:1px solid #DFE2E7;font-size:14px;
+    border:1px solid #DFE2E7;
+    font-size:14px;
   }
   .amount-input {
     padding-right:150px;
@@ -53,3 +55,42 @@ export const Error = styled.div`
   }
 `;
 
+export const MaxValue = styled.div`
+  position:absolute;
+  right:20px;
+  bottom:10px;
+  color:#F0B90B;
+  cursor:pointer;
+`;
+
+export const FeeAva = styled.div`
+  display:flex;
+  justify-content:
+  space-between;
+`;
+
+export const Fee = styled.div`
+  font-size:14px;
+  .fee-title {
+    color:#48515D;
+    margin-right:5px;
+  }
+  .fee-value {
+    color:#212833;
+  }
+`;
+
+export const Ava = styled.div`
+  font-size:14px;
+  .Available-title {
+    color:#48515D;
+    margin-right:5px;
+  }
+  .Available-value {
+    color:#212833;
+  }
+`;
+
+export const ButtonWrapper = styled(DivSelectWordBase)`
+
+`;
