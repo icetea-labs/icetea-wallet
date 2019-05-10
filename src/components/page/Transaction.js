@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import Dropdown from 'rc-dropdown';
 import Menu, { Item as MenuItem, Divider } from 'rc-menu';
-import './../../assets/styles/dropdown.css'
+import './../../assets/styles/dropdown.css';
+import FormError from './FormError.js';
 
 class Transaction extends Component {
 
@@ -21,7 +22,9 @@ class Transaction extends Component {
         { name: 'BTC Coin', symbol: 'BTC' },
         { name: 'ETH Coin', symbol: 'ETH' },
       ],
-      showCFForm: false
+      showCFForm: false,
+      isHidden: true,
+      errMsg: ''
     };
   }
   componentWillMount = async () => {
@@ -35,8 +38,7 @@ class Transaction extends Component {
 
   componentWillReceiveProps = () => {
     this.setState({
-      addressText: this.props.wallet.toAdd
-
+      addressText: this.props.toAdd
     })
 
   }
@@ -51,53 +53,62 @@ class Transaction extends Component {
     })
   }
 
-  sendTransaction = async () => {
-    if (this.state.addressText === '') {
-      window.alert("Please input To Address")
-      return
-    } else if (this.state.amountText === '') {
-      window.alert("Please input amount to send")
-      return
-    }
+  // sendTransaction = async () => {
+  //   if (this.state.addressText === '') {
+  //     window.alert("Please input To Address")
+  //     return
+  //   } else if (this.state.amountText === '') {
+  //     window.alert("Please input amount to send")
+  //     return
+  //   }
 
-    tweb3.wallet.importAccount('CJUPdD38vwc2wMC3hDsySB7YQ6AFLGuU6QYQYaiSeBsK')
+  //   tweb3.wallet.importAccount('CJUPdD38vwc2wMC3hDsySB7YQ6AFLGuU6QYQYaiSeBsK')
 
-    var answer = window.confirm("Are you sure to transfer?")
+  //   var answer = window.confirm("Are you sure to transfer?")
 
-    if (answer) {
-      await tweb3.transfer(this.state.addressText, this.state.amountText);
-      window.alert("Transfer Success")
-    } else { return false; }
+  //   if (answer) {
+  //     await tweb3.transfer(this.state.addressText, this.state.amountText);
+  //     window.alert("Transfer Success")
+  //   } else { return false; }
 
-    var balanceofVip = await tweb3.getBalance('tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx');
-    console.log("I want to see BL:", balanceofVip);
-    this.props.onSendSuccess();
-    this.props.closePoup();
-  }
+  //   var balanceofVip = await tweb3.getBalance('tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx');
+  //   console.log("I want to see BL:", balanceofVip);
+  //   this.props.onSendSuccess();
+  //   this.props.closePoup();
+  // }
 
 
   confirmTrans = () => {
     if (this.state.addressText === '') {
-      window.alert("Please input To Address")
+      // window.alert("Please input To Address")
+      this.setState({
+        isHidden: false,
+        errMsg: 'Please input To Address'
+      })
       return
     } else if (this.state.amountText === '') {
-      window.alert("Please input amount to send")
+      // window.alert("Please input amount to send")
+      this.setState({
+        isHidden: false,
+        errMsg: 'Please input amount to send'
+      })
       return
     }
 
     this.props.onCallCFForm();
 
     // save to store
-    var wallet = {
-      fromAdd: 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx',
+    var userInfo = {
+      fromAdd: this.props.fromAdd,
       toAdd: this.state.addressText,
       amount: this.state.amountText,
       memo: this.state.memo
     }
 
-    this.props.sendInfo(wallet);
+    this.props.sendInfo(userInfo);
 
-    console.log('sendInfo check', wallet);
+    console.log('sendInfo check', userInfo);
+
   }
 
 
@@ -179,7 +190,10 @@ class Transaction extends Component {
                         <div className="border-bottom"></div>
                       </div>
                     </div>
+                    
+                    
                   </div>
+                  
                   <div className="sc-eTyWNx hoKJiD">
                     <div className="sc-cLxPOX cyWHjc">
                       <p className="">Amount to send</p>
@@ -187,14 +201,21 @@ class Transaction extends Component {
                         <div className="border-bottom"></div>
                       </div>
                     </div>
+                    <FormError isHidden={this.state.isHidden} errorMessage={this.state.errMsg} />
                   </div>
+                  
                   <div className="sc-eTyWNx hoKJiD">
                     <p className="titleM">Memo</p>
+                    
                     <textarea className="textarea" name="memo" onChange={this.handleChange}></textarea>
                   </div>
+                  
                   <div className="sc-eTyWNx hoKJiD">
+                 
                     <div className="sc-bsVVwV bkSpCY">
+                    
                       <div className="sc-kbGplQ clrIxQ">
+                      
                         <span className="fee-title">Fee:</span>
                         <span className="fee-value">
                           <span className="sc-tilXH yKCJu">0.000000</span> ICETEA</span>
@@ -207,14 +228,19 @@ class Transaction extends Component {
                       </div>
                     </div>
                   </div>
+                  
                   <div className="sc-jDwBTQ cPxcHa">
                     <button className="sc-bZQynM sc-fHlXLc jNKIKp" onClick={this.confirmTrans}>
                       <span>Next</span>
+                      
                     </button>
+                    
                   </div>
                 </div>
+                
               </div>
             </div>
+            
             <div className="sc-lkqHmb jPpgi">
               <i className="fa fa-times dJRkzW" aria-hidden="true" onClick={() => this.props.closePoup()} ></i></div>
           </div>
@@ -226,14 +252,17 @@ class Transaction extends Component {
 
 const mapStateToProps = state => {
   return {
-    wallet: state.wallet
+    fromAdd: state.account.fromAdd,
+    toAdd: state.account.toAdd,
+    amount: state.account.amount,
+    memo: state.account.memo
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     sendInfo: (data) => {
-      dispatch(actions.saveWallet(data))
+      dispatch(actions.setUserInfo(data))
     }
   }
 }

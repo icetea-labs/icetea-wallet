@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Balances.css';
 import Transaction from './Transaction';
+import SendTransaction from './SendTransaction'
 import TransactionConfirm from './TransactionConfirm';
 import tweb3 from './../../service/tweb3';
 import QRCode from 'qrcode.react'
@@ -173,6 +174,7 @@ class Balances extends Component {
               </div>
             </div>
           </div>
+          <SendTransaction></SendTransaction>
           {this.state.showSendForm ? <Transaction closePoup={() => this.closeViewForm()} onCallCFForm={() => this.onCallCFForm()} /> : ''}
           {this.state.showCFForm ? <TransactionConfirm closePoup={() => this.closeCFForm()}
             onCallTransForm={() => this.viewSendForm()} onSendSuccess={() => this.renderTbl()} /> : ''}

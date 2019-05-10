@@ -1,6 +1,14 @@
 import * as types from '../constants/ActionTypes'
 
 const initialState = {
+  mnemonic: '',
+  password: '',
+  privateKey: '',
+  address: '',
+  fromAdd: 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx',
+  toAdd: '',
+  amount: '',
+  memo: '',
   needAuth: false,
   address: "",
   cipher: "",
