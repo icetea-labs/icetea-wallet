@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {zIndex} from './../../constants/Styles';
-import {DivSelectWordBase} from './../elements/utils'
+import {DivSelectWordBase, WrapperBtnClose} from './../elements/utils'
 
 export const Wrapper = styled.div`
   width:450px;
@@ -93,4 +93,8 @@ export const Ava = styled.div`
 
 export const ButtonWrapper = styled(DivSelectWordBase)`
 
+`;
+
+export const WrapperBtnCloseCus = styled(WrapperBtnClose)`
+  line-height: 20px;
 `;

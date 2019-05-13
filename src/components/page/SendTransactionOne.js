@@ -8,13 +8,33 @@ import {
   Ava,
   ButtonWrapper,
 } from './StyledSTOne';
-
 import { Button } from './../elements/Button';
+import {
+  WrapperSelect,
+} from './Unlock/Styled';
+import SelectUnlockType from './Unlock/SelectUnlockType';
 
 import STOInput from './STOInput';
 import errorIc from '../../assets/img/error-icon.png';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import * as actions from '../../actions';
+import tweb3 from './../../service/tweb3';
 
-export default class SendTransactionOne extends PureComponent {
+var itemsMenu = [{
+  text: "ICETEA",
+  selected: true,
+  recommended: true
+}, {
+  text: "BTC",
+  selected: false,
+  recommended: true
+}, {
+  text: "ETH",
+  selected: false
+}];
+
+class SendTransactionOne extends PureComponent {
 
   constructor(props) {
     super(props);
@@ -26,8 +46,21 @@ export default class SendTransactionOne extends PureComponent {
       amountErr: '',
       memoErr: "",
       memo: '',
-      availableBalance: "10",
+      availableBalance: "100",
+      types: itemsMenu,
+      selectedType: itemsMenu.filter(item => {
+        return !!item.selected
+      })[0].text,
     }
+  }
+
+  componentWillMount = async () => {
+    var balanceofVip = '';
+    balanceofVip = await tweb3.getBalance('tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx');
+    console.log("I want to see BL:", balanceofVip)
+    this.setState({
+      availableBalance: balanceofVip.balance
+    })
   }
   
 
@@ -36,6 +69,7 @@ export default class SendTransactionOne extends PureComponent {
         to: e,
         addressErr: ""
     })
+    console.log('toAdd Change CK', e)
   }
 
   _amountChange = (e) => {
@@ -44,28 +78,89 @@ export default class SendTransactionOne extends PureComponent {
             amount: e,
             amountErr: ""
         })
-    } else
+    } else{
         this.setState({
             amount: ""
         })
+    }
+    console.log('amount Change CK', e)
   }
   _setMaxValue = () => {
     this.setState({
         amount: this.state.availableBalance,
     })
-    
   }
   
   _memoChange = (e) => {
+    var value = e.currentTarget.value;
     this.setState({
-        memo: e.currentTarget.value,
+        memo: value,
         memoErr: ""
     })
+    console.log('memo Change CK', value)
   }
 
   _submit = () => {
+    if(this.state.to === "") {
+      this.setState({
+        addressErr: "To address should not be null",
+      })
+      return
+    }
+    if(this.state.amount === "") {
+      this.setState({
+        amountErr: "Amount should not be null",
+      })
+      return
+    }
 
+    // save to store
+    var to = this.state.to;
+    var amount = this.state.amount;
+    var memo = this.state.memo;
+    
+    var data = { to: to, amount: amount, memo: memo}
+    
+    this.props.setAccount1(data);
+
+    this.setState( {
+      amountErr: "",
+      addressErr: "",
+      memoErr: ""
+    }, () => {
+      this.props.next && this.props.next(this.state)
+    })
+
+    console.log('sendT1 props CK', this.props)
   }
+
+  _getSelectTypes = () => {
+    var types = this.state.types;
+    var items = [];
+    return types.forEach(el => {
+      el.hide || items.push({ text: el.text, value: el.text })
+    }),
+      items
+  };
+
+  _unlockWayChange = (item) => {
+    this._selectType({ text: item });
+  };
+
+  _selectType = (items) => {
+    var value;
+    this.state.types.forEach(el => {
+      if (el.text === items.text) {
+        el.selected = true;
+        value = items.text;
+      } else {
+        el.selected = false;
+      }
+    });
+    this.setState({
+      selectedType: value
+    });
+  };
 
   render() {
     var { to, amount, asset, memo,
@@ -79,7 +174,13 @@ export default class SendTransactionOne extends PureComponent {
             paddingBottom: "0"
           }}>
           <p className="title">Select Asset</p>
-          <p>Bo sung bang AssetSelecte Componen</p>
+       
+            <SelectUnlockType
+              options={this._getSelectTypes()}
+              width="100%"
+              onChange={this._unlockWayChange}
+            />
+      
         </Wrapper>
         <Wrapper>
           <STOInput
@@ -92,7 +193,7 @@ export default class SendTransactionOne extends PureComponent {
           {
             addressErr && 
             <Error>
-              <img src={errorIc} alt={true} />
+              <img src={errorIc} alt="" />
               <span>{addressErr}</span>I
             </Error>
           }
@@ -104,30 +205,28 @@ export default class SendTransactionOne extends PureComponent {
             type="number"
             onChange={this._amountChange}
             onFocus={this._amountChange}
-
-            // max = {this.state.is_max}
           >
           </STOInput>
           <MaxValue onClick={this._setMaxValue}>Max</MaxValue>
           {
             amountErr && 
             <Error>
-              <img src={errorIc} alt={true} />
+              <img src={errorIc} alt="" />
               <span>{amountErr}</span>I
             </Error>
           }
         </Wrapper>
         <Wrapper style= {{ borderBottom: "none"}}>
           <p className="title">Memo</p>
-          <textArea 
+          <textarea 
             className="textarea"
             value={memo}
             onChange={this._memoChange}>
-          </textArea>
+          </textarea>
           {
             memoErr && 
             <Error>
-              <img src={errorIc} alt={true} />
+              <img src={errorIc} alt="" />
               <span>{memoErr}</span>
             </Error>
           }
@@ -141,7 +240,7 @@ export default class SendTransactionOne extends PureComponent {
             </Fee>
             <Ava>
               <span className="Available-title">Available:</span>
-              <span className="Available-value">10 </span>
+              <span className="Available-value">{this.state.availableBalance} </span>
             </Ava>
           </FeeAva>
         </Wrapper>
@@ -163,3 +262,22 @@ SendTransactionOne.defaultProps = {
   defaultAsset: {},
   next: function () { }
 }
+
+const mapStateToProps = state => {
+  return {
+    fromAdd: state.account.fromAdd,
+    to: state.account.to,
+    amount: state.account.amount,
+    memo: state.account.memo
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setAccount1: (data) => {
+      dispatch(actions.setAccount1(data))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SendTransactionOne));
