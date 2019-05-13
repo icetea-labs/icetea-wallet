@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import {zIndex} from './../../constants/Styles';
+import { zIndex } from './../../constants/Styles';
+import { Button } from './../elements/Button';
 
 export const WrapperSend = styled.div`
   position:fixed;
@@ -40,8 +41,32 @@ export const DisplayTab = styled.div`
 export const Tab = styled.div`
   width:60px;
   height:3px;
-  background: ${({bg}) => bg ? bg : "#F0B90B"}
+  background: ${({ bg }) => bg ? bg : "#F0B90B"}
   margin-right:10px; ({df})
 `;
 
+export const ButtonCus = styled.div`
+  width: 100px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+ -webkit-box-pack: center;
+  justify-content: center;
+  position: relative;
+  color: rgb(240, 185, 11);
+  box-sizing: border-box;
+  margin-right: 10px;
+  height: 34px;
+  line-height: 34px;
+  border-radius: 3px;
+  overflow: hidden;
+  outline: none;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(240, 185, 11);
+  border-image: initial;
+  background: rgb(255, 255, 255);
+`;
 
