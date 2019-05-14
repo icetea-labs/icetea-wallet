@@ -6,7 +6,8 @@ import { withRouter } from 'react-router-dom';
 import * as bip39 from 'bip39';
 import HDKey from 'hdkey';
 import { encode, utils } from '../../../utils';
-import * as actions from '../../../actions';
+import * as actions1 from '../../../actions';
+import * as actions from '../../../reducers/create';
 import {
   Button,
   WarningRecover,
@@ -219,7 +220,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.setStep(value));
     },
     setLoading: (value) => {
-      dispatch(actions.setLoading(value));
+      dispatch(actions1.setLoading(value));
     }
   }
 }

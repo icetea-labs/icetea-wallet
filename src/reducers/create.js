@@ -1,52 +1,63 @@
-import * as types from '../constants/ActionTypes'
-
 const initialState = {
-  password: "",
-  address: "",
-  privateKey: "",
-  keyStore: "",
-  step: "inputPassword",
-  mnemonic: "",
-  keyStoreText: "",
+  password: '',
+  address: '',
+  privateKey: '',
+  keyStore: '',
+  step: 'inputPassword',
+  mnemonic: '',
+  keyStoreText: '',
   showPrivateKey: false,
-  confirmMnemonic: false
+  confirmMnemonic: false,
 };
+const SET_STEP = 'createAccount/SET_STEP';
+const SET_PASSWORD = 'createAccount/SET_PASSWORD';
+const SET_ACCOUNT = 'createAccount/SET_ACCOUNT';
+const SET_SHOW_PRIVATEKEY = 'createAccount/SET_SHOW_PRIVATEKEY';
+const SET_CONFIRM_MNEMONIC = 'createAccount/SET_CONFIRM_MNEMONIC';
+// const SET_SHOW_KEYSTORE_TEXT = 'createAccount/SET_SHOW_KEYSTORE_TEXT';
 
-// const initialState = {
-//   password: "",
-//   address: "",
-//   privateKey: "",
-//   keyStore: "",
-//   step: "confirmMnemonic", // confirmMnemonic stepTwo
-//   mnemonic: "taxi sing imitate select scale oak asset puppy remove position jacket hair retire another medal clump heavy lecture exercise home drive recipe dwarf unaware",
-//   keyStoreText: "",
-//   showPrivateKey: false,
-//   confirmMnemonic: false
-// };
+export const setStep = step => ({
+  type: SET_STEP,
+  step,
+});
+export const setPassword = password => ({
+  type: SET_PASSWORD,
+  password,
+});
+export const setAccount = data => ({
+  type: SET_ACCOUNT,
+  data,
+});
+export const setShowPrivateKey = data => ({
+  type: SET_SHOW_PRIVATEKEY,
+  data,
+});
+export const setConfirmMnemonic = data => ({
+  type: SET_CONFIRM_MNEMONIC,
+  data,
+});
 
-const create = ( state = initialState, action ) => {
+export default function create(state = initialState, action) {
   switch (action.type) {
-    case types.SET_PASSWORD:
+    case SET_PASSWORD:
       return Object.assign({}, state, {
-        password: action.password
+        password: action.password,
       });
-    case types.SET_STEP:
+    case SET_STEP:
       return Object.assign({}, state, {
-        step: action.step
+        step: action.step,
       });
-    case types.SET_ACCOUNT:
+    case SET_ACCOUNT:
       return Object.assign({}, state, action.data);
-    case types.SET_SHOW_PRIVATEKEY:
+    case SET_SHOW_PRIVATEKEY:
       return Object.assign({}, state, {
-        showPrivateKey: action.data
+        showPrivateKey: action.data,
       });
-    case types.SET_CONFIRM_MNEMONIC:
+    case SET_CONFIRM_MNEMONIC:
       return Object.assign({}, state, {
-        confirmMnemonic: action.data
+        confirmMnemonic: action.data,
       });
-    default: 
+    default:
       return state;
   }
 }
-
-export default create;

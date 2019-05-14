@@ -106,8 +106,10 @@ export const theme = Object.assign({}, size ,{
   buttonPrimaryColor: "#F0B90B",
   xfersLogoBoxBg: "#23448E",
   lineColor: "#f0f0f0",
+  sectionBorderRadius: "4px",
+  sectionBoxShadow: "-4px 4px 10px 0px rgba(0,0,0,0.1)",
+  tradingViewStyle: {color}
 })
-
 export const zIndex = {
   negitive: -1,
   zeroIndex: 0,

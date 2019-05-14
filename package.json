@@ -16,7 +16,6 @@
     "dateformat": "^3.0.3",
     "font-awesome": "^4.7.0",
     "hdkey": "^1.1.1",
-    "i": "^0.3.6",
     "icetea-common": "github:TradaTech/icetea-common",
     "icetea-web3": "github:TradaTech/icetea-web3",
     "keythereum": "^1.0.4",
@@ -37,7 +36,6 @@
     "react-jss": "^8.6.1",
     "react-redux": "^7.0.1",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8",
     "react-vue": "0.0.5",
     "reactstrap": "^8.0.0",
     "redux": "^4.0.1",
@@ -45,8 +43,8 @@
     "vue": "^2.6.10"
   },
   "scripts": {
-    "start": "PORT=4000 react-scripts start",
-    "build": "react-scripts build",
+    "start": "PORT=4000  react-scripts start",
+    "build": "REACT_APP_ENV=production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -58,5 +56,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "react-scripts": "^2.1.8"
+  }
 }

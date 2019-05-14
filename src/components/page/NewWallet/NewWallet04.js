@@ -3,7 +3,7 @@ import _ from 'lodash';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import * as actions from '../../../actions';
+import * as actions from '../../../reducers/create';
 import { Button, MnemonicItem } from '../../elements';
 import {
   Header2, 

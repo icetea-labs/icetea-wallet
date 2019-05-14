@@ -4,7 +4,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import QueueAnim from 'rc-queue-anim';
-import * as actions from '../../../actions';
+import * as actions from '../../../actions/create';
 // import { theme, zIndex } from './../../../constants/Styles';
 import NewWallet01 from './NewWallet01';
 import NewWallet02 from './NewWallet02';

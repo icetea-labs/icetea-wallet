@@ -1,18 +1,18 @@
-import * as types from '../constants/ActionTypes'
+import * as types from '../constants/ActionTypes';
 
 const initialState = {
   isLoading: false,
   showNotLoginNotify: false,
-  triggerElement: null
+  triggerElement: null,
 };
 
-const globalData = ( state = initialState, action ) => {
+const globalData = (state = initialState, action) => {
   switch (action.type) {
     case types.SET_GLOBAL_LOADING:
       return {
         ...state,
-        isLoading: action.data
-      }
+        isLoading: action.data,
+      };
     // case types.SET_STEP:
     //   return {
     //     ...state,
@@ -23,9 +23,9 @@ const globalData = ( state = initialState, action ) => {
     //     ...state,
     //     triggerElement: action.data
     //   }
-    default: 
+    default:
       return state;
   }
-}
+};
 
 export default globalData;

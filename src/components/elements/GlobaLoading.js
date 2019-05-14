@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Wrapper = styled.div`
     position: fixed;
@@ -54,10 +54,10 @@ export class GlobaLoading extends Component {
     return (
       <Wrapper>
         <Rect>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+          <div />
+          <div />
+          <div />
+          <div />
         </Rect>
       </Wrapper>
     );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{PureComponent} from 'react';
 import styled from 'styled-components';
 import { zIndex } from './../../constants/Styles';
 // For create keystore
@@ -228,12 +228,13 @@ const IconBase = styled.i`
   };
 `;
 export const Icon = (props) => {
-  var {size, color, type} = props;
+  var {size, color, type, hoverColor} = props;
   return (
     <IconBase 
       className={ "iconfont icon-".concat(type) }
       size  = { size || "16px" }
       color = { color }
+      hoverColor = {hoverColor}
     >
     </IconBase>
     );
@@ -242,6 +243,15 @@ Icon.defaultProps = {
   size: 16,
   color: "",
   hoverColor: ""
+}
+export const FontDin = (props) => {
+  var Item = styled.span`font-family:'DIN';`;
+  return (
+    <Item>{props.value}</Item>
+  );
+}
+FontDin.defaultProps = {
+  value: ""
 }
 // For create 
 export const BtnActive = styled.button`
@@ -429,3 +439,46 @@ export const MnemonicItemBase = styled.div`
   margin:${props => props.margin || "5px"};
   user-select:none;
 `;
+
+const Hash = styled.div`
+  color:${({theme})=>theme.TxHashColor};
+  text-decoration:underline;
+  width:${({width})=> width ? width :'150px'};
+  text-overflow:ellipsis;
+  overflow:hidden;
+  white-space:nowrap;
+  &:hover{color:#F0B90B;}
+`;
+const HashLoading = styled.div`
+  color:#F0B90B;
+  display:flex;
+  line-height:16px;
+  span{margin-left:5px;}
+`;
+export class TxHash extends PureComponent {
+  _gotoExplorer = () => {
+    var e = this.props.hash;
+    // window.open("".concat(f.a, "/tx/").concat(e), "blank");
+  }
+  render() {
+    var {hash, width} = this.props
+    return (
+      <div>
+        { 
+          hash ? 
+          <Hash onClick={this._gotoExplorer} width={width} >
+            <FontDin value={hash}/>
+          </Hash> 
+          : <HashLoading>
+              <Icon type="loading" size="14" />
+              <span>Pending</span>
+            </HashLoading>
+        }
+      </div>
+    );
+  }
+}
+TxHash.defaultProps = {
+  hash: "",
+  width: ""
+}

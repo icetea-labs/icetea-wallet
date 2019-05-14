@@ -16,3 +16,6 @@ export const SET_ACCOUNT_1  = 'account/SET_ACCOUNT';
 export const SET_USER_INFO  = 'account/SET_USER_INFO';
 export const SET_NEEDAUTH   = 'account/SET_NEEDAUTH';
 export const SET_WALLETCONNECT_URI  = 'account/SET_WALLETCONNECT_URI';
+// Transaction
+export const SET_TRANSACTION_HISTORY  = 'SET_TRANSACTION_HISTORY';
+export const SET_FETCH_TRANSACTION  = 'SET_FETCH_TRANSACTION';
