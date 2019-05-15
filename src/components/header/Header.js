@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import './Header.css'
-import * as actions from '../../actions'
+import './Header.css';
 import { connect } from 'react-redux';
-import CopyText from  '../page/CopyText'
-import styled from 'styled-components'
+import styled from 'styled-components';
+import CopyText from '../pages/Balances/CopyText';
 
 const DivWapper = styled.div`
   height: 50px;
@@ -60,8 +59,8 @@ const UlLink = styled.ul`
 `;
 class Header extends Component {
   render() {
-    var address = this.props.address;
-    console.log('CheckA', address)
+    const address = this.props.address;
+    console.log('CheckA', address);
     return (
       <DivWapper>
         <div className="sc-uJMKN jNhSkT">
@@ -76,20 +75,21 @@ class Header extends Component {
             <li><a href="/balances">Balances</a></li>
           </UlLink>
           <div className="sc-ktHwxA izmNVh">
-            <i className="iconfont icon-account sc-dnqmqq iiYHFz" size="16" color=""></i>
+            <i className="iconfont icon-account sc-dnqmqq iiYHFz" size="16" color="" />
             <ul className="sc-hEsumM cnUGfj">
               <li className="wallet-address">
                 <div>
                   <div className="title1">Wallet</div>
                   <div className="address">{address}</div>
                 </div>
-                <div className="op"><span title="copy address">
-                  {/* <i className="iconfont icon-copy sc-dnqmqq iiYHFz" size="16" color=""></i> */}
-                  {/* <i className="iconfont fa fa-clone iiYHFz" aria-hidden="true"></i> */}
-                  <CopyText text={address} ></CopyText>
-                </span>
+                <div className="op">
+                  <span title="copy address">
+                    {/* <i className="iconfont icon-copy sc-dnqmqq iiYHFz" size="16" color=""></i> */}
+                    {/* <i className="iconfont fa fa-clone iiYHFz" aria-hidden="true"></i> */}
+                    <CopyText text={address} />
+                                    </span>
                   <span title="go to explorer">
-                    <i className="iconfont icon-link sc-dnqmqq iiYHFz" size="16" color=""></i>
+                    <i className="iconfont icon-link sc-dnqmqq iiYHFz" size="16" color="" />
                   </span>
                 </div>
               </li>
@@ -99,7 +99,7 @@ class Header extends Component {
               <li>Close Wallet</li>
             </ul>
           </div>
-          <div className="sc-tilXH Sxoxk"><i className="iconfont icon-menu sc-dnqmqq eAXZfv" size="20" color=""></i></div>
+          <div className="sc-tilXH Sxoxk"><i className="iconfont icon-menu sc-dnqmqq eAXZfv" size="20" color="" /></div>
         </DivMenuLink>
       </DivWapper>
 
@@ -107,24 +107,9 @@ class Header extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    address: state.account.address
-  };
-}
+const mapStateToProps = state => ({
+  address: state.account.address,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onSaveWallet: (data) => {
-      dispatch(actions.saveWallet(data))
-    },
-    onChangeForm: (formNo) => {
-      dispatch(actions.setStep(formNo))
-    },
-    onChangePopup: (puNo) => {
-      dispatch(actions.changePopup(puNo))
-    }
-  }
-}
+export default connect(mapStateToProps, null)(Header);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);

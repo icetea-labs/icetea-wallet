@@ -4,12 +4,10 @@ import 'font-awesome/css/font-awesome.min.css';
 import './assets/styles/app.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import myReducer from './reducers';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-
+import store from './store';
 // Store
-const store = createStore(myReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+// const store = createStore(myReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
   <Provider store={store}>

@@ -13,14 +13,14 @@ export const utils = {
       mnemonic: mnemonic
     }
   },
-  recoverAccountFromMneomnic (mnemonic){
+  recoverAccountFromMneomnic(mnemonic) {
     var privateKey = this.getPrivateKeyFromMnemonic(mnemonic);
     return {
       privateKey: privateKey,
       address: ecc.toPubKeyAndAddress(privateKey).address,
     }
   },
-  getPrivateKeyFromMnemonic(mnemonic){
+  getPrivateKeyFromMnemonic(mnemonic) {
     if (!bip39.validateMnemonic(mnemonic))
       throw new Error("wrong mnemonic format");
 

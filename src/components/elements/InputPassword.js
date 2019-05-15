@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Icon } from './utils';
-import { zIndex } from './../../constants/Styles';
+import { zIndex } from '../../constants/styles';
 
 const Container = styled.div`
   margin-top:20px;
