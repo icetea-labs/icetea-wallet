@@ -2,37 +2,37 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './constants/styles';
-import {
-  Home,
-  NewWalletMaster,
-  UnlockWallet,
-  Balances,
-  Transaction,
-  TransactionHistory,
-  BotStore
-} from './components/pages';
-import Layout from './components/layout';
+import routes from './router'
 
 class App extends Component {
+
   render() {
     return (
       <ThemeProvider theme={ theme }>
         <Router>
           <Switch>
-            <Route exact path='/' component={NewWalletMaster} />
-            <Route path={`/create`} component={NewWalletMaster} />
-            <Route path={`/unlock`} component={UnlockWallet} />
-            <Layout>
-              <Route path={`/Home`} component={Home} />
-              <Route path={`/sentTransaction`} component={Transaction} />
-              <Route path={`/transactionHistory`} component={TransactionHistory} />
-              <Route path={`/botStore`} component={BotStore} />
-              <Route path={`/balances`} component={Balances} />
-            </Layout>
+              { this.showContentMenu(routes) }
           </Switch>
         </Router>
       </ThemeProvider>
     );
+  }
+
+  showContentMenu = (routes) => {
+    var res = null;
+    if(routes.length > 0 ) {
+      res = routes.map((route, index) => {
+        return (
+          <Route
+            key={index}
+            path={route.path}
+            exact={route.exact}
+            component={route.main}
+          />
+        );
+      });
+    }
+    return res;
   }
 }
 
