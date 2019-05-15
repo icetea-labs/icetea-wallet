@@ -1,7 +1,7 @@
 import React, { PureComponent, PropTypes } from 'react';
 // import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { zIndex } from './../../constants/Styles';
+import { zIndex } from '../../constants/styles';
 import {
   Icon
 } from './utils';

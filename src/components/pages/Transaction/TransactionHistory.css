@@ -1,0 +1,168 @@
+.gUtTAS {
+  display: flex;
+  justify-content: center;
+  background: rgb(253, 253, 253);
+}
+.kCJCmb {
+  width: 1200px;
+  min-width: 960px;
+}
+.hpRMTi {
+  width: 100%;
+  display: none;
+  min-width: 320px;
+  padding: 0px 20px 20px;
+}
+.kOwkAM {
+  color: rgb(33, 40, 51);
+  font-size: 20px;
+  height: 40px;
+  line-height: 40px;
+  background: rgb(255, 255, 255);
+}
+.iCZsOJ {
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+  box-shadow: rgba(90, 102, 124, 0.08) 0px 1px 20px 0px;
+  height: 40px;
+  background: rgb(255, 255, 255);
+  padding: 0px 5px 0px 15px;
+}
+.gRnqNO {
+  position: relative;
+}
+.bkihkp {
+  width: 100%;
+  border-collapse: separate;
+  border-color: rgb(253, 253, 253);
+  border-spacing: 0px 5px;
+}
+.gTmcD {
+  background:  0% 0% / auto 100% rgb(253, 253, 253);
+}
+.gTmcD tr {
+  font-size: 13px;
+  color: rgb(72, 81, 93);
+  box-shadow: none;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+}
+.gTmcD th:first-child {
+  text-indent: 10px;
+}
+.gTmcD th {
+  background-color: rgb(253, 253, 253);
+  word-break: break-all;
+  cursor: pointer;
+  color: rgb(132, 142, 156);
+  height: 40px;
+  text-align: left;
+  line-height: 40px;
+}
+.jWardX tr {
+  box-shadow: rgba(90, 102, 124, 0.08) 0px 1px 20px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(255, 255, 255);
+  border-image: initial;
+  border-radius: 3px;
+  transition: all 0.2s ease-in 0s;
+}
+.jWardX tr:hover {
+  box-shadow: rgba(90, 102, 124, 0.2) 0px 1px 20px;
+}
+.jWardX tr td:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  text-indent: 10px;
+  border-left: 1px solid rgb(255, 255, 255);
+}
+.kGuMQk tr td:last-child {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.jWardX tr td {
+  position: relative;
+  background-color: rgb(255, 255, 255);
+  word-break: break-all;
+  cursor: pointer;
+  font-size: 12px;
+  color: rgb(33, 40, 51);
+  text-align: left;
+  line-height: 40px;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+}
+.jQgIyo:hover {
+  color: rgb(240, 185, 11);
+}
+.jQgIyo {
+  color: rgb(33, 40, 51);
+  width: 150px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: underline;
+  overflow: hidden;
+}
+/* ---paging */
+.leNfoz {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+.djyRfV {
+  display: flex;
+  font-family: DIN;
+}
+.djyRfV .rc-pagination-item-active {
+  background-color: rgb(240, 185, 11);
+  border-color: rgb(240, 185, 11);
+}
+.djyRfV .rc-pagination-item:hover {
+  border-color: rgb(240, 185, 11);
+}
+.djyRfV .rc-pagination-options:hover {
+  border-color: rgb(240, 185, 11);
+}
+
+.djyRfV .rc-pagination-item:hover a {
+  color: rgb(240, 185, 11);
+}
+.djyRfV .rc-pagination-options-quick-jumper input:hover {
+  border-color: rgb(240, 185, 11);
+}
+.djyRfV .rc-select-enabled .rc-select-selection:hover {
+  border-color:  rgb(240, 185, 11);
+  box-shadow: 0 0 2px  rgb(240, 185, 11);
+}
+.djyRfV .rc-select-enabled .rc-select-selection:active {
+  border-color: rgb(240, 185, 11);
+}
+.djyRfV .rc-pagination-item-active:hover a {
+  color: rgb(255, 255, 255);
+}
+.djyRfV .rc-pagination-item {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 13px;
+  border-width: 1px;
+  border-style: solid;
+  /* border-color: rgb(132, 142, 156); */
+  border-image: initial;
+  outline: none;
+}
+
+.fIPZMa {
+  color: rgb(132, 142, 156);
+}
+.yKCJu {
+  font-family: DIN;
+}

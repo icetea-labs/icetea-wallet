@@ -1,6 +1,6 @@
 import React,{PureComponent} from 'react';
 import styled from 'styled-components';
-import { zIndex } from './../../constants/Styles';
+import { zIndex } from '../../constants/styles';
 // For create keystore
 export const Header1 = styled.div`
   font-size: 24px;

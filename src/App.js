@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { theme } from './constants/Styles';
+import { theme } from './constants/styles';
 import {
   Home,
   NewWalletMaster,
@@ -10,7 +10,7 @@ import {
   Transaction,
   TransactionHistory,
   BotStore
-} from './components/page';
+} from './components/pages';
 import Layout from './components/layout';
 
 class App extends Component {

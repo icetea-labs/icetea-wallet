@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import './Header.css';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import * as actions from '../../actions';
-import CopyText from '../page/CopyText';
+import CopyText from '../pages/Balances/CopyText';
 
 const DivWapper = styled.div`
   height: 50px;
@@ -112,16 +111,5 @@ const mapStateToProps = state => ({
   address: state.account.address,
 });
 
-const mapDispatchToProps = dispatch => ({
-  onSaveWallet: (data) => {
-    dispatch(actions.saveWallet(data));
-  },
-  onChangeForm: (formNo) => {
-    dispatch(actions.setStep(formNo));
-  },
-  onChangePopup: (puNo) => {
-    dispatch(actions.changePopup(puNo));
-  },
-});
+export default connect(mapStateToProps, null)(Header);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
