@@ -34,13 +34,18 @@ const FooterUpper = styled.div`
   }
 `
 
+
 class FooterCus extends PureComponent {
+
+  goHome = () => {
+    this.props.history.push("/home")
+  }
   render() {
     return (
       <FooterWrapper>
         <FooterUpper className="nav">
           <div className="nav-link">
-            <a href="/home">Home</a>
+            <a onClick={this.goHome}>Home</a>
           </div>
         </FooterUpper>
         <div>© 2018 - 2019 Ice Tea. All rights reserved.</div>
