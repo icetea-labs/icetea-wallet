@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+<style type="text/css">
+	.st0{opacity:0.4;}
+	.st1{opacity:0.5;fill:none;stroke:#848E9C;stroke-width:2;enable-background:new    ;}
+	.st2{display:none;opacity:0.4;}
+	.st3{display:inline;opacity:0.5;fill:none;stroke:#848E9C;stroke-width:2;enable-background:new    ;}
+	.st4{fill:none;stroke:#848E9C;stroke-width:2;}
+	.st5{fill:none;stroke:#848E9C;stroke-width:2;stroke-linecap:square;}
+	.st6{fill:#1A1F29;stroke:#F0B90B;stroke-width:2;}
+	.st7{fill:#F0B90B;}
+</style>
+<title>3_default</title>
+<desc>Created with Sketch.</desc>
+<g id="分组-6_1_" transform="translate(50.000000, 50.000000) rotate(-315.000000) translate(-50.000000, -50.000000) translate(15.000000, 15.000000)" class="st0">
+	<path id="形状_2_" class="st1" d="M18.6,1H1v17.6"/>
+	<path id="形状-copy-2_1_" class="st1" d="M18.6,69H1V51.4"/>
+	<path id="形状-copy_1_" class="st1" d="M51.4,1H69v17.6"/>
+	<path id="形状-copy-3_1_" class="st1" d="M51.4,69H69V51.4"/>
+</g>
+<g id="teste-home">
+	<g id="text-net-homepage" transform="translate(-1284.000000, -507.000000)">
+		<g id="分组-copy-2" transform="translate(1276.000000, 487.000000)">
+			<g id="_x33__x5F_default" transform="translate(8.000000, 20.000000)">
+				
+					<g id="分组-6" transform="translate(50.000000, 50.000000) rotate(-315.000000) translate(-50.000000, -50.000000) translate(15.000000, 15.000000)" class="st2">
+					<path id="形状" class="st3" d="M1,18.6L18.6,1H1V18.6z"/>
+					<path id="形状-copy-2" class="st3" d="M1,51.4L18.6,69H1V51.4z"/>
+					<path id="形状-copy" class="st3" d="M69,18.6L51.4,1H69V18.6z"/>
+					<path id="形状-copy-3" class="st3" d="M69,51.4L51.4,69H69V51.4z"/>
+				</g>
+				<g id="分组-2" transform="translate(32.000000, 33.000000)">
+					<path id="矩形" class="st4" d="M1,1.7v27.6l11.6,3.7l12-4L35,32.6v-25L24.6,1.2l-12,7L1,1.7z"/>
+					<path id="直线" class="st5" d="M12.5,8v24"/>
+					<path id="直线-copy" class="st5" d="M24.5,2v26"/>
+					<path id="椭圆形" class="st6" d="M12.5,25.8c3.7-3.4,5.5-6.1,5.5-8.2c0-3.1-2.5-5.6-5.5-5.6S7,14.5,7,17.6
+						C7,19.7,8.8,22.4,12.5,25.8z"/>
+					<circle id="椭圆形_1_" class="st7" cx="12.5" cy="17.5" r="1.5"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>

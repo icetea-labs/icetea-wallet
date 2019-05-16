@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 128 128" style="enable-background:new 0 0 128 128;" xml:space="preserve">
+<style type="text/css">
+	.st0{display:none;opacity:0.4;}
+	.st1{display:inline;opacity:0.5;fill:none;stroke:#F0B90B;stroke-width:2;enable-background:new    ;}
+	.st2{fill:#1F2530;stroke:#F0B90B;stroke-width:3;}
+	.st3{fill:none;stroke:#F0B90B;stroke-width:3;stroke-linecap:square;}
+	.st4{fill:#1A1F29;stroke:#FFFFFF;stroke-width:2;}
+	.st5{fill:#FFFFFF;}
+	.st6{fill:#F0B90B;}
+	.st7{opacity:0.4;}
+	.st8{opacity:0.5;fill:none;stroke:#F0B90B;stroke-width:2;enable-background:new    ;}
+</style>
+<title>5_hover</title>
+<desc>Created with Sketch.</desc>
+<g id="teste-home">
+	<g id="text-net-homepage" transform="translate(-906.000000, -684.000000)">
+		<g id="分组-copy-4" transform="translate(855.000000, 684.000000)">
+			<g id="_x35__x5F_hover" transform="translate(51.000000, 0.000000)">
+				
+					<g id="分组-6" transform="translate(64.000000, 64.000000) rotate(-315.000000) translate(-64.000000, -64.000000) translate(19.000000, 19.000000)" class="st0">
+					<path id="形状" class="st1" d="M1,24.6L24.6,1H1V24.6z"/>
+					<path id="形状-copy-2" class="st1" d="M1,65.4L24.6,89H1V65.4z"/>
+					<path id="形状-copy" class="st1" d="M89,24.6L65.4,1H89V24.6z"/>
+					<path id="形状-copy-3" class="st1" d="M89,65.4L65.4,89H89V65.4z"/>
+				</g>
+				<g id="分组-5" transform="translate(41.000000, 44.000000)">
+					<rect id="矩形" x="1.5" y="1.5" class="st2" width="43.2" height="37"/>
+					<path id="直线-3" class="st3" d="M2.5,11.9h42"/>
+					<path id="椭圆形" class="st4" d="M16.1,28.4c4.9-4.5,7.4-8.2,7.4-10.9c0-4.1-3.3-7.5-7.4-7.5s-7.4,3.4-7.4,7.5
+						C8.8,20.3,11.2,23.9,16.1,28.4z"/>
+					<circle id="椭圆形_1_" class="st5" cx="16.2" cy="17.5" r="2.5"/>
+					<rect id="矩形_1_" x="32.5" y="18.8" class="st6" width="7.5" height="3.8"/>
+					<rect id="矩形-copy-2" x="26.2" y="26.2" class="st6" width="13.8" height="3"/>
+				</g>
+			</g>
+		</g>
+	</g>
+	
+		<g id="分组-6_1_" transform="translate(64.000000, 64.000000) rotate(-315.000000) translate(-64.000000, -64.000000) translate(19.000000, 19.000000)" class="st7">
+		<path id="形状_2_" class="st8" d="M24.6,1H1v23.6"/>
+		<path id="形状-copy-2_1_" class="st8" d="M24.6,89H1V65.4"/>
+		<path id="形状-copy_1_" class="st8" d="M65.4,1H89v23.6"/>
+		<path id="形状-copy-3_1_" class="st8" d="M65.4,89H89V65.4"/>
+	</g>
+</g>
+</svg>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+<style type="text/css">
+	.st0{display:none;opacity:0.4;}
+	.st1{display:inline;opacity:0.5;fill:none;stroke:#848E9C;stroke-width:2;enable-background:new    ;}
+	.st2{fill:#F0B90B;}
+	.st3{fill:#848E9C;}
+	.st4{opacity:0.4;}
+	.st5{opacity:0.5;fill:none;stroke:#848E9C;stroke-width:2;enable-background:new    ;}
+</style>
+<title>2_default</title>
+<desc>Created with Sketch.</desc>
+<g id="teste-home">
+	<g id="text-net-homepage" transform="translate(-910.000000, -506.000000)">
+		<g id="分组-copy" transform="translate(869.000000, 486.000000)">
+			<g id="_x32__x5F_default" transform="translate(41.000000, 20.000000)">
+				
+					<g id="分组-6" transform="translate(50.000000, 50.000000) rotate(-315.000000) translate(-50.000000, -50.000000) translate(15.000000, 15.000000)" class="st0">
+					<path id="形状" class="st1" d="M1,18.6L18.6,1H1V18.6z"/>
+					<path id="形状-copy-2" class="st1" d="M1,51.4L18.6,69H1V51.4z"/>
+					<path id="形状-copy" class="st1" d="M69,18.6L51.4,1H69V18.6z"/>
+					<path id="形状-copy-3" class="st1" d="M69,51.4L51.4,69H69V51.4z"/>
+				</g>
+				<g id="访问策略" transform="translate(33.000000, 33.000000)">
+					<path id="形状_1_" class="st2" d="M24.3,25.9l1.6-1.6l8.1,8.1L32.4,34L24.3,25.9z M17,17l4,12.1l4.9-4.9l3.3-3.3L17,17z"/>
+					<polygon id="路径" class="st3" points="23.2,9.7 23.2,14.2 25.4,14.2 25.4,7.5 7.5,7.5 7.5,25.4 14.2,25.4 14.2,23.2 
+						9.7,23.2 9.7,9.7 					"/>
+					<polygon id="路径_1_" class="st3" points="0,0 0,34 24.9,34 24.9,31.7 2.3,31.7 2.3,2.3 31.7,2.3 31.7,24.9 34,24.9 34,0 
+											"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+<g id="分组-6_1_" transform="translate(50.000000, 50.000000) rotate(-315.000000) translate(-50.000000, -50.000000) translate(15.000000, 15.000000)" class="st4">
+	<path id="形状_2_" class="st5" d="M18.6,1H1v17.6"/>
+	<path id="形状-copy-2_1_" class="st5" d="M18.6,69H1V51.4"/>
+	<path id="形状-copy_1_" class="st5" d="M51.4,1H69v17.6"/>
+	<path id="形状-copy-3_1_" class="st5" d="M51.4,69H69V51.4"/>
+</g>
+</svg>
