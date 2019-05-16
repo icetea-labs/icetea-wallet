@@ -3,6 +3,7 @@ import './Header.css';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import CopyText from '../pages/Balances/CopyText';
+import AccountMenu from './AccoutMenu';
 
 const DivWapper = styled.div`
   height: 50px;
@@ -99,6 +100,7 @@ class Header extends Component {
               <li>Close Wallet</li>
             </ul>
           </div>
+          <AccountMenu />
           <div className="sc-tilXH Sxoxk"><i className="iconfont icon-menu sc-dnqmqq eAXZfv" size="20" color="" /></div>
         </DivMenuLink>
       </DivWapper>
