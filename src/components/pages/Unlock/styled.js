@@ -230,6 +230,7 @@ export const BaseBtnFoolter = styled.div`
     .unlock{order:0;}
   }
 `
+
 export const MnBtnFoolter = styled(BaseBtnFoolter)`
   display:flex;
   flex-direction:row;
