@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Dropdown from 'rc-dropdown'
 import Menu, { Item as MenuItem, Divider } from 'rc-menu'
-import 'rc-dropdown/assets/index.css'
+// import 'rc-dropdown/assets/index.css'
+import './../../../assets/styles/dropdown.css'
 import { Icon } from './../../elements/utils'
 import {
   DropWrapper,
@@ -42,6 +43,7 @@ class SelectUnlockType extends Component {
   };
 
   _buildList = () => {
+    console.log('Call buildList')
     var { withSearchBox } = this.props
     var items = this.state.options.map((value, index) => {
       return (
@@ -51,6 +53,7 @@ class SelectUnlockType extends Component {
       )
     })
 
+    console.log('items CK', items)
     return (
       <Menu onSelect={this._onSelect}>
         {
@@ -63,9 +66,12 @@ class SelectUnlockType extends Component {
         {items}
       </Menu>
     )
+
+    
   }
 
   _buildDefaultValue = () => {
+    console.log('Call buildDefaultValue')
     var defaultValue = this.props.defaultValue
     if (defaultValue) { return defaultValue }
     var options = this.state.options
@@ -75,6 +81,7 @@ class SelectUnlockType extends Component {
   render () {
     var { width, className } = this.props
     var { value } = this.props
+    console.log('option1 CK', this.props.options)
     return (
       <DropWrapper width={width} className={'select '.concat(className || '')} >
         <Dropdown
@@ -90,7 +97,7 @@ class SelectUnlockType extends Component {
             <DropItem />
           </div>
         </Dropdown>
-        <DefaultItem></DefaultItem>
+        {/* <DefaultItem></DefaultItem> */}
       </DropWrapper>
     )
   }

@@ -9,7 +9,7 @@
   position: absolute;
   left: -9999px;
   top: -9999px;
-  z-index: 1070;
+  z-index: 1100 !important;
   display: block;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 12px;
@@ -194,6 +194,20 @@
     transform-origin: 0% 100%;
     transform: scaleY(0);
   }
+}
+
+.rc-dropdown .search-box input {
+  height: 26px;
+  line-height: 26px;
+  pointer-events: auto;
+  width: 80%;
+  font-size: 14px;
+  text-indent: 10px;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+  outline: none;
 }
 
 /*# sourceMappingURL=common.css.map*/
