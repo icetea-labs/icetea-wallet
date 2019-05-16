@@ -154,7 +154,7 @@ const GuideWrapper = styled.ul`
 class Home extends Component {
 
   gotoTrade = () => {
-    this.props.history.push("/trade");
+    this.props.history.push("/unlock");
   }
 
   gotoCreate = () => {

@@ -15,7 +15,7 @@ const index = [
   {
     path: '/',
     exact: true,
-    main: () => <NewWalletMaster />
+    main: () => <Home />
   },
   {
     path: '/create',
