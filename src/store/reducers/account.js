@@ -1,4 +1,4 @@
-import { actionTypes } from './../actions/create';
+import { actionTypes } from './../actions/create'
 
 const initialState = {
   needAuth: false,
@@ -15,31 +15,31 @@ const initialState = {
     isCoinomiEmulate: false,
     isInfinito: false,
     isInfinitoEmulate: false,
-    isWalletConnect: false,
+    isWalletConnect: false
   },
   wcUri: '',
-  userInfo: {},
-};
+  userInfo: {}
+}
 
 const account = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_ACCOUNT:
-      return Object.assign({}, state, action.data);
+      return Object.assign({}, state, action.data)
     case actionTypes.SET_USER_INFO:
       return Object.assign({}, state, {
-        userInfo: action.data,
-      });
+        userInfo: action.data
+      })
     case actionTypes.SET_WALLETCONNECT_URI:
       return Object.assign({}, state, {
-        wcUri: action.data,
-      });
+        wcUri: action.data
+      })
     case actionTypes.SET_NEEDAUTH:
-      if (state.flags.isHardware) action.data = false;
+      if (state.flags.isHardware) action.data = false
       return Object.assign({}, state, {
-        needAuth: action.data,
-      });
-    default: return state;
+        needAuth: action.data
+      })
+    default: return state
   }
-};
+}
 
-export default account;
+export default account

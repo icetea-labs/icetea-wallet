@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import {zIndex} from '../../../constants/styles';
-import {DivSelectWordBase, WrapperBtnClose} from '../../elements/utils'
+import styled from 'styled-components'
+import { zIndex } from '../../../constants/styles'
+import { DivSelectWordBase, WrapperBtnClose } from '../../elements/utils'
 
 export const Wrapper = styled.div`
   width:450px;
@@ -38,7 +38,7 @@ export const Wrapper = styled.div`
   @media (max-width:768px){
     width:100%;
   }
-`;
+`
 
 export const Error = styled.div`
   color:#F23051;
@@ -53,7 +53,7 @@ export const Error = styled.div`
     width:15px;
     margin-right:5px;
   }
-`;
+`
 
 export const MaxValue = styled.div`
   position:absolute;
@@ -61,13 +61,13 @@ export const MaxValue = styled.div`
   bottom:10px;
   color:#F0B90B;
   cursor:pointer;
-`;
+`
 
 export const FeeAva = styled.div`
   display:flex;
   justify-content:
   space-between;
-`;
+`
 
 export const Fee = styled.div`
   font-size:14px;
@@ -78,7 +78,7 @@ export const Fee = styled.div`
   .fee-value {
     color:#212833;
   }
-`;
+`
 
 export const Ava = styled.div`
   font-size:14px;
@@ -89,12 +89,12 @@ export const Ava = styled.div`
   .Available-value {
     color:#212833;
   }
-`;
+`
 
 export const ButtonWrapper = styled(DivSelectWordBase)`
 
-`;
+`
 
 export const WrapperBtnCloseCus = styled(WrapperBtnClose)`
   line-height: 20px;
-`;
+`

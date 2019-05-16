@@ -1,18 +1,16 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 
 class ByPrivateKey extends PureComponent {
-  render() {
+  render () {
     return (
-      <div>
-        
-      </div>
-    );
+      <div />
+    )
   }
 }
 
 ByPrivateKey.propTypes = {
 
-};
+}
 
-export default ByPrivateKey;
+export default ByPrivateKey

@@ -1,12 +1,12 @@
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-import * as actions from './../../../store/actions/create';
+import * as actions from './../../../store/actions/create'
 import { Button } from '../../elements'
 import {
-  Header2, 
-  DivControlBtn, 
+  Header2,
+  DivControlBtn,
   DivPreviousBt, Icon
 } from '../../elements/utils'
 
@@ -20,7 +20,7 @@ const DivTextNote = styled.div`
     margin-right: 15px;
     font-size: 20px;
   }
-`;
+`
 const DivShowMnemonic = styled.div`
   text-align: center;
   position: relative;
@@ -37,50 +37,49 @@ const DivShowMnemonic = styled.div`
     font-family: DIN;
     font-weight: 900;
   }
-`;
+`
 
 const DivShowPrivate = styled.div`
   text-align: right;
   cursor: pointer;
   color: rgb(72, 81, 93);
   padding: 10px 0px;
-`;
+`
 
 class NewWallet03 extends PureComponent {
-
   _showPrivatekey = () => {
-    this.props.setShowPrivateKey(true);
+    this.props.setShowPrivateKey(true)
   }
   _goback = () => {
-    this.props.setStep('stepTwo');
+    this.props.setStep('stepTwo')
   }
   _show = () => {
-    this.props.setConfirmMnemonic(true);
+    this.props.setConfirmMnemonic(true)
   }
-  render() {
-    var isActive = 'active';
+  render () {
+    var isActive = 'active'
     return (
       <div>
         <Header2>
-          <span className="page" >2</span>
-          <span className="page totalPage">/2</span>
-          <span className="title" >Choose Secondary Access</span>
+          <span className='page' >2</span>
+          <span className='page totalPage'>/2</span>
+          <span className='title' >Choose Secondary Access</span>
         </Header2>
         <DivTextNote>
-          <Icon type="pencil" size="20" color="inherit"></Icon>
+          <Icon type='pencil' size='20' color='inherit' />
           <span>Back up the text below on paper and keep it somewhere secret and safe.</span>
         </DivTextNote>
         <DivShowMnemonic>
-          <p data-cy="mnemonic">{this.props.mnemonic}</p>
+          <p data-cy='mnemonic'>{this.props.mnemonic}</p>
         </DivShowMnemonic>
         <DivShowPrivate>
           <div onClick={() => this._showPrivatekey()} >View my Private Key &gt;&gt;</div>
         </DivShowPrivate>
 
         <DivControlBtn>
-          <DivPreviousBt className="previous-button" >
-            <Icon type="back" size="20" color="inherit"></Icon>
-            <div className="unlock" onClick={() => this._goback()} >Previous</div>
+          <DivPreviousBt className='previous-button' >
+            <Icon type='back' size='20' color='inherit' />
+            <div className='unlock' onClick={() => this._goback()} >Previous</div>
           </DivPreviousBt>
           <Button
             width={'120px'}
@@ -88,18 +87,18 @@ class NewWallet03 extends PureComponent {
             className={isActive}>
             <React.Fragment>
               <span style={{ 'marginRight': '10px' }} >Continue</span>
-              <Icon type="continue" size="20" color="inherit"></Icon>
+              <Icon type='continue' size='20' color='inherit' />
             </React.Fragment>
           </Button>
         </DivControlBtn>
       </div>
-    );
+    )
   }
 }
 
 NewWallet03.defaultProps = {
-  mnemonic: "",
-  privateKey: "",
+  mnemonic: '',
+  privateKey: '',
   setStep: function () { },
   setShowPrivateKey: function () { },
   setConfirmMnemonic: function () { }
@@ -109,7 +108,7 @@ const mapStateToProps = state => {
   return {
     mnemonic: state.create.mnemonic,
     privateKey: state.create.privateKey
-  };
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -125,4 +124,4 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NewWallet03));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NewWallet03))

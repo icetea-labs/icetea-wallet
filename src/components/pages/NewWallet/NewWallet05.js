@@ -1,11 +1,11 @@
-import React from "react";
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import styled from 'styled-components';
-import * as actions from './../../../store/actions/create';
-import { Button } from '../../elements';
-import { Icon } from '../../elements/utils';
-import success from './../../../assets/img/success.svg';
+import React from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import styled from 'styled-components'
+import * as actions from './../../../store/actions/create'
+import { Button } from '../../elements'
+import { Icon } from '../../elements/utils'
+import success from './../../../assets/img/success.svg'
 
 const WrapperImg = styled.div`
   margin-top:20px;
@@ -15,7 +15,7 @@ const WrapperImg = styled.div`
     display:block;
     margin-bottom:15px;
   }
-`;
+`
 
 const Title = styled.div`
   font-size:16px;
@@ -25,7 +25,7 @@ const Title = styled.div`
   span{
     color:#F23051;
   };
-`;
+`
 const Desc = styled.ul`
   padding:0 30px;
   font-size:12px;
@@ -33,30 +33,30 @@ const Desc = styled.ul`
   li{
     text-align:center;
   };
-`;
+`
 const FoolterBtn = styled.div`
   margin-top:40px;
   display:flex;
   flex-direction:row;
   justify-content:center;
-`;
+`
 
 class NewWallet05 extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       selectedWords: [],
       shuffledWords: [],
-      isSequenceCorrect: true,
+      isSequenceCorrect: true
     }
   }
 
   _gotoUnlock = () => {
-    this.props.setStep("inputPassword");
-    this.props.history.push("/unlock");
+    this.props.setStep('inputPassword')
+    this.props.history.push('/unlock')
   }
 
-  render() {
+  render () {
     return (
       <div>
         <WrapperImg>
@@ -71,34 +71,33 @@ class NewWallet05 extends React.Component {
             >
               <React.Fragment>
                 <span style={{ 'marginRight': '10px' }} >Unlock the wallet</span>
-                <Icon type="continue" size="20" color="inherit"></Icon>
+                <Icon type='continue' size='20' color='inherit' />
               </React.Fragment>
             </Button>
           </FoolterBtn>
         </WrapperImg>
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => {
   return {
     keyStore: state.create.keyStore
-  };
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setStep: (step) => {
       dispatch(actions.setStep(step))
-    },
+    }
   }
 }
 
 NewWallet05.defaultProps = {
   setStep: function () { },
-  history: {},
+  history: {}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NewWallet05));
-
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NewWallet05))

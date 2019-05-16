@@ -1,17 +1,17 @@
-import { actionTypes } from './../actions/globalData';
+import { actionTypes } from './../actions/globalData'
 
 const initialState = {
   isLoading: false,
   showNotLoginNotify: false,
-  triggerElement: null,
-};
+  triggerElement: null
+}
 
 const globalData = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_GLOBAL_LOADING:
       return Object.assign({}, state, {
-        isLoading: action.data,
-      });
+        isLoading: action.data
+      })
     // case types.SET_STEP:
     //   return {
     //     ...state,
@@ -23,8 +23,8 @@ const globalData = (state = initialState, action) => {
     //     triggerElement: action.data
     //   }
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default globalData;
+export default globalData

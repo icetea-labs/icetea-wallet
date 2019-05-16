@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import BotUI from 'botui'
-import tweb3 from '../../../service/tweb3';
+import tweb3 from '../../../service/tweb3'
 
 const initWeb3 = (showAlert = true) => {
   try {
-    var resp = tweb3.wallet.importAccount('CJUPdD38vwc2wMC3hDsySB7YQ6AFLGuU6QYQYaiSeBsK');
+    var resp = tweb3.wallet.importAccount('CJUPdD38vwc2wMC3hDsySB7YQ6AFLGuU6QYQYaiSeBsK')
     // var resp = tweb3.wallet.loadFromStorage('123')
     // if (resp === 0) {
     //   window.alert('Wallet empty! Please go to Wallet tab to create account.')
@@ -23,7 +23,7 @@ const initWeb3 = (showAlert = true) => {
 }
 let web3Inited = initWeb3(false)
 
-var botui=null;
+var botui = null
 
 const say = (text, options) => {
   botui.message.add(Object.assign({ content: String(text) }, options || {}))

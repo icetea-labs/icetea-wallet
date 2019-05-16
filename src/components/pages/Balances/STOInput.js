@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
-import styled from 'styled-components';
-import { Icon } from '../../elements/utils';
+import styled from 'styled-components'
+import { Icon } from '../../elements/utils'
 
-//Component 1093
+// Component 1093
 
 const InputLabel = styled.div`
   position:relative;
@@ -47,7 +47,7 @@ const InputLabel = styled.div`
     color:#848E9C;
     opacity:1;
   }
-`;
+`
 
 const Clear = styled.div`
   position:absolute;
@@ -55,58 +55,57 @@ const Clear = styled.div`
   bottom:10px;
   color:${props => props.theme.fontColor};
   cursor:pointer;
-`;
+`
 
 export default class STOInput extends PureComponent {
-
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       value: ''
     }
   }
 
   _getDecimal = (e) => {
-    return "number" !== this.props.type ? 0 : e && e.includes(".") ? e.split(".")[1].length : 0
+    return this.props.type !== 'number' ? 0 : e && e.includes('.') ? e.split('.')[1].length : 0
   }
 
   _textChange = (e) => {
-    var stateValue = this.state.value;
-    var value = e.currentTarget.value.trim();
+    var stateValue = this.state.value
+    var value = e.currentTarget.value.trim()
 
     // this.setState({
     //   value: e.target.value
     // })
 
-    if(this._getDecimal(value) <= 8){
-      stateValue = value;
+    if (this._getDecimal(value) <= 8) {
+      stateValue = value
       this.setState({
         value: stateValue
-      }, () => this.props.onChange(stateValue, false));
+      }, () => this.props.onChange(stateValue, false))
     }
   }
 
   // componentWillReceiveProps(nextProps){
   //   if (this.props !== nextProps){
   //     this.setState({
-  //       value: 
+  //       value:
   //     })
   //   }
   // }
 
   _clear = (e) => {
     this.setState({
-      value: ""
-    },() => this.props.onChange("",false));
+      value: ''
+    }, () => this.props.onChange('', false))
   };
 
-  render() {
-    var { value } = this.state;
-    var { title, defaultValue, type, autoFocus } = this.props;
+  render () {
+    var { value } = this.state
+    var { title, defaultValue, type, autoFocus } = this.props
 
     return (
       <InputLabel>
-        <p className={value || defaultValue ? "label label-value" : "label"} >{title}</p>
+        <p className={value || defaultValue ? 'label label-value' : 'label'} >{title}</p>
         <div>
           <input
             type={type}
@@ -115,11 +114,11 @@ export default class STOInput extends PureComponent {
             autoFocus={autoFocus}
             onChange={this._textChange}
           />
-          <div className="border-bottom"></div>
+          <div className='border-bottom' />
           {
             (!!value || !!defaultValue) &&
             <Clear onClick={this._clear}>
-              <Icon type="clear" size="14"></Icon>
+              <Icon type='clear' size='14' />
             </Clear>
           }
         </div>
@@ -130,11 +129,9 @@ export default class STOInput extends PureComponent {
 
 STOInput.defaultProps = {
   onChange: function () { },
-  title: "",
-  type: "text",
-  value: "",
-  defaultValue: "",
+  title: '',
+  type: 'text',
+  value: '',
+  defaultValue: '',
   autoFocus: false
 }
-
-

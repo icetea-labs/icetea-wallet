@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from 'react'
 // import PropTypes from 'prop-types';
 // import styled from 'styled-components'
 import {
@@ -13,28 +13,28 @@ export class Button extends PureComponent {
     loading: false,
     onClick: function () { },
     children: null,
-    width: "",
-    height: "",
-    type: "active"
+    width: '',
+    height: '',
+    type: 'active'
   }
   _handleClick = (e) => {
-    this.props.loading || (this.props.onClick && this.props.onClick(e));
+    this.props.loading || (this.props.onClick && this.props.onClick(e))
   }
-  render() {
-    var {disabled, children, loading, width, height} = this.props;
+  render () {
+    var { disabled, children, loading, width, height } = this.props
     return (
       <>
-        { 
+        {
           disabled ? <BtnInactive width={width}>{ children }</BtnInactive>
-          : <BtnActive
-            onClick = {this._handleClick}
-            width = {width}
-            height = {height}
-          >
-          { loading ? <Loading/> : children }
-          </BtnActive> 
+            : <BtnActive
+              onClick={this._handleClick}
+              width={width}
+              height={height}
+            >
+              { loading ? <Loading /> : children }
+            </BtnActive>
         }
       </>
-    );
+    )
   }
 }

@@ -45,7 +45,19 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "ignore": [
+      "**/tmp/",
+      "**/example/",
+      "/components/bot/botui.js"
+    ]
+  },
+  "standard": {
+    "ignore": [
+      "**/tmp/",
+      "**/example/",
+      "/components/bot/botui.js"
+    ]
   },
   "browserslist": [
     ">0.2%",

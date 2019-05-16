@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Icon, MnemonicItemBase } from './utils';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import { Icon, MnemonicItemBase } from './utils'
 
 const Wrapper = styled(MnemonicItemBase)`
   padding:3px 8px;
@@ -25,35 +25,34 @@ const Wrapper = styled(MnemonicItemBase)`
       color:#fff;
     }
   }
-`;
+`
 const WrapperIcon = styled.div`
   margin-left:5px;
   margin-bottom:2px;
-`;
+`
 export class MnemonicItem extends PureComponent {
-
   _handleClick = () => {
     this.props.onClick && this.props.onClick(this.props.value)
   }
-  render() {
-    var { canClose, value } = this.props;
+  render () {
+    var { canClose, value } = this.props
     return (
       <Wrapper onClick={this._handleClick}>
         {
-          canClose ?
-            <React.Fragment>
-              <WrapperIcon> {value} <Icon type="close" size="10" /></WrapperIcon>
+          canClose
+            ? <React.Fragment>
+              <WrapperIcon> {value} <Icon type='close' size='10' /></WrapperIcon>
             </React.Fragment>
             : value
         }
       </Wrapper>
-    );
+    )
   }
 }
 
 MnemonicItem.defaultProps = {
-  value: "",
+  value: '',
   onClick: function () { },
   canClose: false,
   close: function () { }
-};
+}

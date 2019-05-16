@@ -1,20 +1,19 @@
-import React, { Component } from 'react';
-import dateFormat from 'dateformat';
-import './TransactionHistory.css';
-import { decodeTX } from 'icetea-web3/src/utils';
-import { ecc } from 'icetea-common';
-import tweb3 from '../../../service/tweb3';
+import React, { Component } from 'react'
+import dateFormat from 'dateformat'
+import './TransactionHistory.css'
+import { decodeTX } from 'icetea-web3/src/utils'
+import { ecc } from 'icetea-common'
+import tweb3 from '../../../service/tweb3'
 // import PuViewTx from './poup/PuViewTx';
-import Select from 'rc-select';
-import Pagination from 'rc-pagination';
-import localeInfo from 'rc-pagination/lib/locale/en_US';
-import './../../../assets/styles/pagination.css';
-import './../../../assets/styles/locale.css';
-
+import Select from 'rc-select'
+import Pagination from 'rc-pagination'
+import localeInfo from 'rc-pagination/lib/locale/en_US'
+import './../../../assets/styles/pagination.css'
+import './../../../assets/styles/locale.css'
 
 class TransactionHistory extends Component {
-  constructor() {
-    super();
+  constructor () {
+    super()
     this.state = {
       transactions: [],
       totalTx: 0,
@@ -25,13 +24,13 @@ class TransactionHistory extends Component {
     }
   }
 
-  componentDidMount() {
-    this.renderTransactions();
+  componentDidMount () {
+    this.renderTransactions()
   }
   fmtTxs = (txs) => {
     Object.keys(txs).forEach(k => {
       const t = txs[k]
-      t.shash = t.hash//this.fmtHex(t.hash)
+      t.shash = t.hash// this.fmtHex(t.hash)
       t.blockHeight = t.height
 
       const data = decodeTX(t.tx)
@@ -40,8 +39,8 @@ class TransactionHistory extends Component {
         const pubkey = data.evidence.pubkey || data.evidence[0].pubkey
         from = ecc.toAddress(pubkey)
       }
-      t.from = from//this.fmtHex(from, 6)
-      t.to = data.to//this.fmtHex(data.to, 6)
+      t.from = from// this.fmtHex(from, 6)
+      t.to = data.to// this.fmtHex(data.to, 6)
       t.value = data.value
       t.fee = data.fee
 
@@ -65,55 +64,55 @@ class TransactionHistory extends Component {
   //   return hex.substr(0, c) + '…' + hex.substr(-c)
   // }
   fmtTime = (tm) => {
-    var d = (typeof tm === 'number') ? tm * 1000 : Date.parse(tm);
-    return dateFormat(new Date(d), "mm-dd  h:MM:ss")
+    var d = (typeof tm === 'number') ? tm * 1000 : Date.parse(tm)
+    return dateFormat(new Date(d), 'mm-dd  h:MM:ss')
   }
   goDetailHash = (hash) => {
     console.log(hash)
   }
   viewDetail = (hash) => {
     // console.log('-viewDetail-', hash)
-    this.setState({ showDetailTx: true, hashValue: hash });
+    this.setState({ showDetailTx: true, hashValue: hash })
   }
   closeViewDetail = () => {
     this.setState({
       showDetailTx: !this.state.showDetailTx
-    });
+    })
   }
 
   addTimeToTx = async (transactions) => {
-    var blocksNum = [];
+    var blocksNum = []
     transactions.forEach(el => {
-      if (blocksNum.indexOf(el.height) < 0) blocksNum.push(parseInt(el.height));
-    });
+      if (blocksNum.indexOf(el.height) < 0) blocksNum.push(parseInt(el.height))
+    })
     var option = {
       minHeight: Math.min(...blocksNum),
       maxHeight: Math.max(...blocksNum)
-    };
+    }
 
     // console.log("option ", option)
-    var blocksInfo = await tweb3.getBlocks(option);
+    var blocksInfo = await tweb3.getBlocks(option)
 
-    var blocksInfoToObj = {};
+    var blocksInfoToObj = {}
     blocksInfo.block_metas.forEach(el => {
       blocksInfoToObj[el.header.height] = { time: this.fmtTime(el.header.time) }
-    });
+    })
     transactions.forEach(el => {
-      el.time = !!(blocksInfoToObj[el.height]) && blocksInfoToObj[el.height].time;
-    });
+      el.time = !!(blocksInfoToObj[el.height]) && blocksInfoToObj[el.height].time
+    })
     // console.log(blocksInfo)
-    return transactions;
+    return transactions
   }
 
   renderTransactions = async (current = this.state.current, pageSize = this.state.pageSize) => {
     try {
-      var op = {prove: false, page: current, per_page: pageSize};
+      var op = { prove: false, page: current, per_page: pageSize }
       // var myTxs = await tweb3.searchTransactions('tx.height > 0', op);
-      var myTxs = await tweb3.getPastEvents('Transferred', 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx', 'tx.height > 0', op);
-      var transactions = this.fmtTxs(myTxs.txs);
-      console.log('myTxs',myTxs);
+      var myTxs = await tweb3.getPastEvents('Transferred', 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx', 'tx.height > 0', op)
+      var transactions = this.fmtTxs(myTxs.txs)
+      console.log('myTxs', myTxs)
       //
-      transactions = await this.addTimeToTx(transactions);
+      transactions = await this.addTimeToTx(transactions)
       // var form = (current - 1) * pageSize;
       // var to = form + pageSize;
       // if (to > transactions.length) to = transactions.length;
@@ -125,81 +124,81 @@ class TransactionHistory extends Component {
         transactions: transactions,
         txToTable: transactions.map((tx, index) => (
           <tr key={index}>
-            <td><div className="sc-gojNiO jQgIyo" onClick={() => this.goDetailHash(tx.hash)}>{tx.hash}</div></td>
-            <td><div className="sc-evWYkj fIPZMa" >
-              <span className="sc-tilXH yKCJu">{tx.time}</span>
+            <td><div className='sc-gojNiO jQgIyo' onClick={() => this.goDetailHash(tx.hash)}>{tx.hash}</div></td>
+            <td><div className='sc-evWYkj fIPZMa' >
+              <span className='sc-tilXH yKCJu'>{tx.time}</span>
             </div>
             </td>
             <td><div>{tx.status}</div></td>
             <td><div>{tx.txType}</div></td>
             <td><div>{tx.value}</div></td>
             <td><div>{tx.fee}</div></td>
-            <td><div><i className="fa fa-ellipsis-h" onClick={() => this.viewDetail(tx.hash)} ></i></div></td>
+            <td><div><i className='fa fa-ellipsis-h' onClick={() => this.viewDetail(tx.hash)} /></div></td>
           </tr>
         ))
-      });
+      })
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
 
   getTxByHash = (hash) => {
     var tx = this.state.transactions.filter(el => {
-      return el.shash === hash;
+      return el.shash === hash
     })
-    return tx[0];
+    return tx[0]
   }
 
   onShowSizeChange = (current, pageSize) => {
     // console.log(current);
     // console.log(pageSize);
-    this.renderTransactions(current, pageSize);
+    this.renderTransactions(current, pageSize)
     this.setState({
       pageSize: pageSize,
-      current: current,
-    });
+      current: current
+    })
   }
 
   onChange = (page) => {
     // console.log(page);
-    this.renderTransactions(page);
+    this.renderTransactions(page)
     this.setState({
-      current: page,
-    });
+      current: page
+    })
   }
-  render() {
+  render () {
     return (
-      <div className="sc-cZLAbK gUtTAS">
-        <div className="sc-cEvuZC kCJCmb">
-          <div className="sc-iVOTot kOwkAM">Transaction History</div>
+      <div className='sc-cZLAbK gUtTAS'>
+        <div className='sc-cEvuZC kCJCmb'>
+          <div className='sc-iVOTot kOwkAM'>Transaction History</div>
           <div>
-            <div className="sc-iyvyFf gRnqNO">
-              <table className="sc-kTUwUJ sc-gzOgki bkihkp">
-                <thead className="sc-kPVwWT gTmcD">
+            <div className='sc-iyvyFf gRnqNO'>
+              <table className='sc-kTUwUJ sc-gzOgki bkihkp'>
+                <thead className='sc-kPVwWT gTmcD'>
                   <tr>
-                    <th data-key="txHash" className="showSortMark">
-                      <div className="sc-esjQYD fchNtk">TxHash<span className="sc-kfGgVZ hfdPRR"><i
-                        className="iconfont icon-sort_desc sc-dnqmqq iiYHFz" size="16" color=""></i></span></div>
+                    <th data-key='txHash' className='showSortMark'>
+                      <div className='sc-esjQYD fchNtk'>TxHash<span className='sc-kfGgVZ hfdPRR'><i
+                        className='iconfont icon-sort_desc sc-dnqmqq iiYHFz' size='16' color='' /></span></div>
                     </th>
-                    <th data-key="date" className="showSortMark">
-                      <div className="sc-esjQYD fchNtk">Date<span className="sc-kfGgVZ hfdPRR"><i
-                        className="iconfont icon-sort_desc sc-dnqmqq iiYHFz" size="16" color=""></i></span></div>
+                    <th data-key='date' className='showSortMark'>
+                      <div className='sc-esjQYD fchNtk'>Date<span className='sc-kfGgVZ hfdPRR'><i
+                        className='iconfont icon-sort_desc sc-dnqmqq iiYHFz' size='16' color='' /></span></div>
                     </th>
                     <th>Status</th>
                     <th>Type</th>
                     <th>Value</th>
                     <th>TxFee</th>
-                    <th></th>
+                    <th />
                   </tr>
                 </thead>
-                <tbody className="sc-hwwEjo jWardX">
+                <tbody className='sc-hwwEjo jWardX'>
                   {this.state.txToTable}
                 </tbody>
               </table>
             </div>
           </div>
-          <div className="sc-jDwBTQ leNfoz">
-            <div className="sc-hMqMXs djyRfV">
+          <div className='sc-jDwBTQ leNfoz'>
+            <div className='sc-hMqMXs djyRfV'>
               <Pagination
                 selectComponentClass={Select}
                 showQuickJumper
@@ -216,8 +215,8 @@ class TransactionHistory extends Component {
           {/* {this.state.showDetailTx ? <PuViewTx tx={this.getTxByHash(this.state.hashValue)} closePoup={() => this.closeViewDetail()} /> : ''} */}
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default TransactionHistory;
+export default TransactionHistory

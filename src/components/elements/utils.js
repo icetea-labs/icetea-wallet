@@ -1,6 +1,6 @@
-import React,{PureComponent} from 'react';
-import styled from 'styled-components';
-import { zIndex } from '../../constants/styles';
+import React, { PureComponent } from 'react'
+import styled from 'styled-components'
+import { zIndex } from '../../constants/styles'
 // For create keystore
 export const Header1 = styled.div`
   font-size: 24px;
@@ -9,7 +9,7 @@ export const Header1 = styled.div`
   padding-bottom: 18px;
   text-align: center;
   font-family: DIN;
-`;
+`
 export const Header2 = styled.div`
   font-size:16px;
   color:#848E9C;
@@ -22,7 +22,7 @@ export const Header2 = styled.div`
     color:#48515D;
     margin-left:8px;
   }
-`;
+`
 export const InputPass = styled.div`
   margin-top: 20px;
   position: relative;
@@ -58,10 +58,10 @@ export const InputPass = styled.div`
   & input:focus {
     border-color: rgb(21, 181, 221);
   }
-`;
+`
 export const InputConfirmPass = styled.div`
   margin: 40px 0px 20px;
-`;
+`
 export const DivValidPass = styled.div`
   margin-top: 5px;
   background: rgb(251, 251, 251);
@@ -108,7 +108,7 @@ export const DivValidPass = styled.div`
       flex-direction: column;
   }
 }
-`;
+`
 export const DivControlBtnKeystore = styled.div`
   display:flex;
   flex-direction:row;
@@ -123,7 +123,7 @@ export const DivControlBtnKeystore = styled.div`
     .previous-button{order:1;}
     .download-keystore{order:0;margin-top:20px;}
   }
-`;
+`
 export const DivControlBtn = styled.div`
   a{
     color:inherit;
@@ -141,7 +141,7 @@ export const DivControlBtn = styled.div`
     padding-bottom:40px;
     .previous-button{order:1;}
     .continue{order:0;margin-top:20px;}}
-`;
+`
 
 export const DivUnlockLink = styled.div`
   cursor:pointer;
@@ -149,7 +149,7 @@ export const DivUnlockLink = styled.div`
   align-items:center;
   color:#f0b90b;
   i{margin-right:10px;}
-`;
+`
 export const DivFooter = styled.div`
   font-size: 12px;
   color: rgb(132, 142, 156);
@@ -168,14 +168,14 @@ export const DivFooter = styled.div`
     line-height: 20px;
     width: 90%;
   }
-`;
+`
 export const DivFooterCheckBox = styled.div`
   & input:checked + label span:first-child {
       background: rgb(240, 185, 10);
       border-color: rgb(240, 185, 10);
       animation: 0.4s ease 0s 1 normal none running wave;
   }
-`;
+`
 export const DivPreviousBt = styled.div`
   /* cursor: pointer;
   display: flex;
@@ -203,7 +203,7 @@ export const DivPreviousBt = styled.div`
   &:hover{color:#f0b90b;}
   a{color:inherit;}
   i{margin-right:10px;}
-`;
+`
 export const DivContentW2 = styled.div`
   justify-content: center;
   display: flex;
@@ -218,46 +218,45 @@ export const DivContentW2 = styled.div`
     color: rgb(72, 81, 93);
     text-align: center;
   }
-`;
+`
 
 const IconBase = styled.i`
-  color: ${props => props.color };
-  font-size: ${props => "".concat(props.size, "px") };
+  color: ${props => props.color};
+  font-size: ${props => ''.concat(props.size, 'px')};
   &:hover {
-    color: ${props => props.hoverColor ? props.hoverColor : props.color };
+    color: ${props => props.hoverColor ? props.hoverColor : props.color};
   };
-`;
+`
 export const Icon = (props) => {
-  var {size, color, type, hoverColor} = props;
+  var { size, color, type, hoverColor } = props
   return (
-    <IconBase 
-      className={ "iconfont icon-".concat(type) }
-      size  = { size || "16px" }
-      color = { color }
-      hoverColor = {hoverColor}
-    >
-    </IconBase>
-    );
+    <IconBase
+      className={'iconfont icon-'.concat(type)}
+      size={size || '16px'}
+      color={color}
+      hoverColor={hoverColor}
+    />
+  )
 }
 Icon.defaultProps = {
   size: 16,
-  color: "",
-  hoverColor: ""
+  color: '',
+  hoverColor: ''
 }
 export const FontDin = (props) => {
-  var Item = styled.span`font-family:'DIN';`;
+  var Item = styled.span`font-family:'DIN';`
   return (
     <Item>{props.value}</Item>
-  );
+  )
 }
 FontDin.defaultProps = {
-  value: ""
+  value: ''
 }
-// For create 
+// For create
 export const BtnActive = styled.button`
-  width: ${props => props.width ? props.width : "100px"};
-  height: ${props => props.height ? props.height : "40px"};
-  line-height: ${props => props.height ? props.height : "40px"};
+  width: ${props => props.width ? props.width : '100px'};
+  height: ${props => props.height ? props.height : '40px'};
+  line-height: ${props => props.height ? props.height : '40px'};
   text-align:center;
   font-size:14px;
   font-weight:bold;
@@ -320,15 +319,15 @@ export const BtnActive = styled.button`
   @media (max-width:768px){
     width:100%;
   }
-`;
+`
 export const BtnInactive = styled(BtnActive)`
 background:#848E9C;
 box-shadow:none;
-width: ${props => props.width ? props.width : "100px"};
+width: ${props => props.width ? props.width : '100px'};
 &:hover{
   transform:scale(1);
   }
-`;
+`
 export const Loading = styled.div`
   width:20px;
   height:20px;
@@ -342,7 +341,7 @@ export const Loading = styled.div`
     50%{ transform:rotate(180deg); }
     100%{ transform:rotate(360deg); }
   }
-`;
+`
 // For Popup
 export const PuLayout = styled.div`
   position:fixed;
@@ -350,27 +349,27 @@ export const PuLayout = styled.div`
   left:0px;
   right:0px;
   bottom:0px;
-  z-index: ${ zIndex.modal };
+  z-index: ${zIndex.modal};
   background:rgba(0,0,0,0.5);
-`;
+`
 export const PuContainer = styled.div`
-  color:${ props => props.theme.fontColor || "black" };
+  color:${props => props.theme.fontColor || 'black'};
   min-width:320px;
   padding:30px;
   box-sizing:border-box;
-  background:${ props => props.theme.popupBg || "#fff" };
-  box-shadow:${ props => props.theme.boxShadow };
+  background:${props => props.theme.popupBg || '#fff'};
+  box-shadow:${props => props.theme.boxShadow};
   position:fixed;
   top:20%;
   left:50%;
   transform:translate(-50%,-50%);
-`;
+`
 
 export const PuHeader = styled.div`
   font-size:14px;
   font-weight:bold;
   font-family:'DIN';
-`;
+`
 export const PuContent = styled.div`
   padding:20px 0;
   font-size:16px;
@@ -379,24 +378,24 @@ export const PuContent = styled.div`
         color:inherit !important;text-decoration:underline;
       }
     }
-`;
+`
 export const PuFooterBtn = styled.div`
   display:flex;
   flex-direction:row;
-  justify-content:${ props=> props.align };
-`;
+  justify-content:${props => props.align};
+`
 export const PuBtnNext = styled(BtnActive)`
   height:34px;
   line-height:34px;
   padding:0 20px;
-`;
+`
 export const PuBtnCancel = styled(BtnActive)`
   height:34px;
   line-height:34px;
   background:#fff;
   border:1px solid #F0B90B;color:#F0B90B;
   margin-right:10px;box-sizing:border-box;
-`;
+`
 export const PuBtnGoback = styled(BtnActive)`
   background:inherit;
   color:#F0B90B;
@@ -406,7 +405,7 @@ export const PuBtnGoback = styled(BtnActive)`
   line-height:34px;
   margin-right:25px;
   box-sizing:border-box;
-`;
+`
 
 export const WrapperBtnClose = styled.div`
   position:absolute;
@@ -415,70 +414,70 @@ export const WrapperBtnClose = styled.div`
   cursor:pointer;
   color:#848E9C;
   &:hover{ color:#F0B90B; }
-`;
+`
 // For DivSelectWord
 export const DivSelectWordBase = styled.div`
   align-items:${props => props.align};
-  background:${props => "theme" == props.bg ? props.theme.bg : ""};
+  background:${props => props.bg == 'theme' ? props.theme.bg : ''};
   display:flex;
   flex:${props => props.flex};
   flex-basis:${props => props.basis};
   flex-direction:${props => props.direction};
-  flex-wrap:${props => props.wrap || "wrap"};
+  flex-wrap:${props => props.wrap || 'wrap'};
   height:${props => props.height};
   justify-content:${props => props.justify};
   margin:${props => props.margin};
   padding:${props => props.padding};
   align-content:${props => props.content};
-`;
+`
 // MnemonicItem
 export const MnemonicItemBase = styled.div`
-  border:1px solid ${props => props.theme.border || "#eee"};
+  border:1px solid ${props => props.theme.border || '#eee'};
   height:${props => props.height};
   padding:0;
-  margin:${props => props.margin || "5px"};
+  margin:${props => props.margin || '5px'};
   user-select:none;
-`;
+`
 
 const Hash = styled.div`
-  color:${({theme})=>theme.TxHashColor};
+  color:${({ theme }) => theme.TxHashColor};
   text-decoration:underline;
-  width:${({width})=> width ? width :'150px'};
+  width:${({ width }) => width || '150px'};
   text-overflow:ellipsis;
   overflow:hidden;
   white-space:nowrap;
   &:hover{color:#F0B90B;}
-`;
+`
 const HashLoading = styled.div`
   color:#F0B90B;
   display:flex;
   line-height:16px;
   span{margin-left:5px;}
-`;
+`
 export class TxHash extends PureComponent {
   _gotoExplorer = () => {
-    var e = this.props.hash;
+    var e = this.props.hash
     // window.open("".concat(f.a, "/tx/").concat(e), "blank");
   }
-  render() {
-    var {hash, width} = this.props
+  render () {
+    var { hash, width } = this.props
     return (
       <div>
-        { 
-          hash ? 
-          <Hash onClick={this._gotoExplorer} width={width} >
-            <FontDin value={hash}/>
-          </Hash> 
-          : <HashLoading>
-              <Icon type="loading" size="14" />
+        {
+          hash
+            ? <Hash onClick={this._gotoExplorer} width={width} >
+              <FontDin value={hash} />
+            </Hash>
+            : <HashLoading>
+              <Icon type='loading' size='14' />
               <span>Pending</span>
             </HashLoading>
         }
       </div>
-    );
+    )
   }
 }
 TxHash.defaultProps = {
-  hash: "",
-  width: ""
+  hash: '',
+  width: ''
 }

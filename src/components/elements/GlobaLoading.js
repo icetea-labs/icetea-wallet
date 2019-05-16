@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React, { Component } from 'react'
+import styled from 'styled-components'
 
 const Wrapper = styled.div`
     position: fixed;
@@ -9,7 +9,7 @@ const Wrapper = styled.div`
     bottom: 0px;
     z-index: 1100;
     background: rgba(0, 0, 0, 0.5);
-`;
+`
 const Rect = styled.div`
     width: 50px;
     height: 35px;
@@ -47,10 +47,10 @@ const Rect = styled.div`
         transform: scaleY(1);
       }
     }
-`;
+`
 
 export class GlobaLoading extends Component {
-  render() {
+  render () {
     return (
       <Wrapper>
         <Rect>
@@ -60,6 +60,6 @@ export class GlobaLoading extends Component {
           <div />
         </Rect>
       </Wrapper>
-    );
+    )
   }
 }

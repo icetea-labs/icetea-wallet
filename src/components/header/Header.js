@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import './Header.css';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
-import CopyText from '../pages/Balances/CopyText';
-import AccountMenu from './AccountMenu';
+import React, { Component } from 'react'
+import './Header.css'
+import { connect } from 'react-redux'
+import styled from 'styled-components'
+import CopyText from '../pages/Balances/CopyText'
+import AccountMenu from './AccountMenu'
 import Menu from './../menu'
 
 const DivWapper = styled.div`
@@ -23,7 +23,7 @@ const DivWapper = styled.div`
     height: 44px;
     line-height: 44px;
   }
-`;
+`
 const DivMenuLink = styled.div`
   -webkit-box-pack: end;
   justify-content: flex-end;
@@ -33,7 +33,7 @@ const DivMenuLink = styled.div`
   @media (max-width: 768px){
       display: none;
   }
-`;
+`
 const UlLink = styled.ul`
   display: flex;
   flex-direction: row;
@@ -58,60 +58,59 @@ const UlLink = styled.ul`
   & li:hover ul {
     display: block;
   }
-`;
+`
 class Header extends Component {
-  render() {
-    const address = this.props.address;
-    console.log('CheckA', address);
+  render () {
+    const address = this.props.address
+    console.log('CheckA', address)
     return (
       <DivWapper>
-        <div className="sc-uJMKN jNhSkT">
-          <div className="sc-bbmXgH gZQuSA">
-            <img src="/static/images/logo/testnet.svg" alt="" />
+        <div className='sc-uJMKN jNhSkT'>
+          <div className='sc-bbmXgH gZQuSA'>
+            <img src='/static/images/logo/testnet.svg' alt='' />
           </div>
         </div>
         <DivMenuLink>
-            {/* <li><a href="/transactionHistory">Transaction</a></li>
+          {/* <li><a href="/transactionHistory">Transaction</a></li>
             <li><a href="/botStore">IceteaStore</a></li>
             <li><a href="/balances">Balances</a></li> */}
-            <Menu />
-          <div className="sc-ktHwxA izmNVh">
-            <i className="iconfont icon-account sc-dnqmqq iiYHFz" size="16" color="" />
-            <ul className="sc-hEsumM cnUGfj">
-              <li className="wallet-address">
+          <Menu />
+          <div className='sc-ktHwxA izmNVh'>
+            <i className='iconfont icon-account sc-dnqmqq iiYHFz' size='16' color='' />
+            <ul className='sc-hEsumM cnUGfj'>
+              <li className='wallet-address'>
                 <div>
-                  <div className="title1">Wallet</div>
-                  <div className="address">{address}</div>
+                  <div className='title1'>Wallet</div>
+                  <div className='address'>{address}</div>
                 </div>
-                <div className="op">
-                  <span title="copy address">
+                <div className='op'>
+                  <span title='copy address'>
                     {/* <i className="iconfont icon-copy sc-dnqmqq iiYHFz" size="16" color=""></i> */}
                     {/* <i className="iconfont fa fa-clone iiYHFz" aria-hidden="true"></i> */}
                     <CopyText text={address} />
-                                    </span>
-                  <span title="go to explorer">
-                    <i className="iconfont icon-link sc-dnqmqq iiYHFz" size="16" color="" />
+                  </span>
+                  <span title='go to explorer'>
+                    <i className='iconfont icon-link sc-dnqmqq iiYHFz' size='16' color='' />
                   </span>
                 </div>
               </li>
-              <li><a href="/unlock">Change Wallet</a></li>
-              <li><a href="/create">Create New Wallet</a></li>
+              <li><a href='/unlock'>Change Wallet</a></li>
+              <li><a href='/create'>Create New Wallet</a></li>
               <li>Export Keystore File</li>
               <li>Close Wallet</li>
             </ul>
           </div>
           <AccountMenu />
-          <div className="sc-tilXH Sxoxk"><i className="iconfont icon-menu sc-dnqmqq eAXZfv" size="20" color="" /></div>
+          <div className='sc-tilXH Sxoxk'><i className='iconfont icon-menu sc-dnqmqq eAXZfv' size='20' color='' /></div>
         </DivMenuLink>
       </DivWapper>
 
-    );
+    )
   }
 }
 
 const mapStateToProps = state => ({
-  address: state.account.address,
-});
+  address: state.account.address
+})
 
-export default connect(mapStateToProps, null)(Header);
-
+export default connect(mapStateToProps, null)(Header)

@@ -1,21 +1,21 @@
-import React, { PureComponent, Suspense, lazy } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Icon } from './../../elements/utils';
-import { DivSelectWordBase } from './../../elements/utils';
+import React, { PureComponent, Suspense, lazy } from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import { Icon } from './../../elements/utils'
+import { DivSelectWordBase } from './../../elements/utils'
 import {
   WrapperCalender,
   OutBoxCalender,
   WrapperBtn,
   ToggleCalendar,
   WrapperIcon
-} from './styled';
+} from './styled'
 
-const BtnFoolter = styled(DivSelectWordBase)`padding:.5em; background:${({theme}) => theme.bg1}; box-shadow:${({theme}) => theme.boxShadow};`;
+const BtnFoolter = styled(DivSelectWordBase)`padding:.5em; background:${({ theme }) => theme.bg1}; box-shadow:${({ theme }) => theme.boxShadow};`
 
-const CalendarSuper = React.lazy(() => import('./../Unlock/ByJson.js'));
+const CalendarSuper = React.lazy(() => import('./../Unlock/ByJson.js'))
 
-var C = "2017-07-14";
+var C = '2017-07-14'
 class GroupCalendar extends PureComponent {
   // static propTyps = {
   //   locale: PropTypes.string,
@@ -26,20 +26,20 @@ class GroupCalendar extends PureComponent {
   // };
 
   static defaultProps = {
-    locale: "en",
-    minDateStr: "",
-    defaultValue: "",
-    maxDateStr: "",
+    locale: 'en',
+    minDateStr: '',
+    defaultValue: '',
+    maxDateStr: '',
     callbackFn: function () { }
   };
 
-  constructor(props) {
-    super(props);
-    this._node = React.createRef();
+  constructor (props) {
+    super(props)
+    this._node = React.createRef()
     this.state = {
       date: new Date(props.defaultValue),
       calendarOpen: !1,
-      formatted: ""//g()(a).format("YYYY-MM-DD")
+      formatted: ''// g()(a).format("YYYY-MM-DD")
     }
   }
   _setDate = function (e) {
@@ -56,13 +56,13 @@ class GroupCalendar extends PureComponent {
   }
   _clear = () => {
     this.setState({
-      date: new Date,
+      date: new Date(),
       calendarOpen: !1,
-      formatted: ""
+      formatted: ''
     })
   }
   _confirm = () => {
-    this._setDate(this.state.date);
+    this._setDate(this.state.date)
     this.setState({
       calendarOpen: !1
     })
@@ -78,28 +78,29 @@ class GroupCalendar extends PureComponent {
     }))
   }
   _handleMinDate = () => {
-    var e = this.props.minDateStr;
-    return e && "" !== e ? new Date(e) : new Date(C)
+    var e = this.props.minDateStr
+    return e && e !== '' ? new Date(e) : new Date(C)
   }
 
   _handleMaxDate = () => {
-    var e = this.props.maxDateStr;
-    return e && "" !== e && new Date(e) <= new Date ? new Date(e) : new Date
+    var e = this.props.maxDateStr
+    return e && e !== '' && new Date(e) <= new Date() ? new Date(e) : new Date()
   }
 
-  componentDidMount() {
-    window.addEventListener("mousedown", this._onClickedOutside);
-    window.addEventListener("touchstart", this._onClickedOutside);
+  componentDidMount () {
+    window.addEventListener('mousedown', this._onClickedOutside)
+    window.addEventListener('touchstart', this._onClickedOutside)
   }
-  componentDidUpdate(e) {
+  componentDidUpdate (e) {
     if (e.defaultValue !== this.props.defaultValue) {
-      var defaultValue = this.props.defaultValue;
-      if (!defaultValue)
+      var defaultValue = this.props.defaultValue
+      if (!defaultValue) {
         return void this.setState({
-          date: new Date,
+          date: new Date(),
           calendarOpen: false,
-          formatted: ""
-        });
+          formatted: ''
+        })
+      }
       // var n = defaultValue.getFullYear()
       //   , r = Object(y.e)(defaultValue.getMonth() + 1)
       //   , a = Object(y.e)(defaultValue.getDate());
@@ -109,11 +110,11 @@ class GroupCalendar extends PureComponent {
       // })
     }
   }
-  componentWillUnmount() {
-    window.removeEventListener("mousedown", this._onClickedOutside);
-    window.removeEventListener("touchstart", this._onClickedOutside);
+  componentWillUnmount () {
+    window.removeEventListener('mousedown', this._onClickedOutside)
+    window.removeEventListener('touchstart', this._onClickedOutside)
   }
-  componentDidUpdate() {
+  componentDidUpdate () {
     //   if (e.defaultValue !== this.props.defaultValue) {
     //     var t = this.props.defaultValue;
     //     if (!t)
@@ -131,55 +132,54 @@ class GroupCalendar extends PureComponent {
     //     })
     // }
   }
-  componentWillUnmount() {
-    window.removeEventListener("mousedown", this._onClickedOutside);
-    window.removeEventListener("touchstart", this._onClickedOutside);
+  componentWillUnmount () {
+    window.removeEventListener('mousedown', this._onClickedOutside)
+    window.removeEventListener('touchstart', this._onClickedOutside)
   }ß
   _resetDateInput = () => {
     this.setState({
-      formatted: ""
+      formatted: ''
     })
   }
 
-  render() {
-    var {date, calendarOpen, formatted } = this.state;
+  render () {
+    var { date, calendarOpen, formatted } = this.state
     return (
       <WrapperCalender ref={this._node}>
         <OutBoxCalender
           calendarOpen={calendarOpen}
-          className="calendarOuter"
+          className='calendarOuter'
         >
-          <Suspense fallback="">
+          <Suspense fallback=''>
             <CalendarSuper
-               onChange={this._setDate}
-               value={date}
-               locale="en"
-               onClickDay={this._confirm}
-               minDate={this._handleMinDate()}
-               maxDate={this._handleMaxDate()}
-            >
-            </CalendarSuper>
+              onChange={this._setDate}
+              value={date}
+              locale='en'
+              onClickDay={this._confirm}
+              minDate={this._handleMinDate()}
+              maxDate={this._handleMaxDate()}
+            />
           </Suspense>
           <BtnFoolter
-            basis="100%"
-            justify="flex-end"
+            basis='100%'
+            justify='flex-end'
           >
             <WrapperBtn onClick={this._clear}>Clear</WrapperBtn>
-            <WrapperBtn onClick={() => this._setDate(new Date)}>Today</WrapperBtn>
+            <WrapperBtn onClick={() => this._setDate(new Date())}>Today</WrapperBtn>
             <WrapperBtn onClick={this._confirm}>Ok</WrapperBtn>
           </BtnFoolter>
           <ToggleCalendar
             onFocus={this._toggleCalendar}
-            type="text"
+            type='text'
           // value={formatted}
           />
           <WrapperIcon>
-            <Icon type="calendar" color="#5A667C" />
+            <Icon type='calendar' color='#5A667C' />
           </WrapperIcon>
         </OutBoxCalender>
       </WrapperCalender>
-    );
+    )
   }
 }
 
-export default GroupCalendar;
+export default GroupCalendar

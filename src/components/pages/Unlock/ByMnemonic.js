@@ -1,17 +1,17 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import * as actions from '../../../store/actions/account';
-import nr from './../../../assets/img/nr.svg';
-import error from './../../../assets/img/error-icon.svg';
-import { utils } from '../../../utils';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import * as actions from '../../../store/actions/account'
+import nr from './../../../assets/img/nr.svg'
+import error from './../../../assets/img/error-icon.svg'
+import { utils } from '../../../utils'
 
 import {
   Button,
   InputPassword
-} from '../../elements';
-import { Icon } from '../../elements/utils';
+} from '../../elements'
+import { Icon } from '../../elements/utils'
 
 import {
   MnForm,
@@ -23,45 +23,46 @@ import {
   MnPasswordError,
   MnBtnFoolter,
   MnLinkCreateNew
-} from './Styled';
+} from './styled'
 
 class ByMnemonic extends PureComponent {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
-      errMsg: "",
-      password: "",
+      errMsg: '',
+      password: '',
       loading: false,
       isPasswordValid: false
     }
   };
 
   _unlock = (e) => {
-    e.preventDefault();
-    document.activeElement.blur();
-    var { mnemonic, isPasswordValid, password } = this.state;
+    e.preventDefault()
+    document.activeElement.blur()
+    var { mnemonic, isPasswordValid, password } = this.state
     if (isPasswordValid) {
       if (mnemonic) {
         this.setState({
           loading: true
-        });
+        })
         try {
-          var resp = utils.recoverAccountFromMneomnic(mnemonic);
-          var privateKey = resp.privateKey;
-          var address = resp.address;
+          var resp = utils.recoverAccountFromMneomnic(mnemonic)
+          var privateKey = resp.privateKey
+          var address = resp.address
           // e.useDefaultSigningDelegate();
-          console.log('privateKey', privateKey);
-          this.props.unlock(privateKey, address, "", password);
+          console.log('privateKey', privateKey)
+          this.props.unlock(privateKey, address, '', password)
         } catch (e) {
           this.setState({
             errMsg: e.message,
             loading: false
           })
         }
-      } else
+      } else {
         this.setState({
-          errMsg: "mnemonic is invalid"
+          errMsg: 'mnemonic is invalid'
         })
+      }
     }
   };
 
@@ -75,15 +76,15 @@ class ByMnemonic extends PureComponent {
     this.setState({
       password: value,
       isPasswordValid: isPasswordValid
-    });
+    })
   };
 
   _gotoCreate = () => {
-    this.props.history.push("/create");
+    this.props.history.push('/create')
   }
 
-  render() {
-    var { errMsg, isPasswordValid, loading, mnemonic } = this.state;
+  render () {
+    var { errMsg, isPasswordValid, loading, mnemonic } = this.state
     return (
       <div>
         <MnForm onSubmit={e => this._unlock(e)} >
@@ -91,7 +92,7 @@ class ByMnemonic extends PureComponent {
             <span>This option restores a lost keystore file or password,<br />or imports a seed from another wallet app.</span>
             <WarningTooltip>
               <img src={nr} />
-              <div className="tips">
+              <div className='tips'>
                 Warning! Entering your seed phrase or private key on any website is very dangerous. If you have malicious extensions installed in your browser or accidentally visit a phishing website, your assets can be stolen.
               </div>
             </WarningTooltip>
@@ -100,16 +101,16 @@ class ByMnemonic extends PureComponent {
           <MnWrapperTextArea>
             <MnTextArea
               onChange={this._mnemonicChange}
-              data-cy={"unlock-mnemonic-content"}
-              autoComplete="off"
-              autoCorrect="off"
-              autoCapitalize="off"
+              data-cy={'unlock-mnemonic-content'}
+              autoComplete='off'
+              autoCorrect='off'
+              autoCapitalize='off'
               spellCheck={false}
               data-gramm={false}
             />
-            <p className="mneomnic-sep">Please separate each word with a space.</p>
+            <p className='mneomnic-sep'>Please separate each word with a space.</p>
           </MnWrapperTextArea>
-          <InputPassword onChange={this._passwordChange} title="Temporary session password" />
+          <InputPassword onChange={this._passwordChange} title='Temporary session password' />
           {
             errMsg &&
             <MnPasswordError>
@@ -118,29 +119,27 @@ class ByMnemonic extends PureComponent {
             </MnPasswordError>
           }
           <MnBtnFoolter>
-            <MnLinkCreateNew className="create-link" onClick={this._gotoCreate}>Create a New Wallet</MnLinkCreateNew>
+            <MnLinkCreateNew className='create-link' onClick={this._gotoCreate}>Create a New Wallet</MnLinkCreateNew>
             <Button
-              type="submit"
+              type='submit'
               disabled={!isPasswordValid && mnemonic}
               loading={loading}
-              width="170px"
-              className="unlock"
+              width='170px'
+              className='unlock'
             >
-              <span style={{ marginRight: "10px" }}>Unlock Wallet Now</span>
-              <Icon type="continue" size="20" color="inherit" />
+              <span style={{ marginRight: '10px' }}>Unlock Wallet Now</span>
+              <Icon type='continue' size='20' color='inherit' />
             </Button>
           </MnBtnFoolter>
         </MnForm>
       </div>
-    );
+    )
   }
 }
 
 ByMnemonic.defaultProps = {
-  unlock: function() {},
-  history: {},
-};
+  unlock: function () {},
+  history: {}
+}
 
-export default withRouter(ByMnemonic);
-
-
+export default withRouter(ByMnemonic)
