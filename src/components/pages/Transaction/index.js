@@ -16,7 +16,8 @@ import {
   StyledText,
   IconInOut,
   TypeTranfer,
-  TypeOrder
+  TypeOrder,
+  ButtonSeach,
 } from './styled';
 
 import {
@@ -203,7 +204,10 @@ class index extends PureComponent {
       this._getHistory(r)
     })
   }
-
+  _search=()=> {
+    console.log('_search')
+    this.props.getTxHistory('a');
+  }
   render() {
     var { total, address } = this.props;
     var { detail } = this.state;
@@ -237,6 +241,7 @@ class index extends PureComponent {
           {
             detail && <PuDetailTx detail={detail} close={this._clearDetail} />
           }
+          <ButtonSeach onClick={this._search} ><span>Search</span></ButtonSeach>
         </Content>
       </Wrapper>
     );
@@ -312,7 +317,14 @@ const mapStateToProps = state => {
     address: address
   }
 }
-export default connect(mapStateToProps, null)(withRouter(index));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getTxHistory: (data) => {
+      dispatch(actions.getTxHistory(data))
+    }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(index));
 
 // date: e.timeStamp,
 // pair: t.orderData ? t.orderData.symbol : e.txAsset,

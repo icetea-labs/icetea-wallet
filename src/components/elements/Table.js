@@ -38,7 +38,7 @@ export class Table extends PureComponent {
     var header = columns.map((e, r) => {
       if (e.sorter) {
         var className = e.isShowSortMark ? "sortHd" : "showSortMark";
-        console.log('generateHead', this._renderHeader(e.headerAlign, e.title, sortType));
+        // console.log('generateHead', this._renderHeader(e.headerAlign, e.title, sortType));
         return (
           <th
             key={r}
@@ -67,7 +67,6 @@ export class Table extends PureComponent {
     return data.map((column, index) => {
       var tmpRow = [];
       Object.keys(column).forEach(el => {
-        console.log(el)
         this.isDataShow(el) && tmpRow.push(column[el])
       });
       var row = tmpRow.map((value, i) => {

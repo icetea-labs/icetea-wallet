@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { DivSelectWordBase } from '../../elements/utils';
 import { zIndex } from '../../../constants/styles';
+import { Button } from './../../elements';
 
 export const Wrapper = styled.div`
   background:#fdfdfd;
@@ -162,4 +163,17 @@ export const TypeOrder = styled.div`
   text-indent:0;width:40px;
   position:absolute;
   left:85px;top:8px;
+`;
+export const ButtonSeach = styled(Button)`
+  width:auto;
+  background:#fff;
+  color:#212833;
+  padding:0 10px;
+  height:24px;
+  line-height:23px;
+  border:1px solid #848E9C;
+  box-sizing:border-box;
+  font-size:13px;
+  margin-right:10px;
+  &:hover{border-color:#F0B90B;color:#F0B90B;}
 `;

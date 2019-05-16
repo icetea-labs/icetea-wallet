@@ -3,16 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^3.9.3",
-    "@material-ui/icons": "^3.0.2",
-    "@material-ui/styles": "^3.0.0-alpha.10",
-    "@reach/dialog": "^0.2.3",
     "antd": "^3.17.0",
     "bip39": "^3.0.1",
-    "bootstrap": "^4.3.1",
     "botui": "^0.3.8",
-    "botui-react": "^1.0.1",
-    "classnames": "^2.2.6",
     "dateformat": "^3.0.3",
     "font-awesome": "^4.7.0",
     "hdkey": "^1.1.1",
@@ -37,15 +30,18 @@
     "react-redux": "^7.0.1",
     "react-router-dom": "^5.0.0",
     "react-vue": "0.0.5",
-    "reactstrap": "^8.0.0",
     "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
     "styled-components": "^4.2.0",
     "vue": "^2.6.10"
   },
   "scripts": {
-    "start": "PORT=4000  react-scripts start",
+    "start": "react-scripts start",
     "build": "REACT_APP_ENV=production react-scripts build",
     "test": "react-scripts test",
+    "lint": "eslint",
+    "fix": "eslint --fix",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -58,6 +54,13 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "eslint-config-standard": "^12.0.0",
+    "eslint-config-standard-react": "^7.0.2",
+    "eslint-plugin-node": "^9.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-standard": "^4.0.0",
+    "mocha": "^6.1.4",
     "react-scripts": "^2.1.8"
   }
 }
