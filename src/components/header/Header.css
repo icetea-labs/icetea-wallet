@@ -1,4 +1,5 @@
-ol, ul {
+ol,
+ul {
   list-style: none;
 }
 ul {
@@ -81,13 +82,14 @@ a {
 }
 .izmNVh {
   width: 52px;
+  height: 52px;
   text-align: center;
   cursor: pointer;
   position: relative;
 }
-@media (max-width: 768px){
-  .gTIngem{
-      display: none;
+@media (max-width: 768px) {
+  .gTIngem {
+    display: none;
   }
 }
 .izmNVh:hover {
@@ -161,4 +163,207 @@ a {
 .hykyIA {
   cursor: pointer;
   padding: 0px 15px;
+}
+
+/* account menu */
+
+.account-wrapper {
+  position: relative;
+}
+
+.icon-account {
+  display: block;
+  width: 52px;
+  height: 52px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.menu {
+  background: rgb(37, 45, 56);
+  color: #ffffff;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  min-width: 280px;
+  z-index: 300;
+  display: none;
+}
+
+.account-wrapper:hover .menu{
+  display: block
+}
+
+.menu span, .account-menu__name{
+  line-height: normal;
+}
+
+.account-menu__header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 14px;
+}
+
+.menu__divider {
+  background-color: #5d5d5d;
+  width: 100%;
+  height: 1px;
+}
+
+.account-menu__logout-button {
+  border: 1px solid #9b9b9b;
+  background-color: transparent;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 23px;
+  padding: 0 24px;
+  cursor: pointer;
+}
+
+.menu__item--clickable:hover {
+  color: rgb(240, 185, 11);
+  background: rgb(18, 22, 28);
+}
+
+.account-menu__accounts-container {
+  position: relative;
+}
+
+.account-menu__accounts {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  overflow-y: auto;
+  max-height: 166px;
+  position: relative;
+  z-index: 200;
+}
+
+.identicon {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 12px 0 0;
+}
+
+.identicon img{
+  max-width: 100%;
+}
+
+.account-menu__account {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+}
+
+.account-menu__account-info {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+}
+
+.account-menu__name {
+  font-size: 13px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 200px;
+}
+
+.currency-display-component {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.account-menu__balance {
+  color: #9b9b9b;
+}
+
+.currency-display-component__text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu__item--clickable {
+  cursor: pointer;
+}
+
+.menu__item {
+  font-size: 13px;
+  padding: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  z-index: 201;
+}
+
+.menu__item__icon {
+  height: 16px;
+  width: 16px;
+  margin-right: 14px;
+  line-height: normal;
+}
+
+.account-menu__item-icon {
+  max-width: 100%;
+}
+
+.menu__item__text {
+  line-height: 18px;
+}
+
+.account-menu__check-mark {
+  width: 16px;
+  height: 16px;
+  margin-right: 12px;
+  display: flex;
+}
+
+.account-menu__check-mark-icon {
+  max-width: 100%;
+  display: none;
+}
+
+.account-menu__check-mark.checked .account-menu__check-mark-icon {
+  display: block;
 }
