@@ -3,6 +3,7 @@ import './Header.css';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import CopyText from '../pages/Balances/CopyText';
+import Menu from './../menu'
 
 const DivWapper = styled.div`
   height: 50px;
@@ -69,11 +70,10 @@ class Header extends Component {
           </div>
         </div>
         <DivMenuLink>
-          <UlLink>
-            <li><a href="/transactionHistory">Transaction</a></li>
+            {/* <li><a href="/transactionHistory">Transaction</a></li>
             <li><a href="/botStore">IceteaStore</a></li>
-            <li><a href="/balances">Balances</a></li>
-          </UlLink>
+            <li><a href="/balances">Balances</a></li> */}
+            <Menu />
           <div className="sc-ktHwxA izmNVh">
             <i className="iconfont icon-account sc-dnqmqq iiYHFz" size="16" color="" />
             <ul className="sc-hEsumM cnUGfj">
