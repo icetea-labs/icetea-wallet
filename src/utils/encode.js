@@ -32,4 +32,4 @@ function createRandom () {
   }
 }
 
-export default encode;
+export default encode

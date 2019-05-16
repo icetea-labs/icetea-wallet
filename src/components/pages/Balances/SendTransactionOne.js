@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from 'react'
 import {
   Wrapper,
   Error,
@@ -6,127 +6,125 @@ import {
   FeeAva,
   Fee,
   Ava,
-  ButtonWrapper,
-} from './StyledSTOne';
-import { Button } from '../../elements/Button';
+  ButtonWrapper
+} from './StyledSTOne'
+import { Button } from '../../elements/Button'
 import {
-  WrapperSelect,
-} from '../Unlock/Styled';
-import SelectUnlockType from '../Unlock/SelectUnlockType';
+  WrapperSelect
+} from '../Unlock/styled'
+import SelectUnlockType from '../Unlock/SelectUnlockType'
 
-import STOInput from './STOInput';
-import errorIc from '../../../assets/img/error-icon.png';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import * as actions from '../../../store/actions/account';
-import tweb3 from '../../../service/tweb3';
+import STOInput from './STOInput'
+import errorIc from '../../../assets/img/error-icon.png'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import * as actions from '../../../store/actions/account'
+import tweb3 from '../../../service/tweb3'
 
 var itemsMenu = [{
-  text: "ICETEA",
+  text: 'ICETEA',
   selected: true,
   recommended: true
 }, {
-  text: "BTC",
+  text: 'BTC',
   selected: false,
   recommended: true
 }, {
-  text: "ETH",
+  text: 'ETH',
   selected: false
-}];
+}]
 
 class SendTransactionOne extends PureComponent {
-
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       asset: [],
       to: '',
       amount: '',
-      addressErr: "",
+      addressErr: '',
       amountErr: '',
-      memoErr: "",
+      memoErr: '',
       memo: '',
-      availableBalance: "100",
+      availableBalance: '100',
       types: itemsMenu,
       selectedType: itemsMenu.filter(item => {
         return !!item.selected
-      })[0].text,
+      })[0].text
     }
   }
 
   componentWillMount = async () => {
-    var balanceofVip = '';
-    balanceofVip = await tweb3.getBalance('tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx');
-    console.log("I want to see BL:", balanceofVip)
+    var balanceofVip = ''
+    balanceofVip = await tweb3.getBalance('tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx')
+    console.log('I want to see BL:', balanceofVip)
     this.setState({
       availableBalance: balanceofVip.balance
     })
   }
-  
 
   _toChange = (e) => {
     this.setState({
-        to: e,
-        addressErr: ""
+      to: e,
+      addressErr: ''
     })
     console.log('toAdd Change CK', e)
   }
 
   _amountChange = (e) => {
-    if ("" !== e) {
-        this.setState({
-            amount: e,
-            amountErr: ""
-        })
-    } else{
-        this.setState({
-            amount: ""
-        })
+    if (e !== '') {
+      this.setState({
+        amount: e,
+        amountErr: ''
+      })
+    } else {
+      this.setState({
+        amount: ''
+      })
     }
     console.log('amount Change CK', e)
   }
   _setMaxValue = () => {
     this.setState({
-        amount: this.state.availableBalance,
+      amount: this.state.availableBalance
     })
   }
-  
+
   _memoChange = (e) => {
-    var value = e.currentTarget.value;
+    var value = e.currentTarget.value
     this.setState({
-        memo: value,
-        memoErr: ""
+      memo: value,
+      memoErr: ''
     })
     console.log('memo Change CK', value)
   }
 
   _submit = () => {
-    if(this.state.to === "") {
+    if (this.state.to === '') {
       this.setState({
-        addressErr: "To address should not be null",
+        addressErr: 'To address should not be null'
       })
       return
     }
-    if(this.state.amount === "") {
+    if (this.state.amount === '') {
       this.setState({
-        amountErr: "Amount should not be null",
+        amountErr: 'Amount should not be null'
       })
       return
     }
 
     // save to store
-    var to = this.state.to;
-    var amount = this.state.amount;
-    var memo = this.state.memo;
-    
-    var data = { to: to, amount: amount, memo: memo}
-    
-    this.props.setAccount(data);
+    var to = this.state.to
+    var amount = this.state.amount
+    var memo = this.state.memo
 
-    this.setState( {
-      amountErr: "",
-      addressErr: "",
-      memoErr: ""
+    var data = { to: to, amount: amount, memo: memo }
+
+    this.props.setAccount(data)
+
+    this.setState({
+      amountErr: '',
+      addressErr: '',
+      memoErr: ''
     }, () => {
       this.props.next && this.props.next(this.state)
     })
@@ -135,116 +133,113 @@ class SendTransactionOne extends PureComponent {
   }
 
   _getSelectTypes = () => {
-    var types = this.state.types;
-    var items = [];
+    var types = this.state.types
+    var items = []
     return types.forEach(el => {
       el.hide || items.push({ text: el.text, value: el.text })
     }),
-      items
+    items
   };
 
   _unlockWayChange = (item) => {
-    this._selectType({ text: item });
+    this._selectType({ text: item })
   };
 
   _selectType = (items) => {
-    var value;
+    var value
     this.state.types.forEach(el => {
       if (el.text === items.text) {
-        el.selected = true;
-        value = items.text;
+        el.selected = true
+        value = items.text
       } else {
-        el.selected = false;
+        el.selected = false
       }
-    });
+    })
     this.setState({
       selectedType: value
-    });
+    })
   };
 
-  render() {
+  render () {
     var { to, amount, asset, memo,
-      amountErr, addressErr, memoErr } = this.state;
+      amountErr, addressErr, memoErr } = this.state
     return (
       <div>
         <Wrapper
           style={{
-            borderBottom: "none",
-            marginTop: "20px",
-            paddingBottom: "0"
+            borderBottom: 'none',
+            marginTop: '20px',
+            paddingBottom: '0'
           }}>
-          <p className="title">Select Asset</p>
-       
-            <SelectUnlockType
-              options={this._getSelectTypes()}
-              width="100%"
-              onChange={this._unlockWayChange}
-            />
-      
+          <p className='title'>Select Asset</p>
+
+          <SelectUnlockType
+            options={this._getSelectTypes()}
+            width='100%'
+            onChange={this._unlockWayChange}
+          />
+
         </Wrapper>
         <Wrapper>
           <STOInput
-            title="To Address"
+            title='To Address'
             defaultValue={to}
             onChange={this._toChange}
-            autoFocus={true}
-          >
-          </STOInput>
+            autoFocus
+          />
           {
-            addressErr && 
+            addressErr &&
             <Error>
-              <img src={errorIc} alt="" />
+              <img src={errorIc} alt='' />
               <span>{addressErr}</span>I
             </Error>
           }
         </Wrapper>
         <Wrapper>
           <STOInput
-            title= "Amount to send"
+            title='Amount to send'
             defaultValue={amount}
-            type="number"
+            type='number'
             onChange={this._amountChange}
             onFocus={this._amountChange}
-          >
-          </STOInput>
+          />
           <MaxValue onClick={this._setMaxValue}>Max</MaxValue>
           {
-            amountErr && 
+            amountErr &&
             <Error>
-              <img src={errorIc} alt="" />
+              <img src={errorIc} alt='' />
               <span>{amountErr}</span>I
             </Error>
           }
         </Wrapper>
-        <Wrapper style= {{ borderBottom: "none"}}>
-          <p className="title">Memo</p>
-          <textarea 
-            className="textarea"
+        <Wrapper style={{ borderBottom: 'none' }}>
+          <p className='title'>Memo</p>
+          <textarea
+            className='textarea'
             value={memo}
-            onChange={this._memoChange}>
-          </textarea>
+            onChange={this._memoChange} />
           {
-            memoErr && 
+            memoErr &&
             <Error>
-              <img src={errorIc} alt="" />
+              <img src={errorIc} alt='' />
               <span>{memoErr}</span>
             </Error>
           }
         </Wrapper>
-        <Wrapper  style= {{ border: "none", marginTop: "20px"}} >
+        <Wrapper style={{ border: 'none', marginTop: '20px' }} >
           <FeeAva>
             <Fee>
-              <span className="fee-title">Fee:</span>
-              <span className="fee-value">10 </span>
+              <span className='fee-title'>Fee:</span>
+              <span className='fee-value'>10 </span>
               <span>ICETEA</span>
             </Fee>
             <Ava>
-              <span className="Available-title">Available:</span>
-              <span className="Available-value">{this.state.availableBalance} </span>
+              <span className='Available-title'>Available:</span>
+              <span className='Available-value'>{this.state.availableBalance} </span>
             </Ava>
           </FeeAva>
         </Wrapper>
-        <ButtonWrapper style= {{justifyContent: "flex-end", marginTop: "16px" }}>
+        <ButtonWrapper style={{ justifyContent: 'flex-end', marginTop: '16px' }}>
           <Button onClick={this._submit}>
             <span>Next</span>
           </Button>
@@ -256,9 +251,9 @@ class SendTransactionOne extends PureComponent {
 
 SendTransactionOne.defaultProps = {
   assets: [],
-  to: "",
-  amount: "",
-  memo: "",
+  to: '',
+  amount: '',
+  memo: '',
   defaultAsset: {},
   next: function () { }
 }
@@ -269,7 +264,7 @@ const mapStateToProps = state => {
     to: state.account.to,
     amount: state.account.amount,
     memo: state.account.memo
-  };
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -280,4 +275,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SendTransactionOne));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SendTransactionOne))

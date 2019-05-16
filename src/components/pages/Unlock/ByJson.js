@@ -1,18 +1,16 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 
 class ByJson extends PureComponent {
-  render() {
+  render () {
     return (
-      <div>
-        
-      </div>
-    );
+      <div />
+    )
   }
 }
 
 ByJson.propTypes = {
 
-};
+}
 
-export default ByJson;
+export default ByJson

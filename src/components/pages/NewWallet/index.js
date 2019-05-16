@@ -1,18 +1,18 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import styled, { ThemeProvider } from 'styled-components';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import QueueAnim from 'rc-queue-anim';
-import * as actions from './../../../store/actions/create';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import styled, { ThemeProvider } from 'styled-components'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import QueueAnim from 'rc-queue-anim'
+import * as actions from './../../../store/actions/create'
 // import { theme, zIndex } from './../../../constants/Styles';
-import NewWallet01 from './NewWallet01';
-import NewWallet02 from './NewWallet02';
-import NewWallet03 from './NewWallet03';
-import NewWallet04 from './NewWallet04';
-import NewWallet05 from './NewWallet05';
-import pencil from './../../../assets/img/pencil.svg';
-import logo from './../../../assets/img/logo.svg';
+import NewWallet01 from './NewWallet01'
+import NewWallet02 from './NewWallet02'
+import NewWallet03 from './NewWallet03'
+import NewWallet04 from './NewWallet04'
+import NewWallet05 from './NewWallet05'
+import pencil from './../../../assets/img/pencil.svg'
+import logo from './../../../assets/img/logo.svg'
 
 import { Header1 } from '../../elements/utils'
 import {
@@ -27,7 +27,7 @@ const DivWallet = styled.div`
   display: flex;
   padding-bottom: 50px;
   justify-content: center;
-`;
+`
 const DivLogo = styled.div`
   color:#f0b90b;
   height:80px;
@@ -42,7 +42,7 @@ const DivLogo = styled.div`
     top:80px;
   }
   img{ width:80px; }
-`;
+`
 const DivBox1 = styled.div`
   position:absolute;
   top:130px;
@@ -50,7 +50,7 @@ const DivBox1 = styled.div`
   transform:translateX(-50%);
   @media (min-width:1900px){top:190px;}
   @media (max-width:768px){width:100%;}
-`;
+`
 const DivBox2 = styled.div`
   width:100%;
   background:#fff;
@@ -62,14 +62,14 @@ const DivBox2 = styled.div`
     box-sizing:border-box;
   };
   @media (min-width:624px){width:500px;}
-`;
+`
 
 const WrapperImgPencil = styled.div`
   display:flex;
   flex-direction:column;
   align-items:center;
   img{width:80px;margin-bottom:20px;}
-`;
+`
 
 class index extends PureComponent {
   static propTypes = {
@@ -87,10 +87,10 @@ class index extends PureComponent {
   };
 
   static defaultProps = {
-    password: "",
-    step: "",
-    privateKey: "",
-    keyStoreText: "",
+    password: '',
+    step: '',
+    privateKey: '',
+    keyStoreText: '',
     showPrivateKey: false,
     confirmMnemonic: false,
     showKeystoreText: false,
@@ -100,66 +100,66 @@ class index extends PureComponent {
   };
 
   _closeModal = () => {
-    this.props.dispatch(actions.setShowPrivateKey(false));
+    this.props.dispatch(actions.setShowPrivateKey(false))
   }
   _continue = () => {
-    this.props.dispatch(actions.setStep('confirmMnemonic'));
-    this.props.dispatch(actions.setConfirmMnemonic(false));
+    this.props.dispatch(actions.setStep('confirmMnemonic'))
+    this.props.dispatch(actions.setConfirmMnemonic(false))
   }
   _hide = () => {
-    this.props.dispatch(actions.setConfirmMnemonic(false));
+    this.props.dispatch(actions.setConfirmMnemonic(false))
   }
-  render() {
-    var { confirmMnemonic, showPrivateKey, privateKey, step, isLoading } = this.props;
+  render () {
+    var { confirmMnemonic, showPrivateKey, privateKey, step, isLoading } = this.props
     // console.log('00-step', showPrivateKey);
     return (
       // <ThemeProvider theme={ theme }>
-        <div>
-          <QueueAnim delay={200} type={["top", "bottom"]} >
-            <DivWallet key={1}>
-              <DivLogo>
-                <img src={logo} alt="log" />
-              </DivLogo>
-              <DivBox1>
-                <DivBox2>
-                  {
-                    "success" !== step &&
+      <div>
+        <QueueAnim delay={200} type={['top', 'bottom']} >
+          <DivWallet key={1}>
+            <DivLogo>
+              <img src={logo} alt='log' />
+            </DivLogo>
+            <DivBox1>
+              <DivBox2>
+                {
+                  step !== 'success' &&
                     <div>
                       <Header1>Create New Wallet</Header1>
                     </div>
-                  }
-                  {"inputPassword" === step && <NewWallet01 />}
-                  {"stepTwo" === step && <NewWallet02 />}
-                  {"backupMnemonic" === step && <NewWallet03 />}
-                  {"confirmMnemonic" === step && <NewWallet04 />}
-                  {"success" === step && <NewWallet05 />}
-                </DivBox2>
-              </DivBox1>
-            </DivWallet>
-          </QueueAnim>
-          {isLoading && <GlobaLoading />}
-          {showPrivateKey && <PuShowPrivateKey privateKey={privateKey} close={this._closeModal} />}
-          {confirmMnemonic &&
-            <PuConfirmMnemonic
-              okText="Yes"
-              cancelText="Go Back"
-              confirm={this._continue}
-              cancel={this._hide}
-            >
-              <WrapperImgPencil>
-                <img src={pencil} alt="" />
-                <p>Are you sure you have noted down your Mnemonic Phrase?</p>
-              </WrapperImgPencil>
-            </PuConfirmMnemonic>
-          }
-        </div>
+                }
+                {step === 'inputPassword' && <NewWallet01 />}
+                {step === 'stepTwo' && <NewWallet02 />}
+                {step === 'backupMnemonic' && <NewWallet03 />}
+                {step === 'confirmMnemonic' && <NewWallet04 />}
+                {step === 'success' && <NewWallet05 />}
+              </DivBox2>
+            </DivBox1>
+          </DivWallet>
+        </QueueAnim>
+        {isLoading && <GlobaLoading />}
+        {showPrivateKey && <PuShowPrivateKey privateKey={privateKey} close={this._closeModal} />}
+        {confirmMnemonic &&
+        <PuConfirmMnemonic
+          okText='Yes'
+          cancelText='Go Back'
+          confirm={this._continue}
+          cancel={this._hide}
+        >
+          <WrapperImgPencil>
+            <img src={pencil} alt='' />
+            <p>Are you sure you have noted down your Mnemonic Phrase?</p>
+          </WrapperImgPencil>
+        </PuConfirmMnemonic>
+        }
+      </div>
       // </ThemeProvider>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => {
-  var e = state.create;
+  var e = state.create
   return {
     password: e.password,
     step: e.step,
@@ -167,12 +167,12 @@ const mapStateToProps = state => {
     keyStoreText: e.keyStoreText,
     showPrivateKey: e.showPrivateKey,
     confirmMnemonic: e.confirmMnemonic,
-    isLoading: state.globalData.isLoading,
-  };
+    isLoading: state.globalData.isLoading
+  }
 }
 
 // const mapDispatchToProps = (dispatch) => {
 //   return {
 //   };
 // }
-export default connect(mapStateToProps, null)(withRouter(index));
+export default connect(mapStateToProps, null)(withRouter(index))

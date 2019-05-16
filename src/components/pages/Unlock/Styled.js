@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { zIndex } from '../../../constants/styles';
+import styled from 'styled-components'
+import { zIndex } from '../../../constants/styles'
 
 export const Wrapper = styled.div`
   position:relative;
@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   display:flex;
   padding-bottom:50px;
   justify-content:center;
-`;
+`
 export const Logo = styled.div`
   color:#f0b90b;
   height:80px;
@@ -21,7 +21,7 @@ export const Logo = styled.div`
     top:80px;
   }
   img{width:80px;}
-`;
+`
 export const OutBox = styled.div`
   width:830px;
   min-width:750px;
@@ -31,7 +31,7 @@ export const OutBox = styled.div`
   transform:translateX(-50%);
   @media (min-width:1900px){top:190px;}
   @media (max-width:768px){width:100%;min-width:auto;}
-`;
+`
 export const InBox = styled.div`
   background:#fff;
   box-shadow:0 0 10px #e4e4e4;
@@ -39,35 +39,35 @@ export const InBox = styled.div`
   .ship-text{font-size:12px;margin-bottom:8px;text-align:center;}
   .ship-lock{margin:0 auto;display:flex;justify-content:center;margin-bottom:20px;img{height:30px;}}
   @media (min-width:320px) and (max-width:623px){box-shadow:none;padding:5px 20px;}
-`;
+`
 export const Title = styled.div`
   font-size:24px;
   font-weight:bold;
   margin-top:10px;
   margin-bottom:20px;
   text-align:center;color:#212833;
-`;
+`
 export const Content = styled.div`
   display:flex;
   flex-direction:row;
   @media (min-width:320px) and (max-width:623px){flex-direction:column;}
-`;
+`
 export const WrapperMenu = styled.div`
   margin-bottom:20px;
   margin-right:40px;
   color:#212833;
   @media (min-width:320px) and (max-width:623px){margin-right:0px;}
-`;
+`
 export const SubTitle = styled.div`
   font-size:16px;
   white-space:nowrap;
   font-weight:bold;
-`;
+`
 export const WrapperSelect = styled.div`
   margin-top:20px;
   display:none;
   @media (min-width:320px) and (max-width:623px){display:block;}
-`;
+`
 export const Menu = styled.div`
   display:flex;
   flex-direction:column;
@@ -143,12 +143,12 @@ export const Menu = styled.div`
       }
   }
   @media (min-width:320px) and (max-width:623px){display:none;}
-`;
+`
 
 export const UnlockRecommend = styled.img`
   width:14px;
   margin-left:6px;
-`;
+`
 
 // For unlock by Mnemonic
 export const MnForm = styled.form`
@@ -156,7 +156,7 @@ export const MnForm = styled.form`
   color:#48515D;
   position:relative;
   padding-top:50px;
-`;
+`
 export const WarningText = styled.div`
   font-weight:bold;
   font-size:16px;
@@ -165,7 +165,7 @@ export const WarningText = styled.div`
   display:flex;
   position:relative;
   span{color:#F23051;}
-`;
+`
 export const WarningTooltip = styled.div`
   margin-left:8px;
   cursor:pointer;
@@ -185,20 +185,20 @@ export const WarningTooltip = styled.div`
   &:hover .tips{
     display:block;
   }
-`;
+`
 export const MnTitle = styled.div`
   font-size:18px;
   padding:10px 0;
   color:#48515D;
   padding-top:30px;
-`;
+`
 export const MnWrapperTextArea = styled.div`
   font-size:14px;
   margin-bottom:30px;
   p{text-align:left;white-space:nowrap;}
   input{outline:none;border:none;height:30px;width:100%;}
   .mneomnic-sep{color:#848E9C;}
-`;
+`
 export const MnTextArea = styled.textarea`
   height:80px;
   width:95%;
@@ -206,7 +206,7 @@ export const MnTextArea = styled.textarea`
   outline:none;
   padding:10px;
   resize:none;
-`;
+`
 export const MnPasswordError = styled.div`
   color:#F23051;
   position:absolute;
@@ -216,7 +216,7 @@ export const MnPasswordError = styled.div`
   display:flex;
   height:20px;
   img{width:15px;margin-right:5px;}
-`;
+`
 export const BaseBtnFoolter = styled.div`
   display:flex;
   flex-direction:row;
@@ -229,7 +229,7 @@ export const BaseBtnFoolter = styled.div`
     .create-link{order:1;margin-top:10px;}
     .unlock{order:0;}
   }
-`;
+`
 export const MnBtnFoolter = styled(BaseBtnFoolter)`
   display:flex;
   flex-direction:row;
@@ -237,17 +237,17 @@ export const MnBtnFoolter = styled(BaseBtnFoolter)`
   align-items:center;
   margin-top:40px;
   position:relative;
-`;
+`
 export const MnLinkCreateNew = styled.div`
   font-size:14px;
   color:#f0b90b;
   cursor:pointer;
-`;
+`
 // For unlock by PrivateKey
 export const DropWrapper = styled.div`
   position:relative;
   text-indent:10px;
-  border-radius: ${props => "DARK" === props.theme.mode ? "3px" : "0"};
+  border-radius: ${props => props.theme.mode === 'DARK' ? '3px' : '0'};
   font-size:12px;
   color:#848E9C;
   height:22px;
@@ -259,8 +259,8 @@ export const DropWrapper = styled.div`
   border-bottom:1px solid ${props => props.theme.borderColor};
   box-sizing:border-box;
   z-index: ${zIndex.dropdown};
-  width: ${props => props.width ? props.width : "inherit"};
-`;
+  width: ${props => props.width ? props.width : 'inherit'};
+`
 export const DropItem = styled.i`
   position:absolute;
   right:5px;
@@ -271,7 +271,7 @@ export const DropItem = styled.i`
   border-left:5px solid transparent;
   border-right:5px solid transparent;
   border-top:5px solid #666;
-`;
+`
 export const DefaultItem = styled.i`
   z-index: ${zIndex.modal}!important;
   .rc-dropdown-menu-item{
@@ -283,4 +283,4 @@ export const DefaultItem = styled.i`
   .rc-dropdown-menu-item-selected{
     background-color:${props => props.theme.dropdownSelectBgColor};
   };
-`;
+`

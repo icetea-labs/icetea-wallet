@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   Home,
   NewWalletMaster,
@@ -8,8 +8,8 @@ import {
   TransactionHistory,
   BotStore,
   NotFound
-} from './../components/pages';
-import Layout from './../components/layout';
+} from './../components/pages'
+import Layout from './../components/layout'
 
 const index = [
   {
@@ -51,13 +51,12 @@ const index = [
     path: '/balances',
     exact: true,
     main: () => <Layout><Balances /></Layout>
-  }
-  ,
+  },
   {
     path: '',
     exact: false,
     main: () => <NotFound />
   }
-];
+]
 
-export default index;
+export default index

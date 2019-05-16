@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
-import styled from 'styled-components';
+import styled from 'styled-components'
 import {
-  Wrapper,
-} from './StyledSTOne';
+  Wrapper
+} from './StyledSTOne'
 
 const Title = styled.div`
   margin-top:30px;
@@ -16,7 +16,7 @@ const Title = styled.div`
     font-size:16px;
     color:#48515D;
   }
-`;
+`
 
 const WrapperTwo = styled(Wrapper)`
   display:flex;
@@ -35,7 +35,7 @@ const WrapperTwo = styled(Wrapper)`
     width:390px;
     word-break:break-all;
   }
-`;
+`
 
 const WrapperClose = styled.div`
   position:absolute;
@@ -46,37 +46,36 @@ const WrapperClose = styled.div`
   &:hover {
     color:#F0B90B;
   }
-`;
+`
 
 class SendTransactionTwo extends PureComponent {
-  render() {
-
-    var { asset, to, from, amount, memo } = this.props;
+  render () {
+    var { asset, to, from, amount, memo } = this.props
     return (
       <div>
         <Title>
-          <span className="name">ICETEA</span>
-          <span className="fullName">Ice Tea Chain</span>
+          <span className='name'>ICETEA</span>
+          <span className='fullName'>Ice Tea Chain</span>
         </Title>
         <WrapperTwo>
-          <div className="title">To:</div>
-          <div className="value">{to}</div>
+          <div className='title'>To:</div>
+          <div className='value'>{to}</div>
         </WrapperTwo>
         <WrapperTwo>
-          <div className="title">From:</div>
-          <div className="value">{from}</div>
+          <div className='title'>From:</div>
+          <div className='value'>{from}</div>
         </WrapperTwo>
         <WrapperTwo>
-          <div className="title">Amount:</div>
-          <div className="value">{amount}</div>
+          <div className='title'>Amount:</div>
+          <div className='value'>{amount}</div>
         </WrapperTwo>
         <WrapperTwo>
-          <div className="title">Memo:</div>
-          <div className="value">{memo}</div>
+          <div className='title'>Memo:</div>
+          <div className='value'>{memo}</div>
         </WrapperTwo>
         <WrapperTwo>
-          <div className="title">Fee:</div>
-          <div className="value">10 ICETEA</div>
+          <div className='title'>Fee:</div>
+          <div className='value'>10 ICETEA</div>
         </WrapperTwo>
       </div>
     )
@@ -84,11 +83,11 @@ class SendTransactionTwo extends PureComponent {
 }
 
 SendTransactionTwo.defaultProps = {
-  to: "",
-  from: "",
-  amount: "",
-  memo: "",
+  to: '',
+  from: '',
+  amount: '',
+  memo: '',
   asset: {}
-};
+}
 
-export default SendTransactionTwo;
+export default SendTransactionTwo

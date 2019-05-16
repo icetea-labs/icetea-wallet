@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import GroupCalendar from "./GroupCalendar";
-import PuDetailTx from "./../../elements/pu";
-import { Table } from './../../elements';
-import * as actions from './../../../store/actions/transaction';
+import React, { PureComponent } from 'react'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import GroupCalendar from './GroupCalendar'
+import PuDetailTx from './../../elements/pu'
+import { Table } from './../../elements'
+import * as actions from './../../../store/actions/transaction'
 // import TxHash from './TxHash';
 import {
   Wrapper,
@@ -17,27 +17,26 @@ import {
   IconInOut,
   TypeTranfer,
   TypeOrder,
-  ButtonSeach,
-} from './styled';
+  ButtonSeach
+} from './styled'
 
 import {
   TxHash,
   FontDin,
-  Icon,
-} from './../../elements/utils';
+  Icon
+} from './../../elements/utils'
 
 const txType = {
-  TRANSFER: "Transfer",
-  VOTE: "Vote",
-  DEPOSIT: "Deposit",
-  DEPLOY: "Deploy",
-  CALL: "Call",
+  TRANSFER: 'Transfer',
+  VOTE: 'Vote',
+  DEPOSIT: 'Deposit',
+  DEPLOY: 'Deploy',
+  CALL: 'Call'
 }
 
 class index extends PureComponent {
-
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       detail: null,
       txs: [],
@@ -46,7 +45,7 @@ class index extends PureComponent {
     }
   }
 
-  _getHistory = async(e) => {
+  _getHistory = async (e) => {
     // var t = n.props.dispatch
     //   , r = n.state.filterParams
     //   , a = sessionStorage.getItem("user");
@@ -63,84 +62,85 @@ class index extends PureComponent {
     // transactions = await this.addTimeToTx(transactions);
 
   }
-  
+
   _convertText = (e) => {
     switch (e) {
-      case "TRANSFER":
+      case 'TRANSFER':
         return {
           text: txType[e],
-          color: "rgb(0, 192, 135)"
-        };
-      case "CALL":
+          color: 'rgb(0, 192, 135)'
+        }
+      case 'CALL':
         return {
           text: txType[e],
-          color: "#848e9c"
-        };
-      case "DEPLOY":
+          color: '#848e9c'
+        }
+      case 'DEPLOY':
       default:
         return {
           text: txType[e],
-          color: "rgb(74, 144, 226)"
+          color: 'rgb(74, 144, 226)'
         }
     }
   }
 
   _buildColumns = () => {
-    var { address } = this.props;
+    var { address } = this.props
     return [{
-      title: "TxHash",
-      headerAlign: "left",
+      title: 'TxHash',
+      headerAlign: 'left',
       sorter: true,
-      dataIndex: "txHash",
-      key: "TxHash",
+      dataIndex: 'txHash',
+      key: 'TxHash',
       render: (e) => <TxHash hash={e.txHash} />
     }, {
-      title: "Date",
-      dataIndex: "date",
-      headerAlign: "left",
+      title: 'Date',
+      dataIndex: 'date',
+      headerAlign: 'left',
       sorter: true,
-      key: "Date",
-      render: (e) => <ColorGray><FontDin value={e.date} /></ColorGray> //format("MM-DD h:mm:ss")
+      key: 'Date',
+      render: (e) => <ColorGray><FontDin value={e.date} /></ColorGray> // format("MM-DD h:mm:ss")
     }, {
-      title: "exchange.pair",
-      dataIndex: "pair",
-      key: "Asset",
+      title: 'exchange.pair',
+      dataIndex: 'pair',
+      key: 'Asset',
       render: (e) => <ColorGray>pair</ColorGray>
     }, {
-      title: "Type",
-      dataIndex: "type",
-      key: "Type",
+      title: 'Type',
+      dataIndex: 'type',
+      key: 'Type',
       render: (e) => {
         var typeTx = this._convertText(e.type)
-          , type = e.fromAddr === address ? "OUT" : "IN";
+
+        var type = e.fromAddr === address ? 'OUT' : 'IN'
         return (
-          <StyledText style={{ minWidth: "100px" }}>
+          <StyledText style={{ minWidth: '100px' }}>
             <IconInOut color={typeTx.color} />
             <span>{typeTx.text}</span>
-            {"TRANSFER" === e.type && <TypeTranfer type={type}>{type}</TypeTranfer>}
-            {("CALL" === e.type || "DEPLOY" === e.type) && <TypeOrder type={e.side.toUpperCase()}>{e.side.toUpperCase()}</TypeOrder>}
+            {e.type === 'TRANSFER' && <TypeTranfer type={type}>{type}</TypeTranfer>}
+            {(e.type === 'CALL' || e.type === 'DEPLOY') && <TypeOrder type={e.side.toUpperCase()}>{e.side.toUpperCase()}</TypeOrder>}
           </StyledText>
         )
       }
     }, {
-      title: "Value",
-      dataIndex: "value",
-      key: "Value",
+      title: 'Value',
+      dataIndex: 'value',
+      key: 'Value',
       render: (e) => <StyledText><FontDin value={e.value} /></StyledText> // Object(z.d)(e.value, 4)
 
     }, {
-      title: "TxFee",
-      dataIndex: "txFee",
-      key: "TxFee",
+      title: 'TxFee',
+      dataIndex: 'txFee',
+      key: 'TxFee',
       render: (e) => <StyledText>{e.txFee}</StyledText>
     }, {
-      title: "",
-      dataIndex: "op",
-      key: "",
+      title: '',
+      dataIndex: 'op',
+      key: '',
       render: (e) => {
         return (
           <div onClick={() => this._showDetail(e)} >
-            <Icon type="detail-D" color="#848E9C" hoverColor="#F0B90B" />
+            <Icon type='detail-D' color='#848E9C' hoverColor='#F0B90B' />
           </div>
         )
       }
@@ -158,16 +158,16 @@ class index extends PureComponent {
   }
   _buildDataSource = () => {
     return this.props.transactionHistory.map(e => {
-      var t = e.data //&& JSON.parse(e.data) || {};
+      var t = e.data // && JSON.parse(e.data) || {};
       return {
         date: e.timeStamp,
         pair: t.orderData ? t.orderData.symbol : e.txAsset,
         type: e.txType,
-        side: t.orderData ? t.orderData.side : "-",
-        value: (t.orderData ? t.orderData.quantity : e.value), //Object(z.g)
-        txFee: (e.txFee),//Object(z.g)
+        side: t.orderData ? t.orderData.side : '-',
+        value: (t.orderData ? t.orderData.quantity : e.value), // Object(z.g)
+        txFee: (e.txFee), // Object(z.g)
         txHash: e.txHash,
-        op: "",
+        op: '',
         blockHeight: e.blockHeight,
         fromAddr: e.fromAddr,
         orderId: e.orderId,
@@ -178,39 +178,39 @@ class index extends PureComponent {
   }
 
   _filter = (e) => {
-    var filterParams = {};
-    var g = ""
+    var filterParams = {}
+    var g = ''
     if (e.manualStartDate || e.manualEndDate) {
-      e.manualStartDate && (filterParams.startTime = e.manualStartDate.getTime());
-      e.manualEndDate && (filterParams.endTime = e.manualEndDate.getTime());
+      e.manualStartDate && (filterParams.startTime = e.manualStartDate.getTime())
+      e.manualEndDate && (filterParams.endTime = e.manualEndDate.getTime())
       filterParams.startTime === filterParams.endTime &&
-        (filterParams.endTime = new Date("".concat(g()(e.manualEndDate).format("YYYY/MM/DD"), " 23:59:59")).getTime());
+        (filterParams.endTime = new Date(''.concat(g()(e.manualEndDate).format('YYYY/MM/DD'), ' 23:59:59')).getTime())
       this.setState({
         filterParams: filterParams
       }, () => {
         this._getHistory(filterParams)
       })
     } else {
-      alert("exchange.pleaseSelectDate")
+      alert('exchange.pleaseSelectDate')
     }
   }
 
   _paging = (e) => {
-    var t = (e - 1) * 30//$
-      , r = { offset: t };
+    var t = (e - 1) * 30; var // $
+      r = { offset: t }
     this.setState({
       offset: t
     }, () => {
       this._getHistory(r)
     })
   }
-  _search=()=> {
+  _search=() => {
     console.log('_search')
-    this.props.getTxHistory('a');
+    this.props.getTxHistory('a')
   }
-  render() {
-    var { total, address } = this.props;
-    var { detail } = this.state;
+  render () {
+    var { total, address } = this.props
+    var { detail } = this.state
     // console.log('a', this._buildColumns());
     // console.log('b', this._buildDataSource());
     return (
@@ -222,15 +222,15 @@ class index extends PureComponent {
               hasType={false}
               hasPair={false}
               onFilterChange={this._filter}
-              defaultDate={new Date}
+              defaultDate={new Date()}
             />
             <WrapperTextFullHistory>
               Not every transaction is included below. For full history, please refer to
-            <a href={"".concat("....", "/address/").concat(address)}
-                target="_blank"
-                rel="noopener noreferrer"
+              <a href={''.concat('....', '/address/').concat(address)}
+                target='_blank'
+                rel='noopener noreferrer'
               >here</a>.
-          </WrapperTextFullHistory>
+            </WrapperTextFullHistory>
           </WrapperHeader>
           <Table
             columns={this._buildColumns()}
@@ -244,14 +244,14 @@ class index extends PureComponent {
           <ButtonSeach onClick={this._search} ><span>Search</span></ButtonSeach>
         </Content>
       </Wrapper>
-    );
+    )
   }
 }
 
 index.defaultProps = {
   transactionHistory: [
     {
-      txType: "TRANSFER",
+      txType: 'TRANSFER',
       timeStamp: '04-26 2:24:39',
       txHash: '79F28716A907D800077E150DDD01F6316F115C7983B8D4D11F67527695D39BEE',
       fromAddr: 'abcd',
@@ -260,11 +260,11 @@ index.defaultProps = {
       value: '100000',
       txFee: '0.002',
       data: {
-        timeStamp: '04-26 2:24:39',
+        timeStamp: '04-26 2:24:39'
       }
     },
     {
-      txType: "TRANSFER",
+      txType: 'TRANSFER',
       timeStamp: '04-26 2:24:39',
       txHash: '79F28716A907D800077E150DDD01F6316F115C7983B8D4D11F67527695D39BEE',
       fromAddr: 'abcde',
@@ -273,11 +273,11 @@ index.defaultProps = {
       value: '100000',
       txFee: '0.002',
       data: {
-        timeStamp: '04-26 2:24:39',
+        timeStamp: '04-26 2:24:39'
       }
     },
     {
-      txType: "CALL",
+      txType: 'CALL',
       timeStamp: '04-26 2:24:39',
       txHash: '79F28716A907D800077E150DDD01F6316F115C7983B8D4D11F67527695D39BEE',
       fromAddr: 'abcde',
@@ -286,11 +286,11 @@ index.defaultProps = {
       value: '100000',
       txFee: '0.002',
       data: {
-        timeStamp: '04-26 2:24:39',
+        timeStamp: '04-26 2:24:39'
       }
     },
     {
-      txType: "DEPLOY",
+      txType: 'DEPLOY',
       timeStamp: '04-26 2:24:39',
       txHash: '79F28716A907D800077E150DDD01F6316F115C7983B8D4D11F67527695D39BEE',
       fromAddr: 'abcde',
@@ -299,18 +299,19 @@ index.defaultProps = {
       value: '100000',
       txFee: '0.002',
       data: {
-        timeStamp: '04-26 2:24:39',
+        timeStamp: '04-26 2:24:39'
       }
     }
   ],
   total: 0,
-  address: "",
-  dispatch: function () { },
-};
+  address: '',
+  dispatch: function () { }
+}
 
 const mapStateToProps = state => {
   var address = state.account.address
-    , transactionHistory = state.transaction.transactionHistory;
+
+  var transactionHistory = state.transaction.transactionHistory
   return {
     transactionHistory: transactionHistory.tx,
     total: transactionHistory.total,
@@ -324,7 +325,7 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(index));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(index))
 
 // date: e.timeStamp,
 // pair: t.orderData ? t.orderData.symbol : e.txAsset,

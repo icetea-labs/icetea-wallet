@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { zIndex } from '../../../constants/styles';
-import { Button } from '../../elements/Button';
+import styled from 'styled-components'
+import { zIndex } from '../../../constants/styles'
+import { Button } from '../../elements/Button'
 
 export const WrapperSend = styled.div`
   position:fixed;
@@ -10,7 +10,7 @@ export const WrapperSend = styled.div`
   bottom:0;
   z-index:${zIndex.modal};
   background:rgba(0,0,0,0.5);
-`;
+`
 
 export const OutBox = styled.div`
   min-width:320px;
@@ -22,28 +22,28 @@ export const OutBox = styled.div`
   top:10%;
   left:50%;
   transform:translate(-50%,-50%);
-`;
+`
 
 export const Title = styled.div`
   font-size:14px;
   font-weight:bold;
-`;
+`
 
 export const WrapperTab = styled.div`
   padding:30px 0;
   font-size:16px;
   padding-bottom:10px;
-`;
+`
 export const DisplayTab = styled.div`
   display:flex;
-`;
+`
 
 export const Tab = styled.div`
   width:60px;
   height:3px;
-  background: ${({ bg }) => bg ? bg : "#F0B90B"};
+  background: ${({ bg }) => bg || '#F0B90B'};
   margin-right:10px;
-`;
+`
 
 export const ButtonCus = styled.div`
   width: 100px;
@@ -68,5 +68,4 @@ export const ButtonCus = styled.div`
   border-color: rgb(240, 185, 11);
   border-image: initial;
   background: rgb(255, 255, 255);
-`;
-
+`

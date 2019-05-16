@@ -1,1 +1,1 @@
-export { default as TxHistory } from './TxHistory';
+export { default as TxHistory } from './TxHistory'

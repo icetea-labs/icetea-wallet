@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import Layout from '../layout'
-import styled from 'styled-components';
-import { BtnActive } from '../elements/utils';
-import { withRouter } from 'react-router-dom';
-import default1 from './../../assets/img/1_default.svg';
-import hover1 from './../../assets/img/1_hover.svg';
-import default2 from './../../assets/img/2_default.svg';
-import hover2 from './../../assets/img/2_hover.svg';
-import default3 from './../../assets/img/3_default.svg';
-import hover3 from './../../assets/img/3_hover.svg';
-import default4 from './../../assets/img/4_default.svg';
-import hover4 from './../../assets/img/4_hover.svg';
-import default5 from './../../assets/img/5_default.svg';
-import hover5 from './../../assets/img/5_hover.svg';
-import default6 from './../../assets/img/6_default.svg';
-import hover6 from './../../assets/img/6_hover.svg';
+import styled from 'styled-components'
+import { BtnActive } from '../elements/utils'
+import { withRouter } from 'react-router-dom'
+import default1 from './../../assets/img/1_default.svg'
+import hover1 from './../../assets/img/1_hover.svg'
+import default2 from './../../assets/img/2_default.svg'
+import hover2 from './../../assets/img/2_hover.svg'
+import default3 from './../../assets/img/3_default.svg'
+import hover3 from './../../assets/img/3_hover.svg'
+import default4 from './../../assets/img/4_default.svg'
+import hover4 from './../../assets/img/4_hover.svg'
+import default5 from './../../assets/img/5_default.svg'
+import hover5 from './../../assets/img/5_hover.svg'
+import default6 from './../../assets/img/6_default.svg'
+import hover6 from './../../assets/img/6_hover.svg'
 
 const AllBg = styled.div`
   box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px 0px;
@@ -27,7 +27,7 @@ const AllBg = styled.div`
   flex-direction: column;
   min-width: 1024px;
   background: linear-gradient(102deg, rgb(40, 47, 63) 0%, rgb(18, 22, 28) 100%);
-`;
+`
 
 const HomeWrapper = styled.div`
   position:absolute;
@@ -36,14 +36,14 @@ const HomeWrapper = styled.div`
   left:0;
   right:0;
   min-height:650px;
-`;
+`
 
 const HomeOutBox = styled.div`
   position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-`;
+`
 
 const HomeTitle = styled.p`
   font-size:40px;
@@ -53,14 +53,14 @@ const HomeTitle = styled.p`
   white-space:nowrap;
   min-width:750px;
   @media (max-width:1440px){transform:scale(0.8);}
-`;
+`
 
 const HomeSubTitle = styled.p`
   font-size:20px;
   color:#fff;
   text-align:center;
   @media (max-width:1440px){transform:scale(0.8);}
-`;
+`
 
 const HomeBtnWrap = styled.div`
   margin-top:60px;
@@ -69,12 +69,12 @@ const HomeBtnWrap = styled.div`
   position:relative;
   z-index:10;
   font-family:'ProximaNova';
-`;
+`
 
 const BtnWrapper = styled(HomeBtnWrap)`
   justify-content:center;
   margin-top:24px;
-`;
+`
 
 const BtnCus = styled(BtnActive)`
   margin-right:40px;
@@ -92,7 +92,7 @@ const BtnCus = styled(BtnActive)`
     line-height:28px;
     font-size:12px;
     }
-`;
+`
 
 const BtnCus1 = styled(BtnActive)`
   background:inherit;
@@ -114,7 +114,7 @@ const BtnCus1 = styled(BtnActive)`
     line-height:28px;
     font-size:12px;
   }
-`;
+`
 
 const GuideWrapper = styled.ul`
   display:flex;
@@ -149,19 +149,18 @@ const GuideWrapper = styled.ul`
     margin-top:10px;
     li{transform:scale(0.8);}
   }
-`;
+`
 
 class Home extends Component {
-
   gotoTrade = () => {
-    this.props.history.push("/unlock");
+    this.props.history.push('/unlock')
   }
 
   gotoCreate = () => {
-    this.props.history.push("/create");
+    this.props.history.push('/create')
   }
 
-  render() {
+  render () {
     return (
       <AllBg>
         <Layout>
@@ -179,102 +178,102 @@ class Home extends Component {
                   </BtnCus1>
                 </BtnWrapper>
                 <GuideWrapper>
-                  <a href="https://icetea.io/"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <a href='https://icetea.io/'
+                    target='_blank'
+                    rel='noopener noreferrer'
                   >
                     <li>
-                      <img 
+                      <img
                         src={default1}
-                        className="default"
-                        alt=""
+                        className='default'
+                        alt=''
                       />
-                      <img 
+                      <img
                         src={hover1}
-                        className="hover"
-                        alt=""
+                        className='hover'
+                        alt=''
                       />
                       <span>How to Create a Wallet</span>
                     </li>
                   </a>
-                  <a href="https://icetea.io/"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <a href='https://icetea.io/'
+                    target='_blank'
+                    rel='noopener noreferrer'
                   >
                     <li>
-                      <img alt=""
+                      <img alt=''
                         src={default2}
-                        className="default"
+                        className='default'
                       />
-                      <img alt=""
+                      <img alt=''
                         src={hover2}
-                        className="hover"
+                        className='hover'
                       />
                       <span>How to Access Your Wallet</span>
                     </li>
                   </a>
-                  <a href="https://icetea.io/"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <a href='https://icetea.io/'
+                    target='_blank'
+                    rel='noopener noreferrer'
                   >
                     <li>
-                      <img alt=""
+                      <img alt=''
                         src={default3}
-                        className="default"
+                        className='default'
                       />
-                      <img alt=""
+                      <img alt=''
                         src={hover3}
-                        className="hover"
+                        className='hover'
                       />
                       <span>Interface Guide</span>
                     </li>
                   </a>
                 </GuideWrapper>
                 <GuideWrapper>
-                  <a href="https://icetea.io/"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <a href='https://icetea.io/'
+                    target='_blank'
+                    rel='noopener noreferrer'
                   >
                     <li>
-                      <img alt=""
+                      <img alt=''
                         src={default4}
-                        className="default"
+                        className='default'
                       />
-                      <img alt=""
+                      <img alt=''
                         src={hover4}
-                        className="hover"
+                        className='hover'
                       />
                       <span>Funding Your Testnet Account</span>
                     </li>
                   </a>
-                  <a href="https://icetea.io/"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <a href='https://icetea.io/'
+                    target='_blank'
+                    rel='noopener noreferrer'
                   >
                     <li>
-                      <img alt=""
+                      <img alt=''
                         src={default5}
-                        className="default"
+                        className='default'
                       />
-                      <img alt=""
+                      <img alt=''
                         src={hover5}
-                        className="hover"
+                        className='hover'
                       />
                       <span>IceTea Explorer Guide</span>
                     </li>
                   </a>
-                  <a href="https://icetea.io/"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <a href='https://icetea.io/'
+                    target='_blank'
+                    rel='noopener noreferrer'
                   >
                     <li>
-                      <img alt=""
+                      <img alt=''
                         src={default6}
-                        className="default"
+                        className='default'
                       />
-                      <img alt=""
+                      <img alt=''
                         src={hover6}
-                        className="hover"
+                        className='hover'
                       />
                       <span>Things to Avoid</span>
                     </li>
@@ -285,9 +284,8 @@ class Home extends Component {
           </React.Fragment>
         </Layout>
       </AllBg>
-    );
+    )
   }
 }
 
-export default withRouter(Home);
-
+export default withRouter(Home)

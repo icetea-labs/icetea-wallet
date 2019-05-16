@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react';
-import styled from 'styled-components';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { PureComponent } from 'react'
+import styled from 'styled-components'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 const SubMenuWapper = styled.div`
   display:none;
@@ -25,7 +25,7 @@ const SubMenuWapper = styled.div`
     }
     @media  (max-width:768px){background:inherit;}
   }
-`;
+`
 
 const UlLink = styled.ul`
   display: flex;
@@ -65,40 +65,39 @@ const UlLink = styled.ul`
     border-top: 5px solid rgb(255, 255, 255);
 }
 
-`;
+`
 
 const menus = [{
-  text: "Explore",
-  path: "/trade"
+  text: 'Explore',
+  path: '/trade'
 }, {
-  text: "Transaction",
-  path: "/transactionHistory"
+  text: 'Transaction',
+  path: '/transactionHistory'
 }, {
-  text: "Orders",
+  text: 'Orders',
   subMenus: [{
-    text: "Open Orders",
-    path: "/openOrders"
+    text: 'Open Orders',
+    path: '/openOrders'
   }, {
-    text: "Order History",
-    path: "/orderHistory"
+    text: 'Order History',
+    path: '/orderHistory'
   }, {
-    text: "Trade History",
-    path: "/tradeHistory"
+    text: 'Trade History',
+    path: '/tradeHistory'
   }, {
-    text: "Fee History",
-    path: "/feeHistory"
+    text: 'Fee History',
+    path: '/feeHistory'
   }]
 }, {
-  text: "IceteaStore",
-  path: "/botStore"
+  text: 'IceteaStore',
+  path: '/botStore'
 }, {
-  text: "Balances",
-  path: "/balances"
-}];
+  text: 'Balances',
+  path: '/balances'
+}]
 
 class Menu extends PureComponent {
-
-  render() {
+  render () {
     return (
       <UlLink>
         {this.buildMenus(menus)}
@@ -107,12 +106,12 @@ class Menu extends PureComponent {
   }
 
   clickMenu = (e) => {
-    this.props.history.push(e);
+    this.props.history.push(e)
   }
 
   buildSubMenus = (subMenus) => {
-    var res = null;
-    if(subMenus.length > 0){
+    var res = null
+    if (subMenus.length > 0) {
       res = subMenus.map((menu, index) => {
         return (
           <li
@@ -122,26 +121,26 @@ class Menu extends PureComponent {
           >
             {menu.text}
           </li>
-        );
+        )
       })
     }
-    return res;
+    return res
   }
 
   buildMenus = (menus) => {
-    var res = null;
+    var res = null
     if (menus.length > 0) {
-      menus.subMenus ?
-        res =  (
-          <li className="withSubMenus" key={menus.subMenus.text}>
+      menus.subMenus
+        ? res = (
+          <li className='withSubMenus' key={menus.subMenus.text}>
             <span>{menus.subMenus.text}</span>
-            <SubMenuWapper className="subMenus">
+            <SubMenuWapper className='subMenus'>
               {this.buildSubMenus(menus.subMenus)}
             </SubMenuWapper>
-            <i className="triangle"/>
+            <i className='triangle' />
           </li>
-        ) :
-        res = menus.map((menu, index) => {
+        )
+        : res = menus.map((menu, index) => {
           return (
             <li
               className={menu.text}
@@ -150,15 +149,15 @@ class Menu extends PureComponent {
             >
               {menu.text}
             </li>
-          );
-        });
+          )
+        })
     }
-    return res;
+    return res
   }
 }
 
 const mapStateToProps = state => {
-  var account = state.acount;
+  var account = state.acount
   return {
     // privateKey: account.privateKey,
     // needAuth: account.needAuth,
@@ -166,7 +165,7 @@ const mapStateToProps = state => {
     // encryptedData: account.encryptedData,
     // cipher: account.cipher,
     // flags: account.flags,
-  };
+  }
 }
 
-export default connect(mapStateToProps, null)(withRouter(Menu));
+export default connect(mapStateToProps, null)(withRouter(Menu))
