@@ -46,7 +46,7 @@ class AccoutMenu extends Component {
         <div className="account-menu__account-info">
           <div className="account-menu__name">{item.username}</div>
           <div className="currency-display-component account-menu__balance">
-            <span class="currency-display-component__text">{item.total} ETH</span>
+            <span className="currency-display-component__text">{item.total} ETH</span>
           </div>
         </div>
       </div>
@@ -62,12 +62,12 @@ class AccoutMenu extends Component {
   render() {
     return (
       <div className="account-wrapper">
-        <i class="iconfont icon-account sc-dnqmqq iiYHFz" size="16" color=""></i>
+        <i className="iconfont icon-account sc-dnqmqq iiYHFz" size="16" color=""></i>
         <div className="menu account-menu">
           <div className="menu__close-area"></div>
           <div className="menu__item account-menu__header ">
             <span>Tài khoản của tôi</span>
-            <button class="account-menu__logout-button">Thoát</button>
+            <button className="account-menu__logout-button">Thoát</button>
           </div>
           <div className="menu__divider"></div>
           <div className="account-menu__accounts-container">
@@ -78,32 +78,32 @@ class AccoutMenu extends Component {
           <div className="menu__divider"></div>
           <div className="menu__item menu__item  menu__item--clickable">
             <div className="menu__item__icon">
-              <img class="account-menu__item-icon" src={add} alt="" />
+              <img className="account-menu__item-icon" src={add} alt="" />
             </div>
             <div className="menu__item__text">Tạo tài khoản</div>
           </div>
           <div className="menu__item menu__item  menu__item--clickable">
             <div className="menu__item__icon">
-              <img class="account-menu__item-icon" src={imported} alt="" />
+              <img className="account-menu__item-icon" src={imported} alt="" />
             </div>
             <div className="menu__item__text">Nhập tài khoản</div>
           </div>
           <div className="menu__item menu__item  menu__item--clickable">
             <div className="menu__item__icon">
-              <img class="account-menu__item-icon" src={connected} alt="" />
+              <img className="account-menu__item-icon" src={connected} alt="" />
             </div>
             <div className="menu__item__text">Connect Hardware Wallet</div>
           </div>
           <div className="menu__divider"></div>
           <div className="menu__item menu__item  menu__item--clickable">
             <div className="menu__item__icon">
-              <img class="account-menu__item-icon" src={info} alt="" />
+              <img className="account-menu__item-icon" src={info} alt="" />
             </div>
             <div className="menu__item__text">Thông tin và Trợ giúp</div>
           </div>
           <div className="menu__item menu__item  menu__item--clickable">
             <div className="menu__item__icon">
-              <img class="account-menu__item-icon" src={settings} alt="" />
+              <img className="account-menu__item-icon" src={settings} alt="" />
             </div>
             <div className="menu__item__text">Cài đặt</div>
           </div>

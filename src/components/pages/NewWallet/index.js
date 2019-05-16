@@ -44,30 +44,24 @@ const DivLogo = styled.div`
   img{ width:80px; }
 `;
 const DivBox1 = styled.div`
-  position: absolute;
-  top: 130px;
-  left: 50%;
-  transform: translateX(-50%);
-  @media (max-width: 768px) {
-    width: 100%;
-  }
+  position:absolute;
+  top:130px;
+  left:50%;
+  transform:translateX(-50%);
+  @media (min-width:1900px){top:190px;}
+  @media (max-width:768px){width:100%;}
 `;
 const DivBox2 = styled.div`
-  width: 100%;
-  box-shadow: rgb(228, 228, 228) 0px 0px 10px;
-  background: rgb(255, 255, 255);
-  padding: 40px 54px;
-  @media (max-width: 623px) and (min-width: 320px) {
-    box-shadow: none;
-    box-sizing: border-box;
-    padding: 5px 20px;
-  }
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-  @media (min-width: 624px) {
-    width: 500px;
-  }
+  width:100%;
+  background:#fff;
+  box-shadow:0 0 10px #e4e4e4;
+  padding:40px 54px;
+  @media (min-width:320px) and (max-width:623px) {
+    box-shadow:none;
+    padding:5px 20px;
+    box-sizing:border-box;
+  };
+  @media (min-width:624px){width:500px;}
 `;
 
 const WrapperImgPencil = styled.div`
