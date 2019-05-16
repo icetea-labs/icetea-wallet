@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+<style type="text/css">
+	.st0{display:none;opacity:0.4;}
+	.st1{display:inline;opacity:0.5;fill:none;stroke:#848E9C;stroke-width:2;enable-background:new    ;}
+	.st2{fill:#202733;stroke:#848E9C;stroke-width:2;}
+	.st3{fill:#F0B90B;}
+	.st4{fill:none;stroke:#F0B90B;stroke-width:1.6;}
+	.st5{fill:none;stroke:#F0B90B;stroke-width:1.6;stroke-linecap:square;}
+	.st6{opacity:0.4;}
+	.st7{opacity:0.5;fill:none;stroke:#848E9C;stroke-width:2;enable-background:new    ;}
+</style>
+<title>4_default</title>
+<desc>Created with Sketch.</desc>
+<g id="teste-home">
+	<g id="text-net-homepage" transform="translate(-524.000000, -703.000000)">
+		<g id="分组-copy-3" transform="translate(467.000000, 683.000000)">
+			<g id="_x34__x5F_default" transform="translate(57.000000, 20.000000)">
+				
+					<g id="分组-6" transform="translate(50.000000, 50.000000) rotate(-315.000000) translate(-50.000000, -50.000000) translate(15.000000, 15.000000)" class="st0">
+					<path id="形状" class="st1" d="M1,18.6L18.6,1H1V18.6z"/>
+					<path id="形状-copy-2" class="st1" d="M1,51.4L18.6,69H1V51.4z"/>
+					<path id="形状-copy" class="st1" d="M69,18.6L51.4,1H69V18.6z"/>
+					<path id="形状-copy-3" class="st1" d="M69,51.4L51.4,69H69V51.4z"/>
+				</g>
+				<g id="分组-3" transform="translate(30.000000, 34.000000)">
+					<rect id="矩形-copy" x="6" y="1" class="st2" width="30" height="24"/>
+					<rect id="矩形" x="1" y="6" class="st2" width="30" height="24"/>
+					<rect id="矩形_1_" x="18" y="13" class="st3" width="8" height="3"/>
+					<polyline id="路径-2" class="st4" points="5.8,11 10.8,14.9 5.8,19 					"/>
+					<path id="直线-2" class="st5" d="M14,24.5h4"/>
+					<path id="直线-2-copy" class="st5" d="M22,24.5h4"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+<g id="分组-6_1_" transform="translate(50.000000, 50.000000) rotate(-315.000000) translate(-50.000000, -50.000000) translate(15.000000, 15.000000)" class="st6">
+	<path id="形状_2_" class="st7" d="M18.6,1H1v17.6"/>
+	<path id="形状-copy-2_1_" class="st7" d="M18.6,69H1V51.4"/>
+	<path id="形状-copy_1_" class="st7" d="M51.4,1H69v17.6"/>
+	<path id="形状-copy-3_1_" class="st7" d="M51.4,69H69V51.4"/>
+</g>
+</svg>
