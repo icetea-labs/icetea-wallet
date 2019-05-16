@@ -1,47 +1,40 @@
-import tweb3 from '../../service/tweb3'
+import { txApi } from '../../api'
+
 /*
  * action types
  */
 export const actionTypes = {
-  SET_TRANSACTION_HISTORY: 'SET_TRANSACTION_HISTORY',
-  SET_FETCH_TRANSACTION: 'SET_FETCH_TRANSACTION'
+  TX_HISTORY_FETCHING: 'TX_HISTORY_FETCHING',
+  TX_HISTORY_SUCCESS: 'TX_HISTORY_SUCCESS',
+  TX_HISTORY_FAILURE: 'TX_HISTORY_FAILURE'
 }
 /*
  * action creators
  */
-const getTransactionHistory = data => ({
-  type: actionTypes.SET_TRANSACTION_HISTORY,
+const getData = () => ({
+  type: actionTypes.TX_HISTORY_FETCHING,
+})
+const getDataSuccess = data => ({
+  type: actionTypes.TX_HISTORY_SUCCESS,
   data
 })
-const fetchTransactionHistory = data => ({
-  type: actionTypes.SET_FETCH_TRANSACTION,
+const getDataFailure = data => ({
+  type: actionTypes.TX_HISTORY_FAILURE,
   data
 })
 
-// export const getTxHistory = data => ({
-//   return (dispatch) => {
-//     dispatch(getData())
-//     getPeople()
-//       .then((data) => {
-//         dispatch(getDataSuccess(data))
-//       })
-//       .catch((err) => console.log('err:', err))
-//   }
-// });
-
-export const getTxHistory = (data) => {
-  // var op = {prove: false, page: 1, per_page: 20};
-  // var myTxs1 = await tweb3.getPastEvents('Transferred', 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx', 'tx.height > 0', op);
-  // console.log('getTxHistory:', myTxs1)
-  // tweb3.getPastEvents('Transferred', 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx', 'tx.height > 0', op)
-  // .then((events) => {
-  //   console.log(events) // same results as the optional callback above
-  // });
-
-  return async (dispatch) => {
+export const getTxHistory = (options) => {
+  return (dispatch) => {
     var op = { prove: false, page: 1, per_page: 20 }
-    var myTxs = await tweb3.getPastEvents('Transferred', 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx', 'tx.height > 0', op)
-    console.log(myTxs.txs)
-    dispatch(getTransactionHistory(myTxs.txs))
+    dispatch(getData())
+    txApi.getTxHistory(op)
+      .then((data) => {
+        // console.log(data.txs)
+        dispatch(getDataSuccess(data.txs))
+      })
+      .catch((err) => {
+        console.log('err:', err)
+        dispatch(getDataFailure(err))
+      })
   }
 }
