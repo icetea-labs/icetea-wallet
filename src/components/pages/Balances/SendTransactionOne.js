@@ -24,13 +24,14 @@ import tweb3 from '../../../service/tweb3'
 var itemsMenu = [{
   text: 'ICETEA',
   selected: true,
-  recommended: true
 }, {
   text: 'BTC',
   selected: false,
-  recommended: true
 }, {
   text: 'ETH',
+  selected: false
+},{
+  text: 'VNI',
   selected: false
 }]
 
@@ -83,6 +84,7 @@ class SendTransactionOne extends PureComponent {
     }
     console.log('amount Change CK', e)
   }
+  
   _setMaxValue = () => {
     this.setState({
       amount: this.state.availableBalance

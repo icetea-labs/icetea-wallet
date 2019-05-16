@@ -109,7 +109,7 @@ export class WarningRecover extends PureComponent {
           </span>
           <Span>
             <DivText>I understand that Ice-tea cannot recover or reset my password or the keystore file. I will make a backup of the keystore file/password, keep them secret, complete all wallet creation steps and agree to all the
-              <a target='_blank' href='/en/terms'>terms</a>
+              <a target='_blank' href='/en/terms'> terms</a>
             </DivText>
           </Span>
         </Label>

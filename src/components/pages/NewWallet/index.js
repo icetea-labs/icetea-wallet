@@ -21,6 +21,8 @@ import {
   GlobaLoading
 } from '../../elements'
 
+import FooterCus from './../FooterCus'
+
 const DivWallet = styled.div`
   position: relative;
   height: 100%;
@@ -63,7 +65,6 @@ const DivBox2 = styled.div`
   };
   @media (min-width:624px){width:500px;}
 `
-
 const WrapperImgPencil = styled.div`
   display:flex;
   flex-direction:column;
@@ -109,6 +110,11 @@ class index extends PureComponent {
   _hide = () => {
     this.props.dispatch(actions.setConfirmMnemonic(false))
   }
+
+  gotoHome = () => {
+    this.props.history.push('/Home')
+  }
+
   render () {
     var { confirmMnemonic, showPrivateKey, privateKey, step, isLoading } = this.props
     // console.log('00-step', showPrivateKey);
@@ -118,7 +124,7 @@ class index extends PureComponent {
         <QueueAnim delay={200} type={['top', 'bottom']} >
           <DivWallet key={1}>
             <DivLogo>
-              <img src={logo} alt='log' />
+              <img src={logo} alt='log' onClick={this.gotoHome}/>
             </DivLogo>
             <DivBox1>
               <DivBox2>
@@ -134,6 +140,7 @@ class index extends PureComponent {
                 {step === 'confirmMnemonic' && <NewWallet04 />}
                 {step === 'success' && <NewWallet05 />}
               </DivBox2>
+              <FooterCus />
             </DivBox1>
           </DivWallet>
         </QueueAnim>
