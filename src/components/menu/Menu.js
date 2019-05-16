@@ -68,8 +68,8 @@ const UlLink = styled.ul`
 `
 
 const menus = [{
-  text: 'Explore',
-  path: '/trade'
+  text: 'Explorer',
+  path: '/explorer'
 }, {
   text: 'Transaction',
   path: '/transactionHistory'
@@ -89,7 +89,7 @@ const menus = [{
     path: '/feeHistory'
   }]
 }, {
-  text: 'IceteaStore',
+  text: 'IceteaDapp',
   path: '/botStore'
 }, {
   text: 'Balances',
