@@ -67,7 +67,7 @@ class index extends PureComponent {
     //     offset: 0,
     //     limit: $
     //   }, r, e);
-    //   t(Object(R.c)(o))
+    //   t(Object(R.c)(o)) account.name
     // }
     var params = {
       address: this.props.address,

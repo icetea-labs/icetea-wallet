@@ -6,7 +6,7 @@ import { toTEA } from './../utils/utils'
 
 const transaction = {
   getTxHistory(params) {
-    // console.log('getTxHistory', params)
+    console.log('getTxHistory', params)
     return new Promise(async (resolve, reject) => {
       var myTxs = await tweb3.getPastEvents('Transferred', params.address, params.conditions, params.options)
       var transactions = utils.fmtTxs(myTxs.txs)

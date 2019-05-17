@@ -59,18 +59,13 @@ class SendTransaction extends PureComponent {
   }
 
   _transfer = async () => {
-    tweb3.wallet.importAccount('CJUPdD38vwc2wMC3hDsySB7YQ6AFLGuU6QYQYaiSeBsK')
+    var {amount, to} = this.state
+    var {privateKey} = this.props
 
-    // var answer = window.confirm("Are you sure to transfer?")
-
-    // if (answer) {
-    //     await tweb3.transfer(this.props.to, this.props.amount);
-    //     window.alert("Transfer Success")
-    // } else { return false; }
-
-    var amountToUnit = toUNIT(parseFloat(this.state.amount))
-    // console.log('amountToUnit', amountToUnit)
-    await tweb3.transfer(this.state.to, amountToUnit)
+    tweb3.wallet.importAccount(privateKey)
+    console.log('privateKey',privateKey)
+    var amountToUnit = toUNIT(parseFloat(amount))
+    await tweb3.transfer(to, amountToUnit)
 
     notification.notice({
       content:
@@ -92,7 +87,6 @@ class SendTransaction extends PureComponent {
     var { close, assets, address, bncClient, sendingAsset } = this.props
     console.log('State CK', this.state)
     // console.log('Props CK', this.props)
-
     return (
       <QueueAnim animConfig={{ opacity: [1, 0] }}>
         <WrapperSend key={1}>
@@ -169,9 +163,11 @@ SendTransaction.defaultProps = {
 }
 
 const mapStateToProps = state => {
-  var address = state.account.address
+  var address = state.account.address,
+  privateKey = state.account.privateKey
   return {
     address: address,
+    privateKey: privateKey,
   }
 }
 

@@ -1,8 +1,8 @@
-import { actionTypes } from './../actions/create'
+import { actionTypes } from './../actions/account'
 
 const initialState = {
   needAuth: false,
-  address: 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx',
+  address: '',//tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx
   cipher: '',
   privateKey: '',
   keyStore: '',

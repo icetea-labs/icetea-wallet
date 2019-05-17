@@ -101,25 +101,25 @@ class index extends PureComponent {
     setTimeout(() => {
       var n = ''
       if (address) {
-        this.props.getAccount(address)
+        this.props.setAccount({
+          privateKey: privateKey,
+          address: address,
+          keyStore: keyStore,
+          cipher: password,
+          // flags: o,
+          // encryptedData: n,
+          userInfo: {}
+        })
+        // this.props.getAccount(address)
         // !o.isHardware && privateKey && (n = Object(v.b)(e, r));
         sessionStorage.setItem('user', JSON.stringify({
           address: address,
           privateKey: n || privateKey,
           flags: false// o
         }))
+        
         this.props.history.push('/balances')
       }
-
-      this.props.setAccount({
-        privateKey: privateKey,
-        address: address,
-        keyStore: keyStore,
-        cipher: password,
-        // flags: o,
-        // encryptedData: n,
-        userInfo: {}
-      })
     })
   };
 
@@ -205,21 +205,6 @@ class index extends PureComponent {
 index.defaultProps = {
   setAccount: function () { },
   getAccount: function () { },
-  history: {},
-  formatI18nText: function () { }
-}
-
-const mapStateToProps = state => {
-  var e = state.create
-  return {
-    password: e.password,
-    step: e.step,
-    privateKey: e.privateKey,
-    keyStoreText: e.keyStoreText,
-    showPrivateKey: e.showPrivateKey,
-    confirmMnemonic: e.confirmMnemonic,
-    isLoading: state.globalData.isLoading
-  }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -229,4 +214,4 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(index))
+export default connect(null, mapDispatchToProps)(withRouter(index))
