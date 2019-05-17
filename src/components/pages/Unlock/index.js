@@ -108,7 +108,7 @@ class index extends PureComponent {
           privateKey: n || privateKey,
           flags: false// o
         }))
-        this.props.history.push('/Home')
+        this.props.history.push('/balances')
       }
 
       this.props.setAccount({

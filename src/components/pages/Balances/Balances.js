@@ -99,7 +99,7 @@ class Balances extends Component {
                   <i className='fa fa-qrcode sc-dnqmqq dJRkzW' aria-hidden='true' size='18' />
                   <div className='qrCode'>
                     <div size='174' className='qrcode-box sc-iSDuPN iulYhq'>
-                      <QRCode size={174} className='qrForm' value='tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx' />
+                      <QRCode size={174} className='qrForm' value={value} />
                     </div>
                   </div>
                 </div>

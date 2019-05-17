@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux'
 import BotShow from './BotShow';
 import tweb3 from '../../../service/tweb3'
 
@@ -218,11 +219,6 @@ class BotStore extends Component {
     console.log(this.state)
   }
 
-  popupwindow = (url, title, w, h) => {
-    var left = (window.screen.width / 2) - (w / 2)
-    var top = (window.screen.height / 2) - (h / 2)
-    return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left)
-  }
   _onCloseBot = (e) => {
     this.setState({
       isRunBot: false,
@@ -261,10 +257,17 @@ class BotStore extends Component {
             {this.showBots()}
           </Wrap>
         </BotContainer>
-        { this.state.isRunBot && <BotShow onClose={this._onCloseBot} botAddress={this.state.botAddress} /> }
+        { this.state.isRunBot && <BotShow onClose={this._onCloseBot} botAddress={this.state.botAddress} address={this.props.address} /> }
       </BotContent>
     );
   }
 }
 
-export default BotStore;
+const mapStateToProps = state => {
+  var address = state.account.address
+  return {
+    address: address,
+  }
+}
+
+export default connect(mapStateToProps, null)(BotStore)

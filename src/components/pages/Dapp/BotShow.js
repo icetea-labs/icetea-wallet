@@ -17,7 +17,7 @@ import {
 const PuContainer = styled.div`
   min-width:320px;
   max-width:450px;
-  height:500px;
+  height:550px;
   width:100%;
   #my-botui-app:first-child {
     height: 100%;
@@ -96,7 +96,7 @@ class BotShow extends Component {
 
 BotShow.defaultProps = {
   botAddress: '',
-  address: 'dsfasdfasdfsadfadsfsdaf',
+  address: '',
   onClose: function () { }
 }
 

@@ -69,7 +69,12 @@ class index extends PureComponent {
     //   }, r, e);
     //   t(Object(R.c)(o))
     // }
-    this.props.getTxHistory('a')
+    var params = {
+      address: this.props.address,
+      conditions: 'tx.height > 0',
+      options: { prove: false, page: 1, per_page: 100 }
+    }
+    this.props.getTxHistory(params)
   }
 
   _convertText = (e) => {
