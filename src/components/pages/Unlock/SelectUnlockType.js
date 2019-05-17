@@ -43,7 +43,7 @@ class SelectUnlockType extends Component {
   };
 
   _buildList = () => {
-    console.log('Call buildList')
+    // console.log('Call buildList')
     var { withSearchBox } = this.props
     var items = this.state.options.map((value, index) => {
       return (
@@ -53,7 +53,7 @@ class SelectUnlockType extends Component {
       )
     })
 
-    console.log('items CK', items)
+    // console.log('items CK', items)
     return (
       <Menu onSelect={this._onSelect}>
         {
@@ -71,7 +71,7 @@ class SelectUnlockType extends Component {
   }
 
   _buildDefaultValue = () => {
-    console.log('Call buildDefaultValue')
+    // console.log('Call buildDefaultValue')
     var defaultValue = this.props.defaultValue
     if (defaultValue) { return defaultValue }
     var options = this.state.options
@@ -81,7 +81,7 @@ class SelectUnlockType extends Component {
   render () {
     var { width, className } = this.props
     var { value } = this.props
-    console.log('option1 CK', this.props.options)
+    // console.log('option1 CK', this.props.options)
     return (
       <DropWrapper width={width} className={'select '.concat(className || '')} >
         <Dropdown
