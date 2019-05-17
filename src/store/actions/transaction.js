@@ -23,11 +23,11 @@ const getDataFailure = data => ({
   data
 })
 
-export const getTxHistory = (options) => {
+export const getTxHistory = (address, conditions, options) => {
   return (dispatch) => {
-    var op = { prove: false, page: 1, per_page: 100 }
+    var op = 
     // dispatch(getData())
-    txApi.getTxHistory(op)
+    txApi.getTxHistory(address, conditions, options)
       .then((data) => {
         // console.log(data.txs)
         dispatch(getDataSuccess(data))

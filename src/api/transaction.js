@@ -5,9 +5,10 @@ import dateFormat from 'dateformat'
 import { toTEA } from './../utils/utils'
 
 const transaction = {
-  getTxHistory(op) {
+  getTxHistory(params) {
+    // console.log('getTxHistory', params)
     return new Promise(async (resolve, reject) => {
-      var myTxs = await tweb3.getPastEvents('Transferred', 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx', 'tx.height > 0', op)
+      var myTxs = await tweb3.getPastEvents('Transferred', params.address, params.conditions, params.options)
       var transactions = utils.fmtTxs(myTxs.txs)
       console.log('myTxs', myTxs)
       transactions = await utils.addTimeToTx(transactions)
