@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './Header.css'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import CopyText from '../pages/Balances/CopyText'
+import CopyText from './../elements/CopyText'
 import AccountMenu from './AccountMenu'
 import Menu from './../menu'
 

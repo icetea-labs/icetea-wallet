@@ -9,9 +9,6 @@ import {
   ButtonWrapper
 } from './StyledSTOne'
 import { Button } from '../../elements/Button'
-import {
-  WrapperSelect
-} from '../Unlock/styled'
 import SelectUnlockType from '../Unlock/SelectUnlockType'
 
 import STOInput from './STOInput'

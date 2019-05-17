@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { zIndex } from '../../../constants/styles'
 import { DivSelectWordBase, WrapperBtnClose } from '../../elements/utils'
 
 export const Wrapper = styled.div`
