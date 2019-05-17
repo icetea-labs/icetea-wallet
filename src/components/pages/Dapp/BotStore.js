@@ -27,7 +27,6 @@ const BotItems = styled.div`
   float: left;
   border: 1px solid #323a4c;
   border-radius: 3px;
-  overflow: hidden;
   cursor: pointer;
   &:nth-child(4n + 1) {
     margin-right: 0;
@@ -60,9 +59,19 @@ const BotItems = styled.div`
     font-size: 16px;
   }
   .description {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    position: relative;
+    p{
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    &:hover {
+      .sc-qrIAp{
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   }
 `
 
@@ -82,6 +91,20 @@ const ButtonConnect = styled.button`
     background-color: #ffffff;
     color: #232937;
   }
+`
+
+const Tooltip = styled.div`
+  position: absolute;
+  bottom: 100%;
+  background: #ffffff;
+  color: rgba(35,41,55, .8);
+  line-height: 15px;
+  text-align: justify;
+  padding: 7px;
+  border-radius: 5px;
+  transition: opacity .5s ease;
+  visibility: hidden;
+  opacity: 0;
 `
 
 const CategoryTitle = styled.h1`
@@ -174,7 +197,10 @@ class BotStore extends Component {
           </div>
           <ButtonConnect onClick={() => this.connectBot(bot.address)}>Open</ButtonConnect>
         </div>
-        <div className="description">{bot.description}</div>
+        <div className="description">
+          <p>{bot.description}</p>
+          <Tooltip>{bot.description}</Tooltip>
+        </div>
       </BotItems>
     })
     return botsList;
