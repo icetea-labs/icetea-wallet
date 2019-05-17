@@ -20,6 +20,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import * as actions from '../../../store/actions/account'
 import tweb3 from '../../../service/tweb3'
+import { toTEA } from './../../../utils/utils'
 
 var itemsMenu = [{
   text: 'ICETEA',
@@ -59,7 +60,7 @@ class SendTransactionOne extends PureComponent {
     balanceofVip = await tweb3.getBalance('tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx')
     console.log('I want to see BL:', balanceofVip)
     this.setState({
-      availableBalance: balanceofVip.balance
+      availableBalance: toTEA(balanceofVip.balance)
     })
   }
 
