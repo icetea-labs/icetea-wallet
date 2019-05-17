@@ -24,13 +24,14 @@ import tweb3 from '../../../service/tweb3'
 var itemsMenu = [{
   text: 'ICETEA',
   selected: true,
-  recommended: true
 }, {
   text: 'BTC',
   selected: false,
-  recommended: true
 }, {
   text: 'ETH',
+  selected: false
+},{
+  text: 'VNI',
   selected: false
 }]
 
@@ -83,6 +84,7 @@ class SendTransactionOne extends PureComponent {
     }
     console.log('amount Change CK', e)
   }
+  
   _setMaxValue = () => {
     this.setState({
       amount: this.state.availableBalance
@@ -113,11 +115,12 @@ class SendTransactionOne extends PureComponent {
     }
 
     // save to store
+    var fromAdd = 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx'
     var to = this.state.to
     var amount = this.state.amount
     var memo = this.state.memo
 
-    var data = { to: to, amount: amount, memo: memo }
+    var data = { fromAdd: fromAdd, to: to, amount: amount, memo: memo }
 
     this.props.setAccount(data)
 
@@ -129,7 +132,7 @@ class SendTransactionOne extends PureComponent {
       this.props.next && this.props.next(this.state)
     })
 
-    console.log('sendT1 props CK', this.props)
+    // console.log('sendT1 props CK', this.props)
   }
 
   _getSelectTypes = () => {

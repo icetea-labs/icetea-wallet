@@ -21,6 +21,7 @@ import {
   Menu,
   UnlockRecommend
 } from './styled'
+import FooterCus from './../FooterCus'
 
 var itemsMenu = [{
   text: 'WalletConnect',
@@ -135,6 +136,10 @@ class index extends PureComponent {
     this._selectType({ text: item })
   };
 
+  gotoHome = () => {
+    this.props.history.push('/Home')
+  }
+
   render () {
     var { selectedType } = this.state
     var items = this.state.types.filter(el => {
@@ -163,7 +168,7 @@ class index extends PureComponent {
       <QueueAnim delay={200} type={['top', 'bottom']} >
         <Wrapper key={1} >
           <Logo>
-            <img src={logo} alt='logo' />
+            <img src={logo} alt='logo' onClick={this.gotoHome} />
           </Logo>
           <OutBox>
             <InBox>
@@ -189,6 +194,7 @@ class index extends PureComponent {
                 }
               </Content>
             </InBox>
+            <FooterCus />
           </OutBox>
         </Wrapper>
       </QueueAnim>

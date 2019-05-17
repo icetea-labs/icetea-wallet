@@ -132,7 +132,7 @@ class TransactionHistory extends Component {
             <td><div>{tx.status}</div></td>
             <td><div>{tx.txType}</div></td>
             <td><div>{tx.value}</div></td>
-            <td><div>{tx.fee}</div></td>
+            {/* <td><div>{tx.fee}</div></td> */}
             <td><div><i className='fa fa-ellipsis-h' onClick={() => this.viewDetail(tx.hash)} /></div></td>
           </tr>
         ))

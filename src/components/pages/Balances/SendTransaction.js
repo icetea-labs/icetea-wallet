@@ -27,12 +27,13 @@ import tweb3 from '../../../service/tweb3'
 import Notification from 'rc-notification'
 import '../../../assets/styles/notification.css'
 import successIc from '../../../assets/img/success-icon.png'
+import { toUNIT } from './../../../utils/utils'
 
 let notification = null
 Notification.newInstance({}, (n) => notification = n)
 
 class SendTransaction extends PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       asset: null,
@@ -67,14 +68,14 @@ class SendTransaction extends PureComponent {
     //     window.alert("Transfer Success")
     // } else { return false; }
 
-    await tweb3.transfer(this.props.to, this.props.amount)
+    await tweb3.transfer(this.state.to, this.state.amount)
 
     notification.notice({
       content:
-  <span className='notification'>
-    <img width={25} height={25} src={successIc} alt='' />Send successful!
-  </span>,
-      onClose () {
+        <span className='notification'>
+          <img width={25} height={25} src={successIc} alt='' />Send successful!
+         </span>,
+      onClose() {
         console.log('notify  close')
       }
     })
@@ -84,7 +85,7 @@ class SendTransaction extends PureComponent {
     this.props.close()
   }
 
-  render () {
+  render() {
     var { step, to, amount, asset, memo, isSending } = this.state
     var { close, assets, address, bncClient, sendingAsset } = this.props
     console.log('State CK', this.state)
@@ -120,7 +121,7 @@ class SendTransaction extends PureComponent {
                       bncClient={bncClient}
                       to={to}
                       // from={address}
-                      from={this.props.fromAdd}
+                      from={address}
                       amount={amount}
                       asset={sendingAsset || asset}
                       memo={memo}

@@ -2,6 +2,12 @@ import React, { PureComponent, PropTypes } from 'react'
 // import PropTypes from 'prop-types';
 import styled from 'styled-components'
 import { zIndex } from '../../constants/styles'
+import Select from 'rc-select'
+import Pagination from 'rc-pagination'
+import localeInfo from 'rc-pagination/lib/locale/en_US'
+import './../../assets/styles/pagination.css'
+import './../../assets/styles/locale.css'
+
 import {
   Icon
 } from './utils'
@@ -15,7 +21,101 @@ const TableTag = styled(TableBase)`
   border-color:#fdfdfd;
   border-spacing:0 5px;
 `
-const A = styled.div`margin-top:10px;display:flex;justify-content:flex-end;`
+const WrapperPagin = styled.div`
+  margin-top:10px;
+  display:flex;
+  justify-content:flex-end;
+  .rc-pagination-item-active {
+    background-color: #F0B90B;
+    border-color: #F0B90B;
+  }
+  .rc-pagination-item:hover {
+    border-color: #F0B90B;
+  }
+  .rc-pagination-options:hover {
+    border-color: #F0B90B;
+  }
+
+  .rc-pagination-item:hover a {
+    color: #F0B90B;
+  }
+  .rc-pagination-options-quick-jumper input:hover {
+    border-color: #F0B90B;
+  }
+  .rc-select-enabled .rc-select-selection:hover {
+    border-color:  #F0B90B;
+    box-shadow: 0 0 2px  #F0B90B;
+  }
+  .rc-select-enabled .rc-select-selection:active {
+    border-color: #F0B90B;
+  }
+  .rc-select-focused .rc-select-selection {
+    border-color: #F0B90B;
+    box-shadow: 0 0 2px #F0B90B;
+  }
+  .rc-pagination-item-active:hover a {
+    color: rgb(255, 255, 255);
+  }
+  .rc-pagination-item {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 13px;
+    border-width: 1px;
+    border-style: solid;
+    /* border-color: rgb(132, 142, 156); */
+    border-image: initial;
+    outline: none;
+  }
+`
+
+const WrapperPaginInt = styled.div`
+  display:flex;
+  font-family:'DIN';
+  .rc-pagination-item{width:32px;height:32px;line-height:32px;border:1px solid #848E9C;font-size:13px;outline:none;}
+  .rc-pagination-prev,.rc-pagination-next,.rc-pagination-jump-prev,
+  .rc-pagination-jump-next{
+    cursor:pointer;color:#212833;font-size:10px;border-radius:6px;
+    list-style:none;width:32px;height:32px;line-height:32px;float:left;text-align:center;outline:none;
+  }
+  .rc-pagination-item:hover{border-color:#F0B90B;}
+  .rc-pagination-item:hover a{color:#F0B90B;}
+  .rc-pagination-item-active{
+    background-color:#F0B90B;border-color:#F0B90B;
+    &:hover a{color:#fff;}
+  }
+  .rc-pagination-jump-prev:hover:after,
+  .rc-pagination-jump-next:hover:after{color:#F0B90B;}
+  /* Add */
+  .rc-pagination-options-quick-jumper {
+    height: 32px;
+    line-height: 32px
+  }
+  .rc-pagination-options-quick-jumper input {
+    height: 32px
+  }
+  .rc-pagination-options-quick-jumper input:hover {
+    border-color: #F0B90B
+  }
+  .rc-pagination-options-quick-jumper button:active,.rc-pagination-options-quick-jumper button:focus,.rc-pagination-options-quick-jumper button:hover {
+    color: #F0B90B;
+    background-color: #fff;
+    border-color: #F0B90B
+  }
+  /* select */
+  .rc-select-selection--single .rc-select-selection__rendered {
+    height: 32px;
+    line-height: 32px;
+  }
+  .rc-select-selection--multiple .rc-select-selection__rendered .rc-select-selection__choice {
+    margin-top: 4px;
+    line-height: 20px;
+  }
+  .rc-select-selection--single {
+    height: 32px;
+    line-height: 32px;
+  }
+`
 const WrapperTable = styled.div`position:relative;`
 const O = styled.span`i{font-size:12px;margin-left:4px;transform:scale(0.6);}`
 const HeaderLeft = styled.div`display:flex;justify-content:flex-start;`
@@ -23,7 +123,7 @@ const HeaderCenter = styled.div`display:flex;justify-content:center;`
 const HeaderRight = styled.div`display:flex;justify-content:flex-end;`
 
 export class Table extends PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       data: props.dataSource,
@@ -63,7 +163,8 @@ export class Table extends PureComponent {
     return false
   }
   generateBody = () => {
-    var { columns, data } = this.state
+    var { columns } = this.state
+    var data = this.props.dataSource
     return data.map((column, index) => {
       var tmpRow = []
       Object.keys(column).forEach(el => {
@@ -95,17 +196,31 @@ export class Table extends PureComponent {
 
   generateTable = () => {
     var headValue = this.generateHead()
-
     var bodyValue = this.generateBody()
     return (
       <TableTag>
-        <TableHead>{ headValue }</TableHead>
-        <TableBody>{ bodyValue }</TableBody>
+        <TableHead>{headValue}</TableHead>
+        <TableBody>{bodyValue}</TableBody>
       </TableTag>
     )
   }
-
-  componentWillReceiveProps () {
+  onShowSizeChange = (current, pageSize) => {
+    // console.log(current);
+    // console.log(pageSize);
+    // this.setState({
+    //   pageSize: pageSize,
+    //   current: current
+    // })
+    this.props.paging(current, pageSize)
+  }
+  onChange = (current) => {
+    // console.log(page);
+    // this.setState({
+    //   current: page
+    // })
+    this.props.paging(current)
+  }
+  componentWillReceiveProps() {
     this.setState({
       data: this.props.dataSource,
       columns: this.props.columns
@@ -120,13 +235,29 @@ export class Table extends PureComponent {
   _renderHeader = (e, t, n) => {
     return e === 'left' ? <HeaderLeft>{this._renderHeaderDetails(t, n)}</HeaderLeft> : e === 'center' ? <HeaderCenter>{this._renderHeaderDetails(t, n)}</HeaderCenter> : <HeaderRight>{this._renderHeaderDetails(t, n)}</HeaderRight>
   }
-  render () {
-    var { paging, total, dataSource } = this.props
+  render() {
+    var { paging, total, dataSource, pageSize, current } = this.props
+    console.log('current: ',current,' - pageSize: ',pageSize,' - total: ',total)
     return (
       <div>
         <WrapperTable>{this.generateTable()}</WrapperTable>
         {
-          paging && dataSource.length > 0 && <A>paging...</A>
+          paging && dataSource.length > 0 &&
+          <WrapperPagin>
+            <WrapperPaginInt>
+            <Pagination
+              selectComponentClass={Select}
+              showQuickJumper
+              showSizeChanger
+              defaultPageSize={pageSize}
+              defaultCurrent={current}
+              onShowSizeChange={this.onShowSizeChange}
+              onChange={this.onChange}
+              total={total}
+              locale={localeInfo}
+            />
+            </WrapperPaginInt>
+          </WrapperPagin>
         }
       </div>
     )
