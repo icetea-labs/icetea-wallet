@@ -68,7 +68,9 @@ class SendTransaction extends PureComponent {
     //     window.alert("Transfer Success")
     // } else { return false; }
 
-    await tweb3.transfer(this.state.to, this.state.amount)
+    var amountToUnit = toUNIT(parseFloat(this.state.amount))
+    // console.log('amountToUnit', amountToUnit)
+    await tweb3.transfer(this.state.to, amountToUnit)
 
     notification.notice({
       content:
@@ -89,7 +91,7 @@ class SendTransaction extends PureComponent {
     var { step, to, amount, asset, memo, isSending } = this.state
     var { close, assets, address, bncClient, sendingAsset } = this.props
     console.log('State CK', this.state)
-    console.log('Props CK', this.props)
+    // console.log('Props CK', this.props)
 
     return (
       <QueueAnim animConfig={{ opacity: [1, 0] }}>
@@ -167,11 +169,9 @@ SendTransaction.defaultProps = {
 }
 
 const mapStateToProps = state => {
+  var address = state.account.address
   return {
-    fromAdd: state.account.fromAdd,
-    to: state.account.to,
-    amount: state.account.amount,
-    memo: state.account.memo
+    address: address,
   }
 }
 
