@@ -11,12 +11,27 @@ const BotContent = styled.div`
   width: 100%;
   margin-top: -10px;
   min-height: calc(100vh - 100px);
+  @media(max-width: 768px) {
+    margin-top: -20px;
+  }
 `
 
 const BotContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 50px 0;
+  @media(max-width: 1200px) {
+    max-width: 960px;
+  }
+  @media(max-width: 991px) {
+    max-width: 768px;
+  }
+  @media(max-width: 768px) {
+    max-width: 670px;
+  }
+  @media(max-width: 640px) {
+    max-width: 480px;
+  }
 `
 
 const BotItems = styled.div`
@@ -74,6 +89,32 @@ const BotItems = styled.div`
       }
     }
   }
+  @media(max-width: 1200px) {
+    width: calc(100% / 3 - 56px);
+    &:nth-child(4n + 1){
+      margin: 0 20px 20px 0;
+    }
+    &:nth-child(3n + 1) {
+      margin-right: 0;
+    }
+  }
+  @media(max-width: 991px) {
+    width: calc(100% / 2 - 52px);
+    &:nth-child(4n + 1){
+      margin: 0 20px 20px 0;
+    }
+    &:nth-child(3n + 1) {
+      margin: 0 20px 20px 0;
+    }
+    &:nth-child(2n + 1) {
+      margin-right: 0;
+    }
+  }
+  @media(max-width: 640px) {
+    width: calc(100% - 42px);
+    float: none;
+    margin-right: 0 !important;
+  }
 `
 
 const ButtonConnect = styled.button`
@@ -116,6 +157,10 @@ const Wrap = styled.div`
   width: 100%;
   height: 100%;
   display: inline-block;
+  @media(max-width: 640px) {
+    width: calc(100% - 30px);
+    padding: 0 15px;
+  }
 `
 class BotStore extends Component {
   constructor(props) {

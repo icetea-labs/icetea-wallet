@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import './Balances.css'
 import SendTransaction from './SendTransaction'
-import TransactionConfirm from './TransactionConfirm'
 import tweb3 from '../../../service/tweb3'
 import QRCode from 'qrcode.react'
 import { connect } from 'react-redux'
 import TransactionHistory from './../Transaction'
-import CopyText from './CopyText'
+import CopyText from './../../elements/CopyText'
 import { toTEA } from './../../../utils/utils'
 
 class Balances extends Component {
@@ -125,11 +124,7 @@ class Balances extends Component {
               </div>
             </div>
           </div>
-          {/* <SendTransaction></SendTransaction> */}
-          {/* {this.state.showSendForm ? <Transaction closePoup={() => this.closeViewForm()} onCallCFForm={() => this.onCallCFForm()} /> : ''} */}
           {this.state.showSendForm ? <SendTransaction close={() => this.closeViewForm()} onSendSuccess={() => this.renderTbl()} /> : ''}
-          {this.state.showCFForm ? <TransactionConfirm closePoup={() => this.closeCFForm()}
-            onCallTransForm={() => this.viewSendForm()} onSendSuccess={() => this.renderTbl()} /> : ''}
         </div>
         <div><TransactionHistory /></div>
       </div>
