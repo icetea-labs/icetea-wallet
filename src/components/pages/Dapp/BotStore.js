@@ -66,7 +66,7 @@ const BotItems = styled.div`
       overflow: hidden;
     }
     &:hover {
-      .sc-qrIAp{
+      .sc-iGrrsa{
         visibility: visible;
         opacity: 1;
         transform: translateY(0);
