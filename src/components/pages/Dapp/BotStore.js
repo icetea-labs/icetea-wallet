@@ -90,7 +90,7 @@ const BotItems = styled.div`
     }
   }
   @media(max-width: 1200px) {
-    width: calc(100% / 3 - 60px);
+    width: calc(100% / 3 - 56px);
     &:nth-child(4n + 1){
       margin: 0 20px 20px 0;
     }
@@ -99,7 +99,7 @@ const BotItems = styled.div`
     }
   }
   @media(max-width: 991px) {
-    width: calc(100% / 2 - 60px);
+    width: calc(100% / 2 - 52px);
     &:nth-child(4n + 1){
       margin: 0 20px 20px 0;
     }
