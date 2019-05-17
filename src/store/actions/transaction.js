@@ -25,12 +25,12 @@ const getDataFailure = data => ({
 
 export const getTxHistory = (options) => {
   return (dispatch) => {
-    var op = { prove: false, page: 1, per_page: 20 }
-    dispatch(getData())
+    var op = { prove: false, page: 1, per_page: 100 }
+    // dispatch(getData())
     txApi.getTxHistory(op)
       .then((data) => {
         // console.log(data.txs)
-        dispatch(getDataSuccess(data.txs))
+        dispatch(getDataSuccess(data))
       })
       .catch((err) => {
         console.log('err:', err)

@@ -27,6 +27,7 @@ import tweb3 from '../../../service/tweb3'
 import Notification from 'rc-notification'
 import '../../../assets/styles/notification.css'
 import successIc from '../../../assets/img/success-icon.png'
+import { toUNIT } from './../../../utils/utils'
 
 let notification = null
 Notification.newInstance({}, (n) => notification = n)
@@ -160,7 +161,7 @@ class SendTransaction extends PureComponent {
 SendTransaction.defaultProps = {
   close: function () { },
   assets: [],
-  address: 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx',
+  address: '',
   privateKey: '',
   sendingAsset: {}
 }

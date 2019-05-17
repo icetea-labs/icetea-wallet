@@ -5,8 +5,9 @@ import TransactionConfirm from './TransactionConfirm'
 import tweb3 from '../../../service/tweb3'
 import QRCode from 'qrcode.react'
 import { connect } from 'react-redux'
-import TransactionHistory from './../Transaction/TransactionHistory.js'
+import TransactionHistory from './../Transaction'
 import CopyText from './CopyText'
+import { toTEA } from './../../../utils/utils'
 
 class Balances extends Component {
   constructor () {
@@ -21,7 +22,7 @@ class Balances extends Component {
   componentDidMount () {
     this.renderTbl()
     console.log('state', this.state)
-    this.setState({ value: 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx' })
+    this.setState({ value: this.props.address })
   }
 
   viewSendForm = () => {
@@ -46,13 +47,13 @@ class Balances extends Component {
 
   renderTbl = async () => {
     try {
-      var result = await tweb3.getBalance('tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx')
+      var result = await tweb3.getBalance(this.props.address)
       console.log('I want to see balance:', result.balance)
       var tblTmp = [{
         name: 'ICETEA COIN',
         symbo: 'ICETEA',
-        totalBalance: result.balance,
-        availableBalance: result.balance
+        totalBalance: toTEA(result.balance),
+        availableBalance: toTEA(result.balance)
       }]
       this.setState({
         showTbl: tblTmp.map((data, index) => (
@@ -138,8 +139,9 @@ class Balances extends Component {
 }
 
 const mapStateToProps = state => {
+  var address = state.account.address
   return {
-    wallet: state.wallet
+    address: address,
   }
 }
 

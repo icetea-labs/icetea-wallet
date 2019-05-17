@@ -35,17 +35,29 @@ const txType = {
 }
 
 class index extends PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       detail: null,
       txs: [],
       offset: 0,
-      filterParams: {}
+      filterParams: {},
+      current: 1,
+      pageSize: 10
     }
   }
 
-  _getHistory = async (e) => {
+  componentDidMount() {
+    this._getHistory()
+  }
+  componentDidUpdate() {
+    // var { txProps } = this.props;
+    // var { txState } = this.state.txs
+    // 0 === txState.length && txProps.length > 0 && this.setState({
+    //   txs: txState.concat(txProps)
+    // })
+  }
+  _getHistory = (e) => {
     // var t = n.props.dispatch
     //   , r = n.state.filterParams
     //   , a = sessionStorage.getItem("user");
@@ -57,10 +69,7 @@ class index extends PureComponent {
     //   }, r, e);
     //   t(Object(R.c)(o))
     // }
-    // var myTxs = await tweb3.getPastEvents('Transferred', 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx', 'tx.height > 0', op);
-    // var transactions = this.fmtTxs(myTxs.txs);
-    // transactions = await this.addTimeToTx(transactions);
-
+    this.props.getTxHistory('a')
   }
 
   _convertText = (e) => {
@@ -100,12 +109,14 @@ class index extends PureComponent {
       sorter: true,
       key: 'Date',
       render: (e) => <ColorGray><FontDin value={e.date} /></ColorGray> // format("MM-DD h:mm:ss")
-    }, {
-      title: 'exchange.pair',
-      dataIndex: 'pair',
-      key: 'Asset',
-      render: (e) => <ColorGray>pair</ColorGray>
-    }, {
+    },
+    // {
+    //   title: 'exchange.pair',
+    //   dataIndex: 'pair',
+    //   key: 'Asset',
+    //   render: (e) => <ColorGray>pair</ColorGray>
+    // }, 
+    {
       title: 'Type',
       dataIndex: 'type',
       key: 'Type',
@@ -157,24 +168,34 @@ class index extends PureComponent {
     })
   }
   _buildDataSource = () => {
-    return this.props.transactionHistory.map(e => {
-      var t = e.data // && JSON.parse(e.data) || {};
+    var { current, pageSize } = this.state
+    var from = (current - 1) * pageSize,
+      to = from + pageSize;
+    var total = this.props.transactionHistory.length
+    var transactionHistory = []
+    if (total > 0) {
+      if (to > total) to = total
+      // console.log('from: ', from,'-to',to)
+      transactionHistory = this.props.transactionHistory.slice(from, to);
+    }
+    // console.log('_buildDataSource',transactionHistory)
+    var dataSource = transactionHistory.map(e => {
+      var t = e.data || {};//&& JSON.parse(e.data) || {};
       return {
-        date: e.timeStamp,
-        pair: t.orderData ? t.orderData.symbol : e.txAsset,
+        date: e.time,
+        // pair: t.orderData ? t.orderData.symbol : e.txAsset,
         type: e.txType,
         side: t.orderData ? t.orderData.side : '-',
-        value: (t.orderData ? t.orderData.quantity : e.value), // Object(z.g)
-        txFee: (e.txFee), // Object(z.g)
-        txHash: e.txHash,
-        op: '',
+        value: e.value,//(t.orderData ? t.orderData.quantity : e.value), // Object(z.g)
+        txFee: e.fee,//(e.fee), // Object(z.g)
+        txHash: e.hash,
+        op: "",
         blockHeight: e.blockHeight,
-        fromAddr: e.fromAddr,
-        orderId: e.orderId,
-        toAddr: e.toAddr,
-        txAge: e.txAge
+        fromAddr: e.from,
+        toAddr: e.to || 'to',
       }
     })
+    return dataSource;
   }
 
   _filter = (e) => {
@@ -195,24 +216,27 @@ class index extends PureComponent {
     }
   }
 
-  _paging = (e) => {
-    var t = (e - 1) * 30; var // $
-      r = { offset: t }
-    this.setState({
-      offset: t
-    }, () => {
-      this._getHistory(r)
-    })
+  _paging = (current, pageSize) => {
+    if (pageSize) {
+      this.setState({
+        current: current,
+        pageSize: pageSize
+      })
+    } else {
+      this.setState({
+        current: current
+      })
+    }
   }
-  _search=() => {
-    console.log('_search')
-    this.props.getTxHistory('a')
+  _search = () => {
+    this._getHistory()
   }
-  render () {
-    var { total, address } = this.props
-    var { detail } = this.state
-    // console.log('a', this._buildColumns());
-    // console.log('b', this._buildDataSource());
+  render() {
+    var { total, address, transactionHistory } = this.props
+    var { detail, pageSize, current } = this.state
+    // console.log('render props', this.props)
+    // console.log('render state', this.state)
+    console.log('render transactionHistory', transactionHistory)
     return (
       <Wrapper>
         <Content>
@@ -232,16 +256,21 @@ class index extends PureComponent {
               >here</a>.
             </WrapperTextFullHistory>
           </WrapperHeader>
+          {
+            this.props.isFetching && <div>Loading</div>
+          }
           <Table
             columns={this._buildColumns()}
             dataSource={this._buildDataSource()}
             paging={this._paging}
             total={total}
+            current={current}
+            pageSize={pageSize}
           />
           {
             detail && <PuDetailTx detail={detail} close={this._clearDetail} />
           }
-          <ButtonSeach onClick={this._search} ><span>Search</span></ButtonSeach>
+          {/* <ButtonSeach onClick={this._search} ><span>Search</span></ButtonSeach>  */}
         </Content>
       </Wrapper>
     )
@@ -249,60 +278,7 @@ class index extends PureComponent {
 }
 
 index.defaultProps = {
-  transactionHistory: [
-    {
-      txType: 'TRANSFER',
-      timeStamp: '04-26 2:24:39',
-      txHash: '79F28716A907D800077E150DDD01F6316F115C7983B8D4D11F67527695D39BEE',
-      fromAddr: 'abcd',
-      toAddr: 'dsfasdfasdfsdafasdfasdfasdfasdfsdafsadfafas',
-      blockHeight: 1000,
-      value: '100000',
-      txFee: '0.002',
-      data: {
-        timeStamp: '04-26 2:24:39'
-      }
-    },
-    {
-      txType: 'TRANSFER',
-      timeStamp: '04-26 2:24:39',
-      txHash: '79F28716A907D800077E150DDD01F6316F115C7983B8D4D11F67527695D39BEE',
-      fromAddr: 'abcde',
-      toAddr: 'dsfasdfasdfsdafasdfasdfasdfasdfsdafsadfafas',
-      blockHeight: 1000,
-      value: '100000',
-      txFee: '0.002',
-      data: {
-        timeStamp: '04-26 2:24:39'
-      }
-    },
-    {
-      txType: 'CALL',
-      timeStamp: '04-26 2:24:39',
-      txHash: '79F28716A907D800077E150DDD01F6316F115C7983B8D4D11F67527695D39BEE',
-      fromAddr: 'abcde',
-      toAddr: 'dsfasdfasdfsdafasdfasdfasdfasdfsdafsadfafas',
-      blockHeight: 1000,
-      value: '100000',
-      txFee: '0.002',
-      data: {
-        timeStamp: '04-26 2:24:39'
-      }
-    },
-    {
-      txType: 'DEPLOY',
-      timeStamp: '04-26 2:24:39',
-      txHash: '79F28716A907D800077E150DDD01F6316F115C7983B8D4D11F67527695D39BEE',
-      fromAddr: 'abcde',
-      toAddr: 'dsfasdfasdfsdafasdfasdfasdfasdfsdafsadfafas',
-      blockHeight: 1000,
-      value: '100000',
-      txFee: '0.002',
-      data: {
-        timeStamp: '04-26 2:24:39'
-      }
-    }
-  ],
+  transactionHistory: [],
   total: 0,
   address: '',
   dispatch: function () { }
@@ -310,14 +286,15 @@ index.defaultProps = {
 
 const mapStateToProps = state => {
   var address = state.account.address
-
   var transactionHistory = state.transaction.transactionHistory
   return {
     transactionHistory: transactionHistory.tx,
     total: transactionHistory.total,
-    address: address
+    address: address,
+    isFetching: state.transaction.isFetching
   }
 }
+
 const mapDispatchToProps = (dispatch) => {
   return {
     getTxHistory: (data) => {
@@ -325,18 +302,5 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(index))
 
-// date: e.timeStamp,
-// pair: t.orderData ? t.orderData.symbol : e.txAsset,
-// type: e.txType,
-// side: t.orderData ? t.orderData.side : "-",
-// value: (t.orderData ? t.orderData.quantity : e.value), //Object(z.g)
-// txFee: (e.txFee),//Object(z.g)
-// txHash: e.txHash,
-// op: "",
-// blockHeight: e.blockHeight,
-// fromAddr: e.fromAddr,
-// orderId: e.orderId,
-// toAddr: e.toAddr,
-// txAge: e.txAge
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(index))

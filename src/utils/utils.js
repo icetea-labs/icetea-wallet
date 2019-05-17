@@ -43,3 +43,13 @@ export const sendTranAmount = {
     return Math.max(0, (num ? num.length : 0) - (temp[2] ? +temp[2] : 0))
   }
 }
+export const decimal = 6
+
+export function toTEA (unit) {
+  return unit / (10 ** decimal)
+}
+
+export function toUNIT (tea) {
+  tea = tea.toFixed(decimal)
+  return tea * (10 ** decimal)
+}

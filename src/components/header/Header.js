@@ -62,7 +62,6 @@ const UlLink = styled.ul`
 class Header extends Component {
   render () {
     const address = this.props.address
-    console.log('CheckA', address)
     return (
       <DivWapper>
         <div className='sc-uJMKN jNhSkT'>

@@ -2,7 +2,7 @@ import { actionTypes } from './../actions/create'
 
 const initialState = {
   needAuth: false,
-  address: '',
+  address: 'teat1al54h8fy75h078syz54z6hke6l9x232zq3j9st',
   cipher: '',
   privateKey: '',
   keyStore: '',
