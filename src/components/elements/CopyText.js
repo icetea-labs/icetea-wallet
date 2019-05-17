@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import './Balances.css'
 import Notification from 'rc-notification'
-import '../../../assets/styles/notification.css'
-import successIc from '../../../assets/img/success-icon.png'
+import '../../assets/styles/notification.css'
+import successIc from '../../assets/img/success-icon.png'
 
 let notification = null
 Notification.newInstance({}, (n) => notification = n)

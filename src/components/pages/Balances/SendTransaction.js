@@ -82,7 +82,6 @@ class SendTransaction extends PureComponent {
       }
     })
 
-    var balanceofVip = await tweb3.getBalance(this.props.fromAdd)
     this.props.onSendSuccess()
     this.props.close()
   }
