@@ -75,7 +75,7 @@ class BotShow extends Component {
             type={['top', 'bottom']}
           >
             <PuContainer key={2} >
-              <PuHeader>
+              <PuHeader style={{color:'#232937'}}>
               Your Address: {address}
               </PuHeader>
               <PuContent style={{ height: '85%' }} >
