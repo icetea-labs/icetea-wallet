@@ -1,3 +1,3 @@
-export { default as decode } from './decode.js'
-export { default as encode } from './encode.js'
-export * from './utils.js'
+export { default as decode } from './decode';
+export { default as encode } from './encode';
+export * from './utils.js';

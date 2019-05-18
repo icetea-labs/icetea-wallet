@@ -16,7 +16,7 @@
   top: 4px;
 }
 .gGysvU .underline {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -2px;
   width: 100%;
@@ -26,7 +26,9 @@
   transition: all 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0s;
   background: rgb(130, 216, 216);
 }
-input, select, textarea {
+input,
+select,
+textarea {
   color: rgb(82, 71, 99);
   font-weight: 800;
   margin-bottom: 10px;
@@ -38,7 +40,11 @@ input, select, textarea {
   border-radius: 2px;
   padding: 6px 10px;
 }
-button, input, optgroup, select, textarea {
+button,
+input,
+optgroup,
+select,
+textarea {
   font-family: inherit;
   font-size: 100%;
   line-height: 1.15;
@@ -73,14 +79,14 @@ button, input, optgroup, select, textarea {
   font-size: 16px;
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.25) 1px 2px 2px;
-  font-family: "Open Sans";
+  font-family: 'Open Sans';
   max-width: 230px;
   overflow: hidden;
   border-radius: 15px;
   padding: 1em;
   transition: all 0.3s ease 0s;
   background-color: #fff;
-  border: 1px solid rgba(0,0,0,.125);
+  border: 1px solid rgba(0, 0, 0, 0.125);
 }
 .ePsksC {
   /* display: grid; */
@@ -123,7 +129,7 @@ button, input, optgroup, select, textarea {
   color: rgb(33, 40, 51);
 }
 .botName div :last-child {
-  color: #6c757d!important;
+  color: #6c757d !important;
 }
 .ircCEl1 {
   text-align: center;

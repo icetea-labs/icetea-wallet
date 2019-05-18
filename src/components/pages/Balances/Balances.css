@@ -110,7 +110,7 @@
   padding: 10px 0px;
 }
 .byspTh {
-  background:  0% 0% / auto 100% rgb(253, 253, 253);
+  background: 0% 0% / auto 100% rgb(253, 253, 253);
 }
 
 .byspTh th {
@@ -221,7 +221,7 @@ tbody {
   display: block;
 }
 .iulYhq::before {
-  content: " ";
+  content: ' ';
   display: block;
   width: 198px;
   height: 174px;
@@ -232,7 +232,7 @@ tbody {
   background: rgb(255, 255, 255);
 }
 .iulYhq::after {
-  content: " ";
+  content: ' ';
   display: block;
   width: 174px;
   height: 198px;

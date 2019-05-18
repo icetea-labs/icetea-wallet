@@ -190,11 +190,12 @@ a {
   display: none;
 }
 
-.account-wrapper:hover .menu{
-  display: block
+.account-wrapper:hover .menu {
+  display: block;
 }
 
-.menu span, .account-menu__name{
+.menu span,
+.account-menu__name {
   line-height: normal;
 }
 
@@ -266,7 +267,7 @@ a {
   margin: 0 12px 0 0;
 }
 
-.identicon img{
+.identicon img {
   max-width: 100%;
 }
 
