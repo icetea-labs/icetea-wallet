@@ -1,12 +1,12 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 const Container = styled.div`
   & input:checked + label span:first-child {
-      background: rgb(240, 185, 10);
-      border-color: rgb(240, 185, 10);
-      animation: 0.4s ease 0s 1 normal none running wave;
+    background: rgb(240, 185, 10);
+    border-color: rgb(240, 185, 10);
+    animation: 0.4s ease 0s 1 normal none running wave;
   }
   & input:checked + label span:first-child::before {
     transform: scale(3.5);
@@ -16,7 +16,7 @@ const Container = styled.div`
   & input:checked + label span:first-child svg {
     stroke-dashoffset: 0;
   }
-`
+`;
 const Label = styled.label`
   user-select: none;
   cursor: pointer;
@@ -45,7 +45,7 @@ const Label = styled.label`
     flex: 0 0 auto;
   }
   & > span:first-child::before {
-    content: "";
+    content: '';
     width: 100%;
     height: 100%;
     display: block;
@@ -73,47 +73,58 @@ const Label = styled.label`
     line-height: 20px;
     width: 90%;
   }
-`
+`;
 const Span = styled.span`
-    font-size: 12px;
-    color: rgb(132, 142, 156);
-    line-height: 14px;
-`
+  font-size: 12px;
+  color: rgb(132, 142, 156);
+  line-height: 14px;
+`;
 const DivText = styled.div`
   & a {
-      color: rgb(240, 185, 11);
+    color: rgb(240, 185, 11);
   }
-`
+`;
 
 export class WarningRecover extends PureComponent {
   static defaultProps = {
     defaultChecked: PropTypes.bool.isRequired,
     handleCheckChange: PropTypes.func.isRequired
-  }
+  };
 
   static defaultProps = {
     defaultChecked: false,
-    handleCheckChange: function () {}
-  }
+    handleCheckChange: function() {}
+  };
 
-  render () {
+  render() {
     return (
       <Container>
-        <input id='cbx' type='checkbox' checked={this.props.defaultChecked}
-          style={{ display: 'none' }} onChange={this.props.handleCheckChange} />
-        <Label htmlFor='cbx'>
+        <input
+          id="cbx"
+          type="checkbox"
+          checked={this.props.defaultChecked}
+          style={{ display: 'none' }}
+          onChange={this.props.handleCheckChange}
+        />
+        <Label htmlFor="cbx">
           <span>
-            <svg width='12px' height='10px' viewBox='0 0 12 10'>
-              <polyline points='1.5 6 4.5 9 10.5 1' />
+            <svg width="12px" height="10px" viewBox="0 0 12 10">
+              <polyline points="1.5 6 4.5 9 10.5 1" />
             </svg>
           </span>
           <Span>
-            <DivText>I understand that Ice-tea cannot recover or reset my password or the keystore file. I will make a backup of the keystore file/password, keep them secret, complete all wallet creation steps and agree to all the
-              <a target='_blank' href='/en/terms'> terms</a>
+            <DivText>
+              I understand that Ice-tea cannot recover or reset my password or the keystore file. I
+              will make a backup of the keystore file/password, keep them secret, complete all
+              wallet creation steps and agree to all the
+              <a target="_blank" href="/en/terms">
+                {' '}
+                terms
+              </a>
             </DivText>
           </Span>
         </Label>
       </Container>
-    )
+    );
   }
 }

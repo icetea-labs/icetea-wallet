@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import BotUI from 'botui'
-import tweb3 from '../../../service/tweb3'
+import Vue from 'vue';
+import BotUI from 'botui';
+import tweb3 from '../../../service/tweb3';
 
-const initWeb3 = (showAlert = true) => {
+const initWeb3 = (privateKey, showAlert = false) => {
   try {
-    var resp = tweb3.wallet.importAccount('CJUPdD38vwc2wMC3hDsySB7YQ6AFLGuU6QYQYaiSeBsK')
+    const resp = tweb3.wallet.importAccount(privateKey);
     // var resp = tweb3.wallet.loadFromStorage('123')
     // if (resp === 0) {
     //   window.alert('Wallet empty! Please go to Wallet tab to create account.')
@@ -12,65 +12,65 @@ const initWeb3 = (showAlert = true) => {
     // }
     // console.log('--',resp);
     // byId('address').textContent = tweb3.wallet.defaultAccount;
-    return true
+    return true;
   } catch (error) {
-    console.error(error)
-    const err = 'Please go to Wallet tab to create or import one first.'
-    byId('address').textContent = err
-    showAlert && window.alert(err)
-    return false
+    console.error(error);
+    const err = 'Please go to Wallet tab to create or import one first.';
+    byId('address').textContent = err;
+    showAlert && window.alert(err);
+    return false;
   }
-}
-let web3Inited = initWeb3(false)
+};
+let web3Inited; //= initWeb3(false)
 
-var botui = null
+let botui = null;
 
 const say = (text, options) => {
-  botui.message.add(Object.assign({ content: String(text) }, options || {}))
-}
+  botui.message.add(Object.assign({ content: String(text) }, options || {}));
+};
 
-const sayButton = (action) => {
+const sayButton = action => {
   if (!Array.isArray(action)) {
-    action = [action]
+    action = [action];
   }
-  return botui.action.button({ action })
-}
+  return botui.action.button({ action });
+};
 
-const saySelect = (action) => {
-  return botui.action.select({ action })
-}
+const saySelect = action => {
+  return botui.action.select({ action });
+};
 
 const speak = items => {
-  if (!items) return
+  if (!items) return;
   if (!Array.isArray(items)) {
-    items = [items]
+    items = [items];
   }
-  if (!items.length) return
+  if (!items.length) return;
 
   return items.reduce((prev, item) => {
     if (typeof item === 'string') {
-      return say(item)
+      return say(item);
     }
 
-    item.type = item.type || 'text'
+    item.type = item.type || 'text';
     switch (item.type) {
       case 'text':
       case 'html':
-        return botui.message.add(item)
+        return botui.message.add(item);
       case 'input':
         return botui.action.text({
           action: item.content
-        })
+        });
       case 'button':
-        return sayButton(item.content)
+        return sayButton(item.content);
       case 'select':
-        return saySelect(item.content)
+        return saySelect(item.content);
     }
-  }, undefined)
-}
+  }, undefined);
+};
 
-function byId (id) {
-  return document.getElementById(id)
+function byId(id) {
+  return document.getElementById(id);
 }
 
 // function json (o) {
@@ -81,122 +81,116 @@ function byId (id) {
 //   }
 // }
 
-function fmtNum (n) {
+function fmtNum(n) {
   return n.toLocaleString(undefined, {
     minimumFractionDigits: 0,
     maximumFractionDigits: 9
-  })
+  });
 }
 
-function confirmTransfer (amount) {
+function confirmTransfer(amount) {
   say(`ATTENTION: you are about to transfer <b>${fmtNum(amount)}</b> TEA to this bot.`, {
-    type: 'html', cssClass: 'bot-intro'
-  })
+    type: 'html',
+    cssClass: 'bot-intro'
+  });
   return sayButton([
-    { text: 'Let\'s transfer', value: 'transfer' },
+    { text: "Let's transfer", value: 'transfer' },
     { text: 'No way', value: 'no' }
-  ]).then(result => (result && result.value === 'transfer'))
+  ]).then(result => result && result.value === 'transfer');
 }
 
-async function callContract (method, type, value, ...params) {
+async function callContract(method, type, value, ...params) {
   const map = {
-    'none': 'callPure',
-    'read': 'call',
-    'write': 'sendCommit'
-  }
+    none: 'callPure',
+    read: 'call',
+    write: 'sendCommit'
+  };
 
-  const result = await method(...params)[map[type]]({ value })
+  const result = await method(...params)[map[type]]({ value });
 
   if (type === 'write') {
-    return result.result
-  } else {
-    return result
+    return result.result;
   }
+  return result;
 }
 
-export async function connectBot (botAddr) {
+export async function connectBot(botAddr, privateKey) {
   if (!web3Inited) {
-    web3Inited = initWeb3()
+    web3Inited = initWeb3(privateKey);
   }
-  if (!web3Inited) return
+  if (!web3Inited) return;
 
   // if (!botAddr) botAddr = byId('bot_address').value.trim()
-  const contract = tweb3.contract(botAddr)
+  const contract = tweb3.contract(botAddr);
 
   // get bot info
-  const botInfo = await contract.methods.botInfo().callPure()
+  const botInfo = await contract.methods.botInfo().callPure();
 
   if (!botInfo.state_access) {
-    const meta = await tweb3.getMetadata(botAddr)
+    const meta = await tweb3.getMetadata(botAddr);
     if (meta && meta.ontext && meta.ontext.decorators && meta.ontext.decorators.length > 0) {
-      const deco = meta.ontext.decorators[0]
+      const deco = meta.ontext.decorators[0];
       if (deco === 'transaction' || deco === 'payable') {
-        botInfo.state_access = 'write'
+        botInfo.state_access = 'write';
       } else if (deco === 'pure') {
-        botInfo.state_access = 'none'
+        botInfo.state_access = 'none';
       } else {
-        botInfo.state_access = 'read'
+        botInfo.state_access = 'read';
       }
     } else {
-      botInfo.state_access = 'read'
+      botInfo.state_access = 'read';
     }
   } else if (!['read', 'write', 'none'].includes(botInfo.state_access)) {
-    window.alert('Cannot connect to this bot. It has an invalid state access specifier.')
-    return
+    window.alert('Cannot connect to this bot. It has an invalid state access specifier.');
+    return;
   }
 
   botui = BotUI('my-botui-app', {
     vue: Vue
-  })
-  !botInfo.name && (botInfo.name = botAddr)
-  !botInfo.description && (botInfo.description = 'N/A')
+  });
+  !botInfo.name && (botInfo.name = botAddr);
+  !botInfo.description && (botInfo.description = 'N/A');
 
-  botui.message.removeAll()
+  botui.message.removeAll();
 
   // display bot info
-  await say(`<b>${botInfo.name}</b><br>${botInfo.description}`, { type: 'html', cssClass: 'bot-intro' })
+  await say(`<b>${botInfo.name}</b><br>${botInfo.description}`, {
+    type: 'html',
+    cssClass: 'bot-intro'
+  });
 
   // display Start button
-  let result = await sayButton({ text: botInfo.start_button || 'Start', value: 'start' })
-  let callResult
-  let isFirst = true
+  let result = await sayButton({ text: botInfo.start_button || 'Start', value: 'start' });
+  let callResult;
+  let isFirst = true;
   while (result && result.value) {
-    let transferValue = 0
+    let transferValue = 0;
     if (callResult && callResult.options && callResult.options.value) {
-      const ok = await confirmTransfer(callResult.options.value) // should confirm at wallet level
+      const ok = await confirmTransfer(callResult.options.value); // should confirm at wallet level
       if (!ok) {
-        say('Transfer canceled. You could reconnect to this bot to start a new conversation.')
-        return
+        say('Transfer canceled. You could reconnect to this bot to start a new conversation.');
+        return;
       }
-      transferValue = callResult.options.value
+      transferValue = callResult.options.value;
     }
 
     // send lastValue to bot
     callResult = isFirst
       ? await callContract(contract.methods.onstart, botInfo.state_access, 0)
-      : await callContract(contract.methods.ontext, botInfo.state_access, transferValue, result.value)
-    isFirst = false
+      : await callContract(
+          contract.methods.ontext,
+          botInfo.state_access,
+          transferValue,
+          result.value
+        );
+    isFirst = false;
 
-    console.log(callResult)
+    console.log(callResult);
     if (callResult) {
-      result = await speak(callResult.messages || callResult)
-      console.log(result)
+      result = await speak(callResult.messages || callResult);
+      console.log(result);
     } else {
-      result = undefined
+      result = undefined;
     }
   }
 }
-
-// ;(async () => {
-//   var address = '';//getUrlParameter('address')
-//   if (address) {
-//     try {
-//       // await connectBot(address)
-//     } catch (error) {
-//       console.log(error)
-//       window.alert(String(error))
-//     }
-//   } else {
-//     //window.alert('No bot to connect!')
-//   }
-// })()

@@ -1,1 +1,1 @@
-export { default } from './BotStore.js'
+export { default } from './BotStore';

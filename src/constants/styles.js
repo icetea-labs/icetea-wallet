@@ -13,7 +13,7 @@ const size = {
   fontWeightRegular: 400,
   fontWeightMedium: 600,
   fontWeightBold: 700
-}
+};
 
 const color = {
   bg: '#FBFBFB',
@@ -33,7 +33,7 @@ const color = {
   ma1: '#ffc200',
   ma2: '#6600cc',
   ma3: '#cc0066'
-}
+};
 
 export const theme = Object.assign({}, size, {
   mode: 'LIGHT',
@@ -109,7 +109,7 @@ export const theme = Object.assign({}, size, {
   sectionBorderRadius: '4px',
   sectionBoxShadow: '-4px 4px 10px 0px rgba(0,0,0,0.1)',
   tradingViewStyle: { color }
-})
+});
 export const zIndex = {
   negitive: -1,
   zeroIndex: 0,
@@ -134,4 +134,4 @@ export const zIndex = {
   loading: 1100,
   fullScreen: 1100,
   routeLoading: 1200
-}
+};
