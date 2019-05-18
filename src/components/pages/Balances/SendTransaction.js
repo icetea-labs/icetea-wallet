@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import QueueAnim from 'rc-queue-anim';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import {
   WrapperSend,
   OutBox,
@@ -15,14 +17,12 @@ import { WrapperBtnClose, Icon } from '../../elements/utils';
 import SendTransactionOne from './SendTransactionOne';
 import SendTransactionTwo from './SendTransactionTwo';
 import * as actions from '../../../store/actions/account';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { Button } from '../../elements/Button';
 import tweb3 from '../../../service/tweb3';
 import Notification from 'rc-notification';
 import '../../../assets/styles/notification.css';
 import successIc from '../../../assets/img/success-icon.png';
-import { toUNIT } from './../../../utils/utils';
+import { toUNIT } from '../../../utils/utils';
 
 let notification = null;
 Notification.newInstance({}, n => (notification = n));
@@ -53,12 +53,12 @@ class SendTransaction extends PureComponent {
   };
 
   _transfer = async () => {
-    var { amount, to } = this.state;
-    var { privateKey } = this.props;
+    const { amount, to } = this.state;
+    const { privateKey } = this.props;
 
     tweb3.wallet.importAccount(privateKey);
     console.log('privateKey', privateKey);
-    var amountToUnit = toUNIT(parseFloat(amount));
+    const amountToUnit = toUNIT(parseFloat(amount));
     await tweb3.transfer(to, amountToUnit);
 
     notification.notice({
@@ -78,8 +78,8 @@ class SendTransaction extends PureComponent {
   };
 
   render() {
-    var { step, to, amount, asset, memo, isSending } = this.state;
-    var { close, assets, address, bncClient, sendingAsset } = this.props;
+    const { step, to, amount, asset, memo, isSending } = this.state;
+    const { close, assets, address, bncClient, sendingAsset } = this.props;
     console.log('State CK', this.state);
     // console.log('Props CK', this.props)
     return (
@@ -146,7 +146,7 @@ class SendTransaction extends PureComponent {
 }
 
 SendTransaction.defaultProps = {
-  close: function() {},
+  close() {},
   assets: [],
   address: '',
   privateKey: '',

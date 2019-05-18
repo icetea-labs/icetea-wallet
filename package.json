@@ -48,10 +48,6 @@
   },
   "eslintConfig": {
     "extends": "react-app",
-    "env": {
-      "browser": true,
-      "node": true
-    },
     "ignore": [
       "**/tmp/",
       "**/example/",

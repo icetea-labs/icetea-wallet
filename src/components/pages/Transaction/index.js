@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import GroupCalendar from './GroupCalendar';
-import PuDetailTx from './../../elements/pu';
-import { Table } from './../../elements';
-import * as actions from './../../../store/actions/transaction';
+import PuDetailTx from '../../elements/pu';
+import { Table } from '../../elements';
+import * as actions from '../../../store/actions/transaction';
 // import TxHash from './TxHash';
 import {
   Wrapper,
@@ -20,7 +20,7 @@ import {
   ButtonSeach
 } from './styled';
 
-import { TxHash, FontDin, Icon } from './../../elements/utils';
+import { TxHash, FontDin, Icon } from '../../elements/utils';
 
 const txType = {
   TRANSFER: 'Transfer',
@@ -46,6 +46,7 @@ class index extends PureComponent {
   componentDidMount() {
     this._getHistory();
   }
+
   componentDidUpdate() {
     // var { txProps } = this.props;
     // var { txState } = this.state.txs
@@ -53,6 +54,7 @@ class index extends PureComponent {
     //   txs: txState.concat(txProps)
     // })
   }
+
   _getHistory = e => {
     // var t = n.props.dispatch
     //   , r = n.state.filterParams
@@ -66,7 +68,7 @@ class index extends PureComponent {
     //   t(Object(R.c)(o)) account.name
     // }
 
-    var params = {
+    const params = {
       address: this.props.address,
       conditions: '',
       options: { prove: false, page: 1, per_page: 100 }
@@ -96,7 +98,7 @@ class index extends PureComponent {
   };
 
   _buildColumns = () => {
-    var { address } = this.props;
+    const { address } = this.props;
     return [
       {
         title: 'TxHash',
@@ -129,9 +131,9 @@ class index extends PureComponent {
         dataIndex: 'type',
         key: 'Type',
         render: e => {
-          var typeTx = this._convertText(e.type);
+          const typeTx = this._convertText(e.type);
 
-          var type = e.fromAddr === address ? 'OUT' : 'IN';
+          const type = e.fromAddr === address ? 'OUT' : 'IN';
           return (
             <StyledText style={{ minWidth: '100px' }}>
               <IconInOut color={typeTx.color} />
@@ -174,37 +176,40 @@ class index extends PureComponent {
       }
     ];
   };
+
   _showDetail = e => {
     this.setState({
       detail: e
     });
   };
+
   _clearDetail = () => {
     this.setState({
       detail: null
     });
   };
+
   _buildDataSource = () => {
-    var { current, pageSize } = this.state;
-    var from = (current - 1) * pageSize,
-      to = from + pageSize;
-    var total = this.props.transactionHistory.length;
-    var transactionHistory = [];
+    const { current, pageSize } = this.state;
+    const from = (current - 1) * pageSize;
+    let to = from + pageSize;
+    const total = this.props.transactionHistory.length;
+    let transactionHistory = [];
     if (total > 0) {
       if (to > total) to = total;
       // console.log('from: ', from,'-to',to)
       transactionHistory = this.props.transactionHistory.slice(from, to);
     }
     // console.log('_buildDataSource',transactionHistory)
-    var dataSource = transactionHistory.map(e => {
-      var t = e.data || {}; //&& JSON.parse(e.data) || {};
+    const dataSource = transactionHistory.map(e => {
+      const t = e.data || {}; // && JSON.parse(e.data) || {};
       return {
         date: e.time,
         // pair: t.orderData ? t.orderData.symbol : e.txAsset,
         type: e.txType,
         side: t.orderData ? t.orderData.side : '-',
-        value: e.value, //(t.orderData ? t.orderData.quantity : e.value), // Object(z.g)
-        txFee: e.fee, //(e.fee), // Object(z.g)
+        value: e.value, // (t.orderData ? t.orderData.quantity : e.value), // Object(z.g)
+        txFee: e.fee, // (e.fee), // Object(z.g)
         txHash: e.hash,
         op: '',
         blockHeight: e.blockHeight,
@@ -216,8 +221,8 @@ class index extends PureComponent {
   };
 
   _filter = e => {
-    var filterParams = {};
-    var g = '';
+    const filterParams = {};
+    const g = '';
     if (e.manualStartDate || e.manualEndDate) {
       e.manualStartDate && (filterParams.startTime = e.manualStartDate.getTime());
       e.manualEndDate && (filterParams.endTime = e.manualEndDate.getTime());
@@ -227,7 +232,7 @@ class index extends PureComponent {
         ).getTime());
       this.setState(
         {
-          filterParams: filterParams
+          filterParams
         },
         () => {
           this._getHistory(filterParams);
@@ -241,21 +246,23 @@ class index extends PureComponent {
   _paging = (current, pageSize) => {
     if (pageSize) {
       this.setState({
-        current: current,
-        pageSize: pageSize
+        current,
+        pageSize
       });
     } else {
       this.setState({
-        current: current
+        current
       });
     }
   };
+
   _search = () => {
     this._getHistory();
   };
+
   render() {
-    var { total, address, transactionHistory } = this.props;
-    var { detail, pageSize, current } = this.state;
+    const { total, address, transactionHistory } = this.props;
+    const { detail, pageSize, current } = this.state;
     // console.log('render props', this.props)
     // console.log('render state', this.state)
     console.log('render transactionHistory', transactionHistory);
@@ -303,16 +310,16 @@ index.defaultProps = {
   transactionHistory: [],
   total: 0,
   address: '',
-  dispatch: function() {}
+  dispatch() {}
 };
 
 const mapStateToProps = state => {
-  var address = state.account.address;
-  var transactionHistory = state.transaction.transactionHistory;
+  const { address } = state.account;
+  const { transactionHistory } = state.transaction;
   return {
     transactionHistory: transactionHistory.tx,
     total: transactionHistory.total,
-    address: address,
+    address,
     isFetching: state.transaction.isFetching
   };
 };

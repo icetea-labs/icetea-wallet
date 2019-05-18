@@ -4,7 +4,7 @@ import tweb3 from '../../../service/tweb3';
 
 const initWeb3 = (privateKey, showAlert = false) => {
   try {
-    var resp = tweb3.wallet.importAccount(privateKey);
+    const resp = tweb3.wallet.importAccount(privateKey);
     // var resp = tweb3.wallet.loadFromStorage('123')
     // if (resp === 0) {
     //   window.alert('Wallet empty! Please go to Wallet tab to create account.')
@@ -23,7 +23,7 @@ const initWeb3 = (privateKey, showAlert = false) => {
 };
 let web3Inited; //= initWeb3(false)
 
-var botui = null;
+let botui = null;
 
 const say = (text, options) => {
   botui.message.add(Object.assign({ content: String(text) }, options || {}));
@@ -110,9 +110,8 @@ async function callContract(method, type, value, ...params) {
 
   if (type === 'write') {
     return result.result;
-  } else {
-    return result;
   }
+  return result;
 }
 
 export async function connectBot(botAddr, privateKey) {

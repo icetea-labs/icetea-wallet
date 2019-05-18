@@ -3,7 +3,7 @@ import _ from 'lodash';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import * as actions from './../../../store/actions/create';
+import * as actions from '../../../store/actions/create';
 import { Button, MnemonicItem } from '../../elements';
 import {
   Header2,
@@ -12,6 +12,7 @@ import {
   Icon,
   DivSelectWordBase
 } from '../../elements/utils';
+
 const DivH3 = styled.div`
   text-align: left;
   font-size: 16px;
@@ -53,7 +54,7 @@ class NewWallet04 extends React.Component {
 
   componentDidMount() {
     document.scrollingElement.scrollTop = 1e3;
-    var items = this._getRandomSequenceMenmonic();
+    const items = this._getRandomSequenceMenmonic();
     this.setState({
       shuffledWords: items
     });
@@ -64,10 +65,10 @@ class NewWallet04 extends React.Component {
   };
 
   _shuffle = mnemonic => {
-    for (var i = mnemonic.length; i > 0; ) {
-      var ran = Math.floor(Math.random() * i);
+    for (let i = mnemonic.length; i > 0; ) {
+      const ran = Math.floor(Math.random() * i);
 
-      var item = mnemonic[--i];
+      const item = mnemonic[--i];
       mnemonic[i] = mnemonic[ran];
       mnemonic[ran] = item;
     }
@@ -75,14 +76,14 @@ class NewWallet04 extends React.Component {
   };
 
   _getRandomSequenceMenmonic = () => {
-    var mnemonic = this.props.mnemonic.split(' ');
+    const mnemonic = this.props.mnemonic.split(' ');
     return this._shuffle(mnemonic);
   };
 
   _selectWord = e => {
-    var { selectedWords, shuffledWords } = this.state;
+    const { selectedWords, shuffledWords } = this.state;
     selectedWords.push(e);
-    for (var i = 0, len = shuffledWords.length; i < len; i++) {
+    for (let i = 0, len = shuffledWords.length; i < len; i++) {
       if (shuffledWords[i] === e) {
         shuffledWords.splice(i, 1);
         break;
@@ -93,18 +94,18 @@ class NewWallet04 extends React.Component {
   };
 
   _compareSequence = () => {
-    var selectItem = this.state.selectedWords;
+    const selectItem = this.state.selectedWords;
 
-    var mnemonic = this.props.mnemonic.split(' ');
+    const mnemonic = this.props.mnemonic.split(' ');
     this.setState({
       isSequenceCorrect: _.isEqual(mnemonic.slice(0, selectItem.length), selectItem)
     });
   };
 
   _recoverWord = e => {
-    var { selectedWords, shuffledWords } = this.state;
+    const { selectedWords, shuffledWords } = this.state;
     shuffledWords.push(e);
-    for (var i = 0, len = selectedWords.length; i < len; i++) {
+    for (let i = 0, len = selectedWords.length; i < len; i++) {
       if (selectedWords[i] === e) {
         selectedWords.splice(i, 1);
         break;
@@ -119,7 +120,7 @@ class NewWallet04 extends React.Component {
   };
 
   render() {
-    var { shuffledWords, selectedWords, isSequenceCorrect } = this.state;
+    const { shuffledWords, selectedWords, isSequenceCorrect } = this.state;
     return (
       <div>
         <Header2>
@@ -164,7 +165,7 @@ class NewWallet04 extends React.Component {
           </DivPreviousBt>
           <Button
             disabled={!isSequenceCorrect || shuffledWords.length !== 0}
-            width={'120px'}
+            width="120px"
             onClick={this._continue}
           >
             <React.Fragment>
@@ -194,7 +195,7 @@ const mapDispatchToProps = dispatch => {
 
 NewWallet04.defaultProps = {
   mnemonic: '',
-  setStep: function() {}
+  setStep() {}
 };
 
 export default connect(

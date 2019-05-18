@@ -4,20 +4,20 @@ import styled, { ThemeProvider } from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import QueueAnim from 'rc-queue-anim';
-import * as actions from './../../../store/actions/create';
+import * as actions from '../../../store/actions/create';
 // import { theme, zIndex } from './../../../constants/Styles';
 import NewWallet01 from './NewWallet01';
 import NewWallet02 from './NewWallet02';
 import NewWallet03 from './NewWallet03';
 import NewWallet04 from './NewWallet04';
 import NewWallet05 from './NewWallet05';
-import pencil from './../../../assets/img/pencil.svg';
-import logo from './../../../assets/img/logo.svg';
+import pencil from '../../../assets/img/pencil.svg';
+import logo from '../../../assets/img/logo.svg';
 
 import { Header1 } from '../../elements/utils';
 import { PuConfirmMnemonic, PuShowPrivateKey, GlobaLoading } from '../../elements';
 
-import FooterCus from './../FooterCus';
+import FooterCus from '../FooterCus';
 
 const DivWallet = styled.div`
   position: relative;
@@ -99,7 +99,7 @@ class index extends PureComponent {
     showPrivateKey: false,
     confirmMnemonic: false,
     showKeystoreText: false,
-    dispatch: function() {},
+    dispatch() {},
     history: {},
     isLoading: false
   };
@@ -107,10 +107,12 @@ class index extends PureComponent {
   _closeModal = () => {
     this.props.dispatch(actions.setShowPrivateKey(false));
   };
+
   _continue = () => {
     this.props.dispatch(actions.setStep('confirmMnemonic'));
     this.props.dispatch(actions.setConfirmMnemonic(false));
   };
+
   _hide = () => {
     this.props.dispatch(actions.setConfirmMnemonic(false));
   };
@@ -120,7 +122,7 @@ class index extends PureComponent {
   };
 
   render() {
-    var { confirmMnemonic, showPrivateKey, privateKey, step, isLoading } = this.props;
+    let { confirmMnemonic, showPrivateKey, privateKey, step, isLoading } = this.props;
     // console.log('00-step', showPrivateKey);
     return (
       // <ThemeProvider theme={ theme }>
@@ -169,7 +171,7 @@ class index extends PureComponent {
 }
 
 const mapStateToProps = state => {
-  var e = state.create;
+  let e = state.create;
   return {
     password: e.password,
     step: e.step,

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './Balances.css';
-import SendTransaction from './SendTransaction';
-import tweb3 from '../../../service/tweb3';
 import QRCode from 'qrcode.react';
 import { connect } from 'react-redux';
-import TransactionHistory from './../Transaction';
-import CopyText from './../../elements/CopyText';
-import { toTEA } from './../../../utils/utils';
+import SendTransaction from './SendTransaction';
+import tweb3 from '../../../service/tweb3';
+import TransactionHistory from '../Transaction';
+import CopyText from '../../elements/CopyText';
+import { toTEA } from '../../../utils/utils';
 
 class Balances extends Component {
   constructor() {
@@ -18,6 +18,7 @@ class Balances extends Component {
       value: ''
     };
   }
+
   componentDidMount() {
     this.renderTbl();
     console.log('state', this.state);
@@ -43,12 +44,14 @@ class Balances extends Component {
   onCallCFForm = () => {
     this.setState({ showSend: false, showCFForm: true });
   };
+
   _buildBalances = () => {};
+
   renderTbl = async () => {
     try {
-      var result = await tweb3.getBalance(this.props.address);
+      const result = await tweb3.getBalance(this.props.address);
       console.log('I want to see balance:', result.balance);
-      var tblTmp = [
+      const tblTmp = [
         {
           name: 'IceTea Chain Native Token',
           symbo: 'ITEA',
@@ -91,7 +94,7 @@ class Balances extends Component {
   };
 
   render() {
-    var {
+    const {
       value,
       filterAssets,
       showSend,
@@ -100,8 +103,8 @@ class Balances extends Component {
       hideZeroBalance,
       page
     } = this.state;
-    var { privateKey, address } = this.props;
-    var user = sessionStorage.getItem('user');
+    const { privateKey, address } = this.props;
+    const user = sessionStorage.getItem('user');
     return (
       <div className="sc-lnrBVv kvEeOF">
         <div className="sc-kIWQTW jfuazO">
@@ -170,7 +173,7 @@ Balances.defaultProps = {
   pairs: [],
   userInfo: {},
   privateKey: '',
-  dispatch: function() {},
+  dispatch() {},
   cryptoCurrencyRate: {},
   history: {}
 };
@@ -181,7 +184,7 @@ const mapStateToProps = state => {
   // var cryptoCurrencyRate = exchange.cryptoCurrencyRate
   // var pairs = exchange.pairs
   // var symbolTickers = state.tickers.symbolTickers
-  var account = state.account;
+  const { account } = state;
   return {
     userInfo: account.userInfo,
     // tokens: tokens,

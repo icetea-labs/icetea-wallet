@@ -1,8 +1,8 @@
 import React, { PureComponent, Suspense, lazy } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Icon } from './../../elements/utils';
-import { DivSelectWordBase } from './../../elements/utils';
+import { Icon, DivSelectWordBase } from '../../elements/utils';
+
 import { WrapperCalender, OutBoxCalender, WrapperBtn, ToggleCalendar, WrapperIcon } from './styled';
 
 const BtnFoolter = styled(DivSelectWordBase)`
@@ -11,9 +11,9 @@ const BtnFoolter = styled(DivSelectWordBase)`
   box-shadow: ${({ theme }) => theme.boxShadow};
 `;
 
-const CalendarSuper = React.lazy(() => import('./../Unlock/ByJson.js'));
+const CalendarSuper = React.lazy(() => import('../Unlock/ByJson.js'));
 
-var C = '2017-07-14';
+const C = '2017-07-14';
 class GroupCalendar extends PureComponent {
   // static propTyps = {
   //   locale: PropTypes.string,
@@ -28,7 +28,7 @@ class GroupCalendar extends PureComponent {
     minDateStr: '',
     defaultValue: '',
     maxDateStr: '',
-    callbackFn: function() {}
+    callbackFn() {}
   };
 
   constructor(props) {
@@ -40,6 +40,7 @@ class GroupCalendar extends PureComponent {
       formatted: '' // g()(a).format("YYYY-MM-DD")
     };
   }
+
   _setDate = function(e) {
     // var t = e.getFullYear()
     //   , r = Object(y.e)(e.getMonth() + 1)
@@ -52,6 +53,7 @@ class GroupCalendar extends PureComponent {
     //     o(e)
     // })
   };
+
   _clear = () => {
     this.setState({
       date: new Date(),
@@ -59,17 +61,20 @@ class GroupCalendar extends PureComponent {
       formatted: ''
     });
   };
+
   _confirm = () => {
     this._setDate(this.state.date);
     this.setState({
       calendarOpen: !1
     });
   };
+
   _toggleCalendar = () => {
     this.setState({
       calendarOpen: !this.state.calendarOpen
     });
   };
+
   _onClickedOutside = e => {
     this.state.calendarOpen &&
       this._node &&
@@ -78,13 +83,14 @@ class GroupCalendar extends PureComponent {
           calendarOpen: !1
         }));
   };
+
   _handleMinDate = () => {
-    var e = this.props.minDateStr;
+    const e = this.props.minDateStr;
     return e && e !== '' ? new Date(e) : new Date(C);
   };
 
   _handleMaxDate = () => {
-    var e = this.props.maxDateStr;
+    const e = this.props.maxDateStr;
     return e && e !== '' && new Date(e) <= new Date() ? new Date(e) : new Date();
   };
 
@@ -92,9 +98,10 @@ class GroupCalendar extends PureComponent {
     window.addEventListener('mousedown', this._onClickedOutside);
     window.addEventListener('touchstart', this._onClickedOutside);
   }
+
   componentDidUpdate(e) {
     if (e.defaultValue !== this.props.defaultValue) {
-      var defaultValue = this.props.defaultValue;
+      const { defaultValue } = this.props;
       if (!defaultValue) {
         return void this.setState({
           date: new Date(),
@@ -111,10 +118,12 @@ class GroupCalendar extends PureComponent {
       // })
     }
   }
+
   componentWillUnmount() {
     window.removeEventListener('mousedown', this._onClickedOutside);
     window.removeEventListener('touchstart', this._onClickedOutside);
   }
+
   componentDidUpdate() {
     //   if (e.defaultValue !== this.props.defaultValue) {
     //     var t = this.props.defaultValue;
@@ -133,11 +142,14 @@ class GroupCalendar extends PureComponent {
     //     })
     // }
   }
+
   componentWillUnmount() {
     window.removeEventListener('mousedown', this._onClickedOutside);
     window.removeEventListener('touchstart', this._onClickedOutside);
   }
+
   ß;
+
   _resetDateInput = () => {
     this.setState({
       formatted: ''
@@ -145,7 +157,7 @@ class GroupCalendar extends PureComponent {
   };
 
   render() {
-    var { date, calendarOpen, formatted } = this.state;
+    const { date, calendarOpen, formatted } = this.state;
     return (
       <WrapperCalender ref={this._node}>
         <OutBoxCalender calendarOpen={calendarOpen} className="calendarOuter">

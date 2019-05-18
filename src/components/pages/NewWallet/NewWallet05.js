@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import * as actions from './../../../store/actions/create';
+import * as actions from '../../../store/actions/create';
 import { Button } from '../../elements';
 import { Icon } from '../../elements/utils';
-import success from './../../../assets/img/success.svg';
+import success from '../../../assets/img/success.svg';
 
 const WrapperImg = styled.div`
   margin-top: 20px;
@@ -69,7 +69,7 @@ class NewWallet05 extends React.Component {
             <li>Ice-Tea Chain!</li>
           </Desc>
           <FoolterBtn>
-            <Button width={'170px'} onClick={this._gotoUnlock}>
+            <Button width="170px" onClick={this._gotoUnlock}>
               <React.Fragment>
                 <span style={{ marginRight: '10px' }}>Unlock the wallet</span>
                 <Icon type="continue" size="20" color="inherit" />
@@ -97,7 +97,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 NewWallet05.defaultProps = {
-  setStep: function() {},
+  setStep() {},
   history: {}
 };
 

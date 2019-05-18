@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { encode, utils } from '../../../utils';
-import * as acGlobal from './../../../store/actions/globalData';
-import * as actions from './../../../store/actions/create';
+import * as acGlobal from '../../../store/actions/globalData';
+import * as actions from '../../../store/actions/create';
 import { Button, WarningRecover, InputPassword } from '../../elements';
 import { Header2, DivControlBtnKeystore, DivUnlockLink, Icon } from '../../elements/utils';
 
@@ -58,22 +58,22 @@ class NewWallet01 extends PureComponent {
     address: '',
     keyStore: null,
     autoFocus: false,
-    setPassword: function() {},
-    setAccount: function() {},
-    setStep: function() {},
-    setLoading: function() {},
-    setShowKeystoreText: function() {}
+    setPassword() {},
+    setAccount() {},
+    setStep() {},
+    setLoading() {},
+    setShowKeystoreText() {}
   };
 
   _passwordChange = (value, isPasswordValid) => {
     this.props.setPassword(value);
     this.setState({
-      isPasswordValid: isPasswordValid
+      isPasswordValid
     });
   };
 
   _rePasswordChange = value => {
-    var t = {
+    const t = {
       rePassword: value
       // ...this.state
     };
@@ -90,15 +90,15 @@ class NewWallet01 extends PureComponent {
 
   _gotoNext = function(e) {
     document.activeElement.blur();
-    var { password } = this.props;
-    var { rePassword } = this.state;
+    const { password } = this.props;
+    const { rePassword } = this.state;
     if (password.length < 8) {
       alert('invalid password, reset again');
     } else if (password === rePassword) {
       this.props.setLoading(true);
       console.log('true');
       setTimeout(async () => {
-        var account = await this._createAccountWithMneomnic();
+        const account = await this._createAccountWithMneomnic();
         // this._downloadKeyStore(account.keyStore);
         this.props.setAccount({
           privateKey: account.privateKey,
@@ -119,8 +119,8 @@ class NewWallet01 extends PureComponent {
   };
 
   _createAccountWithMneomnic = () => {
-    var resp = utils.createAccountWithMneomnic();
-    var keyObject = encode(resp.privateKey, 'a');
+    const resp = utils.createAccountWithMneomnic();
+    const keyObject = encode(resp.privateKey, 'a');
     return {
       privateKey: resp.privateKey,
       address: resp.address,
@@ -130,9 +130,9 @@ class NewWallet01 extends PureComponent {
   };
 
   _downloadKeyStore = keyObject => {
-    var a = document.createElement('a');
+    const a = document.createElement('a');
 
-    var file = new Blob([JSON.stringify(keyObject)]);
+    const file = new Blob([JSON.stringify(keyObject)]);
     a.href = URL.createObjectURL(file);
     a.download = ''.concat(keyObject.address, '_keystore');
     document.body.appendChild(a);
@@ -146,7 +146,7 @@ class NewWallet01 extends PureComponent {
   };
 
   render() {
-    var { agree, loading, isPasswordValid, rePassErr, rePassword } = this.state;
+    const { agree, loading, isPasswordValid, rePassErr, rePassword } = this.state;
     return (
       <div>
         <Header2>
@@ -160,7 +160,7 @@ class NewWallet01 extends PureComponent {
             withRules={false}
             warning={!!rePassErr}
             onChange={this._rePasswordChange}
-            title={'Re-enter Password'}
+            title="Re-enter Password"
           />
           {rePassErr && <WrapperRePassErr>{rePassErr}</WrapperRePassErr>}
         </WrapperRePassword>
@@ -170,7 +170,7 @@ class NewWallet01 extends PureComponent {
           </DivUnlockLink>
           <Button
             disabled={!agree || !isPasswordValid || !rePassword}
-            width={'200px'}
+            width="200px"
             onClick={() => this._gotoNext()}
             // className="download-keystore"
           >

@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import * as actions from './../../../store/actions/create';
+import * as actions from '../../../store/actions/create';
 import { Button } from '../../elements';
 import { Header2, DivContentW2, DivControlBtn, DivPreviousBt, Icon } from '../../elements/utils';
 
 class NewWallet02 extends PureComponent {
   static defaultProps = {
-    dispatch: function() {}
+    dispatch() {}
   };
 
   _continue = () => {
@@ -18,7 +18,7 @@ class NewWallet02 extends PureComponent {
   };
 
   render() {
-    var isActive = 'active';
+    const isActive = 'active';
     return (
       <div>
         <Header2>
@@ -43,7 +43,7 @@ class NewWallet02 extends PureComponent {
               Previous
             </div>
           </DivPreviousBt>
-          <Button width={'120px'} onClick={() => this._continue()} className={isActive}>
+          <Button width="120px" onClick={() => this._continue()} className={isActive}>
             <React.Fragment>
               <span style={{ marginRight: '10px' }}>Continue</span>
               <Icon type="continue" size="20" color="inherit" />

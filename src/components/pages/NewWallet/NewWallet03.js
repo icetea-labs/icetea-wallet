@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import * as actions from './../../../store/actions/create';
+import * as actions from '../../../store/actions/create';
 import { Button } from '../../elements';
 import { Header2, DivControlBtn, DivPreviousBt, Icon } from '../../elements/utils';
 
@@ -46,14 +46,17 @@ class NewWallet03 extends PureComponent {
   _showPrivatekey = () => {
     this.props.setShowPrivateKey(true);
   };
+
   _goback = () => {
     this.props.setStep('stepTwo');
   };
+
   _show = () => {
     this.props.setConfirmMnemonic(true);
   };
+
   render() {
-    var isActive = 'active';
+    const isActive = 'active';
     return (
       <div>
         <Header2>
@@ -79,7 +82,7 @@ class NewWallet03 extends PureComponent {
               Previous
             </div>
           </DivPreviousBt>
-          <Button width={'120px'} onClick={() => this._show()} className={isActive}>
+          <Button width="120px" onClick={() => this._show()} className={isActive}>
             <React.Fragment>
               <span style={{ marginRight: '10px' }}>Continue</span>
               <Icon type="continue" size="20" color="inherit" />
@@ -94,9 +97,9 @@ class NewWallet03 extends PureComponent {
 NewWallet03.defaultProps = {
   mnemonic: '',
   privateKey: '',
-  setStep: function() {},
-  setShowPrivateKey: function() {},
-  setConfirmMnemonic: function() {}
+  setStep() {},
+  setShowPrivateKey() {},
+  setConfirmMnemonic() {}
 };
 
 const mapStateToProps = state => {

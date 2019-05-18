@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import notFound from './../../../assets/img/404notFound.png';
+import notFound from '../../../assets/img/404notFound.png';
 
 const Wrapper = styled.div`
   position: fixed;

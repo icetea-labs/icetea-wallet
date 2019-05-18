@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import Layout from '../layout';
 import styled from 'styled-components';
-import { BtnActive } from '../elements/utils';
 import { withRouter } from 'react-router-dom';
-import default1 from './../../assets/img/1_default.svg';
-import hover1 from './../../assets/img/1_hover.svg';
-import default2 from './../../assets/img/2_default.svg';
-import hover2 from './../../assets/img/2_hover.svg';
-import default3 from './../../assets/img/3_default.svg';
-import hover3 from './../../assets/img/3_hover.svg';
-import default4 from './../../assets/img/4_default.svg';
-import hover4 from './../../assets/img/4_hover.svg';
-import default5 from './../../assets/img/5_default.svg';
-import hover5 from './../../assets/img/5_hover.svg';
-import default6 from './../../assets/img/6_default.svg';
-import hover6 from './../../assets/img/6_hover.svg';
+import Layout from '../layout';
+import { BtnActive } from '../elements/utils';
+import default1 from '../../assets/img/1_default.svg';
+import hover1 from '../../assets/img/1_hover.svg';
+import default2 from '../../assets/img/2_default.svg';
+import hover2 from '../../assets/img/2_hover.svg';
+import default3 from '../../assets/img/3_default.svg';
+import hover3 from '../../assets/img/3_hover.svg';
+import default4 from '../../assets/img/4_default.svg';
+import hover4 from '../../assets/img/4_hover.svg';
+import default5 from '../../assets/img/5_default.svg';
+import hover5 from '../../assets/img/5_hover.svg';
+import default6 from '../../assets/img/6_default.svg';
+import hover6 from '../../assets/img/6_hover.svg';
 
 const AllBg = styled.div`
   box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px 0px;

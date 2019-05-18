@@ -1,18 +1,18 @@
 import React, { PureComponent } from 'react';
-import { Wrapper, Error, MaxValue, FeeAva, Fee, Ava, ButtonWrapper } from './StyledSTOne';
-import { FontDin } from './../../../components/elements/utils';
-import { Button } from '../../elements/Button';
-import SelectUnlockType from '../Unlock/SelectUnlockType';
 import styled from 'styled-components';
-import STOInput from './STOInput';
-import errorIc from '../../../assets/img/error-icon.png';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { Wrapper, Error, MaxValue, FeeAva, Fee, Ava, ButtonWrapper } from './StyledSTOne';
+import { FontDin } from '../../elements/utils';
+import { Button } from '../../elements/Button';
+import SelectUnlockType from '../Unlock/SelectUnlockType';
+import STOInput from './STOInput';
+import errorIc from '../../../assets/img/error-icon.png';
 import * as actions from '../../../store/actions/account';
 import tweb3 from '../../../service/tweb3';
-import { toTEA } from './../../../utils/utils';
+import { toTEA } from '../../../utils/utils';
 
-var itemsMenu = [
+const itemsMenu = [
   {
     text: 'ITEA',
     selected: true
@@ -53,8 +53,9 @@ class SendTransactionOne extends PureComponent {
       memo: props.memo
     };
   }
+
   componentWillMount = async () => {
-    var balanceofVip = '';
+    let balanceofVip = '';
     balanceofVip = await tweb3.getBalance('tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx');
     console.log('I want to see BL:', balanceofVip);
     this.setState({
@@ -91,7 +92,7 @@ class SendTransactionOne extends PureComponent {
   };
 
   _memoChange = e => {
-    var value = e.currentTarget.value;
+    const { value } = e.currentTarget;
     this.setState({
       memo: value,
       memoErr: ''
@@ -114,12 +115,12 @@ class SendTransactionOne extends PureComponent {
     }
 
     // save to store
-    var fromAdd = 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx';
-    var to = this.state.to;
-    var amount = this.state.amount;
-    var memo = this.state.memo;
+    const fromAdd = 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx';
+    const { to } = this.state;
+    const { amount } = this.state;
+    const { memo } = this.state;
 
-    var data = { fromAdd: fromAdd, to: to, amount: amount, memo: memo };
+    const data = { fromAdd, to, amount, memo };
 
     this.props.setAccount(data);
 
@@ -145,7 +146,8 @@ class SendTransactionOne extends PureComponent {
         render: () => {
           return (
             <React.Fragment>
-              <Item>{e.displayName}</Item>\xa0\xa0<Text>{e.name}</Text>
+              <Item>{e.displayName}</Item>
+              <Text>{e.name}</Text>
             </React.Fragment>
           );
         }
@@ -158,7 +160,7 @@ class SendTransactionOne extends PureComponent {
   };
 
   _selectType = items => {
-    var value;
+    let value;
     this.state.types.forEach(el => {
       if (el.text === items.text) {
         el.selected = true;
@@ -173,9 +175,18 @@ class SendTransactionOne extends PureComponent {
   };
 
   render() {
-    var { to, amount, asset, memo, amountErr, addressErr, memoErr, availableBalance } = this.state;
-    var e = this._genAssetsOptions();
-    var u =
+    const {
+      to,
+      amount,
+      asset,
+      memo,
+      amountErr,
+      addressErr,
+      memoErr,
+      availableBalance
+    } = this.state;
+    const e = this._genAssetsOptions();
+    const u =
       e.find(e => {
         return e.value === asset.asset;
       }) || {};
@@ -196,7 +207,7 @@ class SendTransactionOne extends PureComponent {
             options={this._genAssetsOptions()}
             width="100%"
             onChange={this._assetChange}
-            withSearchBox={true}
+            withSearchBox
           />
         </Wrapper>
         <Wrapper>
@@ -265,7 +276,7 @@ SendTransactionOne.defaultProps = {
   amount: '',
   memo: '',
   defaultAsset: {},
-  next: function() {}
+  next() {}
 };
 
 const mapStateToProps = state => {
