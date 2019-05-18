@@ -2,9 +2,9 @@ import Vue from 'vue'
 import BotUI from 'botui'
 import tweb3 from '../../../service/tweb3'
 
-const initWeb3 = (showAlert = true) => {
+const initWeb3 = (privateKey, showAlert = false) => {
   try {
-    var resp = tweb3.wallet.importAccount('CJUPdD38vwc2wMC3hDsySB7YQ6AFLGuU6QYQYaiSeBsK')
+    var resp = tweb3.wallet.importAccount(privateKey)
     // var resp = tweb3.wallet.loadFromStorage('123')
     // if (resp === 0) {
     //   window.alert('Wallet empty! Please go to Wallet tab to create account.')
@@ -21,7 +21,7 @@ const initWeb3 = (showAlert = true) => {
     return false
   }
 }
-let web3Inited = initWeb3(false)
+let web3Inited;//= initWeb3(false)
 
 var botui = null
 
@@ -114,9 +114,9 @@ async function callContract (method, type, value, ...params) {
   }
 }
 
-export async function connectBot (botAddr) {
+export async function connectBot (botAddr, privateKey) {
   if (!web3Inited) {
-    web3Inited = initWeb3()
+    web3Inited = initWeb3(privateKey)
   }
   if (!web3Inited) return
 
@@ -186,17 +186,3 @@ export async function connectBot (botAddr) {
     }
   }
 }
-
-// ;(async () => {
-//   var address = '';//getUrlParameter('address')
-//   if (address) {
-//     try {
-//       // await connectBot(address)
-//     } catch (error) {
-//       console.log(error)
-//       window.alert(String(error))
-//     }
-//   } else {
-//     //window.alert('No bot to connect!')
-//   }
-// })()

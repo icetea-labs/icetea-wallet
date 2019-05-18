@@ -69,9 +69,10 @@ class index extends PureComponent {
     //   }, r, e);
     //   t(Object(R.c)(o)) account.name
     // }
+
     var params = {
       address: this.props.address,
-      conditions: 'tx.height > 0',
+      conditions: '',
       options: { prove: false, page: 1, per_page: 100 }
     }
     this.props.getTxHistory(params)

@@ -50,11 +50,10 @@ class BotShow extends Component {
   }
 
   _start = async () => {
-    var { botAddress } = this.props
-    console.log('_start', botAddress)
+    var { botAddress, privateKey } = this.props
     if (botAddress) {
       try {
-        await connectBot(botAddress)
+        await connectBot(botAddress, privateKey)
       } catch (error) {
         console.log(error)
         window.alert(String(error))
@@ -97,6 +96,7 @@ class BotShow extends Component {
 BotShow.defaultProps = {
   botAddress: '',
   address: '',
+  privateKey:'',
   onClose: function () { }
 }
 

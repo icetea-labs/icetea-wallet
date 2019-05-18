@@ -254,16 +254,25 @@ class BotStore extends Component {
             {this.showBots()}
           </Wrap>
         </BotContainer>
-        { this.state.isRunBot && <BotShow onClose={this._onCloseBot} botAddress={this.state.botAddress} address={this.props.address} /> }
+        { this.state.isRunBot 
+          && <BotShow 
+          onClose={this._onCloseBot} 
+          botAddress={this.state.botAddress} 
+          address={this.props.address}
+          privateKey={this.props.privateKey}
+          /> 
+        }
       </BotContent>
     );
   }
 }
 
 const mapStateToProps = state => {
-  var address = state.account.address
+  var address = state.account.address,
+  privateKey = state.account.privateKey
   return {
     address: address,
+    privateKey: privateKey
   }
 }
 

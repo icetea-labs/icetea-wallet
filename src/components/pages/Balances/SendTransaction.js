@@ -115,7 +115,6 @@ class SendTransaction extends PureComponent {
                     <SendTransactionTwo
                       bncClient={bncClient}
                       to={to}
-                      // from={address}
                       from={address}
                       amount={amount}
                       asset={sendingAsset || asset}
@@ -161,21 +160,4 @@ SendTransaction.defaultProps = {
   sendingAsset: {}
 }
 
-const mapStateToProps = state => {
-  var address = state.account.address,
-  privateKey = state.account.privateKey
-  return {
-    address: address,
-    privateKey: privateKey,
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setAccount: (data) => {
-      dispatch(actions.setAccount(data))
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SendTransaction))
+export default SendTransaction

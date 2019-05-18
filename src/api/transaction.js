@@ -6,10 +6,17 @@ import { toTEA } from './../utils/utils'
 
 const transaction = {
   getTxHistory(params) {
-    console.log('getTxHistory', params)
     return new Promise(async (resolve, reject) => {
-      var myTxs = await tweb3.getPastEvents('Transferred', params.address, params.conditions, params.options)
-      var transactions = utils.fmtTxs(myTxs.txs)
+      var systemAddr = 'system',
+          eventName = 'Transferred';
+      var conditionsByTo = "tx.to='"+params.address+"' AND tx.height > 0";
+      var conditionsByFrom = "tx.from='"+params.address+"' AND tx.height > 0";
+      // get by to address
+      var myTxsByTo = await tweb3.getPastEvents(eventName, systemAddr, conditionsByTo, params.options)
+      // get by from address
+      var myTxsByFrom = await tweb3.getPastEvents(eventName, systemAddr, conditionsByFrom, params.options)
+      var myTxs = myTxsByFrom.txs.concat(myTxsByTo.txs)
+      var transactions = utils.fmtTxs(myTxs)
       console.log('myTxs', myTxs)
       transactions = await utils.addTimeToTx(transactions)
       var reps = {}
@@ -35,8 +42,8 @@ const utils = {
         const pubkey = data.evidence.pubkey || data.evidence[0].pubkey
         from = ecc.toAddress(pubkey)
       }
-      t.from = from// this.fmtHex(from, 6)
-      t.to = data.to// this.fmtHex(data.to, 6)
+      t.from = from
+      t.to = data.to
       t.value = toTEA(data.value)
       t.fee = toTEA(data.fee || '0')
 
@@ -56,14 +63,6 @@ const utils = {
     return txs.reverse()
   },
   addTimeToTx: async (transactions) => {
-    var blocksNum = []
-    // transactions.forEach(el => {
-    //   if (blocksNum.indexOf(el.height) < 0) blocksNum.push(parseInt(el.height))
-    // })
-    // var option = {
-    //   minHeight: Math.min(...blocksNum),
-    //   maxHeight: Math.max(...blocksNum)
-    // }
     var blocksInfo=[]
     for(var i =0; i < transactions.length; i++) {
       var resp = await tweb3.getBlock({height: transactions[i].height})

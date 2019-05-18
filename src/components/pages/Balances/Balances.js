@@ -9,28 +9,28 @@ import CopyText from './../../elements/CopyText'
 import { toTEA } from './../../../utils/utils'
 
 class Balances extends Component {
-  constructor () {
+  constructor() {
     super()
     this.state = {
-      showSendForm: false,
+      showSend: false,
       showCFForm: false,
       showTbl: [],
       value: ''
     }
   }
-  componentDidMount () {
+  componentDidMount() {
     this.renderTbl()
     console.log('state', this.state)
     this.setState({ value: this.props.address })
   }
 
   viewSendForm = () => {
-    this.setState({ showSendForm: true, showCFForm: false })
+    this.setState({ showSend: true, showCFForm: false })
   }
 
-  closeViewForm = () => {
+  _closeSendModal = () => {
     this.setState({
-      showSendForm: !this.state.showSendForm
+      showSend: !this.state.showSend
     })
   }
 
@@ -41,16 +41,18 @@ class Balances extends Component {
   }
 
   onCallCFForm = () => {
-    this.setState({ showSendForm: false, showCFForm: true })
+    this.setState({ showSend: false, showCFForm: true })
   }
+  _buildBalances = () => {
 
+  }
   renderTbl = async () => {
     try {
       var result = await tweb3.getBalance(this.props.address)
       console.log('I want to see balance:', result.balance)
       var tblTmp = [{
-        name: 'ICETEA COIN',
-        symbo: 'ICETEA',
+        name: 'IceTea Chain Native Token',
+        symbo: 'ITEA',
         totalBalance: toTEA(result.balance),
         availableBalance: toTEA(result.balance)
       }]
@@ -81,8 +83,10 @@ class Balances extends Component {
     }
   }
 
-  render () {
-    const { value } = this.state
+  render() {
+    var { value, filterAssets, showSend, sendingAsset, showMobileCode, hideZeroBalance, page } = this.state
+    var { privateKey, address } = this.props
+    var user = sessionStorage.getItem("user");
     return (
       <div className='sc-lnrBVv kvEeOF'>
         <div className='sc-kIWQTW jfuazO'>
@@ -124,19 +128,52 @@ class Balances extends Component {
               </div>
             </div>
           </div>
-          {this.state.showSendForm ? <SendTransaction close={() => this.closeViewForm()} onSendSuccess={() => this.renderTbl()} /> : ''}
+          {showSend &&
+            <SendTransaction
+              onSendSuccess={this.renderTbl}
+              bncClient=''
+              assets={this.props._buildBalances}
+              privateKey={privateKey}
+              sendingAsset={sendingAsset}
+              address={user.address}
+              account_number={user.account_number}
+              sequence={parseInt(user.sequence, 10)}
+              close={this._closeSendModal}
+            />
+          }
         </div>
         <div><TransactionHistory /></div>
       </div>
-
     )
   }
 }
 
+Balances.defaultProps = {
+  tokens: [],
+  symbolTickers: [],
+  pairs: [],
+  userInfo: {},
+  privateKey: "",
+  dispatch: function () { },
+  cryptoCurrencyRate: {},
+  history: {},
+};
+
 const mapStateToProps = state => {
-  var address = state.account.address
+  // var exchange = state.exchange
+  // var tokens = exchange.tokens
+  // var cryptoCurrencyRate = exchange.cryptoCurrencyRate
+  // var pairs = exchange.pairs
+  // var symbolTickers = state.tickers.symbolTickers
+  var account = state.account
   return {
-    address: address,
+      userInfo: account.userInfo,
+      // tokens: tokens,
+      privateKey: account.privateKey,
+      // cryptoCurrencyRate: cryptoCurrencyRate,
+      // symbolTickers: symbolTickers,
+      // pairs: pairs,
+      address: account.address
   }
 }
 

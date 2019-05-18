@@ -7,10 +7,11 @@ import {
   Fee,
   Ava,
   ButtonWrapper
-} from './StyledSTOne'
+} from './StyledSTOne';
+import { FontDin } from './../../../components/elements/utils'
 import { Button } from '../../elements/Button'
 import SelectUnlockType from '../Unlock/SelectUnlockType'
-
+import styled from 'styled-components'
 import STOInput from './STOInput'
 import errorIc from '../../../assets/img/error-icon.png'
 import { connect } from 'react-redux'
@@ -20,7 +21,7 @@ import tweb3 from '../../../service/tweb3'
 import { toTEA } from './../../../utils/utils'
 
 var itemsMenu = [{
-  text: 'ICETEA',
+  text: 'ITEA',
   selected: true,
 }, {
   text: 'BTC',
@@ -28,30 +29,33 @@ var itemsMenu = [{
 }, {
   text: 'ETH',
   selected: false
-},{
+}, {
   text: 'VNI',
   selected: false
 }]
 
+const Item = styled.div`
+  font-size:16px;
+  color:#212833;
+  font-weight:bold;
+`;
+const Text = styled.div`
+  font-size:12px;
+  color:#848E9C;
+`;
+
 class SendTransactionOne extends PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      asset: [],
-      to: '',
-      amount: '',
-      addressErr: '',
-      amountErr: '',
-      memoErr: '',
-      memo: '',
-      availableBalance: '100',
-      types: itemsMenu,
-      selectedType: itemsMenu.filter(item => {
-        return !!item.selected
-      })[0].text
+      asset: props.defaultAsset || props.assets[0] || {},
+      to: props.to,
+      amount: props.amount,
+      addressErr: "",
+      memoErr: "",
+      memo: props.memo
     }
   }
-
   componentWillMount = async () => {
     var balanceofVip = ''
     balanceofVip = await tweb3.getBalance('tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx')
@@ -82,7 +86,7 @@ class SendTransactionOne extends PureComponent {
     }
     console.log('amount Change CK', e)
   }
-  
+
   _setMaxValue = () => {
     this.setState({
       amount: this.state.availableBalance
@@ -133,16 +137,19 @@ class SendTransactionOne extends PureComponent {
     // console.log('sendT1 props CK', this.props)
   }
 
-  _getSelectTypes = () => {
-    var types = this.state.types
-    var items = []
-    return types.forEach(el => {
-      el.hide || items.push({ text: el.text, value: el.text })
-    }),
-    items
+  _genAssetsOptions = () => {
+    return this.props.assets.map((e) => {
+      return {
+        value: e.asset,
+        text: e.name,
+        render: () => {
+          return <React.Fragment><Item>{e.displayName}</Item>\xa0\xa0<Text>{e.name}</Text></React.Fragment>
+        }
+      }
+    })
   };
 
-  _unlockWayChange = (item) => {
+  _assetChange = (item) => {
     this._selectType({ text: item })
   };
 
@@ -161,9 +168,14 @@ class SendTransactionOne extends PureComponent {
     })
   };
 
-  render () {
+  render() {
     var { to, amount, asset, memo,
-      amountErr, addressErr, memoErr } = this.state
+      amountErr, addressErr, memoErr, availableBalance } = this.state
+    var e = this._genAssetsOptions()
+    var u = e.find((e) => {
+      return e.value === asset.asset
+    }) || {};
+
     return (
       <div>
         <Wrapper
@@ -175,9 +187,11 @@ class SendTransactionOne extends PureComponent {
           <p className='title'>Select Asset</p>
 
           <SelectUnlockType
-            options={this._getSelectTypes()}
-            width='100%'
-            onChange={this._unlockWayChange}
+            defaultValue={u.render && u.render()}
+            options={this._genAssetsOptions()}
+            width="100%"
+            onChange={this._assetChange}
+            withSearchBox={true}
           />
 
         </Wrapper>
@@ -231,12 +245,12 @@ class SendTransactionOne extends PureComponent {
           <FeeAva>
             <Fee>
               <span className='fee-title'>Fee:</span>
-              <span className='fee-value'>10 </span>
-              <span>ICETEA</span>
+              <span className='fee-value'>0.1 </span>
+              <span>ITEA</span>
             </Fee>
             <Ava>
               <span className='Available-title'>Available:</span>
-              <span className='Available-value'>{this.state.availableBalance} </span>
+              <span className='Available-value'><FontDin>{availableBalance}</FontDin></span>
             </Ava>
           </FeeAva>
         </Wrapper>
