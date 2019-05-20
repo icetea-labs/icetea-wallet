@@ -1,14 +1,10 @@
 import React, { PureComponent, PropTypes } from 'react';
 // import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { zIndex } from '../../constants/styles';
 import Select from 'rc-select';
-import Pagination from 'rc-pagination';
-import localeInfo from 'rc-pagination/lib/locale/en_US';
-import './../../assets/styles/pagination.css';
-import './../../assets/styles/locale.css';
-
+import PaginationPro from './PaginationPro';
 import { Icon } from './utils';
+
 const TableBase = styled.table`
   border-collapse: collapse;
   width: 100%;
@@ -206,7 +202,9 @@ const WrapperPaginInt = styled.div`
     height: 32px;
     line-height: 32px;
   }
-  .rc-select-selection--multiple .rc-select-selection__rendered .rc-select-selection__choice {
+  .rc-select-selection--multiple
+    .rc-select-selection__rendered
+    .rc-select-selection__choice {
     margin-top: 4px;
     line-height: 20px;
   }
@@ -244,7 +242,7 @@ export class Table extends PureComponent {
     this.state = {
       data: props.dataSource,
       columns: props.columns,
-      sortType: 'sort_desc'
+      sortType: 'sort_desc',
     };
   }
 
@@ -313,7 +311,7 @@ export class Table extends PureComponent {
     if (this.props.sort) {
       this.props.sort(dataKey, sortType);
       this.setState({
-        sortType: sortType === 'sort_asc' ? 'sort_desc' : 'sort_asc'
+        sortType: sortType === 'sort_asc' ? 'sort_desc' : 'sort_asc',
       });
     }
   };
@@ -347,7 +345,7 @@ export class Table extends PureComponent {
   componentWillReceiveProps() {
     this.setState({
       data: this.props.dataSource,
-      columns: this.props.columns
+      columns: this.props.columns,
     });
   }
   _renderTitle = e => {
@@ -367,26 +365,28 @@ export class Table extends PureComponent {
   };
   render() {
     var { paging, total, dataSource, pageSize, current } = this.props;
-    console.log('current: ', current, ' - pageSize: ', pageSize, ' - total: ', total);
+    console.log(
+      'current: ',
+      current,
+      ' - pageSize: ',
+      pageSize,
+      ' - total: ',
+      total
+    );
     return (
       <div>
         <WrapperTable>{this.generateTable()}</WrapperTable>
         {paging && dataSource.length > 0 && (
-          <WrapperPagin>
-            <WrapperPaginInt>
-              <Pagination
-                selectComponentClass={Select}
-                showQuickJumper
-                showSizeChanger
-                defaultPageSize={pageSize}
-                defaultCurrent={current}
-                onShowSizeChange={this.onShowSizeChange}
-                onChange={this.onChange}
-                total={total}
-                locale={localeInfo}
-              />
-            </WrapperPaginInt>
-          </WrapperPagin>
+          <PaginationPro
+            selectComponentClass={Select}
+            showQuickJumper
+            showSizeChanger
+            defaultPageSize={pageSize}
+            defaultCurrent={current}
+            onShowSizeChange={this.onShowSizeChange}
+            onChange={this.onChange}
+            total={total}
+          />
         )}
       </div>
     );
@@ -402,5 +402,5 @@ Table.defaultProps = {
   sort: function() {},
   pageObj: {},
   total: 0,
-  primaryKey: ''
+  primaryKey: '',
 };
