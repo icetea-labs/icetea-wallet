@@ -11,6 +11,7 @@ import errorIc from '../../../assets/img/error-icon.png';
 import * as actions from '../../../store/actions/account';
 import tweb3 from '../../../service/tweb3';
 import { toTEA } from '../../../utils/utils';
+import { ecc, codec, bech32 } from 'icetea-common';
 
 const itemsMenu = [
   {
@@ -56,7 +57,7 @@ class SendTransactionOne extends PureComponent {
 
   componentWillMount = async () => {
     let balanceofVip = '';
-    balanceofVip = await tweb3.getBalance('tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx');
+    balanceofVip = await tweb3.getBalance(this.props.address);
     console.log('I want to see BL:', balanceofVip);
     this.setState({
       availableBalance: toTEA(balanceofVip.balance)
@@ -107,22 +108,23 @@ class SendTransactionOne extends PureComponent {
       });
       return;
     }
+
+    try {
+      let rs = ecc.validateAddress(this.state.to);
+      console.log('acc CK', rs);
+    } catch {
+      this.setState({
+        addressErr: 'Invalid address! Please Try Again'
+      });
+      return;
+    }
+
     if (this.state.amount === '') {
       this.setState({
         amountErr: 'Amount should not be null'
       });
       return;
     }
-
-    // save to store
-    const fromAdd = 'tea1al54h8fy75h078syz54z6hke6l9x232zyk25cx';
-    const { to } = this.state;
-    const { amount } = this.state;
-    const { memo } = this.state;
-
-    const data = { fromAdd, to, amount, memo };
-
-    this.props.setAccount(data);
 
     this.setState(
       {
@@ -191,6 +193,8 @@ class SendTransactionOne extends PureComponent {
         return e.value === asset.asset;
       }) || {};
 
+    // console.log('State ST1 CK', this.state);
+
     return (
       <div>
         <Wrapper
@@ -254,9 +258,7 @@ class SendTransactionOne extends PureComponent {
             </Fee>
             <Ava>
               <span className="Available-title">Available:</span>
-              <span className="Available-value">
-                <FontDin>{availableBalance}</FontDin>
-              </span>
+              <span className="Available-value">{availableBalance}</span>
             </Ava>
           </FeeAva>
         </Wrapper>
@@ -280,11 +282,11 @@ SendTransactionOne.defaultProps = {
 };
 
 const mapStateToProps = state => {
+  const { account } = state;
   return {
-    fromAdd: state.account.fromAdd,
-    to: state.account.to,
-    amount: state.account.amount,
-    memo: state.account.memo
+    userInfo: account.userInfo,
+    privateKey: account.privateKey,
+    address: account.address
   };
 };
 
