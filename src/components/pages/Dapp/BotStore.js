@@ -13,25 +13,28 @@ const BotContent = styled.div`
   margin-top: -10px;
   min-height: calc(100vh - 100px);
   @media (max-width: 768px) {
-    margin-top: -20px;
+    margin-top: -16px;
+    padding-top: 20px;
   }
 `;
 
 const BotContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 50px 0;
+  padding: 30px 0;
   @media (max-width: 1200px) {
     max-width: 960px;
   }
   @media (max-width: 991px) {
     max-width: 768px;
+    padding: 30px 0;
   }
   @media (max-width: 768px) {
     max-width: 670px;
   }
   @media (max-width: 640px) {
     max-width: 480px;
+    padding: 0 20px;
   }
 `;
 
@@ -40,12 +43,12 @@ const BotItems = styled.div`
   box-shadow: 5px 3px 5px rgba(0, 0, 0, 0.23);
   margin: 0 20px 20px 0;
   padding: 20px;
-  width: calc(100% / 4 - 60px);
+  width: calc(100% / 4 - 57px);
   float: left;
   border: 1px solid #323a4c;
   border-radius: 3px;
   cursor: pointer;
-  &:nth-child(4n + 1) {
+  &:nth-child(4n) {
     margin-right: 0;
   }
   &:hover {
@@ -83,34 +86,50 @@ const BotItems = styled.div`
       overflow: hidden;
     }
     &:hover {
-      .sc-iGrrsa {
+      .tooltip {
         visibility: visible;
         opacity: 1;
         transform: translateY(0);
       }
     }
   }
+  .tooltip {
+    position: absolute;
+    bottom: 100%;
+    background: #ffffff;
+    color: rgba(35, 41, 55, 0.8);
+    line-height: 15px;
+    text-align: justify;
+    padding: 7px;
+    border-radius: 5px;
+    transition: opacity 0.5s ease;
+    visibility: hidden;
+    opacity: 0;
+  }
+
   @media (max-width: 1200px) {
     width: calc(100% / 3 - 56px);
-    &:nth-child(4n + 1) {
+    &:nth-child(4n) {
       margin: 0 20px 20px 0;
     }
-    &:nth-child(3n + 1) {
+    &:nth-child(3n) {
       margin-right: 0;
     }
   }
+
   @media (max-width: 991px) {
     width: calc(100% / 2 - 52px);
-    &:nth-child(4n + 1) {
+    &:nth-child(4n) {
       margin: 0 20px 20px 0;
     }
-    &:nth-child(3n + 1) {
+    &:nth-child(3n) {
       margin: 0 20px 20px 0;
     }
-    &:nth-child(2n + 1) {
+    &:nth-child(2n) {
       margin-right: 0;
     }
   }
+
   @media (max-width: 640px) {
     width: calc(100% - 42px);
     float: none;
@@ -136,42 +155,33 @@ const ButtonConnect = styled.button`
   }
 `;
 
-const Tooltip = styled.div`
-  position: absolute;
-  bottom: 100%;
-  background: #ffffff;
-  color: rgba(35, 41, 55, 0.8);
-  line-height: 15px;
-  text-align: justify;
-  padding: 7px;
-  border-radius: 5px;
-  transition: opacity 0.5s ease;
-  visibility: hidden;
-  opacity: 0;
-`;
-
 const CategoryTitle = styled.h1`
   font-size: 24px;
   margin-bottom: 20px;
 `;
+
 const Wrap = styled.div`
   width: 100%;
   height: 100%;
   display: inline-block;
-  @media (max-width: 640px) {
-    width: calc(100% - 30px);
-    padding: 0 15px;
-  }
 `;
 
 const WrapFilter = styled.div`
   display: flex;
-  border-bottom: 1px solid #dfe2e7;
-  margin-right: 20px;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #4d576d;
+  position: relative;
   input {
-    outline: none;
+    position: absolute;
+    right: 0;
+    width: calc(100% - 30px);
     border: none;
-    margin-left: 5px;
+    outline: none;
+    background: transparent;
+    height: 30px;
+    color: #ffffff;
   }
 `;
 
@@ -193,7 +203,6 @@ class BotStore extends Component {
   setBotStore = async () => {
     const arrBot = await this.getBotList();
     const storeBots = await this.getBotInfo(arrBot);
-    console.log('storeBots', storeBots);
     this.setState({ bots: storeBots, botStore: storeBots });
   };
 
@@ -226,24 +235,6 @@ class BotStore extends Component {
       botInfo.description = info.description || '';
       resInfo.push(botInfo);
     }
-    // for (const bot of keys) {
-    //   const botInfo = {
-    //     address: '',
-    //     category: 'category',
-    //     name: 'name',
-    //     icon: 'icon',
-    //     description: 'description'
-    //   };
-    //   const contract = tweb3.contract(bot);
-    //   const info = await contract.methods.botInfo().callPure();
-    //   botInfo.address = bot;
-    //   botInfo.category = bots[bot].category;
-    //   botInfo.icon = bots[bot].icon;
-    //   botInfo.name = info.name;
-    //   botInfo.alias = bot.split('.', 2)[1];
-    //   botInfo.description = info.description || '';
-    //   resInfo.push(botInfo);
-    // }
     return resInfo;
   };
 
@@ -292,7 +283,7 @@ class BotStore extends Component {
           </div>
           <div className="description">
             <p>{bot.description}</p>
-            <Tooltip>{bot.description}</Tooltip>
+            <div className="tooltip">{bot.description}</div>
           </div>
         </BotItems>
       ));
@@ -303,16 +294,12 @@ class BotStore extends Component {
     return (
       <BotContent>
         <BotContainer>
-          <Wrap>
-            <CategoryTitle>
-              <WrapFilter>
-                <Icon type="search" />
-                <input type="text" onChange={this.botStoreChange} placeholder="Filtered by name" />
-              </WrapFilter>
-            </CategoryTitle>
-            <CategoryTitle>All Store Bots</CategoryTitle>
-            {this.showBots()}
-          </Wrap>
+          <WrapFilter>
+            <Icon type="search" />
+            <input type="text" onChange={this.botStoreChange} placeholder="Filtered by name" />
+          </WrapFilter>
+          <CategoryTitle>All Store Bots</CategoryTitle>
+          <Wrap>{this.showBots()}</Wrap>
         </BotContainer>
         {this.state.isRunBot && (
           <BotShow
