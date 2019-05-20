@@ -41,10 +41,6 @@ class Balances extends Component {
     });
   };
 
-  onCallCFForm = () => {
-    this.setState({ showSend: false, showCFForm: true });
-  };
-
   _buildBalances = () => {};
 
   renderTbl = async () => {
@@ -152,9 +148,10 @@ class Balances extends Component {
               assets={this.props._buildBalances}
               privateKey={privateKey}
               sendingAsset={sendingAsset}
-              address={user.address}
-              account_number={user.account_number}
-              sequence={parseInt(user.sequence, 10)}
+              // address={user.address}
+              address={address}
+              // account_number={user.account_number}
+              // sequence={parseInt(user.sequence, 10)}
               close={this._closeSendModal}
             />
           )}
