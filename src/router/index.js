@@ -1,82 +1,105 @@
 import React from 'react';
-import {
-  Home,
-  NewWalletMaster,
-  UnlockWallet,
-  Balances,
-  Transaction,
-  TransactionHistory,
-  BotStore,
-  NotFound
-} from '../components/pages';
-import Layout from '../components/layout';
+import Loadable from 'react-loadable';
+
+function Loading({ error }) {
+  if (error) {
+    return 'Oh nooess!';
+  } else {
+    return <h3>Loading...</h3>;
+  }
+}
 
 const index = [
   {
     path: '/',
     exact: true,
-    main: () => <Home />
+    component: Loadable({
+      loader: () => import('../components/pages/Home'),
+      loading: Loading,
+      delay: 500,
+      timeout: 5e4,
+    }),
+  },
+  {
+    path: '/home',
+    exact: true,
+    component: Loadable({
+      loader: () => import('../components/pages/Home'),
+      loading: Loading,
+      delay: 500,
+      timeout: 5e4,
+    }),
   },
   {
     path: '/create',
     exact: true,
-    main: () => <NewWalletMaster />
+    component: Loadable({
+      loader: () => import('../components/pages/NewWallet'),
+      loading: Loading,
+      delay: 500,
+      timeout: 5e4,
+    }),
   },
   {
     path: '/unlock',
     exact: true,
-    main: () => <UnlockWallet />
-  },
-  {
-    path: '/Home',
-    exact: true,
-    main: () => (
-      <Layout>
-        <Home />
-      </Layout>
-    )
+    component: Loadable({
+      loader: () => import('../components/pages/Unlock'),
+      loading: Loading,
+      delay: 500,
+      timeout: 5e4,
+    }),
   },
   {
     path: '/sentTransaction',
     exact: true,
-    main: () => (
-      <Layout>
-        <Transaction />
-      </Layout>
-    )
+    component: Loadable({
+      loader: () => import('../components/pages/Transaction'),
+      loading: Loading,
+      delay: 500,
+      timeout: 5e4,
+    }),
   },
   {
     path: '/transactionHistory',
     exact: true,
-    main: () => (
-      <Layout>
-        <TransactionHistory />
-      </Layout>
-    )
+    component: Loadable({
+      loader: () => import('../components/pages/Transaction'),
+      loading: Loading,
+      delay: 500,
+      timeout: 5e4,
+    }),
   },
   {
     path: '/botStore',
     exact: true,
-    main: () => (
-      <Layout>
-        <BotStore />
-      </Layout>
-    )
+    component: Loadable({
+      loader: () => import('../components/pages/Dapp'),
+      loading: Loading,
+      delay: 500,
+      timeout: 5e4,
+    }),
   },
   {
     path: '/balances',
     exact: true,
-    main: () => (
-      <Layout>
-        <Balances />
-      </Layout>
-    )
+    component: Loadable({
+      loader: () => import('../components/pages/Balances'),
+      loading: Loading,
+      delay: 500,
+      timeout: 5e4,
+    }),
   },
   {
     path: '',
     exact: false,
-    main: () => <NotFound />
-  }
+    component: Loadable({
+      loader: () => import('../components/pages/NotFound'),
+      loading: Loading,
+      delay: 500,
+      timeout: 5e4,
+    }),
+  },
 ];
 
 export default index;

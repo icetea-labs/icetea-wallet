@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import BotShow from './BotShow';
 import tweb3 from '../../../service/tweb3';
 import { Icon } from '../../elements/utils';
+import Layout from '../../layout';
 
 const BotContent = styled.div`
   background: #232937;
@@ -182,7 +183,7 @@ class BotStore extends Component {
       bots: [],
       botStore: [],
       isRunBot: false,
-      botAddress: ''
+      botAddress: '',
     };
   }
 
@@ -213,7 +214,7 @@ class BotStore extends Component {
         category: 'category',
         name: 'name',
         icon: 'icon',
-        description: 'description'
+        description: 'description',
       };
       const bot = keys[i];
       const contract = tweb3.contract(bot);
@@ -226,38 +227,20 @@ class BotStore extends Component {
       botInfo.description = info.description || '';
       resInfo.push(botInfo);
     }
-    // for (const bot of keys) {
-    //   const botInfo = {
-    //     address: '',
-    //     category: 'category',
-    //     name: 'name',
-    //     icon: 'icon',
-    //     description: 'description'
-    //   };
-    //   const contract = tweb3.contract(bot);
-    //   const info = await contract.methods.botInfo().callPure();
-    //   botInfo.address = bot;
-    //   botInfo.category = bots[bot].category;
-    //   botInfo.icon = bots[bot].icon;
-    //   botInfo.name = info.name;
-    //   botInfo.alias = bot.split('.', 2)[1];
-    //   botInfo.description = info.description || '';
-    //   resInfo.push(botInfo);
-    // }
     return resInfo;
   };
 
   connectBot = botAddress => {
     this.setState({
       isRunBot: true,
-      botAddress
+      botAddress,
     });
   };
 
   _onCloseBot = () => {
     this.setState({
       isRunBot: false,
-      botAddress: ''
+      botAddress: '',
     });
   };
 
@@ -270,7 +253,7 @@ class BotStore extends Component {
       return botName.includes(filter) || botName.replace(/\.B/, '').includes(filter);
     });
     this.setState({
-      botStore
+      botStore,
     });
   };
 
@@ -301,28 +284,30 @@ class BotStore extends Component {
 
   render() {
     return (
-      <BotContent>
-        <BotContainer>
-          <Wrap>
-            <CategoryTitle>
-              <WrapFilter>
-                <Icon type="search" />
-                <input type="text" onChange={this.botStoreChange} placeholder="Filtered by name" />
-              </WrapFilter>
-            </CategoryTitle>
-            <CategoryTitle>All Store Bots</CategoryTitle>
-            {this.showBots()}
-          </Wrap>
-        </BotContainer>
-        {this.state.isRunBot && (
-          <BotShow
-            onClose={this._onCloseBot}
-            botAddress={this.state.botAddress}
-            address={this.props.address}
-            privateKey={this.props.privateKey}
-          />
-        )}
-      </BotContent>
+      <Layout>
+        <BotContent>
+          <BotContainer>
+            <Wrap>
+              <CategoryTitle>
+                <WrapFilter>
+                  <Icon type="search" />
+                  <input type="text" onChange={this.botStoreChange} placeholder="Filtered by name" />
+                </WrapFilter>
+              </CategoryTitle>
+              <CategoryTitle>All Store Bots</CategoryTitle>
+              {this.showBots()}
+            </Wrap>
+          </BotContainer>
+          {this.state.isRunBot && (
+            <BotShow
+              onClose={this._onCloseBot}
+              botAddress={this.state.botAddress}
+              address={this.props.address}
+              privateKey={this.props.privateKey}
+            />
+          )}
+        </BotContent>
+      </Layout>
     );
   }
 }
@@ -332,7 +317,7 @@ const mapStateToProps = state => {
   const { privateKey } = state.account;
   return {
     address,
-    privateKey
+    privateKey,
   };
 };
 

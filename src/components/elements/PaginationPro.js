@@ -122,9 +122,7 @@ const Wrapper2 = styled.div`
     height: 32px;
     line-height: 32px;
   }
-  .rc-select-selection--multiple
-    .rc-select-selection__rendered
-    .rc-select-selection__choice {
+  .rc-select-selection--multiple .rc-select-selection__rendered .rc-select-selection__choice {
     margin-top: 4px;
     line-height: 20px;
   }
