@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import BotShow from './BotShow';
 import tweb3 from '../../../service/tweb3';
 import { Icon } from '../../elements/utils';
+import Layout from '../../layout';
 
 const BotContent = styled.div`
   background: #232937;
@@ -192,7 +193,7 @@ class BotStore extends Component {
       bots: [],
       botStore: [],
       isRunBot: false,
-      botAddress: ''
+      botAddress: '',
     };
   }
 
@@ -222,7 +223,7 @@ class BotStore extends Component {
         category: 'category',
         name: 'name',
         icon: 'icon',
-        description: 'description'
+        description: 'description',
       };
       const bot = keys[i];
       const contract = tweb3.contract(bot);
@@ -241,14 +242,14 @@ class BotStore extends Component {
   connectBot = botAddress => {
     this.setState({
       isRunBot: true,
-      botAddress
+      botAddress,
     });
   };
 
   _onCloseBot = () => {
     this.setState({
       isRunBot: false,
-      botAddress: ''
+      botAddress: '',
     });
   };
 
@@ -261,7 +262,7 @@ class BotStore extends Component {
       return botName.includes(filter) || botName.replace(/\.B/, '').includes(filter);
     });
     this.setState({
-      botStore
+      botStore,
     });
   };
 
@@ -292,24 +293,26 @@ class BotStore extends Component {
 
   render() {
     return (
-      <BotContent>
-        <BotContainer>
-          <WrapFilter>
-            <Icon type="search" />
-            <input type="text" onChange={this.botStoreChange} placeholder="Filtered by name" />
-          </WrapFilter>
-          <CategoryTitle>All Store Bots</CategoryTitle>
-          <Wrap>{this.showBots()}</Wrap>
-        </BotContainer>
-        {this.state.isRunBot && (
-          <BotShow
-            onClose={this._onCloseBot}
-            botAddress={this.state.botAddress}
-            address={this.props.address}
-            privateKey={this.props.privateKey}
-          />
-        )}
-      </BotContent>
+      <Layout>
+        <BotContent>
+          <BotContainer>
+            <WrapFilter>
+              <Icon type="search" />
+              <input type="text" onChange={this.botStoreChange} placeholder="Filtered by name" />
+            </WrapFilter>
+            <CategoryTitle>All Store Bots</CategoryTitle>
+            <Wrap>{this.showBots()}</Wrap>
+          </BotContainer>
+          {this.state.isRunBot && (
+            <BotShow
+              onClose={this._onCloseBot}
+              botAddress={this.state.botAddress}
+              address={this.props.address}
+              privateKey={this.props.privateKey}
+            />
+          )}
+        </BotContent>
+      </Layout>
     );
   }
 }
@@ -319,7 +322,7 @@ const mapStateToProps = state => {
   const { privateKey } = state.account;
   return {
     address,
-    privateKey
+    privateKey,
   };
 };
 

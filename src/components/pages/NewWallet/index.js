@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import QueueAnim from 'rc-queue-anim';
@@ -88,7 +88,7 @@ class index extends PureComponent {
     confirmMnemonic: PropTypes.bool,
     showKeystoreText: PropTypes.bool,
     dispatch: PropTypes.func,
-    isLoading: PropTypes.bool
+    isLoading: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -101,7 +101,7 @@ class index extends PureComponent {
     showKeystoreText: false,
     dispatch() {},
     history: {},
-    isLoading: false
+    isLoading: false,
   };
 
   _closeModal = () => {
@@ -152,12 +152,7 @@ class index extends PureComponent {
         {isLoading && <GlobaLoading />}
         {showPrivateKey && <PuShowPrivateKey privateKey={privateKey} close={this._closeModal} />}
         {confirmMnemonic && (
-          <PuConfirmMnemonic
-            okText="Yes"
-            cancelText="Go Back"
-            confirm={this._continue}
-            cancel={this._hide}
-          >
+          <PuConfirmMnemonic okText="Yes" cancelText="Go Back" confirm={this._continue} cancel={this._hide}>
             <WrapperImgPencil>
               <img src={pencil} alt="" />
               <p>Are you sure you have noted down your Mnemonic Phrase?</p>
@@ -179,7 +174,7 @@ const mapStateToProps = state => {
     keyStoreText: e.keyStoreText,
     showPrivateKey: e.showPrivateKey,
     confirmMnemonic: e.confirmMnemonic,
-    isLoading: state.globalData.isLoading
+    isLoading: state.globalData.isLoading,
   };
 };
 

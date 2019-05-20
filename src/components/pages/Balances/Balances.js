@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Balances.css';
 import QRCode from 'qrcode.react';
 import { connect } from 'react-redux';
+import Layout from '../../layout';
 import SendTransaction from './SendTransaction';
 import tweb3 from '../../../service/tweb3';
 import TransactionHistory from '../Transaction';
@@ -15,7 +16,7 @@ class Balances extends Component {
       showSend: false,
       showCFForm: false,
       showTbl: [],
-      value: ''
+      value: '',
     };
   }
 
@@ -31,13 +32,13 @@ class Balances extends Component {
 
   _closeSendModal = () => {
     this.setState({
-      showSend: !this.state.showSend
+      showSend: !this.state.showSend,
     });
   };
 
   closeCFForm = () => {
     this.setState({
-      showCFForm: !this.state.showCFForm
+      showCFForm: !this.state.showCFForm,
     });
   };
 
@@ -52,8 +53,8 @@ class Balances extends Component {
           name: 'IceTea Chain Native Token',
           symbo: 'ITEA',
           totalBalance: toTEA(result.balance),
-          availableBalance: toTEA(result.balance)
-        }
+          availableBalance: toTEA(result.balance),
+        },
       ];
       this.setState({
         showTbl: tblTmp.map((data, index) => (
@@ -82,7 +83,7 @@ class Balances extends Component {
               </div>
             </td>
           </tr>
-        ))
+        )),
       });
     } catch (err) {
       console.log(err);
@@ -90,76 +91,70 @@ class Balances extends Component {
   };
 
   render() {
-    const {
-      value,
-      filterAssets,
-      showSend,
-      sendingAsset,
-      showMobileCode,
-      hideZeroBalance,
-      page
-    } = this.state;
+    const { value, filterAssets, showSend, sendingAsset, showMobileCode, hideZeroBalance, page } = this.state;
     const { privateKey, address } = this.props;
     const user = sessionStorage.getItem('user');
     return (
-      <div className="sc-lnrBVv kvEeOF">
-        <div className="sc-kIWQTW jfuazO">
-          <div className="sc-hMjcWo jvYfux">
-            <div className="sc-gCwZxT iWYAnd">
-              <div>
-                <span>Balances</span>
-                <span className="text-address">
-                  <i id="copyText">{value}</i>
-                </span>
-              </div>
-              <div className="sc-jDwBTQ cPxcHa">
-                <div className="sc-fATqzn cNStFF">
-                  <i className="fa fa-qrcode sc-dnqmqq dJRkzW" aria-hidden="true" size="18" />
-                  <div className="qrCode">
-                    <div size="174" className="qrcode-box sc-iSDuPN iulYhq">
-                      <QRCode size={174} className="qrForm" value={value} />
+      <Layout>
+        <div className="sc-lnrBVv kvEeOF">
+          <div className="sc-kIWQTW jfuazO">
+            <div className="sc-hMjcWo jvYfux">
+              <div className="sc-gCwZxT iWYAnd">
+                <div>
+                  <span>Balances</span>
+                  <span className="text-address">
+                    <i id="copyText">{value}</i>
+                  </span>
+                </div>
+                <div className="sc-jDwBTQ cPxcHa">
+                  <div className="sc-fATqzn cNStFF">
+                    <i className="fa fa-qrcode sc-dnqmqq dJRkzW" aria-hidden="true" size="18" />
+                    <div className="qrCode">
+                      <div size="174" className="qrcode-box sc-iSDuPN iulYhq">
+                        <QRCode size={174} className="qrForm" value={value} />
+                      </div>
                     </div>
                   </div>
+                  <CopyText text={this.state.value} />
                 </div>
-                <CopyText text={this.state.value} />
+              </div>
+              <div>
+                <div className="sc-hvvHee cOshIS">
+                  <table className="sc-fQejPQ sc-cPuPxo dcZana">
+                    <thead className="sc-eSePXt byspTh">
+                      <tr>
+                        <th>Asset</th>
+                        <th>Name</th>
+                        <th>Total Balance</th>
+                        <th>Available Balance</th>
+                        <th />
+                      </tr>
+                    </thead>
+                    <tbody className="sc-fvLVrH gjcHsq">{this.state.showTbl}</tbody>
+                  </table>
+                </div>
               </div>
             </div>
-            <div>
-              <div className="sc-hvvHee cOshIS">
-                <table className="sc-fQejPQ sc-cPuPxo dcZana">
-                  <thead className="sc-eSePXt byspTh">
-                    <tr>
-                      <th>Asset</th>
-                      <th>Name</th>
-                      <th>Total Balance</th>
-                      <th>Available Balance</th>
-                      <th />
-                    </tr>
-                  </thead>
-                  <tbody className="sc-fvLVrH gjcHsq">{this.state.showTbl}</tbody>
-                </table>
-              </div>
-            </div>
+            {showSend && (
+              <SendTransaction
+                onSendSuccess={this.renderTbl}
+                bncClient=""
+                assets={this.props._buildBalances}
+                privateKey={privateKey}
+                sendingAsset={sendingAsset}
+                // address={user.address}
+                address={address}
+                // account_number={user.account_number}
+                // sequence={parseInt(user.sequence, 10)}
+                close={this._closeSendModal}
+              />
+            )}
           </div>
-          {showSend && (
-            <SendTransaction
-              onSendSuccess={this.renderTbl}
-              bncClient=""
-              assets={this.props._buildBalances}
-              privateKey={privateKey}
-              sendingAsset={sendingAsset}
-              // address={user.address}
-              address={address}
-              // account_number={user.account_number}
-              // sequence={parseInt(user.sequence, 10)}
-              close={this._closeSendModal}
-            />
-          )}
+          <div>
+            <TransactionHistory />
+          </div>
         </div>
-        <div>
-          <TransactionHistory />
-        </div>
-      </div>
+      </Layout>
     );
   }
 }
@@ -172,7 +167,7 @@ Balances.defaultProps = {
   privateKey: '',
   dispatch() {},
   cryptoCurrencyRate: {},
-  history: {}
+  history: {},
 };
 
 const mapStateToProps = state => {
@@ -189,7 +184,7 @@ const mapStateToProps = state => {
     // cryptoCurrencyRate: cryptoCurrencyRate,
     // symbolTickers: symbolTickers,
     // pairs: pairs,
-    address: account.address
+    address: account.address,
   };
 };
 
