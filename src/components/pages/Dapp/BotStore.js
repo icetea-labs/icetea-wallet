@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import BotShow from './BotShow';
 import tweb3 from '../../../service/tweb3';
+import { Icon } from '../../elements/utils';
 
 const BotContent = styled.div`
   background: #232937;
@@ -162,6 +163,18 @@ const Wrap = styled.div`
     padding: 0 15px;
   }
 `;
+
+const WrapFilter = styled.div`
+  display: flex;
+  border-bottom: 1px solid #dfe2e7;
+  margin-right: 20px;
+  input {
+    outline: none;
+    border: none;
+    margin-left: 5px;
+  }
+`;
+
 class BotStore extends Component {
   constructor(props) {
     super(props);
@@ -178,29 +191,31 @@ class BotStore extends Component {
   }
 
   setBotStore = async () => {
-    var arrBot = await this.getBotList();
-    var storeBots = await this.getBotInfo(arrBot);
-    this.setState({ bots: storeBots });
+    const arrBot = await this.getBotList();
+    const storeBots = await this.getBotInfo(arrBot);
+    console.log('storeBots', storeBots);
+    this.setState({ bots: storeBots, botStore: storeBots });
   };
 
   getBotList = async () => {
-    var address = 'system.botstore';
+    const address = 'system.botstore';
     const contract = tweb3.contract(address);
     const arrbots = await contract.methods.query().call();
     return arrbots;
   };
 
   getBotInfo = async bots => {
-    var resInfo = [];
-    var keys = Object.keys(bots);
-    for (let bot of keys) {
-      var botInfo = {
+    const resInfo = [];
+    const keys = Object.keys(bots);
+    for (let i = 0; i < keys.length; i += 1) {
+      const botInfo = {
         address: '',
         category: 'category',
         name: 'name',
         icon: 'icon',
         description: 'description'
       };
+      const bot = keys[i];
       const contract = tweb3.contract(bot);
       const info = await contract.methods.botInfo().callPure();
       botInfo.address = bot;
@@ -211,57 +226,90 @@ class BotStore extends Component {
       botInfo.description = info.description || '';
       resInfo.push(botInfo);
     }
+    // for (const bot of keys) {
+    //   const botInfo = {
+    //     address: '',
+    //     category: 'category',
+    //     name: 'name',
+    //     icon: 'icon',
+    //     description: 'description'
+    //   };
+    //   const contract = tweb3.contract(bot);
+    //   const info = await contract.methods.botInfo().callPure();
+    //   botInfo.address = bot;
+    //   botInfo.category = bots[bot].category;
+    //   botInfo.icon = bots[bot].icon;
+    //   botInfo.name = info.name;
+    //   botInfo.alias = bot.split('.', 2)[1];
+    //   botInfo.description = info.description || '';
+    //   resInfo.push(botInfo);
+    // }
     return resInfo;
   };
 
   connectBot = botAddress => {
     this.setState({
       isRunBot: true,
-      botAddress: botAddress
+      botAddress
     });
-    console.log(this.state);
   };
 
-  _onCloseBot = e => {
+  _onCloseBot = () => {
     this.setState({
       isRunBot: false,
       botAddress: ''
     });
   };
 
-  showBots = () => {
+  botStoreChange = name => {
     const { bots } = this.state;
+    const value = name.currentTarget.value.trim();
+    const botStore = bots.filter(bot => {
+      const botName = (bot.name && bot.name.toUpperCase()) || '';
+      const filter = (value && value.toUpperCase()) || '';
+      return botName.includes(filter) || botName.replace(/\.B/, '').includes(filter);
+    });
+    this.setState({
+      botStore
+    });
+  };
+
+  showBots = () => {
+    const { botStore } = this.state;
     const botsList =
-      bots &&
-      bots.map((bot, i) => {
-        return (
-          <BotItems key={i}>
-            <div className="bot_header">
-              <div className="icon">
-                <img src={bot.icon} alt={bot.alias} />
-              </div>
-              <div className="pri_info">
-                <p className="name">{bot.name}</p>
-                <span className="alias">@{bot.alias}</span>
-              </div>
-              <ButtonConnect onClick={() => this.connectBot(bot.address)}>Open</ButtonConnect>
+      botStore &&
+      botStore.map((bot, index) => (
+        <BotItems key={index}>
+          <div className="bot_header">
+            <div className="icon">
+              <img src={bot.icon} alt={bot.alias} />
             </div>
-            <div className="description">
-              <p>{bot.description}</p>
-              <Tooltip>{bot.description}</Tooltip>
+            <div className="pri_info">
+              <p className="name">{bot.name}</p>
+              <span className="alias">@{bot.alias} </span>
             </div>
-          </BotItems>
-        );
-      });
+            <ButtonConnect onClick={() => this.connectBot(bot.address)}>Open</ButtonConnect>
+          </div>
+          <div className="description">
+            <p>{bot.description}</p>
+            <Tooltip>{bot.description}</Tooltip>
+          </div>
+        </BotItems>
+      ));
     return botsList;
   };
 
   render() {
-    console.log(this.state.bots);
     return (
       <BotContent>
         <BotContainer>
           <Wrap>
+            <CategoryTitle>
+              <WrapFilter>
+                <Icon type="search" />
+                <input type="text" onChange={this.botStoreChange} placeholder="Filtered by name" />
+              </WrapFilter>
+            </CategoryTitle>
             <CategoryTitle>All Store Bots</CategoryTitle>
             {this.showBots()}
           </Wrap>
@@ -280,11 +328,11 @@ class BotStore extends Component {
 }
 
 const mapStateToProps = state => {
-  var address = state.account.address,
-    privateKey = state.account.privateKey;
+  const { address } = state.account;
+  const { privateKey } = state.account;
   return {
-    address: address,
-    privateKey: privateKey
+    address,
+    privateKey
   };
 };
 
