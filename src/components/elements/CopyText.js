@@ -16,9 +16,9 @@ class CopyText extends Component {
 
     try {
       // Now that we've selected the anchor text, execute the copy command
-      var successful = document.execCommand('copy');
-      var msg = successful ? 'successful' : 'unsuccessful';
-      console.log('Copy command was ' + msg + ' ' + text);
+      const successful = document.execCommand('copy');
+      const msg = successful ? 'successful' : 'unsuccessful';
+      console.log(`Copy command was ${msg} ${text}`);
       // window.alert("Copied the text: " + this.state.value);
 
       notification.notice({
