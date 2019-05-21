@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import BotShow from './BotShow';
 import tweb3 from '../../../service/tweb3';
+import Layout from '../../layout/Layout';
 import { Icon } from '../../elements/utils';
-import Layout from '../../layout';
+import Pagination from '../../elements/PaginationPro';
 
 const BotContent = styled.div`
   background: #232937;
@@ -22,7 +23,7 @@ const BotContent = styled.div`
 const BotContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 30px 0;
+  padding: 30px 0 100px 0;
   @media (max-width: 1200px) {
     max-width: 960px;
   }
@@ -165,6 +166,10 @@ const Wrap = styled.div`
   width: 100%;
   height: 100%;
   display: inline-block;
+  .botslist {
+    width: 100%;
+    display: inline-block;
+  }
 `;
 
 const WrapFilter = styled.div`
@@ -192,8 +197,11 @@ class BotStore extends Component {
     this.state = {
       bots: [],
       botStore: [],
+      botFilter: [],
       isRunBot: false,
       botAddress: '',
+      current: 1,
+      pageSize: 12,
     };
   }
 
@@ -256,21 +264,28 @@ class BotStore extends Component {
   botStoreChange = name => {
     const { bots } = this.state;
     const value = name.currentTarget.value.trim();
-    const botStore = bots.filter(bot => {
+    const filterBots = bots.filter(bot => {
       const botName = (bot.name && bot.name.toUpperCase()) || '';
       const filter = (value && value.toUpperCase()) || '';
       return botName.includes(filter) || botName.replace(/\.B/, '').includes(filter);
     });
-    this.setState({
-      botStore,
-    });
+    if (filterBots.length > 0) {
+      this.setState({
+        botFilter: filterBots,
+      });
+    }
+    if (!value.length) {
+      this.setState({
+        botFilter: [],
+      });
+    }
   };
 
-  showBots = () => {
-    const { botStore } = this.state;
-    const botsList =
-      botStore &&
-      botStore.map((bot, index) => (
+  showFilterBots = () => {
+    const { botFilter } = this.state;
+    const filter =
+      botFilter &&
+      botFilter.map((bot, index) => (
         <BotItems key={index}>
           <div className="bot_header">
             <div className="icon">
@@ -278,7 +293,41 @@ class BotStore extends Component {
             </div>
             <div className="pri_info">
               <p className="name">{bot.name}</p>
-              <span className="alias">@{bot.alias} </span>
+              <span className="alias">@{bot.alias}</span>
+            </div>
+            <ButtonConnect onClick={() => this.connectBot(bot.address)}>Open</ButtonConnect>
+          </div>
+          <div className="description">
+            <p>{bot.description}</p>
+            <div className="tooltip">{bot.description}</div>
+          </div>
+        </BotItems>
+      ));
+    return filter;
+  };
+
+  showBots = () => {
+    const { bots } = this.state;
+    const total = bots.length;
+    const { current, pageSize } = this.state;
+    const from = (current - 1) * pageSize;
+    let to = from + pageSize;
+    let b;
+    if (total > 0) {
+      if (to > total) to = total;
+      b = bots.slice(from, to);
+    }
+    const botsList =
+      b &&
+      b.map((bot, index) => (
+        <BotItems key={index}>
+          <div className="bot_header">
+            <div className="icon">
+              <img src={bot.icon} alt={bot.alias} />
+            </div>
+            <div className="pri_info">
+              <p className="name">{bot.name}</p>
+              <span className="alias">@{bot.alias}</span>
             </div>
             <ButtonConnect onClick={() => this.connectBot(bot.address)}>Open</ButtonConnect>
           </div>
@@ -291,7 +340,22 @@ class BotStore extends Component {
     return botsList;
   };
 
+  onChange = (current, pageSize) => {
+    this.setState({
+      current,
+    });
+  };
+
+  onShowSizeChange = (current, pageSize) => {
+    this.setState({
+      pageSize,
+    });
+  };
+
   render() {
+    const { bots, botFilter, current, pageSize, isRunBot, botAddress } = this.state;
+    const { address, privateKey } = this.props;
+    let total = bots.length;
     return (
       <Layout>
         <BotContent>
@@ -301,15 +365,27 @@ class BotStore extends Component {
               <input type="text" onChange={this.botStoreChange} placeholder="Filtered by name" />
             </WrapFilter>
             <CategoryTitle>All Store Bots</CategoryTitle>
-            <Wrap>{this.showBots()}</Wrap>
+            <Wrap>
+              {botFilter.length > 0 ? (
+                this.showFilterBots()
+              ) : (
+                <div>
+                  <div className="botslist">{this.showBots()}</div>
+                  <Pagination
+                    showQuickJumper
+                    showSizeChanger
+                    defaultPageSize={pageSize}
+                    defaultCurrent={current}
+                    onShowSizeChange={this.onShowSizeChange}
+                    onChange={this.onChange}
+                    total={total}
+                  />
+                </div>
+              )}
+            </Wrap>
           </BotContainer>
-          {this.state.isRunBot && (
-            <BotShow
-              onClose={this._onCloseBot}
-              botAddress={this.state.botAddress}
-              address={this.props.address}
-              privateKey={this.props.privateKey}
-            />
+          {isRunBot && (
+            <BotShow onClose={this._onCloseBot} botAddress={botAddress} address={address} privateKey={privateKey} />
           )}
         </BotContent>
       </Layout>
