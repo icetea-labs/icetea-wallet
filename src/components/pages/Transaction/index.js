@@ -3,8 +3,9 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import GroupCalendar from './GroupCalendar';
 import PuDetailTx from '../../elements/pu';
-import { Table } from '../../elements';
+import Table from '../../elements/TablePro';
 import * as actions from '../../../store/actions/transaction';
+import Layout from '../../layout';
 // import TxHash from './TxHash';
 import {
   Wrapper,
@@ -17,7 +18,6 @@ import {
   IconInOut,
   TypeTranfer,
   TypeOrder,
-  ButtonSeach
 } from './styled';
 
 import { TxHash, FontDin, Icon } from '../../elements/utils';
@@ -27,7 +27,7 @@ const txType = {
   VOTE: 'Vote',
   DEPOSIT: 'Deposit',
   DEPLOY: 'Deploy',
-  CALL: 'Call'
+  CALL: 'Call',
 };
 
 class index extends PureComponent {
@@ -35,16 +35,13 @@ class index extends PureComponent {
     super(props);
     this.state = {
       detail: null,
-      txs: [],
-      offset: 0,
-      filterParams: {},
       current: 1,
-      pageSize: 10
+      pageSize: 10,
     };
   }
 
   componentDidMount() {
-    this._getHistory();
+    this.getHistory();
   }
 
   componentDidUpdate() {
@@ -55,49 +52,38 @@ class index extends PureComponent {
     // })
   }
 
-  _getHistory = e => {
-    // var t = n.props.dispatch
-    //   , r = n.state.filterParams
-    //   , a = sessionStorage.getItem("user");
-    // if ((a = a && JSON.parse(a) || {}).address) {
-    //   var o = Object(i.a)({
-    //     address: a.address,
-    //     offset: 0,
-    //     limit: $
-    //   }, r, e);
-    //   t(Object(R.c)(o)) account.name
-    // }
-
+  getHistory = () => {
+    const { address, getTxHistory } = this.props;
     const params = {
-      address: this.props.address,
+      address,
       conditions: '',
-      options: { prove: false, page: 1, per_page: 100 }
+      options: { prove: false, page: 1, per_page: 100 },
     };
-    this.props.getTxHistory(params);
+    getTxHistory(params);
   };
 
-  _convertText = e => {
+  convertText = e => {
     switch (e) {
       case 'TRANSFER':
         return {
           text: txType[e],
-          color: 'rgb(0, 192, 135)'
+          color: 'rgb(0, 192, 135)',
         };
       case 'CALL':
         return {
           text: txType[e],
-          color: '#848e9c'
+          color: '#848e9c',
         };
       case 'DEPLOY':
       default:
         return {
           text: txType[e],
-          color: 'rgb(74, 144, 226)'
+          color: 'rgb(74, 144, 226)',
         };
     }
   };
 
-  _buildColumns = () => {
+  buildColumns = () => {
     const { address } = this.props;
     return [
       {
@@ -106,7 +92,7 @@ class index extends PureComponent {
         sorter: true,
         dataIndex: 'txHash',
         key: 'TxHash',
-        render: e => <TxHash hash={e.txHash} />
+        render: e => <TxHash hash={e.txHash} />,
       },
       {
         title: 'Date',
@@ -118,7 +104,7 @@ class index extends PureComponent {
           <ColorGray>
             <FontDin value={e.date} />
           </ColorGray>
-        ) // format("MM-DD h:mm:ss")
+        ), // format("MM-DD h:mm:ss")
       },
       // {
       //   title: 'exchange.pair',
@@ -131,7 +117,7 @@ class index extends PureComponent {
         dataIndex: 'type',
         key: 'Type',
         render: e => {
-          const typeTx = this._convertText(e.type);
+          const typeTx = this.convertText(e.type);
 
           const type = e.fromAddr === address ? 'OUT' : 'IN';
           return (
@@ -144,7 +130,7 @@ class index extends PureComponent {
               )}
             </StyledText>
           );
-        }
+        },
       },
       {
         title: 'Value',
@@ -154,53 +140,56 @@ class index extends PureComponent {
           <StyledText>
             <FontDin value={e.value} />
           </StyledText>
-        ) // Object(z.d)(e.value, 4)
+        ), // Object(z.d)(e.value, 4)
       },
       {
         title: 'TxFee',
         dataIndex: 'txFee',
         key: 'TxFee',
-        render: e => <StyledText>{e.txFee}</StyledText>
+        render: e => (
+          <StyledText>
+            <FontDin value={e.txFee} />
+          </StyledText>
+        ),
       },
       {
         title: '',
         dataIndex: 'op',
         key: '',
-        render: e => {
-          return (
-            <div onClick={() => this._showDetail(e)}>
-              <Icon type="detail-D" color="#848E9C" hoverColor="#F0B90B" />
-            </div>
-          );
-        }
-      }
+        render: e => (
+          <div onClick={() => this.showDetail(e)} role="presentation">
+            <Icon type="detail-D" color="#848E9C" hoverColor="#F0B90B" />
+          </div>
+        ),
+      },
     ];
   };
 
-  _showDetail = e => {
+  showDetail = e => {
     this.setState({
-      detail: e
+      detail: e,
     });
   };
 
-  _clearDetail = () => {
+  clearDetail = () => {
     this.setState({
-      detail: null
+      detail: null,
     });
   };
 
-  _buildDataSource = () => {
+  buildDataSource = () => {
     const { current, pageSize } = this.state;
+    let { transactionHistory } = this.props;
+
+    const total = transactionHistory.length;
     const from = (current - 1) * pageSize;
     let to = from + pageSize;
-    const total = this.props.transactionHistory.length;
-    let transactionHistory = [];
+
     if (total > 0) {
       if (to > total) to = total;
       // console.log('from: ', from,'-to',to)
-      transactionHistory = this.props.transactionHistory.slice(from, to);
+      transactionHistory = transactionHistory.slice(from, to);
     }
-    // console.log('_buildDataSource',transactionHistory)
     const dataSource = transactionHistory.map(e => {
       const t = e.data || {}; // && JSON.parse(e.data) || {};
       return {
@@ -208,109 +197,96 @@ class index extends PureComponent {
         // pair: t.orderData ? t.orderData.symbol : e.txAsset,
         type: e.txType,
         side: t.orderData ? t.orderData.side : '-',
-        value: e.value, // (t.orderData ? t.orderData.quantity : e.value), // Object(z.g)
-        txFee: e.fee, // (e.fee), // Object(z.g)
+        value: e.value || 0, // (t.orderData ? t.orderData.quantity : e.value), // Object(z.g)
+        txFee: e.fee || 0, // (e.fee), // Object(z.g)
         txHash: e.hash,
         op: '',
         blockHeight: e.blockHeight,
         fromAddr: e.from,
-        toAddr: e.to || 'to'
+        toAddr: e.to || 'to',
       };
     });
     return dataSource;
   };
 
-  _filter = e => {
+  filter = e => {
     const filterParams = {};
     const g = '';
     if (e.manualStartDate || e.manualEndDate) {
-      e.manualStartDate && (filterParams.startTime = e.manualStartDate.getTime());
-      e.manualEndDate && (filterParams.endTime = e.manualEndDate.getTime());
-      filterParams.startTime === filterParams.endTime &&
-        (filterParams.endTime = new Date(
-          ''.concat(g()(e.manualEndDate).format('YYYY/MM/DD'), ' 23:59:59')
-        ).getTime());
-      this.setState(
-        {
-          filterParams
-        },
-        () => {
-          this._getHistory(filterParams);
-        }
-      );
+      // e.manualStartDate && (filterParams.startTime = e.manualStartDate.getTime());
+      // e.manualEndDate && (filterParams.endTime = e.manualEndDate.getTime());
+      // filterParams.startTime === filterParams.endTime &&
+      //   (filterParams.endTime = new Date(''.concat(g()(e.manualEndDate).format('YYYY/MM/DD'), ' 23:59:59')).getTime());
+      // this.setState(
+      //   {
+      //     filterParams,
+      //   },
+      //   () => {
+      //     this.getHistory(filterParams);
+      //   }
+      // );
     } else {
       alert('exchange.pleaseSelectDate');
     }
   };
 
-  _paging = (current, pageSize) => {
+  paging = (current, pageSize) => {
     if (pageSize) {
       this.setState({
         current,
-        pageSize
+        pageSize,
       });
     } else {
       this.setState({
-        current
+        current,
       });
     }
   };
 
-  _search = () => {
-    this._getHistory();
-  };
+  // _search = () => {
+  //   this.getHistory();
+  // };
 
   render() {
-    const { total, address, transactionHistory } = this.props;
+    const { total, address, isFetching } = this.props;
     const { detail, pageSize, current } = this.state;
-    // console.log('render props', this.props)
-    // console.log('render state', this.state)
-    console.log('render transactionHistory', transactionHistory);
     return (
-      <Wrapper>
-        <Content>
-          <Title>Transaction History</Title>
-          <WrapperHeader>
-            <GroupCalendar
-              hasType={false}
-              hasPair={false}
-              onFilterChange={this._filter}
-              defaultDate={new Date()}
+      <Layout>
+        <Wrapper>
+          <Content>
+            <Title>Transaction History</Title>
+            <WrapperHeader>
+              <GroupCalendar hasType={false} hasPair={false} onFilterChange={this.filter} defaultDate={new Date()} />
+              <WrapperTextFullHistory>
+                Not every transaction is included below. For full history, please refer to
+                <a href={''.concat('....', '/address/').concat(address)} target="_blank" rel="noopener noreferrer">
+                  here
+                </a>
+                .
+              </WrapperTextFullHistory>
+            </WrapperHeader>
+            {isFetching && <div>Loading</div>}
+            <Table
+              columns={this.buildColumns()}
+              dataSource={this.buildDataSource()}
+              paging={this.paging}
+              total={total}
+              current={current}
+              pageSize={pageSize}
             />
-            <WrapperTextFullHistory>
-              Not every transaction is included below. For full history, please refer to
-              <a
-                href={''.concat('....', '/address/').concat(address)}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                here
-              </a>
-              .
-            </WrapperTextFullHistory>
-          </WrapperHeader>
-          {this.props.isFetching && <div>Loading</div>}
-          <Table
-            columns={this._buildColumns()}
-            dataSource={this._buildDataSource()}
-            paging={this._paging}
-            total={total}
-            current={current}
-            pageSize={pageSize}
-          />
-          {detail && <PuDetailTx detail={detail} close={this._clearDetail} />}
-          {/* <ButtonSeach onClick={this._search} ><span>Search</span></ButtonSeach>  */}
-        </Content>
-      </Wrapper>
+            {detail && <PuDetailTx detail={detail} close={this.clearDetail} />}
+            {/* <ButtonSeach onClick={this._search} ><span>Search</span></ButtonSeach>  */}
+          </Content>
+        </Wrapper>
+      </Layout>
     );
   }
 }
-
 index.defaultProps = {
   transactionHistory: [],
   total: 0,
   address: '',
-  dispatch() {}
+  dispatch() {},
 };
 
 const mapStateToProps = state => {
@@ -320,17 +296,15 @@ const mapStateToProps = state => {
     transactionHistory: transactionHistory.tx,
     total: transactionHistory.total,
     address,
-    isFetching: state.transaction.isFetching
+    isFetching: state.transaction.isFetching,
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getTxHistory: data => {
-      dispatch(actions.getTxHistory(data));
-    }
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  getTxHistory: data => {
+    dispatch(actions.getTxHistory(data));
+  },
+});
 
 export default connect(
   mapStateToProps,

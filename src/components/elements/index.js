@@ -1,5 +1,4 @@
 export * from './Button';
-export * from './Table';
 export * from './WarningRecover.js';
 export * from './InputPassword.js';
 export * from './PuConfirmMnemonic.js';

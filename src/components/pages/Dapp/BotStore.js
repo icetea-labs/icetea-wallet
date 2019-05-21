@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import BotShow from './BotShow';
 import tweb3 from '../../../service/tweb3';
+import Layout from '../../layout/Layout';
 import { Icon } from '../../elements/utils';
 import Pagination from '../../elements/PaginationPro';
 
@@ -165,12 +166,9 @@ const Wrap = styled.div`
   width: 100%;
   height: 100%;
   display: inline-block;
-  .sc-hzDkRC{
-    display: inline-block;
+  .botslist {
     width: 100%;
-  }
-  .sc-jhAzac {
-    justify-content: flex-end;
+    display: inline-block;
   }
 `;
 
@@ -203,7 +201,7 @@ class BotStore extends Component {
       isRunBot: false,
       botAddress: '',
       current: 1,
-      pageSize: 12
+      pageSize: 12,
     };
   }
 
@@ -233,7 +231,7 @@ class BotStore extends Component {
         category: 'category',
         name: 'name',
         icon: 'icon',
-        description: 'description'
+        description: 'description',
       };
       const bot = keys[i];
       const contract = tweb3.contract(bot);
@@ -252,14 +250,14 @@ class BotStore extends Component {
   connectBot = botAddress => {
     this.setState({
       isRunBot: true,
-      botAddress
+      botAddress,
     });
   };
 
   _onCloseBot = () => {
     this.setState({
       isRunBot: false,
-      botAddress: ''
+      botAddress: '',
     });
   };
 
@@ -273,12 +271,12 @@ class BotStore extends Component {
     });
     if (filterBots.length > 0) {
       this.setState({
-        botFilter: filterBots
+        botFilter: filterBots,
       });
     }
     if (!value.length) {
       this.setState({
-        botFilter: []
+        botFilter: [],
       });
     }
   };
@@ -344,13 +342,13 @@ class BotStore extends Component {
 
   onChange = (current, pageSize) => {
     this.setState({
-      current
+      current,
     });
   };
 
   onShowSizeChange = (current, pageSize) => {
     this.setState({
-      pageSize
+      pageSize,
     });
   };
 
@@ -359,39 +357,38 @@ class BotStore extends Component {
     const { address, privateKey } = this.props;
     let total = bots.length;
     return (
-      <BotContent>
-        <BotContainer>
-          <WrapFilter>
-            <Icon type="search" />
-            <input type="text" onChange={this.botStoreChange} placeholder="Filtered by name" />
-          </WrapFilter>
-          <CategoryTitle>All Store Bots</CategoryTitle>
-          <Wrap>
-            {
-              botFilter.length > 0 ? this.showFilterBots() : <div>
-                {this.showBots()}
-                <Pagination
-                  showQuickJumper
-                  showSizeChanger
-                  defaultPageSize={pageSize}
-                  defaultCurrent={current}
-                  onShowSizeChange={this.onShowSizeChange}
-                  onChange={this.onChange}
-                  total={total}
-                />
-              </div>
-            }
-          </Wrap>
-        </BotContainer>
-        {isRunBot && (
-          <BotShow
-            onClose={this._onCloseBot}
-            botAddress={botAddress}
-            address={address}
-            privateKey={privateKey}
-          />
-        )}
-      </BotContent>
+      <Layout>
+        <BotContent>
+          <BotContainer>
+            <WrapFilter>
+              <Icon type="search" />
+              <input type="text" onChange={this.botStoreChange} placeholder="Filtered by name" />
+            </WrapFilter>
+            <CategoryTitle>All Store Bots</CategoryTitle>
+            <Wrap>
+              {botFilter.length > 0 ? (
+                this.showFilterBots()
+              ) : (
+                <div>
+                  <div className="botslist">{this.showBots()}</div>
+                  <Pagination
+                    showQuickJumper
+                    showSizeChanger
+                    defaultPageSize={pageSize}
+                    defaultCurrent={current}
+                    onShowSizeChange={this.onShowSizeChange}
+                    onChange={this.onChange}
+                    total={total}
+                  />
+                </div>
+              )}
+            </Wrap>
+          </BotContainer>
+          {isRunBot && (
+            <BotShow onClose={this._onCloseBot} botAddress={botAddress} address={address} privateKey={privateKey} />
+          )}
+        </BotContent>
+      </Layout>
     );
   }
 }
@@ -401,7 +398,7 @@ const mapStateToProps = state => {
   const { privateKey } = state.account;
   return {
     address,
-    privateKey
+    privateKey,
   };
 };
 
