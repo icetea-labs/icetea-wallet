@@ -1,13 +1,13 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
-import { connect } from 'react-redux'
-import QueueAnim from 'rc-queue-anim'
-import * as actions from '../../../store/actions/account'
-import logo from './../../../assets/img/logo.svg'
-import unlock_recommend from './../../../assets/img/unlock_recommend.svg'
-import ByMnemonic from './ByMnemonic'
-import SelectUnlockType from './SelectUnlockType'
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import QueueAnim from 'rc-queue-anim';
+import * as actions from '../../../store/actions/account';
+import logo from './../../../assets/img/logo.svg';
+import unlock_recommend from './../../../assets/img/unlock_recommend.svg';
+import ByMnemonic from './ByMnemonic';
+import SelectUnlockType from './SelectUnlockType';
 import {
   Wrapper,
   Logo,
@@ -19,41 +19,48 @@ import {
   SubTitle,
   WrapperSelect,
   Menu,
-  UnlockRecommend
-} from './styled'
-import FooterCus from './../FooterCus'
+  UnlockRecommend,
+} from './styled';
+import FooterCus from './../FooterCus';
+import { encode } from '../../../utils';
 
-var itemsMenu = [{
-  text: 'WalletConnect',
-  i18nId: 'common.walletConnect',
-  // img: rt.a,
-  selected: false,
-  recommended: true
-}, {
-  text: 'Ledger Device',
-  i18nId: 'common.ledgerDevice',
-  // img: it.a,
-  selected: false,
-  recommended: true
-}, {
-  text: 'KeyStore File',
-  i18nId: 'common.keystoreFile',
-  // img: it.a,
-  selected: false
-}, {
-  text: 'Mnemonic Phrase',
-  i18nId: 'common.mnemonicPhrase',
-  // img: st.a,
-  selected: true,
-  recommended: true
-}, {
-  text: 'Private Key',
-  i18nId: 'common.privateKey',
-  // img: st.a,
-  selected: false,
-  hide: true,
-  smallerIcon: true
-}]
+var itemsMenu = [
+  {
+    text: 'WalletConnect',
+    i18nId: 'common.walletConnect',
+    // img: rt.a,
+    selected: false,
+    recommended: true,
+  },
+  {
+    text: 'Ledger Device',
+    i18nId: 'common.ledgerDevice',
+    // img: it.a,
+    selected: false,
+    recommended: true,
+  },
+  {
+    text: 'KeyStore File',
+    i18nId: 'common.keystoreFile',
+    // img: it.a,
+    selected: false,
+  },
+  {
+    text: 'Mnemonic Phrase',
+    i18nId: 'common.mnemonicPhrase',
+    // img: st.a,
+    selected: true,
+    recommended: true,
+  },
+  {
+    text: 'Private Key',
+    i18nId: 'common.privateKey',
+    // img: st.a,
+    selected: false,
+    hide: true,
+    smallerIcon: true,
+  },
+];
 // {
 //   text: "View Only",
 //   i18nId: "common.viewOnly",
@@ -63,43 +70,46 @@ var itemsMenu = [{
 // }];
 
 class index extends PureComponent {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       types: itemsMenu,
       selectedType: itemsMenu.filter(item => {
-        return !!item.selected
-      })[0].text
-    }
-  };
+        return !!item.selected;
+      })[0].text,
+    };
+  }
 
-  componentDidMount () {
+  componentDidMount() {
     // var types = this.state.types.map(el => {
     //   return "View Only" === el.text && (el.hide = true);
     // });
     // this.setState({
     //   types: types
     // })
-  };
+  }
 
-  _selectType = (items) => {
-    var value
+  _selectType = items => {
+    var value;
     this.state.types.forEach(el => {
       if (el.text === items.text) {
-        el.selected = true
-        value = items.text
+        el.selected = true;
+        value = items.text;
       } else {
-        el.selected = false
+        el.selected = false;
       }
-    })
+    });
     this.setState({
-      selectedType: value
-    })
+      selectedType: value,
+    });
   };
 
   _unlock = (privateKey, address, keyStore, password) => {
     setTimeout(() => {
-      var n = ''
+      var n = '';
+      if (privateKey) {
+        n = encode(privateKey, password);
+      }
       if (address) {
         this.props.setAccount({
           privateKey: privateKey,
@@ -108,67 +118,70 @@ class index extends PureComponent {
           cipher: password,
           // flags: o,
           // encryptedData: n,
-          userInfo: {}
-        })
+          userInfo: {},
+        });
         // this.props.getAccount(address)
         // !o.isHardware && privateKey && (n = Object(v.b)(e, r));
-        sessionStorage.setItem('user', JSON.stringify({
-          address: address,
-          privateKey: n || privateKey,
-          flags: false// o
-        }))
-        
-        this.props.history.push('/balances')
+
+        sessionStorage.setItem(
+          'user',
+          JSON.stringify({
+            address: address,
+            privateKey: n || privateKey,
+            flags: false, // o
+          })
+        );
+
+        this.props.history.push('/balances');
       }
-    })
+    });
   };
 
   _getSelectTypes = () => {
-    var types = this.state.types
-    var items = []
-    return types.forEach(el => {
-      el.hide || items.push({ text: el.text, value: el.text })
-    }),
-    items
+    var types = this.state.types;
+    var items = [];
+    return (
+      types.forEach(el => {
+        el.hide || items.push({ text: el.text, value: el.text });
+      }),
+      items
+    );
   };
 
-  _unlockWayChange = (item) => {
-    this._selectType({ text: item })
+  _unlockWayChange = item => {
+    this._selectType({ text: item });
   };
 
   gotoHome = () => {
-    this.props.history.push('/Home')
-  }
+    this.props.history.push('/Home');
+  };
 
-  render () {
-    var { selectedType } = this.state
+  render() {
+    var { selectedType } = this.state;
     var items = this.state.types.filter(el => {
-      return !el.hide
-    })
+      return !el.hide;
+    });
     var listItems = items.map(item => {
       return (
         <li
           className={item.selected ? 'on' : ''}
           onClick={() => this._selectType(item)}
           key={item.text}
-          role='presentation'
+          role="presentation"
           data-cy={'menu-'.concat(item.text)}
         >
           <span>{item.text}</span>
-          {
-            item.recommended &&
-            <UnlockRecommend src={unlock_recommend} />
-          }
-          <div className='selected' />
+          {item.recommended && <UnlockRecommend src={unlock_recommend} />}
+          <div className="selected" />
         </li>
-      )
-    })
+      );
+    });
 
     return (
-      <QueueAnim delay={200} type={['top', 'bottom']} >
-        <Wrapper key={1} >
+      <QueueAnim delay={200} type={['top', 'bottom']}>
+        <Wrapper key={1}>
           <Logo>
-            <img src={logo} alt='logo' onClick={this.gotoHome} />
+            <img src={logo} alt="logo" onClick={this.gotoHome} />
           </Logo>
           <OutBox>
             <InBox>
@@ -179,39 +192,34 @@ class index extends PureComponent {
                 <WrapperMenu>
                   <SubTitle>Select how you would like to unlock</SubTitle>
                   <WrapperSelect>
-                    <SelectUnlockType
-                      options={this._getSelectTypes()}
-                      width='100%'
-                      onChange={this._unlockWayChange}
-                    />
+                    <SelectUnlockType options={this._getSelectTypes()} width="100%" onChange={this._unlockWayChange} />
                   </WrapperSelect>
-                  <Menu>
-                    {listItems}
-                  </Menu>
+                  <Menu>{listItems}</Menu>
                 </WrapperMenu>
-                {
-                  selectedType === 'Mnemonic Phrase' && <ByMnemonic unlock={this._unlock} />
-                }
+                {selectedType === 'Mnemonic Phrase' && <ByMnemonic unlock={this._unlock} />}
               </Content>
             </InBox>
             <FooterCus />
           </OutBox>
         </Wrapper>
       </QueueAnim>
-    )
+    );
   }
 }
 
 index.defaultProps = {
-  setAccount: function () { },
-  getAccount: function () { },
-}
+  setAccount: function() {},
+  getAccount: function() {},
+};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    setAccount: (data) => {
-      dispatch(actions.setAccount(data))
-    }
-  }
-}
-export default connect(null, mapDispatchToProps)(withRouter(index))
+    setAccount: data => {
+      dispatch(actions.setAccount(data));
+    },
+  };
+};
+export default connect(
+  null,
+  mapDispatchToProps
+)(withRouter(index));

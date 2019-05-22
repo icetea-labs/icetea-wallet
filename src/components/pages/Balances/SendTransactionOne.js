@@ -51,7 +51,8 @@ class SendTransactionOne extends PureComponent {
       amount: props.amount,
       addressErr: '',
       memoErr: '',
-      memo: props.memo
+      memo: props.memo,
+      types: itemsMenu
     };
   }
 
@@ -157,22 +158,23 @@ class SendTransactionOne extends PureComponent {
     });
   };
 
-  _assetChange = item => {
-    this._selectType({ text: item });
+  _getSelectTypes = () => {
+    var types = this.state.types;
+    var items = [];
+    return (
+      types.forEach(el => {
+        el.hide || items.push({ text: el.text, value: el.text });
+      }),
+      items
+    );
   };
 
-  _selectType = items => {
-    let value;
-    this.state.types.forEach(el => {
-      if (el.text === items.text) {
-        el.selected = true;
-        value = items.text;
-      } else {
-        el.selected = false;
-      }
+  _assetChange = e => {
+    var t = this.props.assets.find(function(t) {
+      return t.asset === e;
     });
     this.setState({
-      selectedType: value
+      asset: t
     });
   };
 
@@ -208,7 +210,7 @@ class SendTransactionOne extends PureComponent {
 
           <SelectUnlockType
             defaultValue={u.render && u.render()}
-            options={this._genAssetsOptions()}
+            options={this._getSelectTypes()}
             width="100%"
             onChange={this._assetChange}
             withSearchBox
