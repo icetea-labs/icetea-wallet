@@ -61,7 +61,9 @@ const UlLink = styled.ul`
 `;
 class Header extends Component {
   render() {
-    const address = this.props.address;
+    let user = sessionStorage.getItem('user');
+    user = user && JSON.parse(user) || {};
+    const address = user.address;
     return (
       <DivWapper>
         <div className="sc-uJMKN jNhSkT">

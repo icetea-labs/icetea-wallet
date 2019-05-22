@@ -8,6 +8,7 @@ import tweb3 from '../../../service/tweb3';
 import TransactionHistory from '../Transaction';
 import CopyText from '../../elements/CopyText';
 import { toTEA } from '../../../utils/utils';
+import PuInputPassword from './PuInputPassword';
 
 class Balances extends Component {
   constructor() {
@@ -16,18 +17,26 @@ class Balances extends Component {
       showSend: false,
       showCFForm: false,
       showTbl: [],
-      value: '',
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.renderTbl();
-    console.log('state', this.state);
-    this.setState({ value: this.props.address });
+    console.log('WillMount', this.props.address);
+  }
+
+  shouldComponentUpdate() {
+    // Hàm này thực hiện khi state và props thay đổi
+    // Hàm này sẽ trả về kết quả true/false, bạn sẽ cần sử dụng đến hàm này để xử lý xem có cần update component không
+    this.renderTbl();
   }
 
   viewSendForm = () => {
     this.setState({ showSend: true, showCFForm: false });
+  };
+
+  viewCFForm = () => {
+    this.setState({ showSend: false, showCFForm: true });
   };
 
   _closeSendModal = () => {
@@ -41,6 +50,11 @@ class Balances extends Component {
       showCFForm: !this.state.showCFForm,
     });
   };
+
+  onCFSuccess = () => {
+    this.shouldComponentUpdate();
+    // this.setState({ showSend: true });
+  }
 
   _buildBalances = () => {};
 
@@ -77,7 +91,9 @@ class Balances extends Component {
             </td>
             <td style={{ width: '10%' }}>
               <div className="sc-hkaZBZ sc-hqGPoI feIRPa">
-                <button className="sc-bZQynM sc-MYvYT sc-jbWsrJ ircCEl" onClick={this.viewSendForm}>
+                <button className="sc-bZQynM sc-MYvYT sc-jbWsrJ ircCEl"
+                  onClick={this.props.address ? this.viewSendForm : this.viewCFForm}
+                >
                   Send
                 </button>
               </div>
@@ -91,9 +107,12 @@ class Balances extends Component {
   };
 
   render() {
-    const { value, filterAssets, showSend, sendingAsset, showMobileCode, hideZeroBalance, page } = this.state;
-    const { privateKey, address } = this.props;
-    const user = sessionStorage.getItem('user');
+    const { filterAssets, showSend, sendingAsset, showMobileCode, hideZeroBalance, page, showCFForm } = this.state;
+    const { privateKey } = this.props;
+    let user = sessionStorage.getItem('user');
+    user = user && JSON.parse(user) || {};
+    const address = user.address;
+    console.log('CHECK render', this.props.address)
     return (
       <Layout>
         <div className="sc-lnrBVv kvEeOF">
@@ -103,7 +122,7 @@ class Balances extends Component {
                 <div>
                   <span>Balances</span>
                   <span className="text-address">
-                    <i id="copyText">{value}</i>
+                    <i id="copyText">{address}</i>
                   </span>
                 </div>
                 <div className="sc-jDwBTQ cPxcHa">
@@ -111,11 +130,11 @@ class Balances extends Component {
                     <i className="fa fa-qrcode sc-dnqmqq dJRkzW" aria-hidden="true" size="18" />
                     <div className="qrCode">
                       <div size="174" className="qrcode-box sc-iSDuPN iulYhq">
-                        <QRCode size={174} className="qrForm" value={value} />
+                        <QRCode size={174} className="qrForm" value={address} />
                       </div>
                     </div>
                   </div>
-                  <CopyText text={this.state.value} />
+                  <CopyText text={address} />
                 </div>
               </div>
               <div>
@@ -135,7 +154,7 @@ class Balances extends Component {
                 </div>
               </div>
             </div>
-            {showSend && (
+            { showSend && (
               <SendTransaction
                 onSendSuccess={this.renderTbl}
                 bncClient=""
@@ -150,6 +169,7 @@ class Balances extends Component {
               />
             )}
           </div>
+            <div>{showCFForm && <PuInputPassword onCFSuccess={this.onCFSuccess} close={this.closeCFForm}/> }</div>
           <div>
             <TransactionHistory />
           </div>
