@@ -2,9 +2,9 @@ import { actionTypes } from '../actions/account';
 
 const initialState = {
   needAuth: false,
-  address: 'teat1eq4zrstjpwxcysuujynelvvqxht8mkaaexj7vm', // LuongHV
+  address: '', // LuongHV
   cipher: '',
-  privateKey: 'CZva3qsgXCjYyisP47d6UkEYBPP3LFv1CJCf85quoyxi',
+  privateKey: '',
   keyStore: '',
   mnemonic: '',
   encryptedData: '',
@@ -15,10 +15,10 @@ const initialState = {
     isCoinomiEmulate: false,
     isInfinito: false,
     isInfinitoEmulate: false,
-    isWalletConnect: false
+    isWalletConnect: false,
   },
   wcUri: '',
-  userInfo: {}
+  userInfo: {},
 };
 
 const account = (state = initialState, action) => {
@@ -27,16 +27,16 @@ const account = (state = initialState, action) => {
       return Object.assign({}, state, action.data);
     case actionTypes.SET_USER_INFO:
       return Object.assign({}, state, {
-        userInfo: action.data
+        userInfo: action.data,
       });
     case actionTypes.SET_WALLETCONNECT_URI:
       return Object.assign({}, state, {
-        wcUri: action.data
+        wcUri: action.data,
       });
     case actionTypes.SET_NEEDAUTH:
       if (state.flags.isHardware) action.data = false;
       return Object.assign({}, state, {
-        needAuth: action.data
+        needAuth: action.data,
       });
     default:
       return state;

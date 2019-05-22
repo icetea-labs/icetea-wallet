@@ -16,20 +16,20 @@ import { ecc, codec, bech32 } from 'icetea-common';
 const itemsMenu = [
   {
     text: 'ITEA',
-    selected: true
+    selected: true,
   },
   {
     text: 'BTC',
-    selected: false
+    selected: false,
   },
   {
     text: 'ETH',
-    selected: false
+    selected: false,
   },
   {
     text: 'VNI',
-    selected: false
-  }
+    selected: false,
+  },
 ];
 
 const Item = styled.div`
@@ -47,12 +47,13 @@ class SendTransactionOne extends PureComponent {
     super(props);
     this.state = {
       asset: props.defaultAsset || props.assets[0] || {},
-      to: props.to,
-      amount: props.amount,
+      to: '',
+      amount: '',
       addressErr: '',
       memoErr: '',
       memo: props.memo,
-      types: itemsMenu
+      types: itemsMenu,
+      availableBalance: '',
     };
   }
 
@@ -61,14 +62,14 @@ class SendTransactionOne extends PureComponent {
     balanceofVip = await tweb3.getBalance(this.props.address);
     console.log('I want to see BL:', balanceofVip);
     this.setState({
-      availableBalance: toTEA(balanceofVip.balance)
+      availableBalance: toTEA(balanceofVip.balance),
     });
   };
 
   _toChange = e => {
     this.setState({
       to: e,
-      addressErr: ''
+      addressErr: '',
     });
     console.log('toAdd Change CK', e);
   };
@@ -77,19 +78,20 @@ class SendTransactionOne extends PureComponent {
     if (e !== '') {
       this.setState({
         amount: e,
-        amountErr: ''
+        amountErr: '',
       });
     } else {
       this.setState({
-        amount: ''
+        amount: '',
       });
     }
     console.log('amount Change CK', e);
   };
 
   _setMaxValue = () => {
+    let t = this.state.availableBalance;
     this.setState({
-      amount: this.state.availableBalance
+      amount: t,
     });
   };
 
@@ -97,7 +99,7 @@ class SendTransactionOne extends PureComponent {
     const { value } = e.currentTarget;
     this.setState({
       memo: value,
-      memoErr: ''
+      memoErr: '',
     });
     console.log('memo Change CK', value);
   };
@@ -105,7 +107,7 @@ class SendTransactionOne extends PureComponent {
   _submit = () => {
     if (this.state.to === '') {
       this.setState({
-        addressErr: 'To address should not be null'
+        addressErr: 'To address should not be null',
       });
       return;
     }
@@ -115,14 +117,14 @@ class SendTransactionOne extends PureComponent {
       console.log('acc CK', rs);
     } catch {
       this.setState({
-        addressErr: 'Invalid address! Please Try Again'
+        addressErr: 'Invalid address! Please Try Again',
       });
       return;
     }
 
     if (this.state.amount === '') {
       this.setState({
-        amountErr: 'Amount should not be null'
+        amountErr: 'Amount should not be null',
       });
       return;
     }
@@ -131,7 +133,7 @@ class SendTransactionOne extends PureComponent {
       {
         amountErr: '',
         addressErr: '',
-        memoErr: ''
+        memoErr: '',
       },
       () => {
         this.props.next && this.props.next(this.state);
@@ -153,7 +155,7 @@ class SendTransactionOne extends PureComponent {
               <Text>{e.name}</Text>
             </React.Fragment>
           );
-        }
+        },
       };
     });
   };
@@ -174,28 +176,19 @@ class SendTransactionOne extends PureComponent {
       return t.asset === e;
     });
     this.setState({
-      asset: t
+      asset: t,
     });
   };
 
   render() {
-    const {
-      to,
-      amount,
-      asset,
-      memo,
-      amountErr,
-      addressErr,
-      memoErr,
-      availableBalance
-    } = this.state;
+    const { to, amount, asset, memo, amountErr, addressErr, memoErr, availableBalance } = this.state;
     const e = this._genAssetsOptions();
     const u =
       e.find(e => {
         return e.value === asset.asset;
       }) || {};
 
-    // console.log('State ST1 CK', this.state);
+    console.log('amount CK', amount);
 
     return (
       <div>
@@ -203,7 +196,7 @@ class SendTransactionOne extends PureComponent {
           style={{
             borderBottom: 'none',
             marginTop: '20px',
-            paddingBottom: '0'
+            paddingBottom: '0',
           }}
         >
           <p className="title">Select Asset</p>
@@ -280,7 +273,7 @@ SendTransactionOne.defaultProps = {
   amount: '',
   memo: '',
   defaultAsset: {},
-  next() {}
+  next() {},
 };
 
 const mapStateToProps = state => {
@@ -288,7 +281,7 @@ const mapStateToProps = state => {
   return {
     userInfo: account.userInfo,
     privateKey: account.privateKey,
-    address: account.address
+    address: account.address,
   };
 };
 
@@ -296,7 +289,7 @@ const mapDispatchToProps = dispatch => {
   return {
     setAccount: data => {
       dispatch(actions.setAccount(data));
-    }
+    },
   };
 };
 
