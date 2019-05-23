@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { DivSelectWordBase } from '../../elements/utils';
 import { zIndex } from '../../../constants/styles';
-import { Button } from './../../elements';
+import { Button } from "../../elements";
 
 export const Wrapper = styled.div`
   background: #fdfdfd;
@@ -154,8 +154,7 @@ export const IconInOut = styled.i`
 `;
 export const TypeTranfer = styled.div`
   color: ${props => (props.type === 'IN' ? '#00c087' : '#ea0070')};
-  background: ${props =>
-    props.type === 'IN' ? 'rgba(0, 192, 135, 0.1)' : 'rgba(234, 0, 112, 0.1)'};
+  background: ${props => (props.type === 'IN' ? 'rgba(0, 192, 135, 0.1)' : 'rgba(234, 0, 112, 0.1)')};
   position: absolute;
   left: 85px;
   top: 8px;
@@ -167,8 +166,7 @@ export const TypeTranfer = styled.div`
 `;
 export const TypeOrder = styled.div`
   color: ${props => (props.type === 'BUY' ? '#00c087' : '#ea0070')};
-  background: ${props =>
-    props.type === 'BUY' ? 'rgba(0, 192, 135, 0.1)' : 'rgba(234, 0, 112, 0.1)'};
+  background: ${props => (props.type === 'BUY' ? 'rgba(0, 192, 135, 0.1)' : 'rgba(234, 0, 112, 0.1)')};
   height: 24px;
   line-height: 25px;
   text-align: center;

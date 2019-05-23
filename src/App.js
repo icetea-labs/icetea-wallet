@@ -5,16 +5,6 @@ import { theme } from './constants/styles';
 import routes from './router';
 
 class App extends Component {
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <Router>
-          <Switch>{this.showContentMenu(routes)}</Switch>
-        </Router>
-      </ThemeProvider>
-    );
-  }
-
   showContentMenu = routes => {
     var res = null;
     if (routes.length > 0) {
@@ -24,6 +14,16 @@ class App extends Component {
     }
     return res;
   };
+
+  render() {
+    return (
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Switch>{this.showContentMenu(routes)}</Switch>
+        </Router>
+      </ThemeProvider>
+    );
+  }
 }
 
 export default App;

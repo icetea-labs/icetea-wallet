@@ -26,6 +26,7 @@
     "rc-select": "^9.1.0",
     "react": "^16.8.6",
     "react-calendar": "^2.18.1",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6",
     "react-jss": "^8.6.1",
     "react-loadable": "^5.5.0",

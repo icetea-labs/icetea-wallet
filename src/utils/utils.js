@@ -2,22 +2,33 @@ import * as bip39 from 'bip39';
 import HDKey from 'hdkey';
 import { ecc, codec } from 'icetea-common';
 
+export const userStorage = {
+  isWalletConnect: function() {
+    var user = sessionStorage.getItem('user') || '{}';
+    return (user = JSON.parse(user)).flags && user.flags.isWalletConnect;
+  },
+  privateKey: function() {
+    var user = sessionStorage.getItem('user') || '{}';
+    return !!(user = JSON.parse(user)).privateKey;
+  },
+};
+
 export const utils = {
   createAccountWithMneomnic() {
     const mnemonic = bip39.generateMnemonic();
     const privateKey = this.getPrivateKeyFromMnemonic(mnemonic);
-    console.log(privateKey);
+    // console.log(privateKey);
     return {
       privateKey,
       address: ecc.toPubKeyAndAddress(privateKey).address,
-      mnemonic
+      mnemonic,
     };
   },
   recoverAccountFromMneomnic(mnemonic) {
     const privateKey = this.getPrivateKeyFromMnemonic(mnemonic);
     return {
       privateKey,
-      address: ecc.toPubKeyAndAddress(privateKey).address
+      address: ecc.toPubKeyAndAddress(privateKey).address,
     };
   },
   getPrivateKeyFromMnemonic(mnemonic) {
@@ -29,7 +40,7 @@ export const utils = {
     const hdkey = HDKey.fromMasterSeed(seed);
     return codec.toKeyString(hdkey.privateKey);
     // return privateKey ? u.default.fromSeed(privateKey).derivePath("44'/714'/0'/0/0").privateKey.toString("hex") : privateKey.toString("hex")
-  }
+  },
 };
 
 export const sendTranAmount = {
@@ -45,7 +56,7 @@ export const sendTranAmount = {
       num = num.substring(0, a + 1);
     }
     return Math.max(0, (num ? num.length : 0) - (temp[2] ? +temp[2] : 0));
-  }
+  },
 };
 export const decimal = 6;
 

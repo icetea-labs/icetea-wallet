@@ -203,7 +203,7 @@ class index extends PureComponent {
         op: '',
         blockHeight: e.blockHeight,
         fromAddr: e.from,
-        toAddr: e.to || 'to',
+        toAddr: e.to || '',
       };
     });
     return dataSource;
