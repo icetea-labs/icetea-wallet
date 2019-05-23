@@ -2,21 +2,21 @@ import React, { Component } from 'react';
 import './Balances.css';
 import QRCode from 'qrcode.react';
 import { connect } from 'react-redux';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Layout from '../../layout';
 import SendTransaction from './SendTransaction';
+
 import tweb3 from '../../../service/tweb3';
 import TransactionHistory from '../Transaction';
 import { Icon } from '../../elements/utils';
 import { toTEA } from '../../../utils/utils';
 import PuInputPassword from './PuInputPassword';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import notifi from '../../elements/Notification';
 
 let user = sessionStorage.getItem('user');
 user = (user && JSON.parse(user)) || {};
 
 class Balances extends Component {
-  
   constructor() {
     super();
     this.state = {
@@ -28,11 +28,11 @@ class Balances extends Component {
 
   componentWillMount() {
     this.renderTbl();
-    console.log('WillMount', this.props.address);
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.address !== this.props.address) {
+    const { props } = this;
+    if (prevProps.address !== props.address) {
       this.renderTbl();
     }
   }
@@ -50,20 +50,20 @@ class Balances extends Component {
   };
 
   _closeSendModal = () => {
-    this.setState({
-      showSend: !this.state.showSend,
-    });
+    this.setState(prevState => ({
+      showSend: !prevState.showSend,
+    }));
   };
 
   closeCFForm = () => {
-    this.setState({
-      showCFForm: !this.state.showCFForm,
-    });
+    this.setState(prevState => ({
+      showCFForm: !prevState.showCFForm,
+    }));
   };
 
   onCFSuccess = () => {
     this.sendTimeOut = setTimeout(() => {
-      this.setState({ showSend: !this.state.showSend });
+      this.setState(prevState => ({ showSend: !prevState.showSend }));
     }, 1e3);
   };
 
@@ -73,11 +73,12 @@ class Balances extends Component {
     notifi.info('Copy successful!');
   };
 
-  renderTbl = async () => { 
+  renderTbl = async () => {
+    const { props } = this;
     try {
-      const address = this.props.address
+      const address = props.address;
       const result = await tweb3.getBalance(address);
-      console.log('I want to see balance:', result.balance);
+      // console.log('I want to see balance:', result.balance);
       const tblTmp = [
         {
           name: 'IceTea Chain Native Token',
@@ -108,6 +109,7 @@ class Balances extends Component {
             <td style={{ width: '10%' }}>
               <div className="sc-hkaZBZ sc-hqGPoI feIRPa">
                 <button
+                  type="button"
                   className="sc-bZQynM sc-MYvYT sc-jbWsrJ ircCEl"
                   onClick={address ? this.viewSendForm : this.viewCFForm}
                 >
@@ -119,15 +121,16 @@ class Balances extends Component {
         )),
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
   render() {
-    const { filterAssets, showSend, sendingAsset, showMobileCode, hideZeroBalance, page, showCFForm } = this.state;
+    const { props } = this;
+    const { showSend, sendingAsset, showCFForm, showTbl } = this.state;
     const { privateKey } = this.props;
     const address = user.address;
-    console.log('CHECK render', this.props.address);
+    // console.log('CHECK render', props.address);
     return (
       <Layout>
         <div className="sc-lnrBVv kvEeOF">
@@ -150,7 +153,7 @@ class Balances extends Component {
                     </div>
                   </div>
                   <div className="sc-fATqzn cNStFF">
-                  <CopyToClipboard text={address} onCopy={this._copyAddress}>
+                    <CopyToClipboard text={address} onCopy={this._copyAddress}>
                       <span title="copy address">
                         <Icon type="copy" size={18} />
                       </span>
@@ -170,7 +173,7 @@ class Balances extends Component {
                         <th />
                       </tr>
                     </thead>
-                    <tbody className="sc-fvLVrH gjcHsq">{this.state.showTbl}</tbody>
+                    <tbody className="sc-fvLVrH gjcHsq">{showTbl}</tbody>
                   </table>
                 </div>
               </div>
@@ -179,7 +182,7 @@ class Balances extends Component {
               <SendTransaction
                 onSendSuccess={this.renderTbl}
                 bncClient=""
-                assets={this.props._buildBalances}
+                assets={props._buildBalances}
                 privateKey={privateKey}
                 sendingAsset={sendingAsset}
                 // address={user.address}
@@ -229,11 +232,7 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {};
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(Balances);
