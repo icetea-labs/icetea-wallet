@@ -6,9 +6,11 @@ import Layout from '../../layout';
 import SendTransaction from './SendTransaction';
 import tweb3 from '../../../service/tweb3';
 import TransactionHistory from '../Transaction';
-import CopyText from '../../elements/CopyText';
+import { Icon } from '../../elements/utils';
 import { toTEA } from '../../../utils/utils';
 import PuInputPassword from './PuInputPassword';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import notifi from '../../elements/Notification';
 
 let user = sessionStorage.getItem('user');
 user = (user && JSON.parse(user)) || {};
@@ -67,6 +69,10 @@ class Balances extends Component {
 
   _buildBalances = () => {};
 
+  _copyAddress = function() {
+    notifi.info('Copy successful!');
+  };
+
   renderTbl = async () => { 
     try {
       const address = this.props.address
@@ -120,7 +126,7 @@ class Balances extends Component {
   render() {
     const { filterAssets, showSend, sendingAsset, showMobileCode, hideZeroBalance, page, showCFForm } = this.state;
     const { privateKey } = this.props;
-    const address = this.props.address ? user.address : this.props.address;
+    const address = user.address;
     console.log('CHECK render', this.props.address);
     return (
       <Layout>
@@ -136,14 +142,20 @@ class Balances extends Component {
                 </div>
                 <div className="sc-jDwBTQ cPxcHa">
                   <div className="sc-fATqzn cNStFF">
-                    <i className="fa fa-qrcode sc-dnqmqq dJRkzW" aria-hidden="true" size="18" />
+                    <Icon type="qrcode" size={18} />
                     <div className="qrCode">
                       <div size="174" className="qrcode-box sc-iSDuPN iulYhq">
                         <QRCode size={174} className="qrForm" value={address} />
                       </div>
                     </div>
                   </div>
-                  <CopyText text={address} />
+                  <div className="sc-fATqzn cNStFF">
+                  <CopyToClipboard text={address} onCopy={this._copyAddress}>
+                      <span title="copy address">
+                        <Icon type="copy" size={18} />
+                      </span>
+                    </CopyToClipboard>
+                  </div>
                 </div>
               </div>
               <div>
