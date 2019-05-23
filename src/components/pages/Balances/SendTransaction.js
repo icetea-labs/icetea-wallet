@@ -2,15 +2,7 @@ import React, { PureComponent } from 'react';
 import QueueAnim from 'rc-queue-anim';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import {
-  WrapperSend,
-  OutBox,
-  Title,
-  WrapperTab,
-  DisplayTab,
-  Tab,
-  ButtonCus
-} from './StyledTransaction';
+import { WrapperSend, OutBox, Title, WrapperTab, DisplayTab, Tab, ButtonCus } from './StyledTransaction';
 import { ButtonWrapper } from './StyledSTOne';
 import { WrapperBtnClose, Icon } from '../../elements/utils';
 
@@ -23,6 +15,7 @@ import Notification from 'rc-notification';
 import '../../../assets/styles/notification.css';
 import successIc from '../../../assets/img/success-icon.png';
 import { toUNIT } from '../../../utils/utils';
+import PuInputPassword from './PuInputPassword';
 
 let notification = null;
 Notification.newInstance({}, n => (notification = n));
@@ -34,31 +27,36 @@ class SendTransaction extends PureComponent {
       asset: null,
       to: '',
       step: 'one',
-      amount: '',
-      memo: ''
+      // amount: '',
+      // memo: '',
     };
   }
 
   _next = e => {
     this.setState(Object.assign({}, { step: 'two' }, e));
 
-    console.log('State CK', this.state);
-    console.log('Props CK', this.props);
+    // console.log('State CK', this.state);
+    // console.log('Props CK', this.props);
   };
 
   _gotoStepOne = () => {
     this.setState({
-      step: 'one'
+      step: 'one',
+      amount: this.state.amount,
+      memo: this.state.memo,
     });
   };
 
   _transfer = async () => {
     const { amount, to } = this.state;
-    const { privateKey } = this.props;
+    const { privateKey, address } = this.props;
 
     tweb3.wallet.importAccount(privateKey);
     console.log('privateKey', privateKey);
+    let balanceofVip = await tweb3.getBalance(address);
+    console.log('CK login balance:', balanceofVip);
     const amountToUnit = toUNIT(parseFloat(amount));
+    console.log('CK amount:', amountToUnit);
     await tweb3.transfer(to, amountToUnit);
 
     notification.notice({
@@ -70,7 +68,7 @@ class SendTransaction extends PureComponent {
       ),
       onClose() {
         console.log('notify  close');
-      }
+      },
     });
 
     this.props.onSendSuccess();
@@ -80,8 +78,7 @@ class SendTransaction extends PureComponent {
   render() {
     const { step, to, amount, asset, memo, isSending } = this.state;
     const { close, assets, address, bncClient, sendingAsset } = this.props;
-    console.log('State CK', this.state);
-    // console.log('Props CK', this.props)
+    console.log('Send Transaction State CK', this.state);
     return (
       <QueueAnim animConfig={{ opacity: [1, 0] }}>
         <WrapperSend key={1}>
@@ -126,12 +123,7 @@ class SendTransaction extends PureComponent {
                     <ButtonCus onClick={this._gotoStepOne}>
                       <span>Previous</span>
                     </ButtonCus>
-                    <Button
-                      loading={isSending}
-                      onClick={this._transfer}
-                      width="150px"
-                      height="34px"
-                    >
+                    <Button loading={isSending} onClick={this._transfer} width="150px" height="34px">
                       <span>Send Transaction</span>
                     </Button>
                   </ButtonWrapper>
@@ -146,11 +138,12 @@ class SendTransaction extends PureComponent {
 }
 
 SendTransaction.defaultProps = {
-  close() {},
+  onSendSuccess: function() {},
+  close: function() {},
   assets: [],
   address: '',
   privateKey: '',
-  sendingAsset: {}
+  sendingAsset: {},
 };
 
 export default SendTransaction;

@@ -475,7 +475,7 @@ class Header extends PureComponent {
 Header.defaultProps = {
   dispatch: function() {},
   privateKey: '',
-  address: 'teat1eq4zrstjpwxcysuujynelvvqxht8mkaaexj7vm',
+  address: '',
   encryptedData: null,
   cipher: '',
   needAuth: false,

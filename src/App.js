@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
+// import { browserHistory } from '../src/history';
 import { theme } from './constants/styles';
 import routes from './router';
 
@@ -18,9 +19,9 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <Router>
+        <BrowserRouter>
           <Switch>{this.showContentMenu(routes)}</Switch>
-        </Router>
+        </BrowserRouter>
       </ThemeProvider>
     );
   }
