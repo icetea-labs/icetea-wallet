@@ -1,24 +1,16 @@
 import React, { PureComponent } from 'react';
 import QueueAnim from 'rc-queue-anim';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { WrapperSend, OutBox, Title, WrapperTab, DisplayTab, Tab, ButtonCus } from './StyledTransaction';
 import { ButtonWrapper } from './StyledSTOne';
 import { WrapperBtnClose, Icon } from '../../elements/utils';
-
+import notifi from '../../elements/Notification';
 import SendTransactionOne from './SendTransactionOne';
 import SendTransactionTwo from './SendTransactionTwo';
-import * as actions from '../../../store/actions/account';
 import { Button } from '../../elements/Button';
 import tweb3 from '../../../service/tweb3';
 import Notification from 'rc-notification';
 import '../../../assets/styles/notification.css';
-import successIc from '../../../assets/img/success-icon.png';
 import { toUNIT } from '../../../utils/utils';
-import PuInputPassword from './PuInputPassword';
-
-let notification = null;
-Notification.newInstance({}, n => (notification = n));
 
 class SendTransaction extends PureComponent {
   constructor(props) {
@@ -34,9 +26,6 @@ class SendTransaction extends PureComponent {
 
   _next = e => {
     this.setState(Object.assign({}, { step: 'two' }, e));
-
-    // console.log('State CK', this.state);
-    // console.log('Props CK', this.props);
   };
 
   _gotoStepOne = () => {
@@ -58,18 +47,7 @@ class SendTransaction extends PureComponent {
     const amountToUnit = toUNIT(parseFloat(amount));
     console.log('CK amount:', amountToUnit);
     await tweb3.transfer(to, amountToUnit);
-
-    notification.notice({
-      content: (
-        <span className="notification">
-          <img width={25} height={25} src={successIc} alt="" />
-          Send successful!
-        </span>
-      ),
-      onClose() {
-        console.log('notify  close');
-      },
-    });
+    notifi.info('Send successful!');
 
     this.props.onSendSuccess();
     this.props.close();
