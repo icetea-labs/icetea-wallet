@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
   padding: 30px 0;
 `;
 
@@ -104,6 +102,10 @@ export const InputText = styled.input`
     font-size: 13px;
     border: 1px solid red;
     margin-bottom: 5px;
+  }
+  @media (max-width: 640px) {
+    width: 100%;
+    height: 30px;
   }
 `;
 
