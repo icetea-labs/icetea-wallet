@@ -253,29 +253,22 @@ const IconBase = styled.i`
   }
 `;
 export const Icon = props => {
-  var { size, color, type, hoverColor } = props;
-  return (
-    <IconBase
-      className={'iconfont icon-'.concat(type)}
-      size={size || '16px'}
-      color={color}
-      hoverColor={hoverColor}
-    />
-  );
+  const { size, color, type, hoverColor } = props;
+  return <IconBase className={'iconfont icon-'.concat(type)} size={size || '16px'} color={color} hoverColor={hoverColor} />;
 };
 Icon.defaultProps = {
   size: 16,
   color: '',
-  hoverColor: ''
+  hoverColor: '',
 };
 export const FontDin = props => {
-  var Item = styled.span`
+  const Item = styled.span`
     font-family: 'DIN';
   `;
   return <Item>{props.value}</Item>;
 };
 FontDin.defaultProps = {
-  value: ''
+  value: '',
 };
 // For create
 export const BtnActive = styled.button`
@@ -501,11 +494,11 @@ const HashLoading = styled.div`
 `;
 export class TxHash extends PureComponent {
   _gotoExplorer = () => {
-    var e = this.props.hash;
+    const e = this.props.hash;
     // window.open("".concat(f.a, "/tx/").concat(e), "blank");
   };
   render() {
-    var { hash, width } = this.props;
+    const { hash, width } = this.props;
     return (
       <div>
         {hash ? (
@@ -524,5 +517,25 @@ export class TxHash extends PureComponent {
 }
 TxHash.defaultProps = {
   hash: '',
-  width: ''
+  width: '',
+};
+
+export const checkDevice = {
+  URI: function(e) {
+    var t = new RegExp('(^|&)'.concat(e, '=([^&]*)(&|$)')),
+      n = window.location.search.substr(1).match(t);
+    return null != n ? decodeURIComponent(n[2]) : null;
+  },
+  isMobile: function() {
+    return /mobile|phone|android|pad/i.test(window.navigator.userAgent);
+  },
+  ios: function() {
+    return /iphone|ipad/i.test(window.navigator.userAgent);
+  },
+  redirect: function() {
+    var e = window.location,
+      t = e.origin,
+      n = e.pathname;
+    window.location.href = t + n;
+  },
 };

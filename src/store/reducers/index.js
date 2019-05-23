@@ -8,7 +8,7 @@ const myReducer = combineReducers({
   create,
   account,
   transaction,
-  globalData
+  globalData,
 });
 
 export default myReducer;

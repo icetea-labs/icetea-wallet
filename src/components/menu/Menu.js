@@ -71,50 +71,47 @@ const UlLink = styled.ul`
 const menus = [
   {
     text: 'Explorer',
-    path: '/explorer'
+    path: '/explorer',
   },
   {
     text: 'Transaction',
-    path: '/transactionHistory'
+    path: '/transactionHistory',
   },
   {
     text: 'Orders',
     subMenus: [
       {
         text: 'Open Orders',
-        path: '/openOrders'
+        path: '/openOrders',
       },
       {
         text: 'Order History',
-        path: '/orderHistory'
+        path: '/orderHistory',
       },
       {
         text: 'Trade History',
-        path: '/tradeHistory'
+        path: '/tradeHistory',
       },
       {
         text: 'Fee History',
-        path: '/feeHistory'
-      }
-    ]
+        path: '/feeHistory',
+      },
+    ],
   },
   {
-    text: 'IceteaDapp',
-    path: '/botStore'
+    text: 'Bots Store',
+    path: '/botStore',
   },
   {
     text: 'Balances',
-    path: '/balances'
-  }
+    path: '/balances',
+  },
 ];
 
 class Menu extends PureComponent {
-  render() {
-    return <UlLink>{this.buildMenus(menus)}</UlLink>;
-  }
-
   clickMenu = e => {
-    this.props.history.push(e);
+    const { history } = this.props;
+    history.push(e);
   };
 
   buildSubMenus = subMenus => {
@@ -138,9 +135,7 @@ class Menu extends PureComponent {
         ? (res = (
             <li className="withSubMenus" key={menus.subMenus.text}>
               <span>{menus.subMenus.text}</span>
-              <SubMenuWapper className="subMenus">
-                {this.buildSubMenus(menus.subMenus)}
-              </SubMenuWapper>
+              <SubMenuWapper className="subMenus">{this.buildSubMenus(menus.subMenus)}</SubMenuWapper>
               <i className="triangle" />
             </li>
           ))
@@ -154,6 +149,9 @@ class Menu extends PureComponent {
     }
     return res;
   };
+  render() {
+    return <UlLink>{this.buildMenus(menus)}</UlLink>;
+  }
 }
 
 const mapStateToProps = state => {

@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
-import { browserHistory } from '../src/history';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
+// import { browserHistory } from '../src/history';
 import { theme } from './constants/styles';
 import routes from './router';
 
 class App extends Component {
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <Router history={browserHistory}>
-          <Switch>{this.showContentMenu(routes)}</Switch>
-        </Router>
-      </ThemeProvider>
-    );
-  }
-
   showContentMenu = routes => {
     var res = null;
     if (routes.length > 0) {
@@ -25,6 +15,16 @@ class App extends Component {
     }
     return res;
   };
+
+  render() {
+    return (
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Switch>{this.showContentMenu(routes)}</Switch>
+        </BrowserRouter>
+      </ThemeProvider>
+    );
+  }
 }
 
 export default App;

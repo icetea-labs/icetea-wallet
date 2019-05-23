@@ -3,11 +3,22 @@ import HDKey from 'hdkey';
 import { ecc, codec } from 'icetea-common';
 import decode from './decode';
 
+export const userStorage = {
+  isWalletConnect: function() {
+    var user = sessionStorage.getItem('user') || '{}';
+    return (user = JSON.parse(user)).flags && user.flags.isWalletConnect;
+  },
+  privateKey: function() {
+    var user = sessionStorage.getItem('user') || '{}';
+    return !!(user = JSON.parse(user)).privateKey;
+  },
+};
+
 export const utils = {
   createAccountWithMneomnic() {
     const mnemonic = bip39.generateMnemonic();
     const privateKey = this.getPrivateKeyFromMnemonic(mnemonic);
-    console.log(privateKey);
+    // console.log(privateKey);
     return {
       privateKey,
       address: ecc.toPubKeyAndAddress(privateKey).address,
