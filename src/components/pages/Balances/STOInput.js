@@ -66,7 +66,7 @@ export default class STOInput extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      value: ''
+      value: props.defaultValue,
     };
   }
 
@@ -78,33 +78,31 @@ export default class STOInput extends PureComponent {
     var stateValue = this.state.value;
     var value = e.currentTarget.value.trim();
 
-    // this.setState({
-    //   value: e.target.value
-    // })
-
     if (this._getDecimal(value) <= 8) {
       stateValue = value;
-      this.setState(
-        {
-          value: stateValue
-        },
-        () => this.props.onChange(stateValue, false)
-      );
     }
+    this.setState(
+      {
+        value: stateValue,
+      },
+      () => this.props.onChange(stateValue)
+    );
   };
 
-  // componentWillReceiveProps(nextProps){
-  //   if (this.props !== nextProps){
-  //     this.setState({
-  //       value:
-  //     })
-  //   }
-  // }
+  componentDidUpdate = preProps => {
+    const t = this.props.defaultValue;
+    const n = this.state.value;
+    preProps.defaultValue !== t &&
+      parseFloat(n) !== parseFloat(t) &&
+      this.setState({
+        value: t,
+      });
+  };
 
   _clear = e => {
     this.setState(
       {
-        value: ''
+        value: '',
       },
       () => this.props.onChange('', false)
     );
@@ -118,13 +116,7 @@ export default class STOInput extends PureComponent {
       <InputLabel>
         <p className={value || defaultValue ? 'label label-value' : 'label'}>{title}</p>
         <div>
-          <input
-            type={type}
-            placeholder={title}
-            value={value}
-            autoFocus={autoFocus}
-            onChange={this._textChange}
-          />
+          <input type={type} placeholder={title} value={value} autoFocus={autoFocus} onChange={this._textChange} />
           <div className="border-bottom" />
           {(!!value || !!defaultValue) && (
             <Clear onClick={this._clear}>
@@ -143,5 +135,5 @@ STOInput.defaultProps = {
   type: 'text',
   value: '',
   defaultValue: '',
-  autoFocus: false
+  autoFocus: false,
 };

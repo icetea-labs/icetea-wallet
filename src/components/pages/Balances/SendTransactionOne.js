@@ -90,6 +90,7 @@ class SendTransactionOne extends PureComponent {
 
   _setMaxValue = () => {
     let t = this.state.availableBalance;
+    console.log('Avai CK', t);
     this.setState({
       amount: t,
     });
@@ -188,7 +189,7 @@ class SendTransactionOne extends PureComponent {
         return e.value === asset.asset;
       }) || {};
 
-    console.log('amount CK', amount);
+    console.log('Render amount CK', amount);
 
     return (
       <div>

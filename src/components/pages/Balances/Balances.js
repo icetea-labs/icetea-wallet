@@ -10,7 +10,11 @@ import CopyText from '../../elements/CopyText';
 import { toTEA } from '../../../utils/utils';
 import PuInputPassword from './PuInputPassword';
 
+let user = sessionStorage.getItem('user');
+user = (user && JSON.parse(user)) || {};
+
 class Balances extends Component {
+  
   constructor() {
     super();
     this.state = {
@@ -25,11 +29,15 @@ class Balances extends Component {
     console.log('WillMount', this.props.address);
   }
 
-  shouldComponentUpdate() {
-    // Hàm này thực hiện khi state và props thay đổi
-    // Hàm này sẽ trả về kết quả true/false, bạn sẽ cần sử dụng đến hàm này để xử lý xem có cần update component không
-    this.renderTbl();
+  componentDidUpdate(prevProps) {
+    if (prevProps.address !== this.props.address) {
+      this.renderTbl();
+    }
   }
+
+  componentWillUnmount = () => {
+    clearTimeout(this.sendTimeOut);
+  };
 
   viewSendForm = () => {
     this.setState({ showSend: true, showCFForm: false });
@@ -52,15 +60,17 @@ class Balances extends Component {
   };
 
   onCFSuccess = () => {
-    this.shouldComponentUpdate();
-    // this.setState({ showSend: true });
-  }
+    this.sendTimeOut = setTimeout(() => {
+      this.setState({ showSend: !this.state.showSend });
+    }, 1e3);
+  };
 
   _buildBalances = () => {};
 
-  renderTbl = async () => {
+  renderTbl = async () => { 
     try {
-      const result = await tweb3.getBalance(this.props.address);
+      const address = this.props.address
+      const result = await tweb3.getBalance(address);
       console.log('I want to see balance:', result.balance);
       const tblTmp = [
         {
@@ -91,8 +101,9 @@ class Balances extends Component {
             </td>
             <td style={{ width: '10%' }}>
               <div className="sc-hkaZBZ sc-hqGPoI feIRPa">
-                <button className="sc-bZQynM sc-MYvYT sc-jbWsrJ ircCEl"
-                  onClick={this.props.address ? this.viewSendForm : this.viewCFForm}
+                <button
+                  className="sc-bZQynM sc-MYvYT sc-jbWsrJ ircCEl"
+                  onClick={address ? this.viewSendForm : this.viewCFForm}
                 >
                   Send
                 </button>
@@ -109,10 +120,8 @@ class Balances extends Component {
   render() {
     const { filterAssets, showSend, sendingAsset, showMobileCode, hideZeroBalance, page, showCFForm } = this.state;
     const { privateKey } = this.props;
-    let user = sessionStorage.getItem('user');
-    user = user && JSON.parse(user) || {};
-    const address = user.address;
-    console.log('CHECK render', this.props.address)
+    const address = this.props.address ? user.address : this.props.address;
+    console.log('CHECK render', this.props.address);
     return (
       <Layout>
         <div className="sc-lnrBVv kvEeOF">
@@ -154,7 +163,7 @@ class Balances extends Component {
                 </div>
               </div>
             </div>
-            { showSend && (
+            {showSend && (
               <SendTransaction
                 onSendSuccess={this.renderTbl}
                 bncClient=""
@@ -169,7 +178,7 @@ class Balances extends Component {
               />
             )}
           </div>
-            <div>{showCFForm && <PuInputPassword onCFSuccess={this.onCFSuccess} close={this.closeCFForm}/> }</div>
+          <div>{showCFForm && <PuInputPassword onCFSuccess={this.onCFSuccess} close={this.closeCFForm} />}</div>
           <div>
             <TransactionHistory />
           </div>

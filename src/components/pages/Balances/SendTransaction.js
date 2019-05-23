@@ -27,22 +27,23 @@ class SendTransaction extends PureComponent {
       asset: null,
       to: '',
       step: 'one',
-      amount: '',
-      memo: '',
-      showPuInput: false,
+      // amount: '',
+      // memo: '',
     };
   }
 
   _next = e => {
     this.setState(Object.assign({}, { step: 'two' }, e));
 
-    console.log('State CK', this.state);
-    console.log('Props CK', this.props);
+    // console.log('State CK', this.state);
+    // console.log('Props CK', this.props);
   };
 
   _gotoStepOne = () => {
     this.setState({
       step: 'one',
+      amount: this.state.amount,
+      memo: this.state.memo,
     });
   };
 
@@ -77,8 +78,7 @@ class SendTransaction extends PureComponent {
   render() {
     const { step, to, amount, asset, memo, isSending } = this.state;
     const { close, assets, address, bncClient, sendingAsset } = this.props;
-    console.log('State CK', this.state);
-    // console.log('Props CK', this.props)
+    console.log('Send Transaction State CK', this.state);
     return (
       <QueueAnim animConfig={{ opacity: [1, 0] }}>
         <WrapperSend key={1}>

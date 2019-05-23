@@ -143,7 +143,7 @@ class PuInputPassword extends PureComponent {
             privateKey: privateKey,
             cipher: pass,
             flags: userInfo.flags,
-            address: address
+            address: address,
           });
 
           this.timeoutHanle2 = setTimeout(() => {
@@ -153,16 +153,17 @@ class PuInputPassword extends PureComponent {
             triggerElement && triggerElement.click();
             this.props.close();
           }, 800);
+          this.props.onCFSuccess();
         } catch (log) {
           console.log('Wrong Password!', log);
           this.setState({
             errMsg: 'Wrong Password!',
             loading: false,
           });
+          return;
         }
       }, 100);
     }
-    this.props.onCFSuccess();
   };
 
   _keydown = e => {
@@ -214,7 +215,7 @@ const mapStateToProps = state => {
     privateKey: account.privateKey,
     cipher: account.cipher,
     flags: account.flags,
-    address: account.address
+    address: account.address,
   };
 };
 
