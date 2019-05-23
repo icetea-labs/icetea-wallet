@@ -350,20 +350,15 @@ class Header extends PureComponent {
     const { history } = this.props;
     history.push('/');
   };
-
+  // onClick={() => this.clickMenu(sub.path)}
   _buildSubMenus = subMenus => {
     return subMenus.map(sub => {
       return (
-        <li key={sub.text} onClick={() => this.clickMenu(sub.path)} role="presentation">
-          {sub.text}
+        <li key={sub.text}>
+          <Link to={sub.path}>{sub.text}</Link>
         </li>
       );
     });
-  };
-
-  clickMenu = e => {
-    const { history } = this.props;
-    history.push(e);
   };
 
   render() {
@@ -379,8 +374,8 @@ class Header extends PureComponent {
           <i className="triangle" />
         </li>
       ) : (
-        <li key={el.text} onClick={() => this.clickMenu(el.path)} role="presentation">
-          <span>{el.text}</span>
+        <li key={el.text}>
+          <Link to={el.path}>{el.text}</Link>
         </li>
       );
     });
