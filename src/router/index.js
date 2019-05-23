@@ -81,10 +81,10 @@ const index = [
     }),
   },
   {
-    path: '/balances',
+    path: '/profile',
     exact: true,
     component: Loadable({
-      loader: () => import('../components/pages/Balances'),
+      loader: () => import('../components/pages/Profile/Profile'),
       loading: Loading,
       delay: 500,
       timeout: 5e4,

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
+import { browserHistory } from '../src/history';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './constants/styles';
 import routes from './router';
@@ -8,7 +9,7 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <Router>
+        <Router history={browserHistory}>
           <Switch>{this.showContentMenu(routes)}</Switch>
         </Router>
       </ThemeProvider>

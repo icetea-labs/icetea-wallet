@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { browserHistory } from '../../history';
 import logo from '../../assets/img/logo.png';
 import add from '../../assets/img/add.png';
 import imported from '../../assets/img/import.png';
@@ -67,6 +68,7 @@ class AccoutMenu extends Component {
 
   setSelectedAccount = id => {
     this.setState({ selectedAccount: id });
+    browserHistory.push('/profile')
   };
 
   render() {
