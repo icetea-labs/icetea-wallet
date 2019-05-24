@@ -6,21 +6,21 @@ import { txApi } from '../../api';
 export const actionTypes = {
   TX_HISTORY_FETCHING: 'TX_HISTORY_FETCHING',
   TX_HISTORY_SUCCESS: 'TX_HISTORY_SUCCESS',
-  TX_HISTORY_FAILURE: 'TX_HISTORY_FAILURE'
+  TX_HISTORY_FAILURE: 'TX_HISTORY_FAILURE',
 };
 /*
  * action creators
  */
 const getData = () => ({
-  type: actionTypes.TX_HISTORY_FETCHING
+  type: actionTypes.TX_HISTORY_FETCHING,
 });
 const getDataSuccess = data => ({
   type: actionTypes.TX_HISTORY_SUCCESS,
-  data
+  data,
 });
 const getDataFailure = data => ({
   type: actionTypes.TX_HISTORY_FAILURE,
-  data
+  data,
 });
 
 export const getTxHistory = (address, conditions, options) => {

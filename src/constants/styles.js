@@ -12,7 +12,7 @@ const size = {
   fontWeightLight: 300,
   fontWeightRegular: 400,
   fontWeightMedium: 600,
-  fontWeightBold: 700
+  fontWeightBold: 700,
 };
 
 const color = {
@@ -32,7 +32,7 @@ const color = {
   maLine: '#f0b90b',
   ma1: '#ffc200',
   ma2: '#6600cc',
-  ma3: '#cc0066'
+  ma3: '#cc0066',
 };
 
 export const theme = Object.assign({}, size, {
@@ -108,7 +108,7 @@ export const theme = Object.assign({}, size, {
   lineColor: '#f0f0f0',
   sectionBorderRadius: '4px',
   sectionBoxShadow: '-4px 4px 10px 0px rgba(0,0,0,0.1)',
-  tradingViewStyle: { color }
+  tradingViewStyle: { color },
 });
 export const zIndex = {
   negitive: -1,
@@ -133,5 +133,5 @@ export const zIndex = {
   modal: 1100,
   loading: 1100,
   fullScreen: 1100,
-  routeLoading: 1200
+  routeLoading: 1200,
 };

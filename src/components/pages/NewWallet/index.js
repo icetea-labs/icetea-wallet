@@ -15,7 +15,7 @@ import pencil from '../../../assets/img/pencil.svg';
 import logo from '../../../assets/img/logo.svg';
 
 import { Header1 } from '../../elements/utils';
-import { PuConfirmMnemonic, PuShowPrivateKey, GlobaLoading } from '../../elements';
+import { PuConfirmMnemonic, PuShowPrivateKey } from '../../elements';
 
 import FooterCus from '../FooterCus';
 
@@ -88,7 +88,6 @@ class index extends PureComponent {
     confirmMnemonic: PropTypes.bool,
     showKeystoreText: PropTypes.bool,
     dispatch: PropTypes.func,
-    isLoading: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -101,7 +100,6 @@ class index extends PureComponent {
     showKeystoreText: false,
     dispatch() {},
     history: {},
-    isLoading: false,
   };
 
   _closeModal = () => {
@@ -122,7 +120,7 @@ class index extends PureComponent {
   };
 
   render() {
-    let { confirmMnemonic, showPrivateKey, privateKey, step, isLoading } = this.props;
+    let { confirmMnemonic, showPrivateKey, privateKey, step } = this.props;
     // console.log('00-step', showPrivateKey);
     return (
       // <ThemeProvider theme={ theme }>
@@ -149,7 +147,6 @@ class index extends PureComponent {
             </DivBox1>
           </DivWallet>
         </QueueAnim>
-        {isLoading && <GlobaLoading />}
         {showPrivateKey && <PuShowPrivateKey privateKey={privateKey} close={this._closeModal} />}
         {confirmMnemonic && (
           <PuConfirmMnemonic okText="Yes" cancelText="Go Back" confirm={this._continue} cancel={this._hide}>
@@ -174,7 +171,6 @@ const mapStateToProps = state => {
     keyStoreText: e.keyStoreText,
     showPrivateKey: e.showPrivateKey,
     confirmMnemonic: e.confirmMnemonic,
-    isLoading: state.globalData.isLoading,
   };
 };
 

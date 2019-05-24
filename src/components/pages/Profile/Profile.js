@@ -52,10 +52,10 @@ class Profile extends Component {
   }
 
   handleWalletAddress = address => {
-    const { cipher } = this.props;
+    // const { cipher } = this.props;
     let user = sessionStorage.getItem('user');
     user = (user && JSON.parse(user)) || {};
-    const privateKey = utils.getPrivateKeyFromKeyStore(user.privateKey, cipher);
+    const privateKey = utils.getPrivateKeyFromKeyStore(user.privateKey, 'Tinduong11@');
     tweb3.wallet.importAccount(privateKey);
     this.setState({
       selectedWallet: address,

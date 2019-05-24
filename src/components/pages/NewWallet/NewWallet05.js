@@ -42,26 +42,18 @@ const FoolterBtn = styled.div`
 `;
 
 class NewWallet05 extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedWords: [],
-      shuffledWords: [],
-      isSequenceCorrect: true
-    };
-  }
-
   _gotoUnlock = () => {
-    this.props.setStep('inputPassword');
-    this.props.history.push('/unlock');
+    const { props } = this;
+    props.setStep('inputPassword');
+    props.history.push('/unlock');
   };
 
   render() {
     return (
       <div>
         <WrapperImg>
-          <img src={success} />
-          <Title>You're all set!</Title>
+          <img src={success} alt="" />
+          <Title>You&rsquo;re all set!</Title>
           <Desc>
             <li>You are ready to use the Ice-Tea Wallet and</li>
           </Desc>
@@ -84,7 +76,7 @@ class NewWallet05 extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    keyStore: state.create.keyStore
+    keyStore: state.create.keyStore,
   };
 };
 
@@ -92,13 +84,13 @@ const mapDispatchToProps = dispatch => {
   return {
     setStep: step => {
       dispatch(actions.setStep(step));
-    }
+    },
   };
 };
 
 NewWallet05.defaultProps = {
   setStep() {},
-  history: {}
+  history: {},
 };
 
 export default connect(

@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { Icon } from './utils';
 import { zIndex } from '../../constants/styles';
 
@@ -109,41 +108,36 @@ const WrapperClear = styled.div`
   cursor: pointer;
 `;
 
-export class InputPassword extends PureComponent {
+class InputPassword extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       agree: false,
       password: '',
-      showPassword: false
+      showPassword: false,
     };
   }
 
-  _clear = e => {
-    this.setState(
-      {
-        password: ''
-      },
-      () => this.props.onChange('', false)
-    );
+  _clear = () => {
+    const { props } = this;
+    this.setState({ password: '' }, () => props.onChange('', false));
   };
-  _showPassword = e => {
-    var showPassword = this.state.showPassword;
+
+  _showPassword = () => {
+    const { state } = this;
+    let showPassword = state.showPassword;
     this.setState({
-      showPassword: !showPassword
+      showPassword: !showPassword,
     });
   };
-  _passwordChange = e => {
-    var value = e.currentTarget.value.trim();
+
+  _passwordChange = event => {
+    const { props } = this;
+    var value = event.currentTarget.value.trim();
     var regex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#])'); // [!@#\$%\^&\*]
     var classRule1 = value ? (value.length >= 8 ? 'pass' : 'invalid') : 'empty';
     var classRule2 = value ? (regex.test(value) ? 'pass' : 'invalid') : 'empty';
-    this.setState(
-      {
-        password: value
-      },
-      () => this.props.onChange(value, classRule1 === 'pass' && classRule2 === 'pass')
-    );
+    this.setState({ password: value }, () => props.onChange(value, classRule1 === 'pass' && classRule2 === 'pass'));
   };
 
   render() {
@@ -168,9 +162,7 @@ export class InputPassword extends PureComponent {
           <WrapperEye onClick={this._showPassword}>
             <Icon type={showPassword ? 'eye' : 'blind-eye'} size="14" />
           </WrapperEye>
-          <WrapperClear onClick={this._clear}>
-            {password && <Icon type="clear" size="14" />}
-          </WrapperClear>
+          <WrapperClear onClick={this._clear}>{password && <Icon type="clear" size="14" />}</WrapperClear>
         </div>
         {withRules && (
           <DivRulePassword>
@@ -185,15 +177,14 @@ export class InputPassword extends PureComponent {
     );
   }
 }
-InputPassword.propTypes = {
-  onChange: PropTypes.func,
-  withRules: PropTypes.bool
-};
 
 InputPassword.defaultProps = {
   onChange: function() {},
   withRules: true,
   autoFocus: false,
   warning: false,
-  title: 'Set a New Password'
+  title: 'Set a New Password',
 };
+
+export { InputPassword };
+export default InputPassword;

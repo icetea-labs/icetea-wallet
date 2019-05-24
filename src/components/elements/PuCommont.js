@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import QueueAnim from 'rc-queue-anim';
-// import Icon from 'antd/lib/icon';
 
 import {
   PuLayout,
@@ -11,15 +10,10 @@ import {
   PuBtnCancel,
   PuBtnNext,
   WrapperBtnClose,
-  Icon
+  Icon,
 } from './utils';
 
-export class PuCommont extends PureComponent {
-  _keydown = e => {
-    var close = this.props.close;
-    e.keyCode === 27 && close && close();
-  };
-
+class PuCommont extends PureComponent {
   componentWillMount() {
     window.document.body.removeEventListener('keydown', this._keydown);
   }
@@ -27,18 +21,15 @@ export class PuCommont extends PureComponent {
   componentDidMount() {
     window.document.body.addEventListener('keydown', this._keydown);
   }
+
+  _keydown = e => {
+    const { props } = this;
+    const close = props.close;
+    e.keyCode === 27 && close && close();
+  };
+
   render() {
-    var {
-      closeText,
-      title,
-      close,
-      children,
-      closeAlign,
-      next,
-      cancelButton,
-      hideButton,
-      bgColor
-    } = this.props;
+    var { closeText, title, close, children, closeAlign, next, cancelButton, hideButton, bgColor } = this.props;
 
     return (
       <QueueAnim animConfig={{ opacity: [1, 0] }}>
@@ -55,7 +46,7 @@ export class PuCommont extends PureComponent {
                     </PuBtnCancel>
                   )}
                   {(next || close) && (
-                    <PuBtnNext onClick={next || close} width={'100px'}>
+                    <PuBtnNext onClick={next || close} width="100px">
                       <span>{closeText}</span>
                     </PuBtnNext>
                   )}
@@ -83,5 +74,8 @@ PuCommont.defaultProps = {
   bgColor: '',
   close: null,
   next: null,
-  hideButton: false
+  hideButton: false,
 };
+
+export { PuCommont };
+export default PuCommont;

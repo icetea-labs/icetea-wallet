@@ -85,26 +85,27 @@ const DivText = styled.div`
   }
 `;
 
-export class WarningRecover extends PureComponent {
+class WarningRecover extends PureComponent {
   static defaultProps = {
     defaultChecked: PropTypes.bool.isRequired,
-    handleCheckChange: PropTypes.func.isRequired
+    handleCheckChange: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     defaultChecked: false,
-    handleCheckChange: function() {}
+    handleCheckChange: function() {},
   };
 
   render() {
+    const { props } = this;
     return (
       <Container>
         <input
           id="cbx"
           type="checkbox"
-          checked={this.props.defaultChecked}
+          checked={props.defaultChecked}
           style={{ display: 'none' }}
-          onChange={this.props.handleCheckChange}
+          onChange={props.handleCheckChange}
         />
         <Label htmlFor="cbx">
           <span>
@@ -114,12 +115,10 @@ export class WarningRecover extends PureComponent {
           </span>
           <Span>
             <DivText>
-              I understand that Ice-tea cannot recover or reset my password or the keystore file. I
-              will make a backup of the keystore file/password, keep them secret, complete all
-              wallet creation steps and agree to all the
+              I understand that Ice-tea cannot recover or reset my password or the keystore file. I will make a backup
+              of the keystore file/password, keep them secret, complete all wallet creation steps and agree to all the
               <a target="_blank" href="/en/terms">
-                {' '}
-                terms
+                &npsp;terms.
               </a>
             </DivText>
           </Span>
@@ -128,3 +127,6 @@ export class WarningRecover extends PureComponent {
     );
   }
 }
+
+export { WarningRecover };
+export default WarningRecover;

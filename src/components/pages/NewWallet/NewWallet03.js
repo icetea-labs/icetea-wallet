@@ -44,19 +44,22 @@ const DivShowPrivate = styled.div`
 
 class NewWallet03 extends PureComponent {
   _showPrivatekey = () => {
-    this.props.setShowPrivateKey(true);
+    const { props } = this;
+    props.setShowPrivateKey(true);
   };
 
   _goback = () => {
-    this.props.setStep('stepTwo');
+    const { props } = this;
+    props.setStep('stepTwo');
   };
 
   _show = () => {
-    this.props.setConfirmMnemonic(true);
+    const { props } = this;
+    props.setConfirmMnemonic(true);
   };
 
   render() {
-    const isActive = 'active';
+    const { mnemonic } = this.props;
     return (
       <div>
         <Header2>
@@ -69,20 +72,20 @@ class NewWallet03 extends PureComponent {
           <span>Back up the text below on paper and keep it somewhere secret and safe.</span>
         </DivTextNote>
         <DivShowMnemonic>
-          <p data-cy="mnemonic">{this.props.mnemonic}</p>
+          <p data-cy="mnemonic">{mnemonic}</p>
         </DivShowMnemonic>
         <DivShowPrivate>
-          <div onClick={() => this._showPrivatekey()}>View my Private Key &gt;&gt;</div>
+          <div onClick={this._showPrivatekey}>View my Private Key &gt;&gt;</div>
         </DivShowPrivate>
 
         <DivControlBtn>
           <DivPreviousBt className="previous-button">
             <Icon type="back" size="20" color="inherit" />
-            <div className="unlock" onClick={() => this._goback()}>
+            <div className="unlock" onClick={this._goback}>
               Previous
             </div>
           </DivPreviousBt>
-          <Button width="120px" onClick={() => this._show()} className={isActive}>
+          <Button width="120px" onClick={this._show}>
             <React.Fragment>
               <span style={{ marginRight: '10px' }}>Continue</span>
               <Icon type="continue" size="20" color="inherit" />
@@ -99,13 +102,13 @@ NewWallet03.defaultProps = {
   privateKey: '',
   setStep() {},
   setShowPrivateKey() {},
-  setConfirmMnemonic() {}
+  setConfirmMnemonic() {},
 };
 
 const mapStateToProps = state => {
   return {
     mnemonic: state.create.mnemonic,
-    privateKey: state.create.privateKey
+    privateKey: state.create.privateKey,
   };
 };
 
@@ -119,7 +122,7 @@ const mapDispatchToProps = dispatch => {
     },
     setConfirmMnemonic: value => {
       dispatch(actions.setConfirmMnemonic(value));
-    }
+    },
   };
 };
 export default connect(

@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -30,90 +29,59 @@ class NewWallet01 extends PureComponent {
     super(props);
     this.state = {
       agree: false,
-      loading: false,
       isPasswordValid: true,
       rePassErr: '',
-      rePassword: ''
+      rePassword: '',
     };
   }
 
-  static propTypes = {
-    password: PropTypes.string,
-    privateKey: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    mnemonic: PropTypes.string,
-    address: PropTypes.string,
-    keyStore: PropTypes.string,
-    autoFocus: PropTypes.bool,
-    setPassword: PropTypes.func,
-    setAccount: PropTypes.func,
-    setStep: PropTypes.func,
-    setLoading: PropTypes.func,
-    setShowKeystoreText: PropTypes.func
-  };
-
-  static defaultProps = {
-    password: '',
-    privateKey: '',
-    mnemonic: '',
-    address: '',
-    keyStore: null,
-    autoFocus: false,
-    setPassword() {},
-    setAccount() {},
-    setStep() {},
-    setLoading() {},
-    setShowKeystoreText() {}
-  };
-
   _passwordChange = (value, isPasswordValid) => {
-    this.props.setPassword(value);
+    const { props } = this;
+    props.setPassword(value);
     this.setState({
-      isPasswordValid
+      isPasswordValid,
     });
   };
 
   _rePasswordChange = value => {
-    const t = {
-      rePassword: value
-      // ...this.state
-    };
-    this.props.password === value && (t.rePassErr = '');
-    this.setState(t);
+    let obj = {};
+    const { props } = this;
+    props.password === value && (obj.rePassErr = '');
+    obj.rePassword = value;
+    this.setState(obj);
   };
 
   _handleCheckChange = e => {
     document.activeElement.blur();
     this.setState({
-      agree: e.target.checked
+      agree: e.target.checked,
     });
   };
 
   _gotoNext = function(e) {
     document.activeElement.blur();
+    const { props } = this;
     const { password } = this.props;
     const { rePassword } = this.state;
     if (password.length < 8) {
       alert('invalid password, reset again');
     } else if (password === rePassword) {
-      this.props.setLoading(true);
-      console.log('true');
+      props.setLoading(true);
       setTimeout(async () => {
         const account = await this._createAccountWithMneomnic();
         // this._downloadKeyStore(account.keyStore);
-        this.props.setAccount({
+        props.setAccount({
           privateKey: account.privateKey,
           mnemonic: account.mnemonic,
           address: account.address,
           keyStore: account.keyStore,
-          step: 'stepTwo'
+          step: 'stepTwo',
         });
-        console.log(account);
-        this.props.setLoading(false);
-        console.log('false');
+        props.setLoading(false);
       }, 100);
     } else {
       this.setState({
-        rePassErr: 'The password entered does not match'
+        rePassErr: 'The password entered does not match',
       });
     }
   };
@@ -125,7 +93,7 @@ class NewWallet01 extends PureComponent {
       privateKey: resp.privateKey,
       address: resp.address,
       mnemonic: resp.mnemonic,
-      keyStore: keyObject
+      keyStore: keyObject,
     };
   };
 
@@ -142,11 +110,12 @@ class NewWallet01 extends PureComponent {
   };
 
   _gotoUnlock = () => {
-    this.props.history.push('/unlock');
+    const { props } = this;
+    props.history.push('/unlock');
   };
 
   render() {
-    const { agree, loading, isPasswordValid, rePassErr, rePassword } = this.state;
+    const { agree, isPasswordValid, rePassErr, rePassword } = this.state;
     return (
       <div>
         <Header2>
@@ -188,9 +157,23 @@ class NewWallet01 extends PureComponent {
   }
 }
 
+NewWallet01.defaultProps = {
+  password: '',
+  privateKey: '',
+  mnemonic: '',
+  address: '',
+  keyStore: null,
+  autoFocus: false,
+  setPassword() {},
+  setAccount() {},
+  setStep() {},
+  setLoading() {},
+  setShowKeystoreText() {},
+};
+
 const mapStateToProps = state => {
   return {
-    password: state.create.password
+    password: state.create.password,
   };
 };
 
@@ -207,7 +190,7 @@ const mapDispatchToProps = dispatch => {
     },
     setLoading: value => {
       dispatch(acGlobal.setLoading(value));
-    }
+    },
   };
 };
 
