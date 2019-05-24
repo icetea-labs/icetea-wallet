@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import BaseLayout from '../../layout/BaseLayout';
 import tweb3 from '../../../service/tweb3';
 import { utils } from '../../../utils/utils';
+import notifi from '../../elements/Notification';
 import {
   Container,
   PageTitle,
@@ -51,18 +52,18 @@ class Profile extends Component {
   }
 
   handleWalletAddress = address => {
-    // const { cipher } = this.props;
+    const { cipher } = this.props;
     let user = sessionStorage.getItem('user');
     user = (user && JSON.parse(user)) || {};
-    const privateKey = utils.getPrivateKeyFromKeyStore(user.privateKey, 'Tinduong11@');
-    console.log('privateKey', privateKey);
+    const privateKey = utils.getPrivateKeyFromKeyStore(user.privateKey, cipher);
     tweb3.wallet.importAccount(privateKey);
-    this.loadAlias(address.value);
-    this.loadDid(address.value);
     this.setState({
       selectedWallet: address,
       isHidden: false,
     });
+    console.log('address: ', address.value, 'privateKey: ', privateKey);
+    this.loadAlias(address.value);
+    this.loadDid(address.value);
   };
 
   registerFaucetEvent = () => {
@@ -72,7 +73,7 @@ class Profile extends Component {
       .methods.request(/* address */)
       .sendCommit({ from: address })
       .then(r => {
-        window.alert('Success.');
+        notifi.info('Success');
       })
       .catch(error => {
         window.alert(String(error));
@@ -97,7 +98,7 @@ class Profile extends Component {
       .sendCommit({ from: address })
       .then(r => {
         this.props.setAlias(r.result);
-        window.alert('Success.');
+        notifi.info('Success');
       })
       .catch(error => {
         console.error(error);
@@ -139,7 +140,7 @@ class Profile extends Component {
       .sendCommit({ from: address })
       .then(r => {
         this.loadDid(address);
-        window.alert('Success.');
+        notifi.info('Success');
       })
       .catch(error => {
         console.error(error);
@@ -155,7 +156,7 @@ class Profile extends Component {
       .sendCommit({ from: address })
       .then(r => {
         this.loadDid(address);
-        window.alert('Success.');
+        notifi.info('Success');
       })
       .catch(error => {
         console.error(error);
@@ -210,7 +211,7 @@ class Profile extends Component {
       .sendCommit({ from: address })
       .then(r => {
         this.setState({ threshold: r.result });
-        window.alert('Success.');
+        notifi.info('Success');
       })
       .catch(error => {
         console.error(error);
@@ -228,8 +229,8 @@ class Profile extends Component {
 
   registerAddOwnerEvent = () => {
     const { address } = this.props;
-    const { owner } = this.state;
-    const weight = parseInt(this.state.weight);
+    let { owner, weight } = this.state;
+    weight = parseInt(weight);
     if (!owner || !weight) {
       this.setState({ ownerErr: 'err', weightErr: 'err' });
       return;
@@ -241,7 +242,7 @@ class Profile extends Component {
       .sendCommit({ from: address })
       .then(r => {
         this.loadDid(address);
-        window.alert('Success.');
+        notifi.info('Success');
       })
       .catch(error => {
         console.error(error);
@@ -261,7 +262,7 @@ class Profile extends Component {
       .sendCommit({ from: address })
       .then(r => {
         this.loadDid(address);
-        window.alert('Success.');
+        notifi.info('Success');
       })
       .catch(error => {
         console.error(error);
@@ -270,23 +271,23 @@ class Profile extends Component {
   };
 
   handleInheritor = e => {
-    this.setState({ inheritor: e.target.value });
+    this.setState({ inheritorErr: '', inheritor: e.target.value });
   };
 
   handleWaitdays = e => {
-    this.setState({ waitDays: e.target.value });
+    this.setState({ waitDaysErr: '', waitDays: e.target.value });
   };
 
   handleLockdays = e => {
-    this.setState({ lockDays: e.target.value });
+    this.setState({ lockDaysErr: '', lockDays: e.target.value });
   };
 
   registerAddInheEvent = () => {
     const { address } = this.props;
     const { inheritor } = this.state;
-    let waitDays = parseInt(this.state.waitDays);
-    let lockDays = parseInt(this.state.lockDays);
-
+    let { waitDays, lockDays } = this.state;
+    waitDays = parseInt(waitDays);
+    lockDays = parseInt(lockDays);
     if (!inheritor || !waitDays || !lockDays) {
       this.setState({
         inheritorErr: 'err',
@@ -302,7 +303,7 @@ class Profile extends Component {
       .sendCommit({ from: address })
       .then(r => {
         this.loadDid(address);
-        window.alert('Success.');
+        notifi.info('Success');
       })
       .catch(error => {
         console.error(error);
@@ -322,7 +323,7 @@ class Profile extends Component {
       .sendCommit({ from: address })
       .then(r => {
         this.loadDid(address);
-        window.alert('Success.');
+        notifi.info('Success');
       })
       .catch(error => {
         console.error(error);
@@ -408,14 +409,14 @@ class Profile extends Component {
                 <Label>These tags are NOT encrypted and public. Private tags are not supported yet.</Label>
                 <InputText
                   type="text"
-                  className={tagsNameErr ? 'error' : ''}
+                  className={tagsNameErr && !tagsName.length ? 'error' : ''}
                   value={tagsName}
                   placeholder="name"
                   onChange={this.handleTagsName}
                 />
                 <InputText
                   type="text"
-                  className={tagsValueErr ? 'error' : ''}
+                  className={tagsValueErr && !tagsValue.length ? 'error' : ''}
                   value={tagsValue}
                   placeholder="value"
                   onChange={this.handleTagsValue}
@@ -460,14 +461,14 @@ class Profile extends Component {
                     );
                   })}
                 <InputText
-                  className={ownerErr ? 'error' : ''}
+                  className={ownerErr && !owner.length ? 'error' : ''}
                   type="text"
                   value={owner}
                   placeholder="owner address or alias"
                   onChange={this.handleOwner}
                 />
                 <InputText
-                  className={weightErr ? 'error' : ''}
+                  className={weightErr && !weight.length ? 'error' : ''}
                   type="number"
                   value={weight}
                   placeholder="weight"
@@ -492,21 +493,21 @@ class Profile extends Component {
                     );
                   })}
                 <InputText
-                  className={inheritorErr ? 'error' : ''}
+                  className={inheritorErr && !inheritor.length ? 'error' : ''}
                   type="text"
                   placeholder="inheritor address or alias"
                   value={inheritor}
                   onChange={this.handleInheritor}
                 />
                 <InputText
-                  className={waitDaysErr ? 'error' : ''}
+                  className={waitDaysErr && !waitDays.length ? 'error' : ''}
                   type="number"
                   placeholder="wait days"
                   value={waitDays}
                   onChange={this.handleWaitdays}
                 />
                 <InputText
-                  className={lockDaysErr ? 'error' : ''}
+                  className={lockDaysErr && !lockDays.length ? 'error' : ''}
                   type="number"
                   placeholder="lock days"
                   value={lockDays}
