@@ -2,8 +2,9 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { ecc } from 'icetea-common';
+
 import { Wrapper, Error, MaxValue, FeeAva, Fee, Ava, ButtonWrapper } from './StyledSTOne';
-import { FontDin } from '../../elements/utils';
 import { Button } from '../../elements/Button';
 import SelectUnlockType from '../Unlock/SelectUnlockType';
 import STOInput from './STOInput';
@@ -11,7 +12,7 @@ import errorIc from '../../../assets/img/error-icon.png';
 import * as actions from '../../../store/actions/account';
 import tweb3 from '../../../service/tweb3';
 import { toTEA } from '../../../utils/utils';
-import { ecc, codec, bech32 } from 'icetea-common';
+
 
 const itemsMenu = [
   {
@@ -60,7 +61,7 @@ class SendTransactionOne extends PureComponent {
   componentWillMount = async () => {
     let balanceofVip = '';
     balanceofVip = await tweb3.getBalance(this.props.address);
-    console.log('I want to see BL:', balanceofVip);
+    // console.log('I want to see BL:', balanceofVip);
     this.setState({
       availableBalance: toTEA(balanceofVip.balance),
     });
@@ -71,7 +72,7 @@ class SendTransactionOne extends PureComponent {
       to: e,
       addressErr: '',
     });
-    console.log('toAdd Change CK', e);
+    // console.log('toAdd Change CK', e);
   };
 
   _amountChange = e => {
@@ -85,12 +86,12 @@ class SendTransactionOne extends PureComponent {
         amount: '',
       });
     }
-    console.log('amount Change CK', e);
+    // console.log('amount Change CK', e);
   };
 
   _setMaxValue = () => {
     let t = this.state.availableBalance;
-    console.log('Avai CK', t);
+    // console.log('Avai CK', t);
     this.setState({
       amount: t,
     });
@@ -102,7 +103,7 @@ class SendTransactionOne extends PureComponent {
       memo: value,
       memoErr: '',
     });
-    console.log('memo Change CK', value);
+    // console.log('memo Change CK', value);
   };
 
   _submit = () => {
@@ -115,7 +116,7 @@ class SendTransactionOne extends PureComponent {
 
     try {
       let rs = ecc.validateAddress(this.state.to);
-      console.log('acc CK', rs);
+      // console.log('acc CK', rs);
     } catch {
       this.setState({
         addressErr: 'Invalid address! Please Try Again',
@@ -189,7 +190,7 @@ class SendTransactionOne extends PureComponent {
         return e.value === asset.asset;
       }) || {};
 
-    console.log('Render amount CK', amount);
+    // console.log('Render amount CK', amount);
 
     return (
       <div>
@@ -215,7 +216,7 @@ class SendTransactionOne extends PureComponent {
           {addressErr && (
             <Error>
               <img src={errorIc} alt="" />
-              <span>{addressErr}</span>I
+              <span>{addressErr}</span>
             </Error>
           )}
         </Wrapper>
@@ -231,7 +232,7 @@ class SendTransactionOne extends PureComponent {
           {amountErr && (
             <Error>
               <img src={errorIc} alt="" />
-              <span>{amountErr}</span>I
+              <span>{amountErr}</span>
             </Error>
           )}
         </Wrapper>

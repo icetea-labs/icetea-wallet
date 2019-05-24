@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import QueueAnim from 'rc-queue-anim';
+
 import { WrapperSend, OutBox, Title, WrapperTab, DisplayTab, Tab, ButtonCus } from './StyledTransaction';
 import { ButtonWrapper } from './StyledSTOne';
 import { WrapperBtnClose, Icon } from '../../elements/utils';
@@ -8,8 +9,6 @@ import SendTransactionOne from './SendTransactionOne';
 import SendTransactionTwo from './SendTransactionTwo';
 import { Button } from '../../elements/Button';
 import tweb3 from '../../../service/tweb3';
-import Notification from 'rc-notification';
-import '../../../assets/styles/notification.css';
 import { toUNIT } from '../../../utils/utils';
 
 class SendTransaction extends PureComponent {
