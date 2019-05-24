@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import QueueAnim from 'rc-queue-anim';
-import { PuCommont } from './PuCommont';
 import { PuLayout, PuBtnGoback, PuBtnNext, WrapperBtnClose, Icon } from './utils';
 
 const PuContainer = styled.div`
@@ -68,14 +66,13 @@ class PuConfirmMnemonic extends PureComponent {
   }
 }
 
-PuConfirmMnemonic.propTypes = {
-  confirm: PropTypes.func
-};
 PuConfirmMnemonic.defaultProps = {
   okText: '',
   cancelText: '',
   confirm() {},
   cancel() {},
-  children: null
+  children: null,
 };
+
 export { PuConfirmMnemonic };
+export default PuConfirmMnemonic;

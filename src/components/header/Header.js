@@ -375,7 +375,9 @@ class Header extends PureComponent {
         </li>
       ) : (
         <li key={el.text}>
-          <Link to={el.path}>{el.text}</Link>
+          <Link to={el.path}>
+            <span>{el.text}</span>
+          </Link>
         </li>
       );
     });

@@ -3,7 +3,7 @@ import { actionTypes } from '../actions/transaction';
 const initialState = {
   transactionHistory: [],
   isFetching: false,
-  errMsg: ''
+  errMsg: '',
 };
 
 function transaction(state = initialState, action) {
@@ -13,12 +13,12 @@ function transaction(state = initialState, action) {
     case actionTypes.TX_HISTORY_SUCCESS:
       return Object.assign({}, state, {
         transactionHistory: action.data,
-        isFetching: false
+        isFetching: false,
       });
     case actionTypes.TX_HISTORY_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
-        errMsg: action.data
+        errMsg: action.data,
       });
     default:
       return state;

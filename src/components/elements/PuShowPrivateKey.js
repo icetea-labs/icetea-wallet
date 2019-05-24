@@ -26,15 +26,16 @@ const DivPrivateKey = styled.div`
   font-family: 'DIN';
 `;
 
-export class PuShowPrivateKey extends PureComponent {
+class PuShowPrivateKey extends PureComponent {
   render() {
+    const { props } = this;
     return (
-      <PuCommont close={this.props.close} title="Your Private Key">
+      <PuCommont close={props.close} title="Your Private Key">
         <Container>
           <Icon type="pencil" size="26" color="#848e9c" />
           <span>Back up the text below on paper and keep it somewhere secret and safe.</span>
         </Container>
-        <DivPrivateKey>{this.props.privateKey}</DivPrivateKey>
+        <DivPrivateKey>{props.privateKey}</DivPrivateKey>
       </PuCommont>
     );
   }
@@ -42,5 +43,8 @@ export class PuShowPrivateKey extends PureComponent {
 
 PuShowPrivateKey.defaultProps = {
   privateKey: '',
-  close() {}
+  close() {},
 };
+
+export { PuShowPrivateKey };
+export default PuShowPrivateKey;

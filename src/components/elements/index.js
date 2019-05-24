@@ -6,4 +6,3 @@ export * from './PuShowPrivateKey.js';
 export * from './GlobaLoading.js';
 export * from './MnemonicItem.js';
 export * from './utils';
-export * from './CopyText';

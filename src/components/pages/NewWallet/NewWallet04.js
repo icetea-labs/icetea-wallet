@@ -5,13 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as actions from '../../../store/actions/create';
 import { Button, MnemonicItem } from '../../elements';
-import {
-  Header2,
-  DivControlBtn,
-  DivPreviousBt,
-  Icon,
-  DivSelectWordBase
-} from '../../elements/utils';
+import { Header2, DivControlBtn, DivPreviousBt, Icon, DivSelectWordBase } from '../../elements/utils';
 
 const DivH3 = styled.div`
   text-align: left;
@@ -48,7 +42,7 @@ class NewWallet04 extends React.Component {
     this.state = {
       selectedWords: [],
       shuffledWords: [],
-      isSequenceCorrect: true
+      isSequenceCorrect: true,
     };
   }
 
@@ -56,12 +50,13 @@ class NewWallet04 extends React.Component {
     document.scrollingElement.scrollTop = 1e3;
     const items = this._getRandomSequenceMenmonic();
     this.setState({
-      shuffledWords: items
+      shuffledWords: items,
     });
   }
 
   _goback = () => {
-    this.props.setStep('backupMnemonic');
+    const { props } = this;
+    props.setStep('backupMnemonic');
   };
 
   _shuffle = mnemonic => {
@@ -76,7 +71,8 @@ class NewWallet04 extends React.Component {
   };
 
   _getRandomSequenceMenmonic = () => {
-    const mnemonic = this.props.mnemonic.split(' ');
+    const { props } = this;
+    const mnemonic = props.mnemonic.split(' ');
     return this._shuffle(mnemonic);
   };
 
@@ -94,11 +90,12 @@ class NewWallet04 extends React.Component {
   };
 
   _compareSequence = () => {
-    const selectItem = this.state.selectedWords;
+    const { props, state } = this;
+    const selectItem = state.selectedWords;
 
-    const mnemonic = this.props.mnemonic.split(' ');
+    const mnemonic = props.mnemonic.split(' ');
     this.setState({
-      isSequenceCorrect: _.isEqual(mnemonic.slice(0, selectItem.length), selectItem)
+      isSequenceCorrect: _.isEqual(mnemonic.slice(0, selectItem.length), selectItem),
     });
   };
 
@@ -116,7 +113,8 @@ class NewWallet04 extends React.Component {
   };
 
   _continue = () => {
-    this.props.setStep('success');
+    const { props } = this;
+    props.setStep('success');
   };
 
   render() {
@@ -129,31 +127,17 @@ class NewWallet04 extends React.Component {
           <span className="title">Choose Secondary Access</span>
         </Header2>
         <DivH3>
-          <span>
-            Please select the Mnemonic Phrase in the correct order to ensure that your copy is
-            correct.
-          </span>
+          <span>Please select the Mnemonic Phrase in the correct order to ensure that your copy is correct.</span>
         </DivH3>
         <DivRecoverWord isValid={isSequenceCorrect}>
           {selectedWords.map((items, index) => {
-            return (
-              <MnemonicItem
-                key={index}
-                value={items}
-                canClose
-                onClick={() => this._recoverWord(items)}
-              />
-            );
+            return <MnemonicItem key={index} value={items} canClose onClick={() => this._recoverWord(items)} />;
           })}
         </DivRecoverWord>
-        {!isSequenceCorrect && (
-          <TryAgain>Incorrect Mnemonic Phrase order. Please try again.</TryAgain>
-        )}
+        {!isSequenceCorrect && <TryAgain>Incorrect Mnemonic Phrase order. Please try again.</TryAgain>}
         <DivSelectWord isValid={isSequenceCorrect}>
           {shuffledWords.map((items, index) => {
-            return (
-              <MnemonicItem key={index} value={items} onClick={() => this._selectWord(items)} />
-            );
+            return <MnemonicItem key={index} value={items} onClick={() => this._selectWord(items)} />;
           })}
         </DivSelectWord>
         <DivControlBtn>
@@ -163,11 +147,7 @@ class NewWallet04 extends React.Component {
               Previous
             </div>
           </DivPreviousBt>
-          <Button
-            disabled={!isSequenceCorrect || shuffledWords.length !== 0}
-            width="120px"
-            onClick={this._continue}
-          >
+          <Button disabled={!isSequenceCorrect || shuffledWords.length !== 0} width="120px" onClick={this._continue}>
             <React.Fragment>
               <span style={{ marginRight: '10px' }}>Continue</span>
               <Icon type="continue" size="20" color="inherit" />
@@ -181,7 +161,7 @@ class NewWallet04 extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    mnemonic: state.create.mnemonic
+    mnemonic: state.create.mnemonic,
   };
 };
 
@@ -189,13 +169,13 @@ const mapDispatchToProps = dispatch => {
   return {
     setStep: step => {
       dispatch(actions.setStep(step));
-    }
+    },
   };
 };
 
 NewWallet04.defaultProps = {
   mnemonic: '',
-  setStep() {}
+  setStep() {},
 };
 
 export default connect(

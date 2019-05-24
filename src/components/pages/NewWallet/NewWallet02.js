@@ -6,15 +6,17 @@ import { Header2, DivContentW2, DivControlBtn, DivPreviousBt, Icon } from '../..
 
 class NewWallet02 extends PureComponent {
   static defaultProps = {
-    dispatch() {}
+    dispatch() {},
   };
 
   _continue = () => {
-    this.props.dispatch(actions.setStep('backupMnemonic'));
+    const { props } = this;
+    props.dispatch(actions.setStep('backupMnemonic'));
   };
 
   _goback = () => {
-    this.props.dispatch(actions.setStep('inputPassword'));
+    const { props } = this;
+    props.dispatch(actions.setStep('inputPassword'));
   };
 
   render() {
@@ -32,8 +34,7 @@ class NewWallet02 extends PureComponent {
             <i className="fa fa-desktop" />
           </div>
           <div className="text">
-            We are about to show your mnemonic phrase, please ensure that no one else is looking at
-            your screen.
+            We are about to show your mnemonic phrase, please ensure that no one else is looking at your screen.
           </div>
         </DivContentW2>
         <DivControlBtn>
