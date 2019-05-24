@@ -59,7 +59,6 @@ export const utils = {
 
   getAddressFromPrivateKey(privateKey) {
     const address = ecc.toPubKeyAndAddressBuffer(privateKey).address;
-    console.log('CK decode address', address)
     return address;
   },
 };
