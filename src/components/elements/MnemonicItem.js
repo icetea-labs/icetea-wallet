@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Icon, MnemonicItemBase } from './utils';
 
@@ -31,19 +30,22 @@ const WrapperIcon = styled.div`
   margin-left: 5px;
   margin-bottom: 2px;
 `;
-export class MnemonicItem extends PureComponent {
+
+class MnemonicItem extends PureComponent {
   _handleClick = () => {
-    this.props.onClick && this.props.onClick(this.props.value);
+    const { props } = this;
+    props.onClick && props.onClick(props.value);
   };
+
   render() {
     var { canClose, value } = this.props;
     return (
       <Wrapper onClick={this._handleClick}>
         {canClose ? (
           <React.Fragment>
+            {value}
             <WrapperIcon>
-              {' '}
-              {value} <Icon type="close" size="10" />
+              <Icon type="close" size="10" />
             </WrapperIcon>
           </React.Fragment>
         ) : (
@@ -58,5 +60,8 @@ MnemonicItem.defaultProps = {
   value: '',
   onClick: function() {},
   canClose: false,
-  close: function() {}
+  close: function() {},
 };
+
+export { MnemonicItem };
+export default MnemonicItem;

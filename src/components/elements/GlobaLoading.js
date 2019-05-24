@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -51,17 +51,24 @@ const Rect = styled.div`
   }
 `;
 
-export class GlobaLoading extends Component {
-  render() {
-    return (
-      <Wrapper>
-        <Rect>
-          <div />
-          <div />
-          <div />
-          <div />
-        </Rect>
-      </Wrapper>
-    );
-  }
+function GlobaLoading() {
+  return (
+    <Wrapper>
+      <BaseGlobaLoading />
+    </Wrapper>
+  );
 }
+
+function BaseGlobaLoading() {
+  return (
+    <Rect>
+      <div />
+      <div />
+      <div />
+      <div />
+    </Rect>
+  );
+}
+
+export { GlobaLoading };
+export default GlobaLoading;

@@ -1,21 +1,12 @@
 import React, { PureComponent } from 'react';
-// import PropTypes from 'prop-types';
-// import styled from 'styled-components'
 import { BtnActive, BtnInactive, Loading } from './utils';
 
-export class Button extends PureComponent {
-  static defaultProps = {
-    disabled: false,
-    loading: false,
-    onClick: function() {},
-    children: null,
-    width: '',
-    height: '',
-    type: 'active'
-  };
+class Button extends PureComponent {
   _handleClick = e => {
-    this.props.loading || (this.props.onClick && this.props.onClick(e));
+    const { props } = this;
+    props.loading || (props.onClick && props.onClick(e));
   };
+
   render() {
     var { disabled, children, loading, width, height } = this.props;
     return (
@@ -31,3 +22,16 @@ export class Button extends PureComponent {
     );
   }
 }
+
+Button.defaultProps = {
+  disabled: false,
+  loading: false,
+  onClick: function() {},
+  children: null,
+  width: '',
+  height: '',
+  type: 'active',
+};
+
+export { Button };
+export default Button;

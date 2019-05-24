@@ -254,7 +254,9 @@ const IconBase = styled.i`
 `;
 export const Icon = props => {
   const { size, color, type, hoverColor } = props;
-  return <IconBase className={'iconfont icon-'.concat(type)} size={size || '16px'} color={color} hoverColor={hoverColor} />;
+  return (
+    <IconBase className={'iconfont icon-'.concat(type)} size={size || '16px'} color={color} hoverColor={hoverColor} />
+  );
 };
 Icon.defaultProps = {
   size: 16,
@@ -494,7 +496,7 @@ const HashLoading = styled.div`
 `;
 export class TxHash extends PureComponent {
   _gotoExplorer = () => {
-    const e = this.props.hash;
+    // const e = this.props.hash;
     // window.open("".concat(f.a, "/tx/").concat(e), "blank");
   };
   render() {

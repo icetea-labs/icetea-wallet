@@ -1,11 +1,22 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-// import { browserHistory } from '../src/history';
-import { theme } from './constants/styles';
+import { connect } from 'react-redux';
 import routes from './router';
 
-class App extends Component {
+import { theme } from './constants/styles';
+import { GlobaLoading } from './components/elements';
+
+class App extends PureComponent {
+  componentDidMount() {
+    window.addEventListener('resize', this._resizeWindow);
+    this.hideProgressive();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._resizeWindow);
+  }
+
   showContentMenu = routes => {
     var res = null;
     if (routes.length > 0) {
@@ -16,15 +27,38 @@ class App extends Component {
     return res;
   };
 
+  hideProgressive() {
+    document.querySelector('.progressive-content').style.display = 'none';
+  }
+
   render() {
+    const { isLoading } = this.props;
     return (
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Switch>{this.showContentMenu(routes)}</Switch>
-        </BrowserRouter>
+        <div>
+          <BrowserRouter>
+            <Switch>{this.showContentMenu(routes)}</Switch>
+          </BrowserRouter>
+          {isLoading && <GlobaLoading />}
+        </div>
       </ThemeProvider>
     );
   }
 }
 
-export default App;
+App.defaultProps = {
+  isLoading: false,
+  isHardware: false,
+};
+
+const mapStateToProps = state => {
+  return {
+    isLoading: state.globalData.isLoading,
+    isHardware: state.account.flags.isHardware,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(App);

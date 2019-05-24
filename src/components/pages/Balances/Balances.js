@@ -16,7 +16,6 @@ let user = sessionStorage.getItem('user');
 user = (user && JSON.parse(user)) || {};
 
 class Balances extends Component {
-  
   constructor() {
     super();
     this.state = {
@@ -73,9 +72,9 @@ class Balances extends Component {
     notifi.info('Copy successful!');
   };
 
-  renderTbl = async () => { 
+  renderTbl = async () => {
     try {
-      const address = this.props.address
+      const address = this.props.address;
       const result = await tweb3.getBalance(address);
       console.log('I want to see balance:', result.balance);
       const tblTmp = [
@@ -150,7 +149,7 @@ class Balances extends Component {
                     </div>
                   </div>
                   <div className="sc-fATqzn cNStFF">
-                  <CopyToClipboard text={address} onCopy={this._copyAddress}>
+                    <CopyToClipboard text={address} onCopy={this._copyAddress}>
                       <span title="copy address">
                         <Icon type="copy" size={18} />
                       </span>
