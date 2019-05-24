@@ -2,8 +2,8 @@ import { actionTypes } from '../actions/account';
 
 const initialState = {
   needAuth: false,
-  address: '', // LuongHV
-  cipher: '',
+  address: 'teat07vs2vr2dmsh56wkwfh5dmeg9tl2u6np9scyazv', // LuongHV
+  cipher: 'Tinduong11@',
   privateKey: '',
   keyStore: '',
   mnemonic: '',

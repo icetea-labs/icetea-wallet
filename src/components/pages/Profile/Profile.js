@@ -3,6 +3,7 @@ import Select from 'react-select';
 import { connect } from 'react-redux';
 import BaseLayout from '../../layout/BaseLayout';
 import tweb3 from '../../../service/tweb3';
+import { utils } from '../../../utils/utils';
 import {
   Container,
   PageTitle,
@@ -50,7 +51,11 @@ class Profile extends Component {
   }
 
   handleWalletAddress = address => {
-    const { privateKey } = this.props;
+    // const { cipher } = this.props;
+    let user = sessionStorage.getItem('user');
+    user = (user && JSON.parse(user)) || {};
+    const privateKey = utils.getPrivateKeyFromKeyStore(user.privateKey, 'Tinduong11@');
+    console.log('privateKey', privateKey);
     tweb3.wallet.importAccount(privateKey);
     this.loadAlias(address.value);
     this.loadDid(address.value);
@@ -326,7 +331,9 @@ class Profile extends Component {
   };
 
   render() {
-    const { address } = this.props;
+    let user = sessionStorage.getItem('user');
+    user = (user && JSON.parse(user)) || {};
+    const address = user.address;
     const options = [{ value: address, label: address }];
     const {
       selectedWallet,
@@ -524,6 +531,7 @@ const mapStateToProps = state => {
   return {
     address: state.account.address,
     privateKey: state.account.privateKey,
+    cipher: state.account.cipher,
   };
 };
 
