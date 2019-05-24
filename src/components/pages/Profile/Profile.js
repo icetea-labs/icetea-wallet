@@ -61,7 +61,7 @@ class Profile extends Component {
       selectedWallet: address,
       isHidden: false,
     });
-    console.log('address: ', address.value, 'privateKey: ', privateKey);
+    // console.log('address: ', address.value, 'privateKey: ', privateKey);
     this.loadAlias(address.value);
     this.loadDid(address.value);
   };
@@ -97,7 +97,7 @@ class Profile extends Component {
       .methods.register(alias, address)
       .sendCommit({ from: address })
       .then(r => {
-        this.props.setAlias(r.result);
+        this.loadAlias(address);
         notifi.info('Success');
       })
       .catch(error => {
@@ -394,8 +394,8 @@ class Profile extends Component {
                 <InputText
                   className={aliasErr ? 'error' : ''}
                   type="text"
-                  value={alias}
-                  placeholder="alias"
+                  value={alias || ''}
+                  placeholder="no alias"
                   onChange={this.handleAlias}
                 />
                 <Button className="btn btn-upadte" onClick={this.registerUpdateAliasEvent}>
