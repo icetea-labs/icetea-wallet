@@ -243,10 +243,6 @@ class index extends PureComponent {
     }
   };
 
-  // _search = () => {
-  //   this.getHistory();
-  // };
-
   render() {
     const { total, address, isFetching } = this.props;
     const { detail, pageSize, current } = this.state;
@@ -266,14 +262,14 @@ class index extends PureComponent {
               </WrapperTextFullHistory>
             </WrapperHeader>
             {isFetching && <div>Loading</div>}
-            <Table
+            {/* <Table
               columns={this.buildColumns()}
               dataSource={this.buildDataSource()}
               paging={this.paging}
               total={total}
               current={current}
               pageSize={pageSize}
-            />
+            /> */}
             {detail && <PuDetailTx detail={detail} close={this.clearDetail} />}
             {/* <ButtonSeach onClick={this._search} ><span>Search</span></ButtonSeach>  */}
           </Content>

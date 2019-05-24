@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+
 import { zIndex } from '../../constants/styles';
 import logo from '../../assets/img/logo.svg';
 import cancelblack from '../../assets/img/cancelblack.svg';
@@ -11,8 +12,8 @@ import MenuMobile from '../menu/MenuMobile';
 import { PuConfirmMnemonic } from '../elements/PuConfirmMnemonic';
 import notifi from '../elements/Notification';
 import Clock from './Clock';
+import GetSessionPassword from './GetSessionPassword';
 import { mainnet, testnet, currentServer, explorer, faq, forums } from '../../config/networks';
-// import { userStorage } from '../../utils/utils';
 
 const WrapperHeader = styled.div`
   height: 50px;
@@ -283,7 +284,7 @@ class Header extends PureComponent {
     };
   }
 
-  _confirmSignout = e => {
+  _confirmSignout = () => {
     return function() {
       // userStorage.isWalletConnect && state && state.disconnect();
       sessionStorage.removeItem('user');
@@ -351,6 +352,7 @@ class Header extends PureComponent {
     history.push('/');
   };
   // onClick={() => this.clickMenu(sub.path)}
+
   _buildSubMenus = subMenus => {
     return subMenus.map(sub => {
       return (
@@ -362,7 +364,6 @@ class Header extends PureComponent {
   };
 
   render() {
-    const { props } = this;
     const { confirmLogout, showMobileMenu } = this.state;
     const { className, bgColor, address } = this.props;
 
@@ -385,7 +386,7 @@ class Header extends PureComponent {
     return (
       <WrapperHeader className={className} bgColor={bgColor}>
         <LogoDisplay>
-          <LogoWrapper onClick={props._clickLogo}>
+          <LogoWrapper onClick={this._clickLogo}>
             <img src={logo} alt="" />
           </LogoWrapper>
           {/* mobile.. */}
@@ -469,6 +470,7 @@ class Header extends PureComponent {
           </PuConfirmMnemonic>
         )}
         {/* privateKey  account.. */}
+        <GetSessionPassword />
       </WrapperHeader>
     );
   }
