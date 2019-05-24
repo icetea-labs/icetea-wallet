@@ -13,6 +13,7 @@ import notifi from '../elements/Notification';
 import Clock from './Clock';
 import { mainnet, testnet, currentServer, explorer, faq, forums } from '../../config/networks';
 // import { userStorage } from '../../utils/utils';
+import selected from '../../assets/img/checked.png';
 
 const WrapperHeader = styled.div`
   height: 50px;
@@ -119,40 +120,120 @@ const ItemsSubMenu = styled.div`
     background: ${props => props.theme.headerDropdownBg};
     color: #f0b90b;
   }
-  ul li:not(.wallet-address) {
-    animation: userappear 0.3s ease-in-out;
-    @keyframes userappear {
-      0% {
-        height: 0;
-        opacity: 0;
-      }
-      40% {
-        height: 10px;
-        opacity: 0;
-      }
-      100% {
-        height: 20px;
-        opacity: 1;
-      }
-    }
-  }
-  &:hover ul {
-    display: flex;
-  }
   @media (max-width: 768px) {
     display: none;
   }
+  .account-menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: #252d38;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  }
+  &:hover {
+    .account-menu {
+      display: block;
+    }
+  }
+`;
+const AccountMenu = styled.div`
+  .wallet-address {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    background: rgba(72, 81, 93, 0.3);
+    &:hover {
+      color: inherit;
+    }
+    .wl-address {
+      margin-left: 20px;
+    }
+    .title {
+      margin-bottom: 3px;
+      text-align: left;
+      color: #9298a0;
+      width: 100px;
+      white-space: nowrap;
+      line-height: normal;
+    }
+    .address {
+      width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: normal;
+    }
+    .op {
+      display: flex;
+      align-items: center;
+      margin-left: 30px;
+      i {
+        margin-right: 10px;
+        &:hover {
+          color: #f0b90b;
+        }
+      }
+      span {
+        position: relative;
+      }
+    }
+  }
 `;
 
+const ListAccount = styled.div`
+  position: relative;
+  line-height: normal;
+  max-height: 150px;
+  border-bottom: 1px solid #343e4c;
+  overflow: auto;
+`;
+
+const WrapAccount = styled.div`
+  .account-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 13px;
+    &:hover {
+      background: #12161c;
+      color: #f0b90b;
+    }
+  }
+  .account-avt {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    img {
+      max-width: 100%;
+    }
+  }
+  .account-info {
+    width: calc(100% - 71px);
+    text-align: left;
+    color: #ffffff;
+    &:hover {
+      .accout-name {
+        color: #f0b90b;
+      }
+    }
+  }
+  .accout-balances {
+    font-size: 12px;
+    color: #9ca2ab;
+  }
+  .selected {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    img {
+      max-width: 100%;
+    }
+  }
+`;
 const ItemsAccount = styled.ul`
-  display: none;
   flex-direction: column;
   color: #fff;
-  position: absolute;
-  top: 50px;
-  right: 0;
-  background: #252d38;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
   li {
     padding: 10px;
     background: ${props => props.theme.headerDropdownBg};
@@ -162,6 +243,8 @@ const ItemsAccount = styled.ul`
     line-height: 20px;
     text-indent: 10px;
     font-size: 13px;
+    display: flex;
+    align-items: center;
     &:hover {
       background: #12161c;
       color: #f0b90b;
@@ -173,40 +256,6 @@ const ItemsAccount = styled.ul`
       font-size: 13px;
       &:hover {
         text-decoration: none;
-      }
-    }
-  }
-  li.wallet-address {
-    display: flex;
-    height: 40px;
-    align-items: center;
-    background: rgba(72, 81, 93, 0.3);
-    &:hover {
-      color: inherit;
-    }
-    .title {
-      color: #48515d;
-      width: 100px;
-      white-space: nowrap;
-    }
-    .address {
-      width: 180px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      position: relative;
-    }
-    .op {
-      display: flex;
-      margin-top: 10px;
-      margin-left: 30px;
-      i {
-        margin-right: 10px;
-        &:hover {
-          color: #f0b90b;
-        }
-      }
-      span {
-        position: relative;
       }
     }
   }
@@ -364,7 +413,7 @@ class Header extends PureComponent {
   render() {
     const { props } = this;
     const { confirmLogout, showMobileMenu } = this.state;
-    const { className, bgColor, address } = this.props;
+    const { className, bgColor, address, history } = this.props;
 
     const Menus = this._getMenus().map(el => {
       return el.subMenus ? (
@@ -405,33 +454,94 @@ class Header extends PureComponent {
           {address && (
             <ItemsSubMenu>
               <Icon type="account" />
-              <ItemsAccount>
-                <li className="wallet-address">
-                  <div>
-                    <div className="title">Wallet</div>
-                    <div className="address">{address}</div>
-                  </div>
-                  <div className="op">
-                    <CopyToClipboard text={address} onCopy={this._copyAddress}>
-                      <span title="copy address">
-                        <Icon type="copy" />
+              <div className="account-menu">
+                <AccountMenu>
+                  <div className="wallet-address">
+                    <div className="wl-address">
+                      <div className="title">Wallet</div>
+                      <div className="address">{address}</div>
+                    </div>
+                    <div className="op">
+                      <CopyToClipboard text={address} onCopy={this._copyAddress}>
+                        <span title="copy address">
+                          <Icon type="copy" />
+                        </span>
+                      </CopyToClipboard>
+                      <span onClick={this._gotoExplorer} title="go to explorer" role="presentation">
+                        <Icon type="link" />
                       </span>
-                    </CopyToClipboard>
-                    <span onClick={this._gotoExplorer} title="go to explorer" role="presentation">
-                      <Icon type="link" />
-                    </span>
+                    </div>
                   </div>
-                </li>
-                <li>
-                  <Link to="/unlock">Change Wallet</Link>
-                </li>
-                <li>
-                  <Link to="/create">Create New Wallet</Link>
-                </li>
-                <li onClick={this._showConfirmLogout} role="presentation">
-                  Close Wallet
-                </li>
-              </ItemsAccount>
+                  <ListAccount>
+                    <WrapAccount>
+                      <div
+                        className="account-item"
+                        onClick={() => {
+                          history.push('/profile');
+                        }}
+                      >
+                        <div className="selected">
+                          <img src={selected} alt="" />
+                        </div>
+                        <div className="account-avt">
+                          <img src={logo} alt="" />
+                        </div>
+                        <div className="account-info">
+                          <div className="accout-name">Tài khoản 1</div>
+                          <div className="accout-balances">3 ETH</div>
+                        </div>
+                      </div>
+                      <div className="account-item">
+                        <div className="selected" />
+                        <div className="account-avt">
+                          <img src={logo} alt="" />
+                        </div>
+                        <div className="account-info">
+                          <div className="accout-name">Tài khoản 1</div>
+                          <div className="accout-balances">3 ETH</div>
+                        </div>
+                      </div>
+                      <div className="account-item">
+                        <div className="selected" />
+                        <div className="account-avt">
+                          <img src={logo} alt="" />
+                        </div>
+                        <div className="account-info">
+                          <div className="accout-name">Tài khoản 1</div>
+                          <div className="accout-balances">3 ETH</div>
+                        </div>
+                      </div>
+                      <div className="account-item">
+                        <div className="selected" />
+                        <div className="account-avt">
+                          <img src={logo} alt="" />
+                        </div>
+                        <div className="account-info">
+                          <div className="accout-name">Tài khoản 1</div>
+                          <div className="accout-balances">3 ETH</div>
+                        </div>
+                      </div>
+                    </WrapAccount>
+                  </ListAccount>
+                  <ItemsAccount>
+                    <li>
+                      <Link to="/unlock">Change Wallet</Link>
+                    </li>
+                    <li>
+                      <span>Import Wallet</span>
+                    </li>
+                    <li>
+                      <Link to="/create">Create New Wallet</Link>
+                    </li>
+                    <li>
+                      <span>Setting</span>
+                    </li>
+                    <li onClick={this._showConfirmLogout} role="presentation">
+                      Close Wallet
+                    </li>
+                  </ItemsAccount>
+                </AccountMenu>
+              </div>
             </ItemsSubMenu>
           )}
           <StyledUlTag>
