@@ -9,7 +9,7 @@ import Layout from '../../layout';
 import SendTransaction from './SendTransaction';
 import tweb3 from '../../../service/tweb3';
 import TransactionHistory from '../Transaction';
-import { Icon, checkDevice, DivSelectWordBase } from '../../elements/utils';
+import { Icon, checkDevice, DivSelectWordBase, BtnActive } from '../../elements/utils';
 import { toTEA } from '../../../utils/utils';
 import PuInputPassword from './PuInputPassword';
 import notifi from '../../elements/Notification';
@@ -121,6 +121,112 @@ const WrapperQRCode = styled(DivSelectWordBase)`
   }
 `;
 
+const ContentWrapper = styled.div`
+  margin-bottom: 10px;
+  background: rgba(33, 40, 51, 0.6);
+  border-radius: 3px;
+`;
+
+const ContentTitle = styled.div`
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  height: 40px;
+  line-height: 40px;
+  font-size: 13px;
+  position: relative;
+  color: rgb(132, 142, 156);
+  border-bottom: 1px solid rgb(11, 14, 17);
+  padding: 0px 15px;
+  .symbol {
+    font-size: 14px;
+    margin-right: 10px;
+    color: rgb(255, 255, 255);
+  }
+  .name {
+    width: 130px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+`;
+
+const ContentValue = styled.div`
+  font-size: 13px;
+  position: relative;
+  padding: 10px 15px;
+`;
+
+const TitleAsset = styled.div`
+  -webkit-box-align: center;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const BtnCus = styled(BtnActive)`
+  background: inherit;
+  border: 1px solid #f0b90b;
+  color: #f0b90b;
+  width: 170px;
+  a {
+    color: inherit;
+    width: 100%;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  @media (max-width: 1440px) {
+    width: 110px;
+    height: 30px;
+    line-height: 28px;
+    font-size: 12px;
+  }
+`;
+
+const ContentValueBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const CVBWrapper = styled.div`
+  .title {
+    color: rgb(132, 142, 156);
+    width: 46px;
+    text-align: left;
+    margin-right: 20px;
+  }
+  .value {
+    color: rgb(255, 255, 255);
+  }
+  span {
+    font-family: DIN;
+  }
+`;
+
+const TotalWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: rgb(255, 255, 255);
+  font-weight: 600;
+  .title {
+    margin-right: 10px;
+    color: rgb(255, 255, 255);
+  }
+`;
+
+const AvaiWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: rgb(255, 255, 255);
+  title {
+    color: rgb(132, 142, 156);
+    font-size: 13px;
+  }
+`;
+
 class Balances extends Component {
   constructor() {
     super();
@@ -128,12 +234,14 @@ class Balances extends Component {
       showSend: false,
       showCFForm: false,
       showTbl: [],
+      showMbTbl: [],
       showMobileCode: false,
     };
   }
 
   componentWillMount() {
     this.renderTbl();
+    this.renderMobileTbl();
   }
 
   componentDidUpdate(prevProps) {
@@ -188,11 +296,9 @@ class Balances extends Component {
   };
 
   renderTbl = async () => {
-    const { props } = this;
     try {
-      const address = props.address;
+      const address = user.address;
       const result = await tweb3.getBalance(address);
-      // console.log('I want to see balance:', result.balance);
       const tblTmp = [
         {
           name: 'IceTea Chain Native Token',
@@ -239,9 +345,62 @@ class Balances extends Component {
     }
   };
 
+  renderMobileTbl = async () => {
+    try {
+      const address = user.address;
+      const result = await tweb3.getBalance(address);
+      // console.log('I want to see balance:', result.balance);
+      const tblTmp = [
+        {
+          name: 'IceTea Chain Native Token',
+          symbo: 'ITEA',
+          totalBalance: toTEA(result.balance),
+          availableBalance: toTEA(result.balance),
+        },
+      ];
+      this.setState({
+        showMbTbl: tblTmp.map((data, index) => (
+          <div key={index}>
+            <div className="infinite-scroll-component">
+              <ContentWrapper>
+                <ContentTitle>
+                  <TitleAsset>
+                    <div className="symbol">{data.symbo}</div>
+                    <div className="name">{data.name}</div>
+                  </TitleAsset>
+                  <BtnCus onClick={address ? this.viewSendForm : this.viewCFForm}>Send</BtnCus>
+                </ContentTitle>
+                <ContentValue>
+                  <ContentValueBox>
+                    <CVBWrapper>
+                      <TotalWrapper>
+                        <div className="title">Total</div>
+                        <div className="value">
+                          <span>{data.totalBalance}</span>
+                        </div>
+                      </TotalWrapper>
+                      <AvaiWrapper>
+                        <div className="title">Available</div>
+                        <div className="value">
+                          <span>{data.availableBalance}</span>
+                        </div>
+                      </AvaiWrapper>
+                    </CVBWrapper>
+                  </ContentValueBox>
+                </ContentValue>
+              </ContentWrapper>
+            </div>
+          </div>
+        )),
+      });
+    } catch (err) {
+      // console.log(err);
+    }
+  };
+
   render() {
     const { props } = this;
-    const { showSend, sendingAsset, showCFForm, showTbl, showMobileCode } = this.state;
+    const { showSend, sendingAsset, showCFForm, showTbl, showMobileCode, showMbTbl } = this.state;
     const { privateKey } = this.props;
     const address = user.address;
     // console.log('CHECK render', props.address);
@@ -273,7 +432,7 @@ class Balances extends Component {
                       </WrapperQRCode>
                     )}
                   </WrapSubTitle>
-                  
+                  <div>{showMbTbl}</div>
                 </Outbox>
               </React.Fragment>
             </Wrapper>
