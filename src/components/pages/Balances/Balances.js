@@ -13,6 +13,7 @@ import { Icon, checkDevice, DivSelectWordBase, BtnActive } from '../../elements/
 import { toTEA } from '../../../utils/utils';
 import PuInputPassword from './PuInputPassword';
 import notifi from '../../elements/Notification';
+import SendTxMobile from './SendTxMobile';
 
 let user = sessionStorage.getItem('user');
 user = (user && JSON.parse(user)) || {};
@@ -236,6 +237,7 @@ class Balances extends Component {
       showTbl: [],
       showMbTbl: [],
       showMobileCode: false,
+      showSendMobi: false,
     };
   }
 
@@ -246,7 +248,7 @@ class Balances extends Component {
 
   componentDidUpdate(prevProps) {
     const { props } = this;
-    if (prevProps.address !== props.address) {
+    if (prevProps.privateKey !== props.privateKey) {
       this.renderTbl();
     }
   }
@@ -257,6 +259,10 @@ class Balances extends Component {
 
   viewSendForm = () => {
     this.setState({ showSend: true, showCFForm: false });
+  };
+
+  viewSendMobi = () => {
+    this.setState({ showSendMobi: true });
   };
 
   viewCFForm = () => {
@@ -297,6 +303,7 @@ class Balances extends Component {
 
   renderTbl = async () => {
     try {
+      const { privateKey } = this.props;
       const address = user.address;
       const result = await tweb3.getBalance(address);
       const tblTmp = [
@@ -331,7 +338,7 @@ class Balances extends Component {
                 <button
                   type="button"
                   className="sc-bZQynM sc-MYvYT sc-jbWsrJ ircCEl"
-                  onClick={address ? this.viewSendForm : this.viewCFForm}
+                  onClick={privateKey ? this.viewSendForm : this.viewCFForm}
                 >
                   Send
                 </button>
@@ -347,6 +354,7 @@ class Balances extends Component {
 
   renderMobileTbl = async () => {
     try {
+      const { privateKey } = this.props;
       const address = user.address;
       const result = await tweb3.getBalance(address);
       // console.log('I want to see balance:', result.balance);
@@ -368,7 +376,8 @@ class Balances extends Component {
                     <div className="symbol">{data.symbo}</div>
                     <div className="name">{data.name}</div>
                   </TitleAsset>
-                  <BtnCus onClick={address ? this.viewSendForm : this.viewCFForm}>Send</BtnCus>
+                  {/* <BtnCus onClick={privateKey ? this.viewSendMobi : this.viewCFForm}>Send</BtnCus> */}
+                  <BtnCus onClick={this.viewSendMobi}>Send</BtnCus>
                 </ContentTitle>
                 <ContentValue>
                   <ContentValueBox>
@@ -400,7 +409,7 @@ class Balances extends Component {
 
   render() {
     const { props } = this;
-    const { showSend, sendingAsset, showCFForm, showTbl, showMobileCode, showMbTbl } = this.state;
+    const { showSend, sendingAsset, showCFForm, showTbl, showMobileCode, showMbTbl, showSendMobi } = this.state;
     const { privateKey } = this.props;
     const address = user.address;
     // console.log('CHECK render', props.address);
@@ -438,6 +447,18 @@ class Balances extends Component {
             </Wrapper>
           )}
         </MobileWrapper>
+
+        {showSendMobi && (
+          <MobileWrapper>
+            <Wrapper>
+              <React.Fragment>
+                <Outbox>
+                  <SendTxMobile />
+                </Outbox>
+              </React.Fragment>
+            </Wrapper>
+          </MobileWrapper>
+        )}
         <Layout>
           <NotMobileWrapper>
             <div className="sc-lnrBVv kvEeOF">
