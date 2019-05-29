@@ -169,7 +169,7 @@ class BotShow extends Component {
                       <Icon type="close" size="18" color="inherit" />
                     </WrapperBtnCloseCus>
                     <div className="content-rsideba" style={{ display: showMenu === true ? 'block' : 'none' }}>
-                      <div className="bot-menu-items">
+                      <div className="bot-menu-items" id="bot-menu-items">
                         <a href="#">About</a>
                         <a href="#">Services</a>
                         <a href="#">Clients</a>
@@ -194,7 +194,7 @@ BotShow.defaultProps = {
   botAddress: '',
   address: 'teat1al54h8fy75h078syz54z6hke6l9x232zq3j9st',
   privateKey: 'CJUPdD38vwc2wMC3hDsySB7YQ6AFLGuU6QYQYaiSeBsK',
-  onClose: function() {},
+  onClose() {},
 };
 
 export default BotShow;
