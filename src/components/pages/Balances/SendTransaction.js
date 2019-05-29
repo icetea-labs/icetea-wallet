@@ -115,8 +115,8 @@ class SendTransaction extends PureComponent {
 }
 
 SendTransaction.defaultProps = {
-  onSendSuccess: function() {},
-  close: function() {},
+  onSendSuccess() {},
+  close() {},
   assets: [],
   address: '',
   privateKey: '',

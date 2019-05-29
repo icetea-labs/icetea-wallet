@@ -1,15 +1,19 @@
 {
-  "extends": ["airbnb", "prettier", "eslint:recommended", "plugin:react/recommended"],
+  "extends": ["airbnb", "prettier", "plugin:react/recommended"],
   "parser": "babel-eslint",
   "plugins": ["prettier", "react"],
   "rules": {
     "react/prop-types": 0,
     "react/forbid-prop-types": 0,
     "react/no-array-index-key": 0,
-    "react/require-default-props":0,
-    "jsx-a11y/click-events-have-key-events":0,
-    "jsx-a11y/no-noninteractive-element-interactions":0,
-    "jsx-a11y/no-static-element-interactions":0,
+    "react/require-default-props": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/no-noninteractive-element-interactions": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+    "no-return-assign": 0,
+    "no-param-reassign": 0,
+    "no-await-in-loop": 0,
     "prettier/prettier": [
       "error",
       {
@@ -24,3 +28,4 @@
     "browser": true
   }
 }
+// "eslint:recommended", "plugin:react/recommended"

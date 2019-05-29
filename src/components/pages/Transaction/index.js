@@ -44,18 +44,29 @@ class index extends PureComponent {
     this.getHistory();
   }
 
+  componentWillReceiveProps(nextProps) {
+    // this.getHistory();
+    const { address } = this.props;
+    // console.log('address', address, '--', prevProps.address);
+    if (address !== nextProps.address) {
+      this.getHistory(nextProps.address);
+    }
+  }
+
   componentDidUpdate() {
     // var { txProps } = this.props;
     // var { txState } = this.state.txs
     // 0 === txState.length && txProps.length > 0 && this.setState({
     //   txs: txState.concat(txProps)
     // })
+    // this.getHistory();
   }
 
-  getHistory = () => {
+  getHistory = addr => {
     const { address, getTxHistory } = this.props;
+
     const params = {
-      address,
+      address: addr || address,
       conditions: '',
       options: { prove: false, page: 1, per_page: 100 },
     };
@@ -243,10 +254,6 @@ class index extends PureComponent {
     }
   };
 
-  // _search = () => {
-  //   this.getHistory();
-  // };
-
   render() {
     const { total, address, isFetching } = this.props;
     const { detail, pageSize, current } = this.state;
@@ -275,7 +282,6 @@ class index extends PureComponent {
               pageSize={pageSize}
             />
             {detail && <PuDetailTx detail={detail} close={this.clearDetail} />}
-            {/* <ButtonSeach onClick={this._search} ><span>Search</span></ButtonSeach>  */}
           </Content>
         </Wrapper>
       </Layout>
