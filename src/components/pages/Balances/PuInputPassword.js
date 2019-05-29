@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react';
 import QueueAnim from 'rc-queue-anim';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { zIndex } from '../../../constants/styles';
 import { Button, InputPassword } from '../../elements';
 import { Icon } from '../../elements/utils';
 import error from '../../../assets/img/error-icon.svg';
 import { utils } from '../../../utils';
+import { zIndex } from '../../../constants/styles';
 import * as actions from '../../../store/actions/account';
 
 const WrapperPu = styled.div`
@@ -120,11 +120,13 @@ class PuInputPassword extends PureComponent {
 
   _confirm = () => {
     document.activeElement.blur();
-    const setAccount = this.props.setAccount;
+    const { state, props } = this;
+    const setAccount = props.setAccount;
     let userInfo = sessionStorage.getItem('user');
-    if ((userInfo = (userInfo && JSON.parse(userInfo)) || {}).address && userInfo.privateKey) {
-      const pass = this.state.password;
-      let triggerElement = this.props.triggerElement;
+    userInfo = (userInfo && JSON.parse(userInfo)) || {};
+    if (userInfo.address && userInfo.privateKey) {
+      const pass = state.password;
+      let triggerElement = props.triggerElement;
       if (!pass) {
         return void this.setState({
           errMsg: 'password should not be null',
@@ -137,7 +139,7 @@ class PuInputPassword extends PureComponent {
         try {
           const privateKey = utils.recoverAccountFromPrivateKey(userInfo.privateKey, pass, userInfo.address);
           const address = utils.getAddressFromPrivateKey(privateKey);
-          console.log('CK input address', userInfo.address);
+          // console.log('CK input address', userInfo.address);
 
           setAccount({
             privateKey: privateKey,
@@ -151,11 +153,11 @@ class PuInputPassword extends PureComponent {
               loading: false,
             });
             triggerElement && triggerElement.click();
-            this.props.close();
+            props.close();
           }, 800);
-          this.props.onCFSuccess();
+          props.onCFSuccess();
         } catch (log) {
-          console.log('Wrong Password!', log);
+          // console.log('Wrong Password!', log);
           this.setState({
             errMsg: 'Wrong Password!',
             loading: false,
@@ -182,7 +184,7 @@ class PuInputPassword extends PureComponent {
               <WrapperInput>
                 <InputPassword
                   withRules={false}
-                  autoFocus={true}
+                  autoFocus
                   onChange={this._passwordChange}
                   title="Enter your session password"
                 />
@@ -194,7 +196,7 @@ class PuInputPassword extends PureComponent {
               </WrapperBtn>
               {errMsg && (
                 <WrapperPassErr>
-                  <img src={error} />
+                  <img src={error} alt="" />
                   <span>{errMsg}</span>
                 </WrapperPassErr>
               )}
