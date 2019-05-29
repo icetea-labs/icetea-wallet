@@ -376,8 +376,8 @@ class Balances extends Component {
                     <div className="symbol">{data.symbo}</div>
                     <div className="name">{data.name}</div>
                   </TitleAsset>
-                  {/* <BtnCus onClick={privateKey ? this.viewSendMobi : this.viewCFForm}>Send</BtnCus> */}
-                  <BtnCus onClick={this.viewSendMobi}>Send</BtnCus>
+                  <BtnCus onClick={privateKey ? this.viewSendMobi : this.viewCFForm}>Send</BtnCus>
+                  {/* <BtnCus onClick={this.viewSendMobi}>Send</BtnCus> */}
                 </ContentTitle>
                 <ContentValue>
                   <ContentValueBox>
