@@ -246,10 +246,10 @@ class Balances extends Component {
     this.renderMobileTbl();
   }
 
-  componentDidUpdate(prevProps) {
-    const { props } = this;
-    if (prevProps.privateKey !== props.privateKey) {
-      this.renderTbl();
+  componentWillReceiveProps(nextProps) {
+    const { address } = this.props;
+    if (address !== nextProps.address) {
+      this.renderTbl(nextProps.address);
     }
   }
 
@@ -301,11 +301,11 @@ class Balances extends Component {
     });
   };
 
-  renderTbl = async () => {
+  renderTbl = async addr => {
     try {
-      const { privateKey } = this.props;
-      const address = user.address;
-      const result = await tweb3.getBalance(address);
+      const { privateKey, address } = this.props;
+      // const address = user.address;
+      const result = await tweb3.getBalance(addr || address);
       const tblTmp = [
         {
           name: 'IceTea Chain Native Token',
@@ -354,8 +354,8 @@ class Balances extends Component {
 
   renderMobileTbl = async () => {
     try {
-      const { privateKey } = this.props;
-      const address = user.address;
+      const { privateKey, address } = this.props;
+      // const address = user.address;
       const result = await tweb3.getBalance(address);
       // console.log('I want to see balance:', result.balance);
       const tblTmp = [
@@ -410,8 +410,7 @@ class Balances extends Component {
   render() {
     const { props } = this;
     const { showSend, sendingAsset, showCFForm, showTbl, showMobileCode, showMbTbl, showSendMobi } = this.state;
-    const { privateKey } = this.props;
-    const address = user.address;
+    const { privateKey, address } = this.props;
     // console.log('CHECK render', props.address);
     return (
       <div>

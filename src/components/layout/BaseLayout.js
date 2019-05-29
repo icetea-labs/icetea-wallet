@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import styled from 'styled-components';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
-import styled from 'styled-components';
 
 const Main = styled.div`
   padding: 50px 0;
@@ -29,13 +29,14 @@ const Wrapper = styled.div`
   }
 `;
 
-class BaseLayout extends Component {
+class BaseLayout extends PureComponent {
   render() {
+    const { props } = this;
     return (
       <Main>
         <Header />
         <Wrapper>
-          <div className="container">{this.props.children}</div>
+          <div className="container">{props.children}</div>
         </Wrapper>
         <Footer />
       </Main>

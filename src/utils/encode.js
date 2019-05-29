@@ -8,7 +8,7 @@ function createRandom() {
   const random = randomBytes(keyBytes + ivBytes + keyBytes);
   return {
     iv: random.slice(keyBytes, keyBytes + ivBytes),
-    salt: random.slice(keyBytes + ivBytes)
+    salt: random.slice(keyBytes + ivBytes),
   };
 }
 
@@ -23,8 +23,8 @@ function encode(privateKey, password) {
     kdfparams: {
       c: 262144,
       dklen: 32,
-      prf: 'hmac-sha256'
-    }
+      prf: 'hmac-sha256',
+    },
   };
 
   const dk = createRandom();

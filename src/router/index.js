@@ -4,9 +4,8 @@ import Loadable from 'react-loadable';
 function Loading({ error }) {
   if (error) {
     return 'Oh nooess!';
-  } else {
-    return <h3>Loading...</h3>;
   }
+  return <h3>Loading...</h3>;
 }
 
 const index = [

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+
 import { zIndex } from '../../constants/styles';
 import logo from '../../assets/img/logo.svg';
 import cancelblack from '../../assets/img/cancelblack.svg';
@@ -11,9 +12,12 @@ import MenuMobile from '../menu/MenuMobile';
 import { PuConfirmMnemonic } from '../elements/PuConfirmMnemonic';
 import notifi from '../elements/Notification';
 import Clock from './Clock';
+import GetSessionPassword from './GetSessionPassword';
 import { mainnet, testnet, currentServer, explorer, faq, forums } from '../../config/networks';
-// import { userStorage } from '../../utils/utils';
 import selected from '../../assets/img/checked.png';
+import * as actions from '../../store/actions/account';
+import { utils, toTEA } from '../../utils/utils';
+import tweb3 from '../../service/tweb3';
 
 const WrapperHeader = styled.div`
   height: 50px;
@@ -329,11 +333,28 @@ class Header extends PureComponent {
       confirmLogout: false,
       showMobileMenu: false,
       showSearchIcon: false,
+      accounts: {},
     };
   }
 
-  _confirmSignout = e => {
-    return function() {
+  async componentDidMount() {
+    await this.updateBalance();
+  }
+
+  updateBalance = async () => {
+    const { childKey, setBalanceChildKey } = this.props;
+    const childKeyTmp = [];
+
+    for (let i = 0; i < childKey.length; i += 1) {
+      const { balance } = await tweb3.getBalance(childKey[i].address);
+      childKey[i].balance = balance;
+      childKeyTmp.push(childKey[i]);
+    }
+    setBalanceChildKey(childKeyTmp);
+  };
+
+  _confirmSignout = () => {
+    return () => {
       // userStorage.isWalletConnect && state && state.disconnect();
       sessionStorage.removeItem('user');
       window.localStorage.removeItem('walletconnect');
@@ -346,11 +367,11 @@ class Header extends PureComponent {
     window.open(''.concat(explorer, '/address/').concat(address), 'blank');
   };
 
-  _copyAddress = function() {
+  _copyAddress = () => {
     notifi.info('copy success');
   };
 
-  _getMenus = function() {
+  _getMenus = () => {
     const { address } = this.props;
 
     const authenticated = [
@@ -363,8 +384,12 @@ class Header extends PureComponent {
         path: '/balances',
       },
       {
-        text: 'Bots Store',
+        text: 'BotStore',
         path: '/botStore',
+      },
+      {
+        text: 'Profile',
+        path: '/profile',
       },
     ];
 
@@ -404,6 +429,7 @@ class Header extends PureComponent {
     history.push('/');
   };
   // onClick={() => this.clickMenu(sub.path)}
+
   _buildSubMenus = subMenus => {
     return subMenus.map(sub => {
       return (
@@ -414,12 +440,48 @@ class Header extends PureComponent {
     });
   };
 
+  _createAccount = async () => {
+    const { mnemonic, indexKey, addNewAccount } = this.props;
+    const account = utils.createAccountWithMneomnic(mnemonic, indexKey + 1);
+    const { balance } = await tweb3.getBalance(account.address);
+    const childKey = {
+      indexKey: indexKey + 1,
+      address: account.address,
+      privateKey: '',
+      balance,
+      selected: false,
+    };
+    addNewAccount(childKey);
+  };
+
+  _importAccount = () => {
+    console.log('aaaaa');
+  };
+
+  _selectAccount = index => {
+    const { childKey, setAccount } = this.props;
+    const selectedAddress = childKey[index].address;
+    // console.log('aa', childKey[index].address);
+    setAccount({
+      address: selectedAddress,
+    });
+    let current = sessionStorage.getItem('user');
+    if (!current) {
+      current = {};
+    } else {
+      current = JSON.parse(current);
+      current.address = selectedAddress;
+      sessionStorage.setItem('user', JSON.stringify(current));
+    }
+  };
+
   render() {
-    const { props } = this;
     const { confirmLogout, showMobileMenu } = this.state;
-    const { className, bgColor, address, history } = this.props;
+    const { className, bgColor, address, history, childKey } = this.props;
+    // console.log('render', childKey);
 
     const Menus = this._getMenus().map(el => {
+      // console.log('Menus', el);
       return el.subMenus ? (
         <li className="withSubMenus" key={el.text}>
           <span>{el.text}</span>
@@ -435,10 +497,25 @@ class Header extends PureComponent {
       );
     });
 
+    const Accounts = childKey.map((el, index) => {
+      return (
+        <div className="account-item" key={index} onClick={() => this._selectAccount(index)}>
+          <div className="selected">{el.address === this.props.address && <img src={selected} alt="" />}</div>
+          <div className="account-avt">
+            <img src={logo} alt="" />
+          </div>
+          <div className="account-info">
+            <div className="accout-name">Account {index}</div>
+            <div className="accout-balances">{toTEA(el.balance) || 0} TEA</div>
+          </div>
+        </div>
+      );
+    });
+
     return (
       <WrapperHeader className={className} bgColor={bgColor}>
         <LogoDisplay>
-          <LogoWrapper onClick={props._clickLogo}>
+          <LogoWrapper onClick={this._clickLogo}>
             <img src={logo} alt="" />
           </LogoWrapper>
           {/* mobile.. */}
@@ -477,68 +554,22 @@ class Header extends PureComponent {
                     </div>
                   </div>
                   <ListAccount>
-                    <WrapAccount>
-                      <div
-                        className="account-item"
-                        onClick={() => {
-                          history.push('/profile');
-                        }}
-                      >
-                        <div className="selected">
-                          <img src={selected} alt="" />
-                        </div>
-                        <div className="account-avt">
-                          <img src={logo} alt="" />
-                        </div>
-                        <div className="account-info">
-                          <div className="accout-name">Tài khoản 1</div>
-                          <div className="accout-balances">3 ETH</div>
-                        </div>
-                      </div>
-                      <div className="account-item">
-                        <div className="selected" />
-                        <div className="account-avt">
-                          <img src={logo} alt="" />
-                        </div>
-                        <div className="account-info">
-                          <div className="accout-name">Tài khoản 1</div>
-                          <div className="accout-balances">3 ETH</div>
-                        </div>
-                      </div>
-                      <div className="account-item">
-                        <div className="selected" />
-                        <div className="account-avt">
-                          <img src={logo} alt="" />
-                        </div>
-                        <div className="account-info">
-                          <div className="accout-name">Tài khoản 1</div>
-                          <div className="accout-balances">3 ETH</div>
-                        </div>
-                      </div>
-                      <div className="account-item">
-                        <div className="selected" />
-                        <div className="account-avt">
-                          <img src={logo} alt="" />
-                        </div>
-                        <div className="account-info">
-                          <div className="accout-name">Tài khoản 1</div>
-                          <div className="accout-balances">3 ETH</div>
-                        </div>
-                      </div>
-                    </WrapAccount>
+                    <WrapAccount>{Accounts}</WrapAccount>
                   </ListAccount>
+                  <ItemsAccount>
+                    <li onClick={this._createAccount} role="presentation">
+                      Create Account
+                    </li>
+                    <li onClick={this._importAccount} role="presentation">
+                      Import Account
+                    </li>
+                  </ItemsAccount>
                   <ItemsAccount>
                     <li>
                       <Link to="/unlock">Change Wallet</Link>
                     </li>
                     <li>
-                      <span>Import Wallet</span>
-                    </li>
-                    <li>
                       <Link to="/create">Create New Wallet</Link>
-                    </li>
-                    <li>
-                      <span>Setting</span>
                     </li>
                     <li onClick={this._showConfirmLogout} role="presentation">
                       Close Wallet
@@ -558,7 +589,7 @@ class Header extends PureComponent {
                 <li>
                   <a href={forums}>Forums</a>
                 </li>
-                <li>{'mainnet' === currentServer ? <a href={mainnet}>Mainnet</a> : <a href={testnet}>Testnet</a>}</li>
+                <li>{currentServer === 'mainnet' ? <a href={mainnet}>Mainnet</a> : <a href={testnet}>Testnet</a>}</li>
               </ItemsSubMenuWapper>
             </li>
           </StyledUlTag>
@@ -582,14 +613,14 @@ class Header extends PureComponent {
             </ContentLogout>
           </PuConfirmMnemonic>
         )}
-        {/* privateKey  account.. */}
+        <GetSessionPassword />
       </WrapperHeader>
     );
   }
 }
 
 Header.defaultProps = {
-  dispatch: function() {},
+  dispatch() {},
   privateKey: '',
   address: '',
   encryptedData: null,
@@ -599,19 +630,38 @@ Header.defaultProps = {
 };
 
 const mapStateToProps = state => {
-  const { privateKey, needAuth, address, encryptedData, cipher, flags } = state.account;
+  const { privateKey, needAuth, address, encryptedData, cipher, flags, childKey, mnemonic, indexKey } = state.account;
   return {
-    needAuth: needAuth,
-    privateKey: privateKey,
-    address: address,
-    encryptedData: encryptedData,
-    cipher: cipher,
-    flags: flags,
+    needAuth,
+    privateKey,
+    address,
+    encryptedData,
+    cipher,
+    childKey,
+    mnemonic,
+    indexKey,
+    flags,
     isIpValid: state.globalData.isIpValid,
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    setAccount: data => {
+      dispatch(actions.setAccount(data));
+    },
+    addNewAccount: data => {
+      dispatch(actions.addNewAccount(data));
+    },
+    importNewAccount: data => {
+      dispatch(actions.importNewAccount(data));
+    },
+    setBalanceChildKey: data => {
+      dispatch(actions.setBalanceChildKey(data));
+    },
+  };
+};
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(withRouter(Header));
