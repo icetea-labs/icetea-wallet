@@ -362,6 +362,10 @@ class Header extends PureComponent {
         text: 'Balances',
         path: '/balances',
       },
+      {
+        text: 'Bots Store',
+        path: '/botStore',
+      },
     ];
 
     const unauthenticated = [
