@@ -3,18 +3,229 @@ import './Balances.css';
 import QRCode from 'qrcode.react';
 import { connect } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import styled from 'styled-components';
+
 import Layout from '../../layout';
 import SendTransaction from './SendTransaction';
-
 import tweb3 from '../../../service/tweb3';
 import TransactionHistory from '../Transaction';
-import { Icon } from '../../elements/utils';
+import { Icon, checkDevice, DivSelectWordBase, BtnActive } from '../../elements/utils';
 import { toTEA } from '../../../utils/utils';
 import PuInputPassword from './PuInputPassword';
 import notifi from '../../elements/Notification';
 
 let user = sessionStorage.getItem('user');
 user = (user && JSON.parse(user)) || {};
+
+const MobileWrapper = styled.div`
+  background: rgb(18, 22, 28);
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
+
+const NotMobileWrapper = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const Wrapper = styled.div`
+  display: none;
+  background: #12161c;
+  @media (max-width: 768px) {
+    display: block;
+  }
+  .scrollContainer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+  }
+`;
+
+const Outbox = styled.div`
+  padding: 10px 12px;
+  border-top: 1px solid #000;
+  position: relative;
+  top: 44px;
+  background: #12161c;
+`;
+
+const Title = styled(DivSelectWordBase)`
+  justify-content: space-between;
+  font-size: 20px;
+  padding: 10px 0;
+  color: #fff;
+  align-items: center;
+  text-indent: '10px';
+  font-weight: 'bold';
+`;
+
+const WrapSubTitle = styled.div`
+  background: linear-gradient(225deg, rgba(29, 36, 46, 1) 0%, rgba(19, 23, 30, 1) 100%);
+  box-shadow: 0px 0px 8px 0px rgba(11, 14, 17, 0.5);
+  border-radius: 3px;
+  color: #848e9c;
+  padding: 25px 12px;
+  .totalUsd {
+    font-size: 14px;
+  }
+  .address {
+    color: #848e9c;
+    font-size: 17px;
+    font-weight: 500;
+    width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 22px;
+  }
+  .box {
+    width: 24px;
+    height: 24px;
+    background: rgba(33, 40, 51, 1);
+    border-radius: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+const WrapperQRCode = styled(DivSelectWordBase)`
+  justify-content: center;
+  margin-top: 20px;
+  .qrcode-box {
+    position: relative;
+    border: 2px solid rgb(255, 255, 255);
+    display: inline-block;
+    background: rgb(37, 45, 56);
+    padding: 10px;
+  }
+  .qrcode-box::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: rgb(37, 45, 56);
+  }
+  .qrcode-box::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: rgb(37, 45, 56);
+  }
+`;
+
+const ContentWrapper = styled.div`
+  margin-bottom: 10px;
+  background: rgba(33, 40, 51, 0.6);
+  border-radius: 3px;
+`;
+
+const ContentTitle = styled.div`
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  height: 40px;
+  line-height: 40px;
+  font-size: 13px;
+  position: relative;
+  color: rgb(132, 142, 156);
+  border-bottom: 1px solid rgb(11, 14, 17);
+  padding: 0px 15px;
+  .symbol {
+    font-size: 14px;
+    margin-right: 10px;
+    color: rgb(255, 255, 255);
+  }
+  .name {
+    width: 130px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+`;
+
+const ContentValue = styled.div`
+  font-size: 13px;
+  position: relative;
+  padding: 10px 15px;
+`;
+
+const TitleAsset = styled.div`
+  -webkit-box-align: center;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const BtnCus = styled(BtnActive)`
+  background: inherit;
+  border: 1px solid #f0b90b;
+  color: #f0b90b;
+  width: 170px;
+  a {
+    color: inherit;
+    width: 100%;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  @media (max-width: 1440px) {
+    width: 110px;
+    height: 30px;
+    line-height: 28px;
+    font-size: 12px;
+  }
+`;
+
+const ContentValueBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const CVBWrapper = styled.div`
+  .title {
+    color: rgb(132, 142, 156);
+    width: 46px;
+    text-align: left;
+    margin-right: 20px;
+  }
+  .value {
+    color: rgb(255, 255, 255);
+  }
+  span {
+    font-family: DIN;
+  }
+`;
+
+const TotalWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: rgb(255, 255, 255);
+  font-weight: 600;
+  .title {
+    margin-right: 10px;
+    color: rgb(255, 255, 255);
+  }
+`;
+
+const AvaiWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: rgb(255, 255, 255);
+  title {
+    color: rgb(132, 142, 156);
+    font-size: 13px;
+  }
+`;
 
 class Balances extends Component {
   constructor() {
@@ -23,11 +234,14 @@ class Balances extends Component {
       showSend: false,
       showCFForm: false,
       showTbl: [],
+      showMbTbl: [],
+      showMobileCode: false,
     };
   }
 
   componentWillMount() {
     this.renderTbl();
+    this.renderMobileTbl();
   }
 
   componentDidUpdate(prevProps) {
@@ -73,12 +287,18 @@ class Balances extends Component {
     notifi.info('Copy successful!');
   };
 
+  _showMobileQrCode = () => {
+    const { state } = this;
+    let e = state.showMobileCode;
+    this.setState({
+      showMobileCode: !e,
+    });
+  };
+
   renderTbl = async () => {
-    const { props } = this;
     try {
-      const address = props.address;
+      const address = user.address;
       const result = await tweb3.getBalance(address);
-      // console.log('I want to see balance:', result.balance);
       const tblTmp = [
         {
           name: 'IceTea Chain Native Token',
@@ -125,80 +345,169 @@ class Balances extends Component {
     }
   };
 
+  renderMobileTbl = async () => {
+    try {
+      const address = user.address;
+      const result = await tweb3.getBalance(address);
+      // console.log('I want to see balance:', result.balance);
+      const tblTmp = [
+        {
+          name: 'IceTea Chain Native Token',
+          symbo: 'ITEA',
+          totalBalance: toTEA(result.balance),
+          availableBalance: toTEA(result.balance),
+        },
+      ];
+      this.setState({
+        showMbTbl: tblTmp.map((data, index) => (
+          <div key={index}>
+            <div className="infinite-scroll-component">
+              <ContentWrapper>
+                <ContentTitle>
+                  <TitleAsset>
+                    <div className="symbol">{data.symbo}</div>
+                    <div className="name">{data.name}</div>
+                  </TitleAsset>
+                  <BtnCus onClick={address ? this.viewSendForm : this.viewCFForm}>Send</BtnCus>
+                </ContentTitle>
+                <ContentValue>
+                  <ContentValueBox>
+                    <CVBWrapper>
+                      <TotalWrapper>
+                        <div className="title">Total</div>
+                        <div className="value">
+                          <span>{data.totalBalance}</span>
+                        </div>
+                      </TotalWrapper>
+                      <AvaiWrapper>
+                        <div className="title">Available</div>
+                        <div className="value">
+                          <span>{data.availableBalance}</span>
+                        </div>
+                      </AvaiWrapper>
+                    </CVBWrapper>
+                  </ContentValueBox>
+                </ContentValue>
+              </ContentWrapper>
+            </div>
+          </div>
+        )),
+      });
+    } catch (err) {
+      // console.log(err);
+    }
+  };
+
   render() {
     const { props } = this;
-    const { showSend, sendingAsset, showCFForm, showTbl } = this.state;
+    const { showSend, sendingAsset, showCFForm, showTbl, showMobileCode, showMbTbl } = this.state;
     const { privateKey } = this.props;
     const address = user.address;
-    // console.log('CHECK render', props.address);
+    console.log('CHECK render', props.address);
     return (
-      <Layout>
-        <div className="sc-lnrBVv kvEeOF">
-          <div className="sc-kIWQTW jfuazO">
-            <div className="sc-hMjcWo jvYfux">
-              <div className="sc-gCwZxT iWYAnd">
-                <div>
-                  <span>Balances</span>
-                  <span className="text-address">
-                    <i id="copyText">{address}</i>
-                  </span>
-                </div>
-                <div className="sc-jDwBTQ cPxcHa">
-                  <div className="sc-fATqzn cNStFF">
-                    <Icon type="qrcode" size={18} />
-                    <div className="qrCode">
-                      <div size="174" className="qrcode-box sc-iSDuPN iulYhq">
-                        <QRCode size={174} className="qrForm" value={address} />
+      <div>
+        <MobileWrapper>
+          {checkDevice.isMobile() && (
+            <Wrapper>
+              <React.Fragment>
+                <Outbox>
+                  <Title>My Balances</Title>
+                  <WrapSubTitle>
+                    <DivSelectWordBase margin="10px 0 0 0" justify="space-between" align="center">
+                      <div className="address">{address}</div>
+                      <CopyToClipboard text={address} onCopy={this._copyAddress}>
+                        <div title="copy box" onClick={this._copyAddress}>
+                          <Icon type="copy" size={14} />
+                        </div>
+                      </CopyToClipboard>
+                      <span className="box" onClick={this._showMobileQrCode}>
+                        <Icon type={showMobileCode ? 'close' : 'qrcode'} size={14} />
+                      </span>
+                    </DivSelectWordBase>
+                    {showMobileCode && (
+                      <WrapperQRCode>
+                        <div size="174" className="qrcode-box sc-iSDuPN iulYhq">
+                          <QRCode size={174} level="M" className="qrForm" value={address} />
+                        </div>
+                      </WrapperQRCode>
+                    )}
+                  </WrapSubTitle>
+                  <div>{showMbTbl}</div>
+                </Outbox>
+              </React.Fragment>
+            </Wrapper>
+          )}
+        </MobileWrapper>
+        <Layout>
+          <NotMobileWrapper>
+            <div className="sc-lnrBVv kvEeOF">
+              <div className="sc-kIWQTW jfuazO">
+                <div className="sc-hMjcWo jvYfux">
+                  <div className="sc-gCwZxT iWYAnd">
+                    <div>
+                      <span>Balances</span>
+                      <span className="text-address">
+                        <i id="copyText">{address}</i>
+                      </span>
+                    </div>
+                    <div className="sc-jDwBTQ cPxcHa">
+                      <div className="sc-fATqzn cNStFF">
+                        <Icon type="qrcode" size={18} />
+                        <div className="qrCode">
+                          <div size="174" className="qrcode-box sc-iSDuPN iulYhq">
+                            <QRCode size={174} className="qrForm" value={address} />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="sc-fATqzn cNStFF">
+                        <CopyToClipboard text={address} onCopy={this._copyAddress}>
+                          <span title="copy address">
+                            <Icon type="copy" size={18} />
+                          </span>
+                        </CopyToClipboard>
                       </div>
                     </div>
                   </div>
-                  <div className="sc-fATqzn cNStFF">
-                    <CopyToClipboard text={address} onCopy={this._copyAddress}>
-                      <span title="copy address">
-                        <Icon type="copy" size={18} />
-                      </span>
-                    </CopyToClipboard>
+                  <div>
+                    <div className="sc-hvvHee cOshIS">
+                      <table className="sc-fQejPQ sc-cPuPxo dcZana">
+                        <thead className="sc-eSePXt byspTh">
+                          <tr>
+                            <th>Asset</th>
+                            <th>Name</th>
+                            <th>Total Balance</th>
+                            <th>Available Balance</th>
+                            <th />
+                          </tr>
+                        </thead>
+                        <tbody className="sc-fvLVrH gjcHsq">{showTbl}</tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
+                {showSend && (
+                  <SendTransaction
+                    onSendSuccess={this.renderTbl}
+                    bncClient=""
+                    assets={props._buildBalances}
+                    privateKey={privateKey}
+                    sendingAsset={sendingAsset}
+                    // address={user.address}
+                    address={address}
+                    // account_number={user.account_number}
+                    // sequence={parseInt(user.sequence, 10)}
+                    close={this._closeSendModal}
+                  />
+                )}
               </div>
+              <div>{showCFForm && <PuInputPassword onCFSuccess={this.onCFSuccess} close={this.closeCFForm} />}</div>
               <div>
-                <div className="sc-hvvHee cOshIS">
-                  <table className="sc-fQejPQ sc-cPuPxo dcZana">
-                    <thead className="sc-eSePXt byspTh">
-                      <tr>
-                        <th>Asset</th>
-                        <th>Name</th>
-                        <th>Total Balance</th>
-                        <th>Available Balance</th>
-                        <th />
-                      </tr>
-                    </thead>
-                    <tbody className="sc-fvLVrH gjcHsq">{showTbl}</tbody>
-                  </table>
-                </div>
+                <TransactionHistory />
               </div>
             </div>
-            {showSend && (
-              <SendTransaction
-                onSendSuccess={this.renderTbl}
-                bncClient=""
-                assets={props._buildBalances}
-                privateKey={privateKey}
-                sendingAsset={sendingAsset}
-                // address={user.address}
-                address={address}
-                // account_number={user.account_number}
-                // sequence={parseInt(user.sequence, 10)}
-                close={this._closeSendModal}
-              />
-            )}
-          </div>
-          <div>{showCFForm && <PuInputPassword onCFSuccess={this.onCFSuccess} close={this.closeCFForm} />}</div>
-          <div>
-            <TransactionHistory />
-          </div>
-        </div>
-      </Layout>
+          </NotMobileWrapper>
+        </Layout>
+      </div>
     );
   }
 }

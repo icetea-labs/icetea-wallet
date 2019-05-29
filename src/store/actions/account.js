@@ -3,6 +3,9 @@
  */
 export const actionTypes = {
   SET_ACCOUNT: 'account/SET_ACCOUNT',
+  ADD_NEW_ACCOUNT: 'account/ADD_NEW_ACCOUNT',
+  IMPORT_NEW_ACCOUNT: 'account/IMPORT_NEW_ACCOUNT',
+  SET_BALANCE_CHILDKEY: 'account/SET_BALANCE_CHILDKEY',
   SET_USER_INFO: 'account/SET_USER_INFO',
   SET_NEEDAUTH: 'account/SET_NEEDAUTH',
   SET_WALLETCONNECT_URI: 'account/SET_WALLETCONNECT_URI',
@@ -12,6 +15,18 @@ export const actionTypes = {
  */
 export const setAccount = data => ({
   type: actionTypes.SET_ACCOUNT,
+  data,
+});
+export const addNewAccount = data => ({
+  type: actionTypes.ADD_NEW_ACCOUNT,
+  data,
+});
+export const importNewAccount = data => ({
+  type: actionTypes.IMPORT_NEW_ACCOUNT,
+  data,
+});
+export const setBalanceChildKey = data => ({
+  type: actionTypes.SET_BALANCE_CHILDKEY,
   data,
 });
 export const setUserInfo = data => ({

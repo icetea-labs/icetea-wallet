@@ -101,14 +101,14 @@ class MenuMobile extends PureComponent {
     props.history.push(path);
   };
 
-  _buildMenus = function() {
+  _buildMenus = () => {
     const { menuGroups, path, notLoginMenuGroup } = this.state;
     const { address } = this.props;
     return (address ? menuGroups : notLoginMenuGroup).map(el => {
-      const li = el.menus.map((el, i) => {
+      const li = el.menus.map((item, i) => {
         return (
-          <li className={path === el.path ? 'current' : ''} key={i} onClick={() => this._clickMenu(el.path)}>
-            {el.text}
+          <li className={path === item.path ? 'current' : ''} key={i} onClick={() => this._clickMenu(item.path)}>
+            {item.text}
           </li>
         );
       });
@@ -130,7 +130,7 @@ class MenuMobile extends PureComponent {
     e.target === this.layoutRef.current && this._hide();
   };
 
-  _copyAddress = function() {
+  _copyAddress = () => {
     notifi.info('copy success');
   };
 
@@ -182,8 +182,8 @@ class MenuMobile extends PureComponent {
 }
 
 MenuMobile.defaultProps = {
-  closeWallet: function() {},
-  close: function() {},
+  closeWallet() {},
+  close() {},
   address: '',
 };
 

@@ -1,11 +1,10 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import QueueAnim from 'rc-queue-anim';
 import * as actions from '../../../store/actions/account';
-import logo from './../../../assets/img/logo.svg';
-import unlock_recommend from './../../../assets/img/unlock_recommend.svg';
+import logo from '../../../assets/img/logo.svg';
+import unlock_recommend from '../../../assets/img/unlock_recommend.svg';
 import ByMnemonic from './ByMnemonic';
 import SelectUnlockType from './SelectUnlockType';
 import {
@@ -21,10 +20,10 @@ import {
   Menu,
   UnlockRecommend,
 } from './styled';
-import FooterCus from './../FooterCus';
+import FooterCus from '../FooterCus';
 import { encode } from '../../../utils';
 
-var itemsMenu = [
+const itemsMenu = [
   {
     text: 'WalletConnect',
     i18nId: 'common.walletConnect',
@@ -90,8 +89,9 @@ class index extends PureComponent {
   }
 
   _selectType = items => {
-    var value;
-    this.state.types.forEach(el => {
+    let value;
+    const { types } = this.state;
+    types.forEach(el => {
       if (el.text === items.text) {
         el.selected = true;
         value = items.text;
@@ -104,20 +104,31 @@ class index extends PureComponent {
     });
   };
 
-  _unlock = (privateKey, address, keyStore, password) => {
+  _unlock = (privateKey, address, keyStore, password, mnemonic) => {
+    const { props } = this;
     setTimeout(() => {
-      var n = '';
+      let encryptedData = '';
       if (privateKey) {
-        n = encode(privateKey, password);
+        encryptedData = encode(privateKey, password);
       }
       if (address) {
-        this.props.setAccount({
-          privateKey: privateKey,
-          address: address,
-          keyStore: keyStore,
+        const childKey = {
+          address,
+          privateKey: '',
+          balance: 0,
+          selected: true,
+        };
+
+        props.setAccount({
+          indexKey: 0,
+          address,
+          privateKey,
           cipher: password,
+          mnemonic,
+          keyStore,
+          childKey: [childKey],
           // flags: o,
-          // encryptedData: n,
+          encryptedData,
           userInfo: {},
         });
         // this.props.getAccount(address)
@@ -126,20 +137,23 @@ class index extends PureComponent {
         sessionStorage.setItem(
           'user',
           JSON.stringify({
-            address: address,
-            privateKey: n || privateKey,
+            indexKey: 0,
+            address,
+            privateKey: encryptedData || privateKey,
+            mnemonic,
             flags: false, // o
+            childKey: [{ address, selected: true }],
           })
         );
 
-        this.props.history.push('/balances');
+        props.history.push('/balances');
       }
     });
   };
 
   _getSelectTypes = () => {
-    var types = this.state.types;
-    var items = [];
+    const { types } = this.state;
+    const items = [];
     return (
       types.forEach(el => {
         el.hide || items.push({ text: el.text, value: el.text });
@@ -153,15 +167,16 @@ class index extends PureComponent {
   };
 
   gotoHome = () => {
-    this.props.history.push('/Home');
+    const { props } = this;
+    props.history.push('/Home');
   };
 
   render() {
-    var { selectedType } = this.state;
-    var items = this.state.types.filter(el => {
+    const { selectedType, types } = this.state;
+    const items = types.filter(el => {
       return !el.hide;
     });
-    var listItems = items.map(item => {
+    const listItems = items.map(item => {
       return (
         <li
           className={item.selected ? 'on' : ''}
@@ -208,8 +223,8 @@ class index extends PureComponent {
 }
 
 index.defaultProps = {
-  setAccount: function() {},
-  getAccount: function() {},
+  setAccount() {},
+  getAccount() {},
 };
 
 const mapDispatchToProps = dispatch => {

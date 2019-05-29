@@ -145,7 +145,7 @@ class GetSessionPassword extends PureComponent {
           // const address = utils.getAddressFromPrivateKey(privateKey);
           // console.log('CK input address', address);
           setAccount({
-            privateKey: privateKey,
+            privateKey,
             cipher: password,
           });
 
@@ -222,9 +222,9 @@ const mapStateToProps = state => {
 
 GetSessionPassword.defaultProps = {
   needAuth: true,
-  setAccount: function() {},
-  setNeedAuth: function() {},
-  dispatch: function() {},
+  setAccount() {},
+  setNeedAuth() {},
+  dispatch() {},
   triggerElement: null,
 };
 

@@ -1,3 +1,8 @@
+.kvEeOF {
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+}
+
 .jfuazO {
   display: flex;
   -webkit-box-pack: center;
@@ -241,4 +246,9 @@ tbody {
   top: 50%;
   transform: translate(-50%, -50%);
   background: rgb(255, 255, 255);
+}
+
+.infinite-scroll-component {
+  height: auto;
+  overflow: auto;
 }

@@ -14,6 +14,10 @@ import notifi from '../elements/Notification';
 import Clock from './Clock';
 import GetSessionPassword from './GetSessionPassword';
 import { mainnet, testnet, currentServer, explorer, faq, forums } from '../../config/networks';
+import selected from '../../assets/img/checked.png';
+import * as actions from '../../store/actions/account';
+import { utils, toTEA } from '../../utils/utils';
+import tweb3 from '../../service/tweb3';
 
 const WrapperHeader = styled.div`
   height: 50px;
@@ -120,40 +124,120 @@ const ItemsSubMenu = styled.div`
     background: ${props => props.theme.headerDropdownBg};
     color: #f0b90b;
   }
-  ul li:not(.wallet-address) {
-    animation: userappear 0.3s ease-in-out;
-    @keyframes userappear {
-      0% {
-        height: 0;
-        opacity: 0;
-      }
-      40% {
-        height: 10px;
-        opacity: 0;
-      }
-      100% {
-        height: 20px;
-        opacity: 1;
-      }
-    }
-  }
-  &:hover ul {
-    display: flex;
-  }
   @media (max-width: 768px) {
     display: none;
   }
+  .account-menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: #252d38;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  }
+  &:hover {
+    .account-menu {
+      display: block;
+    }
+  }
+`;
+const AccountMenu = styled.div`
+  .wallet-address {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    background: rgba(72, 81, 93, 0.3);
+    &:hover {
+      color: inherit;
+    }
+    .wl-address {
+      margin-left: 20px;
+    }
+    .title {
+      margin-bottom: 3px;
+      text-align: left;
+      color: #9298a0;
+      width: 100px;
+      white-space: nowrap;
+      line-height: normal;
+    }
+    .address {
+      width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: normal;
+    }
+    .op {
+      display: flex;
+      align-items: center;
+      margin-left: 30px;
+      i {
+        margin-right: 10px;
+        &:hover {
+          color: #f0b90b;
+        }
+      }
+      span {
+        position: relative;
+      }
+    }
+  }
 `;
 
+const ListAccount = styled.div`
+  position: relative;
+  line-height: normal;
+  max-height: 150px;
+  border-bottom: 1px solid #343e4c;
+  overflow: auto;
+`;
+
+const WrapAccount = styled.div`
+  .account-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 13px;
+    &:hover {
+      background: #12161c;
+      color: #f0b90b;
+    }
+  }
+  .account-avt {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    img {
+      max-width: 100%;
+    }
+  }
+  .account-info {
+    width: calc(100% - 71px);
+    text-align: left;
+    color: #ffffff;
+    &:hover {
+      .accout-name {
+        color: #f0b90b;
+      }
+    }
+  }
+  .accout-balances {
+    font-size: 12px;
+    color: #9ca2ab;
+  }
+  .selected {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    img {
+      max-width: 100%;
+    }
+  }
+`;
 const ItemsAccount = styled.ul`
-  display: none;
   flex-direction: column;
   color: #fff;
-  position: absolute;
-  top: 50px;
-  right: 0;
-  background: #252d38;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
   li {
     padding: 10px;
     background: ${props => props.theme.headerDropdownBg};
@@ -163,6 +247,8 @@ const ItemsAccount = styled.ul`
     line-height: 20px;
     text-indent: 10px;
     font-size: 13px;
+    display: flex;
+    align-items: center;
     &:hover {
       background: #12161c;
       color: #f0b90b;
@@ -174,40 +260,6 @@ const ItemsAccount = styled.ul`
       font-size: 13px;
       &:hover {
         text-decoration: none;
-      }
-    }
-  }
-  li.wallet-address {
-    display: flex;
-    height: 40px;
-    align-items: center;
-    background: rgba(72, 81, 93, 0.3);
-    &:hover {
-      color: inherit;
-    }
-    .title {
-      color: #48515d;
-      width: 100px;
-      white-space: nowrap;
-    }
-    .address {
-      width: 180px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      position: relative;
-    }
-    .op {
-      display: flex;
-      margin-top: 10px;
-      margin-left: 30px;
-      i {
-        margin-right: 10px;
-        &:hover {
-          color: #f0b90b;
-        }
-      }
-      span {
-        position: relative;
       }
     }
   }
@@ -281,11 +333,28 @@ class Header extends PureComponent {
       confirmLogout: false,
       showMobileMenu: false,
       showSearchIcon: false,
+      accounts: {},
     };
   }
 
+  async componentDidMount() {
+    await this.updateBalance();
+  }
+
+  updateBalance = async () => {
+    const { childKey, setBalanceChildKey } = this.props;
+    const childKeyTmp = [];
+
+    for (let i = 0; i < childKey.length; i += 1) {
+      const { balance } = await tweb3.getBalance(childKey[i].address);
+      childKey[i].balance = balance;
+      childKeyTmp.push(childKey[i]);
+    }
+    setBalanceChildKey(childKeyTmp);
+  };
+
   _confirmSignout = () => {
-    return function() {
+    return () => {
       // userStorage.isWalletConnect && state && state.disconnect();
       sessionStorage.removeItem('user');
       window.localStorage.removeItem('walletconnect');
@@ -298,11 +367,11 @@ class Header extends PureComponent {
     window.open(''.concat(explorer, '/address/').concat(address), 'blank');
   };
 
-  _copyAddress = function() {
+  _copyAddress = () => {
     notifi.info('copy success');
   };
 
-  _getMenus = function() {
+  _getMenus = () => {
     const { address } = this.props;
 
     const authenticated = [
@@ -313,6 +382,14 @@ class Header extends PureComponent {
       {
         text: 'Balances',
         path: '/balances',
+      },
+      {
+        text: 'BotStore',
+        path: '/botStore',
+      },
+      {
+        text: 'Profile',
+        path: '/profile',
       },
     ];
 
@@ -363,11 +440,48 @@ class Header extends PureComponent {
     });
   };
 
+  _createAccount = async () => {
+    const { mnemonic, indexKey, addNewAccount } = this.props;
+    const account = utils.createAccountWithMneomnic(mnemonic, indexKey + 1);
+    const { balance } = await tweb3.getBalance(account.address);
+    const childKey = {
+      indexKey: indexKey + 1,
+      address: account.address,
+      privateKey: '',
+      balance,
+      selected: false,
+    };
+    addNewAccount(childKey);
+  };
+
+  _importAccount = () => {
+    console.log('aaaaa');
+  };
+
+  _selectAccount = index => {
+    const { childKey, setAccount } = this.props;
+    const selectedAddress = childKey[index].address;
+    // console.log('aa', childKey[index].address);
+    setAccount({
+      address: selectedAddress,
+    });
+    let current = sessionStorage.getItem('user');
+    if (!current) {
+      current = {};
+    } else {
+      current = JSON.parse(current);
+      current.address = selectedAddress;
+      sessionStorage.setItem('user', JSON.stringify(current));
+    }
+  };
+
   render() {
     const { confirmLogout, showMobileMenu } = this.state;
-    const { className, bgColor, address } = this.props;
+    const { className, bgColor, address, history, childKey } = this.props;
+    // console.log('render', childKey);
 
     const Menus = this._getMenus().map(el => {
+      // console.log('Menus', el);
       return el.subMenus ? (
         <li className="withSubMenus" key={el.text}>
           <span>{el.text}</span>
@@ -380,6 +494,21 @@ class Header extends PureComponent {
             <span>{el.text}</span>
           </Link>
         </li>
+      );
+    });
+
+    const Accounts = childKey.map((el, index) => {
+      return (
+        <div className="account-item" key={index} onClick={() => this._selectAccount(index)}>
+          <div className="selected">{el.address === this.props.address && <img src={selected} alt="" />}</div>
+          <div className="account-avt">
+            <img src={logo} alt="" />
+          </div>
+          <div className="account-info">
+            <div className="accout-name">Account {index}</div>
+            <div className="accout-balances">{toTEA(el.balance) || 0} TEA</div>
+          </div>
+        </div>
       );
     });
 
@@ -406,33 +535,48 @@ class Header extends PureComponent {
           {address && (
             <ItemsSubMenu>
               <Icon type="account" />
-              <ItemsAccount>
-                <li className="wallet-address">
-                  <div>
-                    <div className="title">Wallet</div>
-                    <div className="address">{address}</div>
-                  </div>
-                  <div className="op">
-                    <CopyToClipboard text={address} onCopy={this._copyAddress}>
-                      <span title="copy address">
-                        <Icon type="copy" />
+              <div className="account-menu">
+                <AccountMenu>
+                  <div className="wallet-address">
+                    <div className="wl-address">
+                      <div className="title">Wallet</div>
+                      <div className="address">{address}</div>
+                    </div>
+                    <div className="op">
+                      <CopyToClipboard text={address} onCopy={this._copyAddress}>
+                        <span title="copy address">
+                          <Icon type="copy" />
+                        </span>
+                      </CopyToClipboard>
+                      <span onClick={this._gotoExplorer} title="go to explorer" role="presentation">
+                        <Icon type="link" />
                       </span>
-                    </CopyToClipboard>
-                    <span onClick={this._gotoExplorer} title="go to explorer" role="presentation">
-                      <Icon type="link" />
-                    </span>
+                    </div>
                   </div>
-                </li>
-                <li>
-                  <Link to="/unlock">Change Wallet</Link>
-                </li>
-                <li>
-                  <Link to="/create">Create New Wallet</Link>
-                </li>
-                <li onClick={this._showConfirmLogout} role="presentation">
-                  Close Wallet
-                </li>
-              </ItemsAccount>
+                  <ListAccount>
+                    <WrapAccount>{Accounts}</WrapAccount>
+                  </ListAccount>
+                  <ItemsAccount>
+                    <li onClick={this._createAccount} role="presentation">
+                      Create Account
+                    </li>
+                    <li onClick={this._importAccount} role="presentation">
+                      Import Account
+                    </li>
+                  </ItemsAccount>
+                  <ItemsAccount>
+                    <li>
+                      <Link to="/unlock">Change Wallet</Link>
+                    </li>
+                    <li>
+                      <Link to="/create">Create New Wallet</Link>
+                    </li>
+                    <li onClick={this._showConfirmLogout} role="presentation">
+                      Close Wallet
+                    </li>
+                  </ItemsAccount>
+                </AccountMenu>
+              </div>
             </ItemsSubMenu>
           )}
           <StyledUlTag>
@@ -445,7 +589,7 @@ class Header extends PureComponent {
                 <li>
                   <a href={forums}>Forums</a>
                 </li>
-                <li>{'mainnet' === currentServer ? <a href={mainnet}>Mainnet</a> : <a href={testnet}>Testnet</a>}</li>
+                <li>{currentServer === 'mainnet' ? <a href={mainnet}>Mainnet</a> : <a href={testnet}>Testnet</a>}</li>
               </ItemsSubMenuWapper>
             </li>
           </StyledUlTag>
@@ -469,7 +613,6 @@ class Header extends PureComponent {
             </ContentLogout>
           </PuConfirmMnemonic>
         )}
-        {/* privateKey  account.. */}
         <GetSessionPassword />
       </WrapperHeader>
     );
@@ -477,7 +620,7 @@ class Header extends PureComponent {
 }
 
 Header.defaultProps = {
-  dispatch: function() {},
+  dispatch() {},
   privateKey: '',
   address: '',
   encryptedData: null,
@@ -487,19 +630,38 @@ Header.defaultProps = {
 };
 
 const mapStateToProps = state => {
-  const { privateKey, needAuth, address, encryptedData, cipher, flags } = state.account;
+  const { privateKey, needAuth, address, encryptedData, cipher, flags, childKey, mnemonic, indexKey } = state.account;
   return {
-    needAuth: needAuth,
-    privateKey: privateKey,
-    address: address,
-    encryptedData: encryptedData,
-    cipher: cipher,
-    flags: flags,
+    needAuth,
+    privateKey,
+    address,
+    encryptedData,
+    cipher,
+    childKey,
+    mnemonic,
+    indexKey,
+    flags,
     isIpValid: state.globalData.isIpValid,
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    setAccount: data => {
+      dispatch(actions.setAccount(data));
+    },
+    addNewAccount: data => {
+      dispatch(actions.addNewAccount(data));
+    },
+    importNewAccount: data => {
+      dispatch(actions.importNewAccount(data));
+    },
+    setBalanceChildKey: data => {
+      dispatch(actions.setBalanceChildKey(data));
+    },
+  };
+};
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(withRouter(Header));

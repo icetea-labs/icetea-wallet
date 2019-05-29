@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { connect } from 'react-redux';
-import routes from './router';
 
+import routes from './router';
 import { theme } from './constants/styles';
 import { GlobaLoading } from './components/elements';
 
@@ -17,19 +17,19 @@ class App extends PureComponent {
     window.removeEventListener('resize', this._resizeWindow);
   }
 
-  showContentMenu = routes => {
-    var res = null;
-    if (routes.length > 0) {
-      res = routes.map((route, index) => {
+  showContentMenu = list => {
+    let res = null;
+    if (list.length > 0) {
+      res = list.map((route, index) => {
         return <Route key={index} path={route.path} exact={route.exact} component={route.component} />;
       });
     }
     return res;
   };
 
-  hideProgressive() {
-    document.querySelector('.progressive-content').style.display = 'none';
-  }
+  hideProgressive = () => {
+    window.document.querySelector('.progressive-content').style.display = 'none';
+  };
 
   render() {
     const { isLoading } = this.props;

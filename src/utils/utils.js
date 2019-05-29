@@ -2,45 +2,50 @@ import * as bip39 from 'bip39';
 import HDKey from 'hdkey';
 import { ecc, codec } from 'icetea-common';
 import decode from './decode';
+import paths from '../config/walletPaths';
 
 export const userStorage = {
-  isWalletConnect: function() {
-    var user = sessionStorage.getItem('user') || '{}';
+  isWalletConnect() {
+    let user = sessionStorage.getItem('user') || '{}';
     return (user = JSON.parse(user)).flags && user.flags.isWalletConnect;
   },
-  privateKey: function() {
-    var user = sessionStorage.getItem('user') || '{}';
+  privateKey() {
+    let user = sessionStorage.getItem('user') || '{}';
     return !!(user = JSON.parse(user)).privateKey;
   },
 };
 
 export const utils = {
-  createAccountWithMneomnic() {
-    const mnemonic = bip39.generateMnemonic();
-    const privateKey = this.getPrivateKeyFromMnemonic(mnemonic);
-    // console.log(privateKey);
+  createAccountWithMneomnic(mnemonic, index = 0) {
+    if (!mnemonic) mnemonic = bip39.generateMnemonic();
+    const privateKey = this.getPrivateKeyFromMnemonic(mnemonic, index);
+    const { address } = ecc.toPubKeyAndAddress(privateKey);
+
     return {
-      privateKey,
-      address: ecc.toPubKeyAndAddress(privateKey).address,
       mnemonic,
+      privateKey,
+      address,
     };
   },
-  recoverAccountFromMneomnic(mnemonic) {
-    const privateKey = this.getPrivateKeyFromMnemonic(mnemonic);
+  recoverAccountFromMneomnic(mnemonic, index = 0) {
+    const privateKey = this.getPrivateKeyFromMnemonic(mnemonic, index);
+    const { address } = ecc.toPubKeyAndAddress(privateKey);
+
     return {
       privateKey,
-      address: ecc.toPubKeyAndAddress(privateKey).address,
+      address,
     };
   },
-  getPrivateKeyFromMnemonic(mnemonic) {
+  getPrivateKeyFromMnemonic(mnemonic, index = 0) {
     if (!bip39.validateMnemonic(mnemonic)) {
       throw new Error('wrong mnemonic format');
     }
 
     const seed = bip39.mnemonicToSeedSync(mnemonic);
     const hdkey = HDKey.fromMasterSeed(seed);
-    return codec.toKeyString(hdkey.privateKey);
-    // return privateKey ? u.default.fromSeed(privateKey).derivePath("44'/714'/0'/0/0").privateKey.toString("hex") : privateKey.toString("hex")
+    const childkey = hdkey.derive(paths + index);
+
+    return codec.toKeyString(childkey.privateKey);
   },
 
   recoverAccountFromPrivateKey(keyStore, password, address) {
@@ -58,8 +63,7 @@ export const utils = {
   },
 
   getAddressFromPrivateKey(privateKey) {
-    const address = ecc.toPubKeyAndAddressBuffer(privateKey).address;
-    console.log('CK decode address', address)
+    const { address } = ecc.toPubKeyAndAddressBuffer(privateKey);
     return address;
   },
 };
