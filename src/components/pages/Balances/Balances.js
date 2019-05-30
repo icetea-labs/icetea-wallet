@@ -11,12 +11,12 @@ import tweb3 from '../../../service/tweb3';
 import TransactionHistory from '../Transaction';
 import { Icon, checkDevice, DivSelectWordBase, BtnActive } from '../../elements/utils';
 import { toTEA } from '../../../utils/utils';
-import PuInputPassword from './PuInputPassword';
 import notifi from '../../elements/Notification';
 import SendTxMobile from './SendTxMobile';
+import * as actions from '../../../store/actions/account';
 
-let user = sessionStorage.getItem('user');
-user = (user && JSON.parse(user)) || {};
+// let user = sessionStorage.getItem('user');
+// user = (user && JSON.parse(user)) || {};
 
 const MobileWrapper = styled.div`
   background: rgb(18, 22, 28);
@@ -233,7 +233,6 @@ class Balances extends Component {
     super();
     this.state = {
       showSend: false,
-      showCFForm: false,
       showTbl: [],
       showMbTbl: [],
       showMobileCode: false,
@@ -257,28 +256,22 @@ class Balances extends Component {
     clearTimeout(this.sendTimeOut);
   };
 
-  viewSendForm = () => {
-    this.setState({ showSend: true, showCFForm: false });
+  showSendTransaction = () => {
+    this.setState({ showSend: true });
   };
 
   viewSendMobi = () => {
     this.setState({ showSendMobi: true });
   };
 
-  viewCFForm = () => {
-    this.setState({ showSend: false, showCFForm: true });
+  getKeyFromSeasionStogae = () => {
+    const { props } = this;
+    props.setNeedAuth(true);
+    this.setState({ showSend: true });
   };
 
   _closeSendModal = () => {
-    this.setState(prevState => ({
-      showSend: !prevState.showSend,
-    }));
-  };
-
-  closeCFForm = () => {
-    this.setState(prevState => ({
-      showCFForm: !prevState.showCFForm,
-    }));
+    this.setState({ showSend: false });
   };
 
   onCFSuccess = () => {
@@ -289,21 +282,26 @@ class Balances extends Component {
 
   _buildBalances = () => {};
 
-  _copyAddress = function() {
+  _copyAddress = () => {
     notifi.info('Copy successful!');
   };
 
   _showMobileQrCode = () => {
     const { state } = this;
-    let e = state.showMobileCode;
+    const value = state.showMobileCode;
     this.setState({
-      showMobileCode: !e,
+      showMobileCode: !value,
     });
+  };
+
+  _sendTransaction = () => {
+    const { privateKey } = this.props;
+    return privateKey ? this.showSendTransaction() : this.getKeyFromSeasionStogae();
   };
 
   renderTbl = async addr => {
     try {
-      const { privateKey, address } = this.props;
+      const { address } = this.props;
       // const address = user.address;
       const result = await tweb3.getBalance(addr || address);
       const tblTmp = [
@@ -335,11 +333,7 @@ class Balances extends Component {
             </td>
             <td style={{ width: '10%' }}>
               <div className="sc-hkaZBZ sc-hqGPoI feIRPa">
-                <button
-                  type="button"
-                  className="sc-bZQynM sc-MYvYT sc-jbWsrJ ircCEl"
-                  onClick={privateKey ? this.viewSendForm : this.viewCFForm}
-                >
+                <button type="button" className="sc-bZQynM sc-MYvYT sc-jbWsrJ ircCEl" onClick={this._sendTransaction}>
                   Send
                 </button>
               </div>
@@ -357,7 +351,6 @@ class Balances extends Component {
       const { privateKey, address } = this.props;
       // const address = user.address;
       const result = await tweb3.getBalance(address);
-      // console.log('I want to see balance:', result.balance);
       const tblTmp = [
         {
           name: 'IceTea Chain Native Token',
@@ -409,7 +402,7 @@ class Balances extends Component {
 
   render() {
     const { props } = this;
-    const { showSend, sendingAsset, showCFForm, showTbl, showMobileCode, showMbTbl, showSendMobi } = this.state;
+    const { showSend, sendingAsset, showTbl, showMobileCode, showMbTbl, showSendMobi } = this.state;
     const { privateKey, address } = this.props;
     // console.log('CHECK render', props.address);
     return (
@@ -505,7 +498,7 @@ class Balances extends Component {
                     </div>
                   </div>
                 </div>
-                {showSend && (
+                {showSend && privateKey && (
                   <SendTransaction
                     onSendSuccess={this.renderTbl}
                     bncClient=""
@@ -520,7 +513,6 @@ class Balances extends Component {
                   />
                 )}
               </div>
-              <div>{showCFForm && <PuInputPassword onCFSuccess={this.onCFSuccess} close={this.closeCFForm} />}</div>
               <div>
                 <TransactionHistory />
               </div>
@@ -552,16 +544,18 @@ const mapStateToProps = state => {
   const { account } = state;
   return {
     userInfo: account.userInfo,
-    // tokens: tokens,
     privateKey: account.privateKey,
-    // cryptoCurrencyRate: cryptoCurrencyRate,
-    // symbolTickers: symbolTickers,
-    // pairs: pairs,
     address: account.address,
   };
 };
-
+const mapDispatchToProps = dispatch => {
+  return {
+    setNeedAuth: data => {
+      dispatch(actions.setNeedAuth(data));
+    },
+  };
+};
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Balances);

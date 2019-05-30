@@ -12,7 +12,7 @@ import MenuMobile from '../menu/MenuMobile';
 import { PuConfirmMnemonic } from '../elements/PuConfirmMnemonic';
 import notifi from '../elements/Notification';
 import Clock from './Clock';
-import GetSessionPassword from './GetSessionPassword';
+import GetKeyFromSessionStorage from './GetKeyFromSessionStorage';
 import { mainnet, testnet, currentServer, explorer, faq, forums } from '../../config/networks';
 import selected from '../../assets/img/checked.png';
 import * as actions from '../../store/actions/account';
@@ -344,7 +344,7 @@ class Header extends PureComponent {
   updateBalance = async () => {
     const { childKey, setBalanceChildKey } = this.props;
     const childKeyTmp = [];
-
+    // console.log('childKey', childKey);
     for (let i = 0; i < childKey.length; i += 1) {
       const { balance } = await tweb3.getBalance(childKey[i].address);
       childKey[i].balance = balance;
@@ -441,17 +441,22 @@ class Header extends PureComponent {
   };
 
   _createAccount = async () => {
-    const { mnemonic, indexKey, addNewAccount } = this.props;
-    const account = utils.createAccountWithMneomnic(mnemonic, indexKey + 1);
-    const { balance } = await tweb3.getBalance(account.address);
-    const childKey = {
-      indexKey: indexKey + 1,
-      address: account.address,
-      privateKey: '',
-      balance,
-      selected: false,
-    };
-    addNewAccount(childKey);
+    const { mnemonic, indexKey, addNewAccount, setNeedAuth } = this.props;
+    if (mnemonic) {
+      const account = utils.createAccountWithMneomnic(mnemonic, indexKey + 1);
+      const { balance } = await tweb3.getBalance(account.address);
+      const childKey = {
+        indexKey: indexKey + 1,
+        address: account.address,
+        privateKey: '',
+        balance,
+        selected: false,
+      };
+      addNewAccount(childKey);
+      notifi.info('Create success');
+    } else {
+      setNeedAuth(true);
+    }
   };
 
   _importAccount = () => {
@@ -459,11 +464,17 @@ class Header extends PureComponent {
   };
 
   _selectAccount = index => {
-    const { childKey, setAccount } = this.props;
+    const { mnemonic, childKey, setAccount } = this.props;
     const selectedAddress = childKey[index].address;
+    let privateKey = '';
     // console.log('aa', childKey[index].address);
+    if (mnemonic) {
+      ({ privateKey } = utils.recoverAccountFromMneomnic(mnemonic, index));
+    }
+
     setAccount({
       address: selectedAddress,
+      privateKey,
     });
     let current = sessionStorage.getItem('user');
     if (!current) {
@@ -505,7 +516,7 @@ class Header extends PureComponent {
             <img src={logo} alt="" />
           </div>
           <div className="account-info">
-            <div className="accout-name">Account {index}</div>
+            <div className="accout-name">Account {index + 1}</div>
             <div className="accout-balances">{toTEA(el.balance) || 0} TEA</div>
           </div>
         </div>
@@ -613,7 +624,7 @@ class Header extends PureComponent {
             </ContentLogout>
           </PuConfirmMnemonic>
         )}
-        {needAuth && <GetSessionPassword />}
+        {needAuth && <GetKeyFromSessionStorage />}
       </WrapperHeader>
     );
   }
@@ -658,6 +669,9 @@ const mapDispatchToProps = dispatch => {
     },
     setBalanceChildKey: data => {
       dispatch(actions.setBalanceChildKey(data));
+    },
+    setNeedAuth: data => {
+      dispatch(actions.setNeedAuth(data));
     },
   };
 };

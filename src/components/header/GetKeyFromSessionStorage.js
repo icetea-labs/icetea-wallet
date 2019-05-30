@@ -2,12 +2,13 @@ import React, { PureComponent } from 'react';
 import QueueAnim from 'rc-queue-anim';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { Button, InputPassword } from '../../elements';
-import { Icon } from '../../elements/utils';
-import error from '../../../assets/img/error-icon.svg';
-import { utils } from '../../../utils';
-import { zIndex } from '../../../constants/styles';
-import * as actions from '../../../store/actions/account';
+
+import * as actions from '../../store/actions/account';
+import { zIndex } from '../../constants/styles';
+import error from '../../assets/img/error-icon.svg';
+import { utils } from '../../utils';
+import { Button, InputPassword } from '../elements';
+import { Icon } from '../elements/utils';
 
 const WrapperPu = styled.div`
   position: fixed;
@@ -88,7 +89,7 @@ const WrapperBtnClose = styled.div`
   }
 `;
 
-class PuInputPassword extends PureComponent {
+class GetKeyFromSessionStorage extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -101,51 +102,69 @@ class PuInputPassword extends PureComponent {
   componentDidMount = () => {
     window.document.body.addEventListener('keydown', this._keydown);
   };
+
   componentWillUnmount = () => {
     clearTimeout(this.timeoutHanle1);
     clearTimeout(this.timeoutHanle2);
     window.document.body.removeEventListener('keydown', this._keydown);
   };
 
-  _passwordChange = e => {
+  _passwordChange = value => {
     this.setState({
-      password: e,
+      password: value,
     });
   };
 
-  // close = () => {
-  //   const e = this.props;
-  //   (0, e.dispatch)((0, e.setNeedAuth)(false));
-  // };
+  _close = () => {
+    const { props } = this;
+    props.setNeedAuth(false);
+  };
 
   _confirm = () => {
     document.activeElement.blur();
-    const { state, props } = this;
-    const setAccount = props.setAccount;
+    const { setAccount, encryptedData, triggerElement } = this.props;
+    const { password } = this.state;
+
     let userInfo = sessionStorage.getItem('user');
     userInfo = (userInfo && JSON.parse(userInfo)) || {};
-    if (userInfo.address && userInfo.privateKey) {
-      const pass = state.password;
-      let triggerElement = props.triggerElement;
-      if (!pass) {
-        return void this.setState({
+
+    if (encryptedData) {
+      if (!password) {
+        this.setState({
           errMsg: 'password should not be null',
         });
+        return;
       }
+
       this.setState({
-        loading: !0,
+        loading: true,
       });
+
       this.timeoutHanle1 = setTimeout(() => {
         try {
-          const privateKey = utils.recoverAccountFromPrivateKey(userInfo.privateKey, pass, userInfo.address);
-          const address = utils.getAddressFromPrivateKey(privateKey);
-          // console.log('CK input address', userInfo.address);
+          const { address } = this.props;
+          let privateKey = '';
+          let mnemonic = '';
 
+          if (encryptedData) mnemonic = utils.decryptMnemonic(encryptedData, password);
+
+          for (let i = 0; i < userInfo.childKey.length; i += 1) {
+            const account = userInfo.childKey[i];
+            console.log('account', account);
+            console.log('mnemonic', mnemonic);
+            if (account.address === address) {
+              if (account.privateKey) {
+                privateKey = utils.recoverAccountFromPrivateKey(account.privateKey, password, account.address);
+              } else {
+                ({ privateKey } = utils.recoverAccountFromMneomnic(mnemonic, account.index));
+              }
+              break;
+            }
+          }
           setAccount({
-            privateKey: privateKey,
-            cipher: pass,
-            flags: userInfo.flags,
-            address: address,
+            privateKey,
+            mnemonic,
+            cipher: password,
           });
 
           this.timeoutHanle2 = setTimeout(() => {
@@ -153,16 +172,14 @@ class PuInputPassword extends PureComponent {
               loading: false,
             });
             triggerElement && triggerElement.click();
-            props.close();
-          }, 800);
-          props.onCFSuccess();
+            this._close();
+          }, 50);
         } catch (log) {
-          // console.log('Wrong Password!', log);
+          console.log('Wrong Password!', log);
           this.setState({
             errMsg: 'Wrong Password!',
             loading: false,
           });
-          return;
         }
       }, 100);
     }
@@ -173,8 +190,9 @@ class PuInputPassword extends PureComponent {
   };
 
   render() {
-    const { needAuth, close } = this.props;
+    const { needAuth } = this.props;
     const { errMsg, loading } = this.state;
+
     return needAuth ? (
       <QueueAnim animConfig={{ opacity: [1, 0] }}>
         <WrapperPu key={1}>
@@ -200,7 +218,7 @@ class PuInputPassword extends PureComponent {
                   <span>{errMsg}</span>
                 </WrapperPassErr>
               )}
-              <WrapperBtnClose onClick={close}>
+              <WrapperBtnClose onClick={this._close}>
                 <Icon type="close" size="18" />
               </WrapperBtnClose>
             </OutBoxPu>
@@ -214,20 +232,19 @@ class PuInputPassword extends PureComponent {
 const mapStateToProps = state => {
   const { account } = state;
   return {
-    privateKey: account.privateKey,
-    cipher: account.cipher,
-    flags: account.flags,
+    needAuth: account.needAuth,
     address: account.address,
+    encryptedData: account.encryptedData,
+    mnemonic: account.mnemonic,
   };
 };
 
-PuInputPassword.defaultProps = {
+GetKeyFromSessionStorage.defaultProps = {
   needAuth: true,
-  setAccount: function() {},
-  setNeedAuth: function() {},
-  dispatch: function() {},
+  setAccount() {},
+  setNeedAuth() {},
+  dispatch() {},
   triggerElement: null,
-  close: function() {},
 };
 
 const mapDispatchToProps = dispatch => {
@@ -235,10 +252,13 @@ const mapDispatchToProps = dispatch => {
     setAccount: data => {
       dispatch(actions.setAccount(data));
     },
+    setNeedAuth: data => {
+      dispatch(actions.setNeedAuth(data));
+    },
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PuInputPassword);
+)(GetKeyFromSessionStorage);
