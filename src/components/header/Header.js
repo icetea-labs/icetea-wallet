@@ -477,7 +477,7 @@ class Header extends PureComponent {
 
   render() {
     const { confirmLogout, showMobileMenu } = this.state;
-    const { className, bgColor, address, history, childKey } = this.props;
+    const { className, bgColor, address, childKey, needAuth } = this.props;
     // console.log('render', childKey);
 
     const Menus = this._getMenus().map(el => {
@@ -500,7 +500,7 @@ class Header extends PureComponent {
     const Accounts = childKey.map((el, index) => {
       return (
         <div className="account-item" key={index} onClick={() => this._selectAccount(index)}>
-          <div className="selected">{el.address === this.props.address && <img src={selected} alt="" />}</div>
+          <div className="selected">{el.address === address && <img src={selected} alt="" />}</div>
           <div className="account-avt">
             <img src={logo} alt="" />
           </div>
@@ -613,7 +613,7 @@ class Header extends PureComponent {
             </ContentLogout>
           </PuConfirmMnemonic>
         )}
-        <GetSessionPassword />
+        {needAuth && <GetSessionPassword />}
       </WrapperHeader>
     );
   }
