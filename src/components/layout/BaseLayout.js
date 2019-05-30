@@ -5,6 +5,7 @@ import Footer from '../footer/Footer';
 
 const Main = styled.div`
   padding: 50px 0;
+  background: #252b39;
   min-height: calc(100vh - 100px);
 `;
 const Wrapper = styled.div`
