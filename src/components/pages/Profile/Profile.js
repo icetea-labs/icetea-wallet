@@ -14,11 +14,10 @@ import {
   Label,
   Button,
   InputText,
-  TagsList,
-  OwnerList,
-  InheritorList,
+  List,
   Error,
 } from './StyleProfile';
+import { setNeedAuth } from '../../../store/actions/account';
 
 class Profile extends Component {
   constructor(props) {
@@ -52,16 +51,14 @@ class Profile extends Component {
   }
 
   handleWalletAddress = address => {
-    // const { cipher } = this.props;
-    let user = sessionStorage.getItem('user');
-    user = (user && JSON.parse(user)) || {};
-    const privateKey = utils.getPrivateKeyFromKeyStore(user.privateKey, 'Tinduong11@');
-    tweb3.wallet.importAccount(privateKey);
+    const { privateKey } = this.props;
+    if (!privateKey) {
+      this.props.setNeedAuth(true);
+    }
     this.setState({
       selectedWallet: address,
       isHidden: false,
     });
-    // console.log('address: ', address.value, 'privateKey: ', privateKey);
     this.loadAlias(address.value);
     this.loadDid(address.value);
   };
@@ -332,9 +329,8 @@ class Profile extends Component {
   };
 
   render() {
-    let user = sessionStorage.getItem('user');
-    user = (user && JSON.parse(user)) || {};
-    const address = user.address;
+    const { privateKey, address } = this.props;
+    privateKey && tweb3.wallet.importAccount(privateKey);
     const options = [{ value: address, label: address }];
     const {
       selectedWallet,
@@ -392,92 +388,92 @@ class Profile extends Component {
               <FormGroups className="form-groups">
                 <ItemsTitle>Alias</ItemsTitle>
                 <InputText
-                  className={aliasErr ? 'error' : ''}
+                  className={aliasErr ? 'one-field error' : 'one-field'}
                   type="text"
                   value={alias || ''}
                   placeholder="no alias"
                   onChange={this.handleAlias}
                 />
+                {aliasErr && <Error>{aliasErr}</Error>}
                 <Button className="btn btn-upadte" onClick={this.registerUpdateAliasEvent}>
                   Update
                 </Button>
-                {aliasErr && <Error>{aliasErr}</Error>}
               </FormGroups>
 
               <FormGroups className="form-groups">
                 <ItemsTitle>Tags</ItemsTitle>
                 <Label>These tags are NOT encrypted and public. Private tags are not supported yet.</Label>
+                {Object.keys(tagsList).length > 0 &&
+                  Object.keys(tagsList).map((tags, index) => {
+                    return (
+                      <List key={index}>
+                        {`${tags} : ${tagsList[tags]}`}
+                        <span onClick={() => this.registerRemoveTagEvent(tags)}>x</span>
+                      </List>
+                    );
+                  })}
                 <InputText
                   type="text"
-                  className={tagsNameErr && !tagsName.length ? 'error' : ''}
+                  className={tagsNameErr && !tagsName.length ? 'two-field error' : 'two-field'}
                   value={tagsName}
                   placeholder="name"
                   onChange={this.handleTagsName}
                 />
                 <InputText
                   type="text"
-                  className={tagsValueErr && !tagsValue.length ? 'error' : ''}
+                  className={tagsValueErr && !tagsValue.length ? 'two-field error' : 'two-field'}
                   value={tagsValue}
                   placeholder="value"
                   onChange={this.handleTagsValue}
                 />
+                {(tagsNameErr || tagsValueErr) && <Error>Name and Value field is required </Error>}
                 <Button className="btn btn-add" onClick={this.registerAddTagEvent}>
                   Add
                 </Button>
-                {(tagsNameErr || tagsValueErr) && <Error>Name and Value field is required </Error>}
-                {Object.keys(tagsList).length > 0 &&
-                  Object.keys(tagsList).map((tags, index) => {
-                    return (
-                      <TagsList key={index}>
-                        {` - ${tags} : ${tagsList[tags]}`}
-                        <span onClick={() => this.registerRemoveTagEvent(tags)}>x</span>
-                      </TagsList>
-                    );
-                  })}
               </FormGroups>
 
               <FormGroups className="form-groups">
                 <ItemsTitle>Owner settings</ItemsTitle>
                 <Label>Threshold: </Label>
                 <InputText
-                  className={thresholdErr ? 'error' : ''}
+                  className={thresholdErr ? 'one-field error' : 'one-field'}
                   type="number"
                   placeholder="threshold"
                   value={threshold}
                   onChange={this.handleThreshold}
                 />
+                {thresholdErr && <Error>{thresholdErr}</Error>}
                 <Button className="btn btn-upadte" onClick={this.registerUpdateThresholdEvent}>
                   Update
                 </Button>
-                {thresholdErr && <Error>{thresholdErr}</Error>}
                 <Label>Owner list</Label>
                 {Object.keys(ownersList).length > 0 &&
                   Object.keys(ownersList).map((own, index) => {
                     return (
-                      <OwnerList key={index}>
-                        {` - ${own} : ${ownersList[own]}`}
+                      <List key={index}>
+                        {`${own} : ${ownersList[own]}`}
                         <span onClick={() => this.registerRemoveOwnerEvent(own)}>x</span>
-                      </OwnerList>
+                      </List>
                     );
                   })}
                 <InputText
-                  className={ownerErr && !owner.length ? 'error' : ''}
+                  className={ownerErr && !owner.length ? 'two-field error' : 'two-field'}
                   type="text"
                   value={owner}
                   placeholder="owner address or alias"
                   onChange={this.handleOwner}
                 />
                 <InputText
-                  className={weightErr && !weight.length ? 'error' : ''}
+                  className={weightErr && !weight.length ? 'two-field error' : 'two-field'}
                   type="number"
                   value={weight}
                   placeholder="weight"
                   onChange={this.handleWeight}
                 />
+                {(ownerErr || weightErr) && <Error>Owner and weight field is required </Error>}
                 <Button className="btn btn-add" onClick={this.registerAddOwnerEvent}>
                   Add
                 </Button>
-                {(ownerErr || weightErr) && <Error>Owner and weight field is required </Error>}
               </FormGroups>
 
               <FormGroups className="form-groups">
@@ -486,39 +482,39 @@ class Profile extends Component {
                 {Object.keys(inheritorList).length > 0 &&
                   Object.keys(inheritorList).map((iht, index) => {
                     return (
-                      <InheritorList key={index}>
-                        {` - ${iht} - wait: ${inheritorList[iht].waitPeriod} - lock: ${inheritorList[iht].lockPeriod}`}
+                      <List key={index}>
+                        {`${iht} - wait: ${inheritorList[iht].waitPeriod} - lock: ${inheritorList[iht].lockPeriod}`}
                         <span onClick={() => this.registerRemoveInheEvent(iht)}>x</span>
-                      </InheritorList>
+                      </List>
                     );
                   })}
                 <InputText
-                  className={inheritorErr && !inheritor.length ? 'error' : ''}
+                  className={inheritorErr && !inheritor.length ? 'three-field error' : 'three-field'}
                   type="text"
                   placeholder="inheritor address or alias"
                   value={inheritor}
                   onChange={this.handleInheritor}
                 />
                 <InputText
-                  className={waitDaysErr && !waitDays.length ? 'error' : ''}
+                  className={waitDaysErr && !waitDays.length ? 'three-field error' : 'three-field'}
                   type="number"
                   placeholder="wait days"
                   value={waitDays}
                   onChange={this.handleWaitdays}
                 />
                 <InputText
-                  className={lockDaysErr && !lockDays.length ? 'error' : ''}
+                  className={lockDaysErr && !lockDays.length ? 'three-field error' : 'three-field'}
                   type="number"
                   placeholder="lock days"
                   value={lockDays}
                   onChange={this.handleLockdays}
                 />
-                <Button className="btn btn-add" onClick={this.registerAddInheEvent}>
-                  add
-                </Button>
                 {(inheritorErr || waitDaysErr || lockDaysErr) && (
                   <Error>Inheritor, Wait Days and Lock Days field is required</Error>
                 )}
+                <Button className="btn btn-add" onClick={this.registerAddInheEvent}>
+                  add
+                </Button>
               </FormGroups>
             </div>
           </ProfileWrap>
@@ -536,4 +532,15 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = dispatch => {
+  return {
+    setNeedAuth: data => {
+      dispatch(setNeedAuth(data));
+    },
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile);
