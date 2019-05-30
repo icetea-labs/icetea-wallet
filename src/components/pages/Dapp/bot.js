@@ -5,13 +5,6 @@ import tweb3 from '../../../service/tweb3';
 const initWeb3 = (privateKey, showAlert = false) => {
   try {
     const resp = tweb3.wallet.importAccount(privateKey);
-    // var resp = tweb3.wallet.loadFromStorage('123')
-    // if (resp === 0) {
-    //   window.alert('Wallet empty! Please go to Wallet tab to create account.')
-    //   return
-    // }
-    // console.log('--',resp);
-    // byId('address').textContent = tweb3.wallet.defaultAccount;
     return true;
   } catch (error) {
     console.error(error);
@@ -43,6 +36,7 @@ const saySelect = action => {
 };
 
 const speak = items => {
+  console.log('on speak')
   if (!items) return;
   if (!Array.isArray(items)) {
     items = [items];
@@ -83,49 +77,39 @@ function byId(id) {
 //   }
 // }
 
-function fmtNum(n) {
-  return n.toLocaleString(undefined, {
+
+function fmtMicroTea (n) {
+  const tea = n / Math.pow(10, 6)
+  return tea.toLocaleString(undefined, {
     minimumFractionDigits: 0,
-    maximumFractionDigits: 9,
-  });
+    maximumFractionDigits: 9
+  })
 }
 
-function confirmTransfer(amount) {
-  say(`ATTENTION: you are about to transfer <b>${fmtNum(amount)}</b> TEA to this bot.`, {
-    type: 'html',
-    cssClass: 'bot-intro',
-  });
-  return sayButton([{ text: "Let's transfer", value: 'transfer' }, { text: 'No way', value: 'no' }]).then(
-    result => result && result.value === 'transfer'
-  );
+function confirmTransfer (amount) {
+  console.log('on confirmTransfer')
+  say(`ATTENTION: you are about to transfer <b>${fmtMicroTea(amount)}</b> TEA to this bot.`, {
+    type: 'html', cssClass: 'bot-confirm'
+  })
+  return sayButton([
+    { text: 'Let\'s transfer', value: 'transfer' },
+    { text: 'No way', value: 'no' }
+  ]).then(result => (!!result && result.value === 'transfer'))
 }
 
-// async function callContract(method, type, value, ...params) {
-//   console.log('Call Contract')
-//   const map = {
-//     none: 'callPure',
-//     read: 'call',
-//     write: 'sendCommit',
-//   };
-
-//   const result = await method(...params)[map[type]]({ value });
-
-//   if (type === 'write') {
-//     return result.result;
-//   }
-//   return result;
-// }
-
-function callContract (method, type, value, from, ...params) {
+function callContract(method, type, value, from, ...params) {
+  console.log('on callContract');
   if (value) {
-    type = 'write'
+    type = 'write';
   }
   const map = {
-    'none': 'callPure',
-    'read': 'call',
-    'write': 'sendCommit'
-  }
-  return method(...params)[map[type]]({ value, from }).then(r => type === 'write' ? r.result : r)
+    none: 'callPure',
+    read: 'call',
+    write: 'sendCommit',
+  };
+  return method(...params)
+    [map[type]]({ value, from })
+    .then(r => (type === 'write' ? r.result : r));
 }
 
 async function getBotInfoFromStore(alias) {
@@ -183,46 +167,50 @@ function pushToQueue(type, content, stateAccess, transferValue, sendback) {
   });
 }
 
-function handleQueue (contract, defStateAccess) {
+function handleQueue(contract, defStateAccess) {
   if (queue.length) {
-    var item = queue.shift()
-    callContract(contract.methods['on' + item.type],
+    var item = queue.shift();
+    callContract(
+      contract.methods['on' + item.type],
       item.stateAccess,
       item.transferValue || 0,
       tweb3.wallet.defaultAccount,
       item.content.value,
-      { sendback: item.sendback })
+      { sendback: item.sendback }
+    )
       .then(contractResult => {
+        console.log('contractResult', contractResult);
         return speak(contractResult.messages || contractResult).then(speakResult => {
           if (typeof speakResult === 'object') {
-            speakResult.sendback = contractResult.sendback
-            speakResult.stateAccess = (contractResult.options || {}).nextStateAccess
+            speakResult.sendback = contractResult.sendback;
+            speakResult.stateAccess = (contractResult.options || {}).nextStateAccess;
           }
           if (contractResult.options && contractResult.options.value) {
             return confirmTransfer(contractResult.options.value).then(ok => {
               if (!ok) {
-                say('Transfer canceled. You could reconnect to this bot to start a new conversation.')
-                return sayButton({ text: 'Restart', value: 'command:start' })
+                say('Transfer canceled. You could reconnect to this bot to start a new conversation.');
+                return sayButton({ text: 'Restart', value: 'command:start' });
               }
 
-              speakResult.transferValue = contractResult.options.value
-              return speakResult
-            })
+              speakResult.transferValue = contractResult.options.value;
+              console.log('speakResult', speakResult)
+              return speakResult;
+            });
           } else {
-            return speakResult
+            return speakResult;
           }
-        })
+        });
       })
       .then(r => {
         if (r && r.value) {
-          console.log('confirm R', r)
-          pushToQueue('text', r, r.stateAccess || defStateAccess, r.transferValue, r.sendback)
+          pushToQueue('text', r, r.stateAccess || defStateAccess, r.transferValue, r.sendback);
         }
+        console.log('confirm R', r);
       })
       .catch(err => {
-        console.error(err)
-        say('An error has occured: ' + err, { type: 'html', cssClass: 'bot-error' })
-      })
+        console.error(err);
+        say('An error has occured: ' + err, { type: 'html', cssClass: 'bot-error' });
+      });
   }
 }
 
@@ -239,7 +227,7 @@ export async function connectBot(botAddr, privateKey) {
   // get bot info
   // const botInfo = await contract.methods.botInfo().callPure();
   const botInfo = await getBotInfo(botAddr);
-  console.log('BotInfo CK', botInfo)
+  console.log('BotInfo CK', botInfo);
 
   const commands = botInfo.commands || [
     {
