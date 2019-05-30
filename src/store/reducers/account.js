@@ -31,8 +31,8 @@ const initialState = Object.assign(
       user = JSON.parse(user);
       resp.address = user.address;
       resp.flags = user.flags || {};
-      resp.encryptedData = user.privateKey;
-      resp.mnemonic = user.mnemonic;
+      resp.encryptedData = user.mnemonic;
+      // resp.mnemonic = user.mnemonic;
       resp.indexKey = user.indexKey;
       resp.childKey = user.childKey;
     }

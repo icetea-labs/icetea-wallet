@@ -10,11 +10,78 @@ import { PuLayout, PuHeader, PuContent, WrapperBtnClose, Icon } from '../../elem
 
 const PuContainer = styled.div`
   min-width: 320px;
-  max-width: 450px;
-  height: 550px;
+  max-width: 650px;
+  height: 750px;
   width: 100%;
   #my-botui-app:first-child {
+    position: relative;
     height: 100%;
+  }
+  // icon menu
+  .menu-icon {
+    position: fixed;
+    top: 60px;
+    right: 30px;
+    z-index: 10;
+    width: 50px;
+    height: 50px;
+    font-size: 30px;
+    color: rgb(90, 90, 90);
+  }
+  //background-sidebar
+  .background-sidebar {
+    position: fixed;
+    z-index: 4;
+    width: 0px;
+    height: 100%;
+    background-color: #28635a;
+    overflow: none;
+    // display: none;
+  }
+  //side-bar
+  .sidebar {
+    width: 0px;
+    height: 0px;
+    position: fixed;
+    top: 0px;
+    z-index: 3;
+  }
+
+  // side-bar_right
+  .side-bar_right {
+    z-index: 100;
+    position: fixed;
+    right: 17px;
+    top: 57px;
+    height: 648px;
+    background-color: #28635a;
+    transition: 300ms;
+
+    .content-sidebar {
+      width: 100%;
+      height: 92%;
+      position: absolute;
+      top: 8%;
+      color: whitesmoke;
+      color: white;
+      padding: 10px;
+    }
+
+    .bot-menu-items {
+      padding-top: 60px;
+    }
+    .bot-menu-items a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .bot-menu-items a:hover {
+      color: #f1f1f1;
+    }
   }
   border-radius: 15px;
   padding: 15px;
@@ -37,6 +104,13 @@ const WrapperBtnCloseCus = styled(WrapperBtnClose)`
   line-height: 20px;
 `;
 class BotShow extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showMenu: false,
+    };
+  }
+
   componentDidMount() {
     setTimeout(() => {
       this._start();
@@ -44,7 +118,7 @@ class BotShow extends Component {
   }
 
   _start = async () => {
-    var { botAddress, privateKey } = this.props;
+    const { botAddress, privateKey } = this.props;
     if (botAddress) {
       try {
         await connectBot(botAddress, privateKey);
@@ -57,7 +131,20 @@ class BotShow extends Component {
     }
   };
 
+  openBar = () => {
+    this.setState({
+      showMenu: true,
+    });
+  };
+
+  hiddenSibar = () => {
+    this.setState({
+      showMenu: false,
+    });
+  };
+
   render() {
+    var { showMenu } = this.state;
     var { onClose, address } = this.props;
     return (
       <QueueAnim animConfig={{ opacity: [1, 0] }}>
@@ -65,9 +152,31 @@ class BotShow extends Component {
           <QueueAnim leaveReverse delay={100} type={['top', 'bottom']}>
             <PuContainer key={2}>
               <PuHeader style={{ color: '#232937' }}>Your Address: {address}</PuHeader>
-              <PuContent style={{ height: '85%' }}>
+              <PuContent style={{ height: '90%' }}>
                 <div id="my-botui-app">
                   <bot-ui />
+                </div>
+                <div className="sidebar">
+                  <div className="background-sidebar" style={{ display: showMenu === true ? 'block' : 'none' }} />
+                  <div className="menu-icon phone">
+                    <i className="fa fa-bars " onClick={this.openBar} />
+                  </div>
+                  <div className="side-bar_right" style={{ width: showMenu === true ? '15pc' : '0pc' }}>
+                    <WrapperBtnCloseCus
+                      onClick={this.hiddenSibar}
+                      style={{ display: showMenu === true ? 'block' : 'none' }}
+                    >
+                      <Icon type="close" size="18" color="inherit" />
+                    </WrapperBtnCloseCus>
+                    <div className="content-rsideba" style={{ display: showMenu === true ? 'block' : 'none' }}>
+                      <div className="bot-menu-items" id="bot-menu-items">
+                        <a href="#">About</a>
+                        <a href="#">Services</a>
+                        <a href="#">Clients</a>
+                        <a href="#">Contact</a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </PuContent>
               <WrapperBtnCloseCus onClick={onClose}>
@@ -83,9 +192,9 @@ class BotShow extends Component {
 
 BotShow.defaultProps = {
   botAddress: '',
-  address: '',
-  privateKey: '',
-  onClose: function() {}
+  address: 'teat1al54h8fy75h078syz54z6hke6l9x232zq3j9st',
+  privateKey: 'CJUPdD38vwc2wMC3hDsySB7YQ6AFLGuU6QYQYaiSeBsK',
+  onClose() {},
 };
 
 export default BotShow;

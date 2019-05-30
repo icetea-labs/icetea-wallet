@@ -348,7 +348,7 @@ class Balances extends Component {
 
   renderMobileTbl = async () => {
     try {
-      const { address } = this.props;
+      const { privateKey, address } = this.props;
       // const address = user.address;
       const result = await tweb3.getBalance(address);
       const tblTmp = [
@@ -369,8 +369,8 @@ class Balances extends Component {
                     <div className="symbol">{data.symbo}</div>
                     <div className="name">{data.name}</div>
                   </TitleAsset>
-                  {/* <BtnCus onClick={privateKey ? this.viewSendMobi : this.getKeyFromSeasionStogae}>Send</BtnCus> */}
-                  <BtnCus onClick={this.viewSendMobi}>Send</BtnCus>
+                  <BtnCus onClick={privateKey ? this.viewSendMobi : this.viewCFForm}>Send</BtnCus>
+                  {/* <BtnCus onClick={this.viewSendMobi}>Send</BtnCus> */}
                 </ContentTitle>
                 <ContentValue>
                   <ContentValueBox>

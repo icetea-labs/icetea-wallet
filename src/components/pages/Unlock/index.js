@@ -7,6 +7,7 @@ import logo from '../../../assets/img/logo.svg';
 import unlock_recommend from '../../../assets/img/unlock_recommend.svg';
 import ByMnemonic from './ByMnemonic';
 import SelectUnlockType from './SelectUnlockType';
+import { utils } from '../../../utils';
 import {
   Wrapper,
   Logo,
@@ -108,8 +109,8 @@ class index extends PureComponent {
     const { props } = this;
     setTimeout(() => {
       let encryptedData = '';
-      if (privateKey) {
-        encryptedData = encode(privateKey, password);
+      if (mnemonic) {
+        encryptedData = utils.encryptMnemonic(mnemonic, password);
       }
       if (address) {
         const childKey = {
@@ -139,8 +140,8 @@ class index extends PureComponent {
           JSON.stringify({
             indexKey: 0,
             address,
-            privateKey: encryptedData || privateKey,
-            mnemonic,
+            mnemonic: encryptedData || mnemonic,
+            // mnemonic,
             flags: false, // o
             childKey: [{ index: 0, address, selected: true }],
           })

@@ -142,10 +142,12 @@ class GetKeyFromSessionStorage extends PureComponent {
 
       this.timeoutHanle1 = setTimeout(() => {
         try {
-          const { mnemonic, address } = this.props;
+          const { address } = this.props;
           let privateKey = '';
-          // const privateKey = utils.recoverAccountFromPrivateKey(encryptedData, password, address);
-          // const address = utils.getAddressFromPrivateKey(privateKey);
+          let mnemonic = '';
+
+          if (encryptedData) mnemonic = utils.decryptMnemonic(encryptedData, password);
+
           for (let i = 0; i < userInfo.childKey.length; i += 1) {
             const account = userInfo.childKey[i];
             console.log('account', account);
@@ -161,6 +163,7 @@ class GetKeyFromSessionStorage extends PureComponent {
           }
           setAccount({
             privateKey,
+            mnemonic,
             cipher: password,
           });
 

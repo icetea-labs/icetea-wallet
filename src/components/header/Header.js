@@ -441,18 +441,22 @@ class Header extends PureComponent {
   };
 
   _createAccount = async () => {
-    const { mnemonic, indexKey, addNewAccount } = this.props;
-    const account = utils.createAccountWithMneomnic(mnemonic, indexKey + 1);
-    const { balance } = await tweb3.getBalance(account.address);
-    const childKey = {
-      indexKey: indexKey + 1,
-      address: account.address,
-      privateKey: '',
-      balance,
-      selected: false,
-    };
-    addNewAccount(childKey);
-    notifi.info('Create success');
+    const { mnemonic, indexKey, addNewAccount, setNeedAuth } = this.props;
+    if (mnemonic) {
+      const account = utils.createAccountWithMneomnic(mnemonic, indexKey + 1);
+      const { balance } = await tweb3.getBalance(account.address);
+      const childKey = {
+        indexKey: indexKey + 1,
+        address: account.address,
+        privateKey: '',
+        balance,
+        selected: false,
+      };
+      addNewAccount(childKey);
+      notifi.info('Create success');
+    } else {
+      setNeedAuth(true);
+    }
   };
 
   _importAccount = () => {
@@ -460,11 +464,17 @@ class Header extends PureComponent {
   };
 
   _selectAccount = index => {
-    const { childKey, setAccount } = this.props;
+    const { mnemonic, childKey, setAccount } = this.props;
     const selectedAddress = childKey[index].address;
+    let privateKey = '';
     // console.log('aa', childKey[index].address);
+    if (mnemonic) {
+      ({ privateKey } = utils.recoverAccountFromMneomnic(mnemonic, index));
+    }
+
     setAccount({
       address: selectedAddress,
+      privateKey,
     });
     let current = sessionStorage.getItem('user');
     if (!current) {
@@ -478,7 +488,7 @@ class Header extends PureComponent {
 
   render() {
     const { confirmLogout, showMobileMenu } = this.state;
-    const { className, bgColor, address, childKey } = this.props;
+    const { className, bgColor, address, childKey, needAuth } = this.props;
     // console.log('render', childKey);
 
     const Menus = this._getMenus().map(el => {
@@ -501,7 +511,7 @@ class Header extends PureComponent {
     const Accounts = childKey.map((el, index) => {
       return (
         <div className="account-item" key={index} onClick={() => this._selectAccount(index)}>
-          <div className="selected">{el.address === this.props.address && <img src={selected} alt="" />}</div>
+          <div className="selected">{el.address === address && <img src={selected} alt="" />}</div>
           <div className="account-avt">
             <img src={logo} alt="" />
           </div>
@@ -614,7 +624,7 @@ class Header extends PureComponent {
             </ContentLogout>
           </PuConfirmMnemonic>
         )}
-        <GetKeyFromSessionStorage />
+        {needAuth && <GetKeyFromSessionStorage />}
       </WrapperHeader>
     );
   }
@@ -659,6 +669,9 @@ const mapDispatchToProps = dispatch => {
     },
     setBalanceChildKey: data => {
       dispatch(actions.setBalanceChildKey(data));
+    },
+    setNeedAuth: data => {
+      dispatch(actions.setNeedAuth(data));
     },
   };
 };

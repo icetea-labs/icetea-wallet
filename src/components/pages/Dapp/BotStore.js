@@ -219,6 +219,7 @@ class BotStore extends Component {
     const address = 'system.botstore';
     const contract = tweb3.contract(address);
     const arrbots = await contract.methods.query().call();
+    console.log('All Bot', arrbots)
     return arrbots;
   };
 
@@ -394,8 +395,10 @@ class BotStore extends Component {
 }
 
 const mapStateToProps = state => {
-  const { address } = state.account;
-  const { privateKey } = state.account;
+  // const { address } = state.account;
+  // const { privateKey } = state.account;
+  const { address } = 'teat1al54h8fy75h078syz54z6hke6l9x232zq3j9st';
+  const { privateKey } = 'CJUPdD38vwc2wMC3hDsySB7YQ6AFLGuU6QYQYaiSeBsK';
   return {
     address,
     privateKey,
