@@ -100,19 +100,32 @@ function confirmTransfer(amount) {
   );
 }
 
-async function callContract(method, type, value, ...params) {
-  const map = {
-    none: 'callPure',
-    read: 'call',
-    write: 'sendCommit',
-  };
+// async function callContract(method, type, value, ...params) {
+//   console.log('Call Contract')
+//   const map = {
+//     none: 'callPure',
+//     read: 'call',
+//     write: 'sendCommit',
+//   };
 
-  const result = await method(...params)[map[type]]({ value });
+//   const result = await method(...params)[map[type]]({ value });
 
-  if (type === 'write') {
-    return result.result;
+//   if (type === 'write') {
+//     return result.result;
+//   }
+//   return result;
+// }
+
+function callContract (method, type, value, from, ...params) {
+  if (value) {
+    type = 'write'
   }
-  return result;
+  const map = {
+    'none': 'callPure',
+    'read': 'call',
+    'write': 'sendCommit'
+  }
+  return method(...params)[map[type]]({ value, from }).then(r => type === 'write' ? r.result : r)
 }
 
 async function getBotInfoFromStore(alias) {
@@ -170,6 +183,49 @@ function pushToQueue(type, content, stateAccess, transferValue, sendback) {
   });
 }
 
+function handleQueue (contract, defStateAccess) {
+  if (queue.length) {
+    var item = queue.shift()
+    callContract(contract.methods['on' + item.type],
+      item.stateAccess,
+      item.transferValue || 0,
+      tweb3.wallet.defaultAccount,
+      item.content.value,
+      { sendback: item.sendback })
+      .then(contractResult => {
+        return speak(contractResult.messages || contractResult).then(speakResult => {
+          if (typeof speakResult === 'object') {
+            speakResult.sendback = contractResult.sendback
+            speakResult.stateAccess = (contractResult.options || {}).nextStateAccess
+          }
+          if (contractResult.options && contractResult.options.value) {
+            return confirmTransfer(contractResult.options.value).then(ok => {
+              if (!ok) {
+                say('Transfer canceled. You could reconnect to this bot to start a new conversation.')
+                return sayButton({ text: 'Restart', value: 'command:start' })
+              }
+
+              speakResult.transferValue = contractResult.options.value
+              return speakResult
+            })
+          } else {
+            return speakResult
+          }
+        })
+      })
+      .then(r => {
+        if (r && r.value) {
+          console.log('confirm R', r)
+          pushToQueue('text', r, r.stateAccess || defStateAccess, r.transferValue, r.sendback)
+        }
+      })
+      .catch(err => {
+        console.error(err)
+        say('An error has occured: ' + err, { type: 'html', cssClass: 'bot-error' })
+      })
+  }
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export async function connectBot(botAddr, privateKey) {
   if (!web3Inited) {
@@ -183,6 +239,8 @@ export async function connectBot(botAddr, privateKey) {
   // get bot info
   // const botInfo = await contract.methods.botInfo().callPure();
   const botInfo = await getBotInfo(botAddr);
+  console.log('BotInfo CK', botInfo)
+
   const commands = botInfo.commands || [
     {
       text: 'Start',
@@ -229,32 +287,40 @@ export async function connectBot(botAddr, privateKey) {
   });
 
   // display Start button
-  let result = await sayButton({ text: botInfo.start_button || 'Start', value: 'start' });
-  let callResult;
-  let isFirst = true;
-  while (result && result.value) {
-    let transferValue = 0;
-    if (callResult && callResult.options && callResult.options.value) {
-      const ok = await confirmTransfer(callResult.options.value); // should confirm at wallet level
-      if (!ok) {
-        say('Transfer canceled. You could reconnect to this bot to start a new conversation.');
-        return;
-      }
-      transferValue = callResult.options.value;
-    }
+  sayButton({ text: botInfo.startButtonText || 'Start', value: 'start' }).then(r => {
+    pushToQueue('command', r, botInfo.stateAccess);
+  });
 
-    // send lastValue to bot
-    callResult = isFirst
-      ? await callContract(contract.methods.onstart, botInfo.state_access, 0)
-      : await callContract(contract.methods.ontext, botInfo.state_access, transferValue, result.value);
-    isFirst = false;
+  setInterval(function() {
+    handleQueue(contract, botInfo.stateAccess);
+  }, 100);
 
-    console.log(callResult);
-    if (callResult) {
-      result = await speak(callResult.messages || callResult);
-      console.log(result);
-    } else {
-      result = undefined;
-    }
-  }
+  // let result = await sayButton({ text: botInfo.start_button || 'Start', value: 'start' });
+  // let callResult;
+  // let isFirst = true;
+  // while (result && result.value) {
+  //   let transferValue = 0;
+  //   if (callResult && callResult.options && callResult.options.value) {
+  //     const ok = await confirmTransfer(callResult.options.value); // should confirm at wallet level
+  //     if (!ok) {
+  //       say('Transfer canceled. You could reconnect to this bot to start a new conversation.');
+  //       return;
+  //     }
+  //     transferValue = callResult.options.value;
+  //   }
+
+  //   // send lastValue to bot
+  //   callResult = isFirst
+  //     ? await callContract(contract.methods.onstart, botInfo.state_access, 0)
+  //     : await callContract(contract.methods.ontext, botInfo.state_access, transferValue, result.value);
+  //   isFirst = false;
+
+  //   console.log(callResult);
+  //   if (callResult) {
+  //     result = await speak(callResult.messages || callResult);
+  //     console.log(result);
+  //   } else {
+  //     result = undefined;
+  //   }
+  // }
 }

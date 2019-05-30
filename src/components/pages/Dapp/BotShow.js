@@ -118,7 +118,7 @@ class BotShow extends Component {
   }
 
   _start = async () => {
-    var { botAddress, privateKey } = this.props;
+    const { botAddress, privateKey } = this.props;
     if (botAddress) {
       try {
         await connectBot(botAddress, privateKey);
