@@ -124,8 +124,7 @@ class InputPassword extends PureComponent {
   };
 
   _showPassword = () => {
-    const { state } = this;
-    let showPassword = state.showPassword;
+    const { showPassword } = this.state;
     this.setState({
       showPassword: !showPassword,
     });
@@ -133,19 +132,19 @@ class InputPassword extends PureComponent {
 
   _passwordChange = event => {
     const { props } = this;
-    var value = event.currentTarget.value.trim();
-    var regex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#])'); // [!@#\$%\^&\*]
-    var classRule1 = value ? (value.length >= 8 ? 'pass' : 'invalid') : 'empty';
-    var classRule2 = value ? (regex.test(value) ? 'pass' : 'invalid') : 'empty';
+    const value = event.currentTarget.value.trim();
+    const regex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#])'); // [!@#\$%\^&\*]
+    const classRule1 = value ? (value.length >= 8 ? 'pass' : 'invalid') : 'empty';
+    const classRule2 = value ? (regex.test(value) ? 'pass' : 'invalid') : 'empty';
     this.setState({ password: value }, () => props.onChange(value, classRule1 === 'pass' && classRule2 === 'pass'));
   };
 
   render() {
-    var { password, showPassword } = this.state;
-    var { withRules, warning, title, autoFocus } = this.props;
-    var regex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#])'); // [!@#\$%\^&\*]
-    var classRule1 = password ? (password.length >= 8 ? 'pass' : 'invalid') : 'empty';
-    var classRule2 = password ? (regex.test(password) ? 'pass' : 'invalid') : 'empty';
+    const { password, showPassword } = this.state;
+    const { withRules, warning, title, autoFocus } = this.props;
+    const regex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#])'); // [!@#\$%\^&\*]
+    const classRule1 = password ? (password.length >= 8 ? 'pass' : 'invalid') : 'empty';
+    const classRule2 = password ? (regex.test(password) ? 'pass' : 'invalid') : 'empty';
 
     return (
       <Container borderColor={warning ? 'rgba(242,48,81,0.5)' : 'rgba(234,236,239,0.5)'}>
@@ -179,7 +178,7 @@ class InputPassword extends PureComponent {
 }
 
 InputPassword.defaultProps = {
-  onChange: function() {},
+  onChange() {},
   withRules: true,
   autoFocus: false,
   warning: false,

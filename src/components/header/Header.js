@@ -12,7 +12,7 @@ import MenuMobile from '../menu/MenuMobile';
 import { PuConfirmMnemonic } from '../elements/PuConfirmMnemonic';
 import notifi from '../elements/Notification';
 import Clock from './Clock';
-import GetSessionPassword from './GetSessionPassword';
+import GetKeyFromSessionStorage from './GetKeyFromSessionStorage';
 import { mainnet, testnet, currentServer, explorer, faq, forums } from '../../config/networks';
 import selected from '../../assets/img/checked.png';
 import * as actions from '../../store/actions/account';
@@ -344,7 +344,7 @@ class Header extends PureComponent {
   updateBalance = async () => {
     const { childKey, setBalanceChildKey } = this.props;
     const childKeyTmp = [];
-
+    // console.log('childKey', childKey);
     for (let i = 0; i < childKey.length; i += 1) {
       const { balance } = await tweb3.getBalance(childKey[i].address);
       childKey[i].balance = balance;
@@ -452,6 +452,7 @@ class Header extends PureComponent {
       selected: false,
     };
     addNewAccount(childKey);
+    notifi.info('Create success');
   };
 
   _importAccount = () => {
@@ -477,7 +478,7 @@ class Header extends PureComponent {
 
   render() {
     const { confirmLogout, showMobileMenu } = this.state;
-    const { className, bgColor, address, history, childKey } = this.props;
+    const { className, bgColor, address, childKey } = this.props;
     // console.log('render', childKey);
 
     const Menus = this._getMenus().map(el => {
@@ -505,7 +506,7 @@ class Header extends PureComponent {
             <img src={logo} alt="" />
           </div>
           <div className="account-info">
-            <div className="accout-name">Account {index}</div>
+            <div className="accout-name">Account {index + 1}</div>
             <div className="accout-balances">{toTEA(el.balance) || 0} TEA</div>
           </div>
         </div>
@@ -613,7 +614,7 @@ class Header extends PureComponent {
             </ContentLogout>
           </PuConfirmMnemonic>
         )}
-        <GetSessionPassword />
+        <GetKeyFromSessionStorage />
       </WrapperHeader>
     );
   }

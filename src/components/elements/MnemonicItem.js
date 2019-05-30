@@ -38,7 +38,7 @@ class MnemonicItem extends PureComponent {
   };
 
   render() {
-    var { canClose, value } = this.props;
+    const { canClose, value } = this.props;
     return (
       <Wrapper onClick={this._handleClick}>
         {canClose ? (
@@ -58,9 +58,9 @@ class MnemonicItem extends PureComponent {
 
 MnemonicItem.defaultProps = {
   value: '',
-  onClick: function() {},
+  onClick() {},
   canClose: false,
-  close: function() {},
+  close() {},
 };
 
 export { MnemonicItem };

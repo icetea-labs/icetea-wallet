@@ -11,9 +11,9 @@ export const actionTypes = {
 /*
  * action creators
  */
-const getData = () => ({
-  type: actionTypes.TX_HISTORY_FETCHING,
-});
+// const getData = () => ({
+//   type: actionTypes.TX_HISTORY_FETCHING,
+// });
 const getDataSuccess = data => ({
   type: actionTypes.TX_HISTORY_SUCCESS,
   data,

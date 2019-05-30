@@ -13,7 +13,6 @@ import * as actions from '../../../store/actions/account';
 import tweb3 from '../../../service/tweb3';
 import { toTEA } from '../../../utils/utils';
 
-
 const itemsMenu = [
   {
     text: 'ITEA',
@@ -59,11 +58,11 @@ class SendTransactionOne extends PureComponent {
   }
 
   componentWillMount = async () => {
-    let balanceofVip = '';
-    balanceofVip = await tweb3.getBalance(this.props.address);
+    const { address } = this.props;
+    const { balance } = await tweb3.getBalance(address);
     // console.log('I want to see BL:', balanceofVip);
     this.setState({
-      availableBalance: toTEA(balanceofVip.balance),
+      availableBalance: toTEA(balance),
     });
   };
 
@@ -82,19 +81,14 @@ class SendTransactionOne extends PureComponent {
         amountErr: '',
       });
     } else {
-      this.setState({
-        amount: '',
-      });
+      this.setState({ amount: '' });
     }
     // console.log('amount Change CK', e);
   };
 
   _setMaxValue = () => {
-    let t = this.state.availableBalance;
-    // console.log('Avai CK', t);
-    this.setState({
-      amount: t,
-    });
+    const { availableBalance } = this.state;
+    this.setState({ amount: availableBalance });
   };
 
   _memoChange = e => {
@@ -107,27 +101,23 @@ class SendTransactionOne extends PureComponent {
   };
 
   _submit = () => {
-    if (this.state.to === '') {
-      this.setState({
-        addressErr: 'To address should not be null',
-      });
+    const { props } = this;
+    const { to, amount } = this.state;
+
+    if (to) {
+      this.setState({ addressErr: 'To address should not be null' });
       return;
     }
 
     try {
-      let rs = ecc.validateAddress(this.state.to);
-      // console.log('acc CK', rs);
+      ecc.validateAddress(to);
     } catch {
-      this.setState({
-        addressErr: 'Invalid address! Please Try Again',
-      });
+      this.setState({ addressErr: 'Invalid address! Please Try Again' });
       return;
     }
 
-    if (this.state.amount === '') {
-      this.setState({
-        amountErr: 'Amount should not be null',
-      });
+    if (amount) {
+      this.setState({ amountErr: 'Amount should not be null' });
       return;
     }
 
@@ -138,7 +128,7 @@ class SendTransactionOne extends PureComponent {
         memoErr: '',
       },
       () => {
-        this.props.next && this.props.next(this.state);
+        props.next && props.next(this.state);
       }
     );
 
@@ -146,7 +136,8 @@ class SendTransactionOne extends PureComponent {
   };
 
   _genAssetsOptions = () => {
-    return this.props.assets.map(e => {
+    const { props } = this;
+    return props.assets.map(e => {
       return {
         value: e.asset,
         text: e.name,
@@ -163,8 +154,8 @@ class SendTransactionOne extends PureComponent {
   };
 
   _getSelectTypes = () => {
-    var types = this.state.types;
-    var items = [];
+    const { types } = this.state;
+    const items = [];
     return (
       types.forEach(el => {
         el.hide || items.push({ text: el.text, value: el.text });
@@ -174,12 +165,11 @@ class SendTransactionOne extends PureComponent {
   };
 
   _assetChange = e => {
-    var t = this.props.assets.find(function(t) {
-      return t.asset === e;
+    const { props } = this;
+    const asset = props.assets.find(item => {
+      return item.asset === e;
     });
-    this.setState({
-      asset: t,
-    });
+    this.setState({ asset });
   };
 
   render() {

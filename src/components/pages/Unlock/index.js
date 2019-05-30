@@ -142,7 +142,7 @@ class index extends PureComponent {
             privateKey: encryptedData || privateKey,
             mnemonic,
             flags: false, // o
-            childKey: [{ address, selected: true }],
+            childKey: [{ index: 0, address, selected: true }],
           })
         );
 

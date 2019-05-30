@@ -129,8 +129,15 @@ class index extends PureComponent {
         key: 'Type',
         render: e => {
           const typeTx = this.convertText(e.type);
+          let type = '';
+          if (e.fromAddr === e.toAddr && e.fromAddr === address) {
+            type = '-';
+          } else if (e.fromAddr === address) {
+            type = 'OUT';
+          } else {
+            type = 'IN';
+          }
 
-          const type = e.fromAddr === address ? 'OUT' : 'IN';
           return (
             <StyledText style={{ minWidth: '100px' }}>
               <IconInOut color={typeTx.color} />
@@ -221,8 +228,8 @@ class index extends PureComponent {
   };
 
   filter = e => {
-    const filterParams = {};
-    const g = '';
+    // const filterParams = {};
+    // const g = '';
     if (e.manualStartDate || e.manualEndDate) {
       // e.manualStartDate && (filterParams.startTime = e.manualStartDate.getTime());
       // e.manualEndDate && (filterParams.endTime = e.manualEndDate.getTime());

@@ -48,7 +48,7 @@ const WrapperClose = styled.div`
 
 class SendTransactionTwo extends PureComponent {
   render() {
-    var { asset, to, from, amount, memo } = this.props;
+    const { asset, to, from, amount, memo } = this.props;
     return (
       <div>
         <Title>
@@ -85,7 +85,7 @@ SendTransactionTwo.defaultProps = {
   from: '',
   amount: '',
   memo: '',
-  asset: {}
+  asset: {},
 };
 
 export default SendTransactionTwo;

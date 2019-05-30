@@ -13,7 +13,7 @@ const TableBase = styled.table`
     border: 1px solid #f0f0f0;
   }
 `;
-//const TheadStyled = styled.thead`background:#f7f7f7;background-size:auto 100%;tr{font-size:14px;color:#666;border:1px solid #f0f0f0;:first-child{border:1px solid #f0f0f0;border-bottom:4px solid #f0f0f0;}}th{background-color:#f7f7f7;padding:0px 0px 0px 10px;height:56px;text-align:center;word-break:break-all;color:#333;font-size:13px;font-weight:600;cursor:pointer;border:none;position:sticky;top:-1px;&:hover{color:#f0b90b;}&:first-child{border-right:1px solid #f0f0f0;padding:0;&:hover{color:#333;}}:last-child{padding-right:10px;}}.showSortMark{i{display:none;}}.sortHd{i{display:inline-block;}}}`;
+// const TheadStyled = styled.thead`background:#f7f7f7;background-size:auto 100%;tr{font-size:14px;color:#666;border:1px solid #f0f0f0;:first-child{border:1px solid #f0f0f0;border-bottom:4px solid #f0f0f0;}}th{background-color:#f7f7f7;padding:0px 0px 0px 10px;height:56px;text-align:center;word-break:break-all;color:#333;font-size:13px;font-weight:600;cursor:pointer;border:none;position:sticky;top:-1px;&:hover{color:#f0b90b;}&:first-child{border-right:1px solid #f0f0f0;padding:0;&:hover{color:#333;}}:last-child{padding-right:10px;}}.showSortMark{i{display:none;}}.sortHd{i{display:inline-block;}}}`;
 const TableHead = styled.thead`
   background: #fdfdfd;
   background-size: auto 100%;
@@ -49,7 +49,7 @@ const TableHead = styled.thead`
     }
   }
 `;
-//const TbodyStyled = styled.tbody`tr{&:hover{background-color:#fffbf3;}}td{padding:6px 0px 6px 10px;position:relative;text-align:center;word-break:break-all;cursor:pointer;font-size:14px;color:#333;min-height:60px;:first-child{border-right:1px solid #f0f0f0;color:#999;padding:0;width:34px;font-size:12px;}:last-child{padding-right:10px;}}}`;
+// const TbodyStyled = styled.tbody`tr{&:hover{background-color:#fffbf3;}}td{padding:6px 0px 6px 10px;position:relative;text-align:center;word-break:break-all;cursor:pointer;font-size:14px;color:#333;min-height:60px;:first-child{border-right:1px solid #f0f0f0;color:#999;padding:0;width:34px;font-size:12px;}:last-child{padding-right:10px;}}}`;
 const TableBody = styled.tbody`
   tr {
     border: 1px solid #fff;
@@ -132,18 +132,20 @@ class TablePro extends PureComponent {
     return item.type === 'string' ? <span>{item}</span> : item;
   };
 
-  renderHeaderDetails = item => {
-    return this.renderTitle(item); // [, <O><Icon type={t}/></O> ]
+  renderHeaderDetails = title => {
+    return this.renderTitle(title); // [, <O><Icon type={t}/></O> ]
   };
 
-  renderHeader = (item, t, n) => {
-    return item === 'left' ? (
-      <HeaderLeft>{this.renderHeaderDetails(t, n)}</HeaderLeft>
-    ) : item === 'center' ? (
-      <HeaderCenter>{this.renderHeaderDetails(t, n)}</HeaderCenter>
-    ) : (
-      <HeaderRight>{this.renderHeaderDetails(t, n)}</HeaderRight>
-    );
+  renderHeader = (item, title, sortType) => {
+    if (item === 'left') {
+      return <HeaderLeft>{this.renderHeaderDetails(title, sortType)}</HeaderLeft>;
+    }
+
+    if (item === 'center') {
+      return <HeaderCenter>{this.renderHeaderDetails(title, sortType)}</HeaderCenter>;
+    }
+
+    return <HeaderRight>{this.renderHeaderDetails(title, sortType)}</HeaderRight>;
   };
 
   generateHead = () => {
