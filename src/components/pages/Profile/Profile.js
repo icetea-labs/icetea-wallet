@@ -51,6 +51,10 @@ class Profile extends Component {
   }
 
   handleWalletAddress = address => {
+    if (!address.value) {
+      notifi.warn('Please got to unlock wallet!');
+      return;
+    }
     const { privateKey } = this.props;
     if (!privateKey) {
       this.props.setNeedAuth(true);
