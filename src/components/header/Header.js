@@ -519,7 +519,7 @@ class Header extends PureComponent {
   render() {
     const { confirmLogout, showMobileMenu } = this.state;
     const { className, bgColor, address, childKey, needAuth } = this.props;
-    // console.log('render', childKey);
+    console.log('render header');
 
     const Menus = this._getMenus().map(el => {
       // console.log('Menus', el);
