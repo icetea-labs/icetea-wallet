@@ -73,7 +73,8 @@ class Profile extends Component {
         notifi.info('Success');
       })
       .catch(error => {
-        window.alert(String(error));
+        //window.alert(String(error));
+        notifi.warn('You already received 100000000 microtea. No more.');
       });
   };
 
@@ -383,7 +384,7 @@ class Profile extends Component {
             <div className="orther-groups" hidden={isHidden}>
               <ItemsTitle>Faucet</ItemsTitle>
               <Button className="get-tea" onClick={this.registerFaucetEvent}>
-                GET 10 TEA
+                GET 100 TEA
               </Button>
               <FormGroups className="form-groups">
                 <ItemsTitle>Alias</ItemsTitle>
