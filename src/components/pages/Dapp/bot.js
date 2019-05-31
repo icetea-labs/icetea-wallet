@@ -18,6 +18,7 @@ let web3Inited;
 
 const queue = [];
 let botui = null;
+let handleInterval = null;
 
 const say = (text, options) => {
   botui.message.add(Object.assign({ content: String(text) }, options || {}));
@@ -131,25 +132,6 @@ async function getBotInfo(alias) {
   return Object.assign(await getBotInfoFromBot(alias), await getBotInfoFromStore(alias));
 }
 
-function setCommands(commands, defStateAccess) {
-  var t = byId('bot-menu-items');
-  t.innerHTML = '';
-  commands.forEach(c => {
-    var a = document.createElement('A');
-    a.href = '#';
-    a.setAttribute('data-value', c.value);
-    a.textContent = c.text || c.value;
-    t.appendChild(a);
-    a.onclick = function() {
-      //closeNav()
-      // botui.action.hide()
-      say(c.text || c.value, { human: true });
-      console.log('Check', c.text + ' Xem ' + c.value);
-      pushToQueue('command', c, c.stateAccess || defStateAccess);
-    };
-  });
-}
-
 function pushToQueue(type, content, stateAccess, transferValue, sendback) {
   if (content.value.indexOf(':') > 0) {
     const parts = content.value.split(':', 2);
@@ -165,12 +147,31 @@ function pushToQueue(type, content, stateAccess, transferValue, sendback) {
   });
 }
 
+function setCommands(commands, defStateAccess) {
+  const t = byId('bot-menu-items');
+  t.innerHTML = '';
+  commands.forEach(c => {
+    const a = document.createElement('A');
+    a.href = '#';
+    a.setAttribute('data-value', c.value);
+    a.textContent = c.text || c.value;
+    t.appendChild(a);
+    a.onclick = () => {
+      // closeNav();
+      // botui.action.hide()
+      say(c.text || c.value, { human: true });
+      console.log('Check', `${c.text} Xem ${c.value}`);
+      pushToQueue('command', c, c.stateAccess || defStateAccess);
+    };
+  });
+}
+
 function handleQueue(contract, defStateAccess) {
   if (queue.length) {
     console.log('Handle Queue', contract);
-    var item = queue.shift();
+    const item = queue.shift();
     callContract(
-      contract.methods['on' + item.type],
+      contract.methods[`on${item.type}`],
       item.stateAccess,
       item.transferValue || 0,
       tweb3.wallet.defaultAccount,
@@ -193,9 +194,8 @@ function handleQueue(contract, defStateAccess) {
               speakResult.transferValue = contractResult.options.value;
               return speakResult;
             });
-          } else {
-            return speakResult;
           }
+          return speakResult;
         });
       })
       .then(r => {
@@ -205,16 +205,22 @@ function handleQueue(contract, defStateAccess) {
       })
       .catch(err => {
         console.error(err);
-        say('An error has occured: ' + err, { type: 'html', cssClass: 'bot-error' });
+        say(`An error has occured: ${err}`, { type: 'html', cssClass: 'bot-error' });
       });
   }
+}
+
+function closeNav() {
+  byId('side-bar_right').style.width = '0pc';
+  byId('content-rsideba').style.display = 'none';
+  byId('btnClose').style.display = 'none';
 }
 
 /**
  * connect to bot smart contract
  * @param {string} botAddr bot smart contract address
  */
-export async function connectBot(botAddr, privateKey) {
+async function connectBot(botAddr, privateKey) {
   botui = BotUI('my-botui-app', {
     vue: Vue,
   });
@@ -268,7 +274,14 @@ export async function connectBot(botAddr, privateKey) {
 
   console.log('Connect to Contract', contract);
 
-  setInterval(function() {
+  handleInterval = setInterval(() => {
     handleQueue(contract, botInfo.stateAccess);
   }, 100);
 }
+
+function disConnectBot() {
+  clearInterval(handleInterval);
+}
+
+export { connectBot, disConnectBot };
+export default connectBot;
