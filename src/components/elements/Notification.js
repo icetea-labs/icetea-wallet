@@ -7,12 +7,12 @@ import { checkDevice } from './utils';
 
 let notification = null;
 
-const alertCus = function(e) {
-  let alert = document.createElement('div');
+const alertCus = e => {
+  const alert = document.createElement('div');
   alert.className = 'alert';
   alert.innerText = e;
   document.body.appendChild(alert);
-  setTimeout(function() {
+  setTimeout(() => {
     document.body.removeChild(alert);
   }, 3e3);
 };
@@ -22,7 +22,7 @@ Notification.newInstance({}, n => {
 });
 
 const notifi = {
-  info: function(e) {
+  info(e) {
     checkDevice.isMobile()
       ? alertCus(e)
       : notification.notice({
@@ -34,7 +34,7 @@ const notifi = {
           ),
         });
   },
-  warn: function(e) {
+  warn(e) {
     checkDevice.isMobile()
       ? alertCus(e)
       : notification.notice({

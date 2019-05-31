@@ -1,8 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
 import { DivSelectWordBase } from '../../elements/utils';
 import { zIndex } from '../../../constants/styles';
-import { Button } from "../../elements";
+import { Button } from '../../elements';
 
 export const Wrapper = styled.div`
   background: #fdfdfd;

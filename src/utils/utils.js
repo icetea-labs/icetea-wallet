@@ -4,6 +4,9 @@ import { ecc, codec } from 'icetea-common';
 import decode from './decode';
 import paths from '../config/walletPaths';
 
+const keythereum = require('keythereum');
+const randomBytes = require('randombytes');
+
 export const userStorage = {
   isWalletConnect() {
     let user = sessionStorage.getItem('user') || '{}';
@@ -14,6 +17,16 @@ export const userStorage = {
     return !!(user = JSON.parse(user)).privateKey;
   },
 };
+
+function createRandom() {
+  const keyBytes = 32;
+  const ivBytes = 16;
+  const random = randomBytes(keyBytes + ivBytes + keyBytes);
+  return {
+    iv: random.slice(keyBytes, keyBytes + ivBytes),
+    salt: random.slice(keyBytes + ivBytes),
+  };
+}
 
 export const utils = {
   createAccountWithMneomnic(mnemonic, index = 0) {
@@ -65,6 +78,25 @@ export const utils = {
   getAddressFromPrivateKey(privateKey) {
     const { address } = ecc.toPubKeyAndAddressBuffer(privateKey);
     return address;
+  },
+  encryptMnemonic(mnemonic, password) {
+    const options = {
+      kdf: 'pbkdf2',
+      cipher: 'aes-128-ctr',
+      kdfparams: {
+        c: 262144,
+        dklen: 32,
+        prf: 'hmac-sha256',
+      },
+    };
+
+    const dk = createRandom();
+    return keythereum.dump(password, mnemonic, dk.salt, dk.iv, options);
+  },
+  decryptMnemonic(mnemonicObj, password) {
+    // type uint8array
+    const mnemonic = keythereum.recover(password, mnemonicObj);
+    return new TextDecoder('utf-8').decode(mnemonic).replace(/%20/g, ' ');
   },
 };
 

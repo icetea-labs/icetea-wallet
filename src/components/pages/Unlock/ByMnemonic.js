@@ -100,7 +100,7 @@ class ByMnemonic extends PureComponent {
               </div>
             </WarningTooltip>
           </WarningText>
-          <MnTitle>Please enter your 24 word phrase</MnTitle>
+          <MnTitle>Please enter your 12 word phrase</MnTitle>
           <MnWrapperTextArea>
             <MnTextArea
               onChange={this._mnemonicChange}

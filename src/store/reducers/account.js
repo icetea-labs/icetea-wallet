@@ -31,8 +31,8 @@ const initialState = Object.assign(
       user = JSON.parse(user);
       resp.address = user.address;
       resp.flags = user.flags || {};
-      resp.encryptedData = user.privateKey;
-      resp.mnemonic = user.mnemonic;
+      resp.encryptedData = user.mnemonic;
+      // resp.mnemonic = user.mnemonic;
       resp.indexKey = user.indexKey;
       resp.childKey = user.childKey;
     }
@@ -42,6 +42,7 @@ const initialState = Object.assign(
 
 const addChildKey = (state, action) => {
   const childKey = {
+    index: action.data.indexKey,
     address: action.data.address,
     privateKey: action.data.privateKey || '',
     balance: action.data.balance || 0,
@@ -61,7 +62,7 @@ const addChildKey = (state, action) => {
       current = {};
     } else {
       current = JSON.parse(current);
-      current.childKey.push({ address: childKey.address, selected: false });
+      current.childKey.push({ address: childKey.address, index: childKey.index, selected: false });
       current.indexKey = action.data.indexKey;
       sessionStorage.setItem('user', JSON.stringify(current));
     }

@@ -36,20 +36,21 @@ class SendTransaction extends PureComponent {
   };
 
   _transfer = async () => {
+    const { props } = this;
     const { amount, to } = this.state;
     const { privateKey, address } = this.props;
 
     tweb3.wallet.importAccount(privateKey);
     console.log('privateKey', privateKey);
-    let balanceofVip = await tweb3.getBalance(address);
+    const balanceofVip = await tweb3.getBalance(address);
     console.log('CK login balance:', balanceofVip);
     const amountToUnit = toUNIT(parseFloat(amount));
     console.log('CK amount:', amountToUnit);
     await tweb3.transfer(to, amountToUnit);
-    notifi.info('Send successful!');
+    notifi.info('Success! Transaction broadcasted.');
 
-    this.props.onSendSuccess();
-    this.props.close();
+    props.onSendSuccess();
+    props.close();
   };
 
   render() {
