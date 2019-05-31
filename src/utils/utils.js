@@ -1,6 +1,6 @@
 import * as bip39 from 'bip39';
 import HDKey from 'hdkey';
-import { ecc, codec } from 'icetea-common';
+import { ecc, codec, AccountType } from 'icetea-common';
 import decode from './decode';
 import paths from '../config/walletPaths';
 
@@ -41,12 +41,20 @@ export const utils = {
     };
   },
   recoverAccountFromMneomnic(mnemonic, index = 0) {
-    const privateKey = this.getPrivateKeyFromMnemonic(mnemonic, index);
-    const { address } = ecc.toPubKeyAndAddress(privateKey);
+    let privateKey = '';
+    let address = '';
+    let indexBase = '';
+    do {
+      indexBase = index;
+      privateKey = this.getPrivateKeyFromMnemonic(mnemonic, index);
+      ({ address } = ecc.toPubKeyAndAddress(privateKey));
+      index += 1;
+    } while (!codec.isAddressType(address, AccountType.BANK_ACCOUNT));
 
     return {
       privateKey,
       address,
+      index: indexBase,
     };
   },
   getPrivateKeyFromMnemonic(mnemonic, index = 0) {

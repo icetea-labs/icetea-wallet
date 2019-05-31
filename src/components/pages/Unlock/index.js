@@ -105,7 +105,7 @@ class index extends PureComponent {
     });
   };
 
-  _unlock = (privateKey, address, keyStore, password, mnemonic) => {
+  _unlock = (privateKey, address, keyStore, password, mnemonic, indexKey) => {
     const { props } = this;
     setTimeout(() => {
       let encryptedData = '';
@@ -121,7 +121,7 @@ class index extends PureComponent {
         };
 
         props.setAccount({
-          indexKey: 0,
+          indexKey,
           address,
           privateKey,
           cipher: password,
@@ -138,12 +138,12 @@ class index extends PureComponent {
         sessionStorage.setItem(
           'user',
           JSON.stringify({
-            indexKey: 0,
+            indexKey,
             address,
             mnemonic: encryptedData || mnemonic,
             // mnemonic,
             flags: false, // o
-            childKey: [{ index: 0, address, selected: true }],
+            childKey: [{ index: indexKey, address, selected: true }],
           })
         );
 
