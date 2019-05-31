@@ -6,6 +6,7 @@ import tweb3 from '../../../service/tweb3';
 import Layout from '../../layout/Layout';
 import { Icon } from '../../elements/utils';
 import Pagination from '../../elements/PaginationPro';
+import * as actions from '../../../store/actions/account';
 
 const BotContent = styled.div`
   background: #232937;
@@ -196,7 +197,6 @@ class BotStore extends Component {
     super(props);
     this.state = {
       bots: [],
-      botStore: [],
       botFilter: [],
       isRunBot: false,
       botAddress: '',
@@ -212,14 +212,14 @@ class BotStore extends Component {
   setBotStore = async () => {
     const arrBot = await this.getBotList();
     const storeBots = await this.getBotInfo(arrBot);
-    this.setState({ bots: storeBots, botStore: storeBots });
+    this.setState({ bots: storeBots });
   };
 
   getBotList = async () => {
     const address = 'system.botstore';
     const contract = tweb3.contract(address);
     const arrbots = await contract.methods.query().call();
-    console.log('All Bot', arrbots)
+    console.log('All Bot', arrbots);
     return arrbots;
   };
 
@@ -249,11 +249,27 @@ class BotStore extends Component {
   };
 
   connectBot = botAddress => {
-    this.setState({
-      isRunBot: true,
-      botAddress,
-    });
+    const { privateKey, setNeedAuth } = this.props;
+    // show get password for get privatekey.
+    if (!privateKey) setNeedAuth(true);
+
+    // show pu bot.
+    this.setState({ isRunBot: true, botAddress });
+    // return privateKey ? this.showBot(botAddress) : this.getKeyAndshowBot(botAddress);
   };
+
+  // showBot = botAddress => {
+  //   this.setState({
+  //     isRunBot: true,
+  //     botAddress,
+  //   });
+  // };
+
+  // getKeyAndshowBot = botAddress => {
+  //   const { props } = this;
+  //   props.setNeedAuth(true);
+  //   this.setState({ isRunBot: true, botAddress });
+  // };
 
   _onCloseBot = () => {
     this.setState({
@@ -356,7 +372,7 @@ class BotStore extends Component {
   render() {
     const { bots, botFilter, current, pageSize, isRunBot, botAddress } = this.state;
     const { address, privateKey } = this.props;
-    let total = bots.length;
+    const total = bots.length;
     return (
       <Layout>
         <BotContent>
@@ -385,7 +401,7 @@ class BotStore extends Component {
               )}
             </Wrap>
           </BotContainer>
-          {isRunBot && (
+          {isRunBot && privateKey && (
             <BotShow onClose={this._onCloseBot} botAddress={botAddress} address={address} privateKey={privateKey} />
           )}
         </BotContent>
@@ -395,17 +411,25 @@ class BotStore extends Component {
 }
 
 const mapStateToProps = state => {
-  // const { address } = state.account;
-  // const { privateKey } = state.account;
-  const { address } = 'teat1al54h8fy75h078syz54z6hke6l9x232zq3j9st';
-  const { privateKey } = 'CJUPdD38vwc2wMC3hDsySB7YQ6AFLGuU6QYQYaiSeBsK';
+  const { address } = state.account;
+  const { privateKey } = state.account;
+  // const address = 'teat1al54h8fy75h078syz54z6hke6l9x232zq3j9st';
+  // const privateKey = 'CJUPdD38vwc2wMC3hDsySB7YQ6AFLGuU6QYQYaiSeBsK';
   return {
     address,
     privateKey,
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    setNeedAuth: data => {
+      dispatch(actions.setNeedAuth(data));
+    },
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(BotStore);
