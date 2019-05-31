@@ -124,52 +124,84 @@ const ItemsSubMenu = styled.div`
     background: ${props => props.theme.headerDropdownBg};
     color: #f0b90b;
   }
+  ul li:not(.wallet-address) {
+    animation: userappear 0.3s ease-in-out;
+    @keyframes userappear {
+      0% {
+        height: 0;
+        opacity: 0;
+      }
+      40% {
+        height: 10px;
+        opacity: 0;
+      }
+      100% {
+        height: 20px;
+        opacity: 1;
+      }
+    }
+  }
+  &:hover ul {
+    display: flex;
+  }
   @media (max-width: 768px) {
     display: none;
   }
-  .account-menu {
-    display: none;
-    position: absolute;
-    top: 50px;
-    right: 0;
-    background: #252d38;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-  }
-  &:hover {
-    .account-menu {
+`;
+const AccountMenu = styled.ul`
+  display: none;
+  flex-direction: column;
+  color: #fff;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: #252d38;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  li {
+    padding: 10px;
+    background: ${props => props.theme.headerDropdownBg};
+    width: 290px;
+    text-align: left;
+    height: 20px;
+    line-height: 20px;
+    text-indent: 10px;
+    font-size: 13px;
+    &:hover {
+      background: #12161c;
+      color: #f0b90b;
+    }
+    a {
+      height: 100%;
       display: block;
+      color: inherit;
+      font-size: 13px;
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
-`;
-const AccountMenu = styled.div`
-  .wallet-address {
+  li.wallet-address {
     display: flex;
-    height: 50px;
+    height: 40px;
     align-items: center;
     background: rgba(72, 81, 93, 0.3);
     &:hover {
       color: inherit;
     }
-    .wl-address {
-      margin-left: 20px;
-    }
     .title {
-      margin-bottom: 3px;
-      text-align: left;
-      color: #9298a0;
+      color: #48515d;
       width: 100px;
       white-space: nowrap;
-      line-height: normal;
     }
     .address {
       width: 180px;
       overflow: hidden;
       text-overflow: ellipsis;
-      line-height: normal;
+      position: relative;
     }
     .op {
       display: flex;
-      align-items: center;
+      margin-top: 10px;
       margin-left: 30px;
       i {
         margin-right: 10px;
@@ -188,7 +220,6 @@ const ListAccount = styled.div`
   position: relative;
   line-height: normal;
   max-height: 150px;
-  border-bottom: 1px solid #343e4c;
   overflow: auto;
 `;
 
@@ -238,6 +269,7 @@ const WrapAccount = styled.div`
 const ItemsAccount = styled.ul`
   flex-direction: column;
   color: #fff;
+  border-top: 1px solid #343e4c;
   li {
     padding: 10px;
     background: ${props => props.theme.headerDropdownBg};
@@ -247,8 +279,6 @@ const ItemsAccount = styled.ul`
     line-height: 20px;
     text-indent: 10px;
     font-size: 13px;
-    display: flex;
-    align-items: center;
     &:hover {
       background: #12161c;
       color: #f0b90b;
@@ -546,48 +576,48 @@ class Header extends PureComponent {
           {address && (
             <ItemsSubMenu>
               <Icon type="account" />
-              <div className="account-menu">
-                <AccountMenu>
-                  <div className="wallet-address">
-                    <div className="wl-address">
-                      <div className="title">Wallet</div>
-                      <div className="address">{address}</div>
-                    </div>
-                    <div className="op">
-                      <CopyToClipboard text={address} onCopy={this._copyAddress}>
-                        <span title="copy address">
-                          <Icon type="copy" />
-                        </span>
-                      </CopyToClipboard>
-                      <span onClick={this._gotoExplorer} title="go to explorer" role="presentation">
-                        <Icon type="link" />
-                      </span>
-                    </div>
+              <AccountMenu>
+                <li className="wallet-address">
+                  <div>
+                    <div className="title">Wallet</div>
+                    <div className="address">{address}</div>
                   </div>
-                  <ListAccount>
-                    <WrapAccount>{Accounts}</WrapAccount>
-                  </ListAccount>
-                  <ItemsAccount>
-                    <li onClick={this._createAccount} role="presentation">
-                      Create Account
-                    </li>
-                    <li onClick={this._importAccount} role="presentation">
-                      Import Account
-                    </li>
-                  </ItemsAccount>
-                  <ItemsAccount>
-                    <li>
-                      <Link to="/unlock">Change Wallet</Link>
-                    </li>
-                    <li>
-                      <Link to="/create">Create New Wallet</Link>
-                    </li>
-                    <li onClick={this._showConfirmLogout} role="presentation">
-                      Close Wallet
-                    </li>
-                  </ItemsAccount>
-                </AccountMenu>
-              </div>
+                  <div className="op">
+                    <CopyToClipboard text={address} onCopy={this._copyAddress}>
+                      <span title="copy address">
+                        <Icon type="copy" />
+                      </span>
+                    </CopyToClipboard>
+                    <span onClick={this._gotoExplorer} title="go to explorer" role="presentation">
+                      <Icon type="link" />
+                    </span>
+                  </div>
+                </li>
+
+                <ListAccount>
+                  <WrapAccount>{Accounts}</WrapAccount>
+                </ListAccount>
+
+                <ItemsAccount>
+                  <li onClick={this._createAccount} role="presentation">
+                    Create Account
+                  </li>
+                  <li onClick={this._importAccount} role="presentation">
+                    Import Account
+                  </li>
+                </ItemsAccount>
+                <ItemsAccount>
+                  <li>
+                    <Link to="/unlock">Change Wallet</Link>
+                  </li>
+                  <li>
+                    <Link to="/create">Create New Wallet</Link>
+                  </li>
+                  <li onClick={this._showConfirmLogout} role="presentation">
+                    Close Wallet
+                  </li>
+                </ItemsAccount>
+              </AccountMenu>
             </ItemsSubMenu>
           )}
           <StyledUlTag>
