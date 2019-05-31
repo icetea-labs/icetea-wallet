@@ -88,6 +88,7 @@ export const utils = {
         dklen: 32,
         prf: 'hmac-sha256',
       },
+      noAddress: true,
     };
 
     const dk = createRandom();
