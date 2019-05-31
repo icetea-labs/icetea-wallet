@@ -6,6 +6,8 @@ import tweb3 from '../../../service/tweb3';
 import Layout from '../../layout/Layout';
 import { Icon } from '../../elements/utils';
 import Pagination from '../../elements/PaginationPro';
+import GetKeyFromSessionStorage from '../../header/GetKeyFromSessionStorage';
+import * as actions from '../../../store/actions/account';
 
 const BotContent = styled.div`
   background: #232937;
@@ -219,7 +221,7 @@ class BotStore extends Component {
     const address = 'system.botstore';
     const contract = tweb3.contract(address);
     const arrbots = await contract.methods.query().call();
-    console.log('All Bot', arrbots)
+    console.log('All Bot', arrbots);
     return arrbots;
   };
 
@@ -249,10 +251,21 @@ class BotStore extends Component {
   };
 
   connectBot = botAddress => {
+    const { privateKey } = this.props;
+    return privateKey ? this.showBotPu(botAddress) : this.getKeyFromSeasionStogae();
+  };
+
+  showBotPu = botAddress => {
     this.setState({
       isRunBot: true,
       botAddress,
     });
+  };
+
+  getKeyFromSeasionStogae = () => {
+    const { props } = this;
+    props.setNeedAuth(true);
+    this.setState({ isRunBot: false });
   };
 
   _onCloseBot = () => {
@@ -356,7 +369,7 @@ class BotStore extends Component {
   render() {
     const { bots, botFilter, current, pageSize, isRunBot, botAddress } = this.state;
     const { address, privateKey } = this.props;
-    let total = bots.length;
+    const total = bots.length;
     return (
       <Layout>
         <BotContent>
@@ -389,23 +402,32 @@ class BotStore extends Component {
             <BotShow onClose={this._onCloseBot} botAddress={botAddress} address={address} privateKey={privateKey} />
           )}
         </BotContent>
+        {privateKey && <GetKeyFromSessionStorage />}
       </Layout>
     );
   }
 }
 
 const mapStateToProps = state => {
-  // const { address } = state.account;
-  // const { privateKey } = state.account;
-  const { address } = 'teat1al54h8fy75h078syz54z6hke6l9x232zq3j9st';
-  const { privateKey } = 'CJUPdD38vwc2wMC3hDsySB7YQ6AFLGuU6QYQYaiSeBsK';
+  const { address } = state.account;
+  const { privateKey } = state.account;
+  // const address = 'teat1al54h8fy75h078syz54z6hke6l9x232zq3j9st';
+  // const privateKey = 'CJUPdD38vwc2wMC3hDsySB7YQ6AFLGuU6QYQYaiSeBsK';
   return {
     address,
     privateKey,
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    setNeedAuth: data => {
+      dispatch(actions.setNeedAuth(data));
+    },
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(BotStore);

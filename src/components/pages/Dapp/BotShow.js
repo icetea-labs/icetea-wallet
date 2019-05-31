@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import QueueAnim from 'rc-queue-anim';
 // import 'botui/build/botui.min.css';
 import './botui.min.css';
 import './botui-theme-default.css';
-import { connectBot } from './bot.js';
+import { connectBot, disConnectBot } from './bot';
 import { PuLayout, PuHeader, PuContent, WrapperBtnClose, Icon } from '../../elements/utils';
 
 const PuContainer = styled.div`
@@ -117,6 +116,10 @@ class BotShow extends Component {
     }, 150);
   }
 
+  componentWillUnmount() {
+    disConnectBot();
+  }
+
   _start = async () => {
     const { botAddress, privateKey } = this.props;
     if (botAddress) {
@@ -144,8 +147,8 @@ class BotShow extends Component {
   };
 
   render() {
-    var { showMenu } = this.state;
-    var { onClose, address } = this.props;
+    const { showMenu } = this.state;
+    const { onClose, address } = this.props;
     return (
       <QueueAnim animConfig={{ opacity: [1, 0] }}>
         <PuLayout key={1}>
@@ -159,16 +162,25 @@ class BotShow extends Component {
                 <div className="sidebar">
                   <div className="background-sidebar" style={{ display: showMenu === true ? 'block' : 'none' }} />
                   <div className="menu-icon phone">
-                    <i className="fa fa-bars " onClick={this.openBar} />
+                    <i className="fa fa-bars" onClick={this.openBar} />
                   </div>
-                  <div className="side-bar_right" style={{ width: showMenu === true ? '15pc' : '0pc' }}>
+                  <div
+                    className="side-bar_right"
+                    id="side-bar_right"
+                    style={{ width: showMenu === true ? '15pc' : '0pc' }}
+                  >
                     <WrapperBtnCloseCus
+                      id="btnClose"
                       onClick={this.hiddenSibar}
                       style={{ display: showMenu === true ? 'block' : 'none' }}
                     >
                       <Icon type="close" size="18" color="inherit" />
                     </WrapperBtnCloseCus>
-                    <div className="content-rsideba" style={{ display: showMenu === true ? 'block' : 'none' }}>
+                    <div
+                      className="content-rsideba"
+                      id="content-rsideba"
+                      style={{ display: showMenu === true ? 'block' : 'none' }}
+                    >
                       <div className="bot-menu-items" id="bot-menu-items">
                         <a href="#">About</a>
                         <a href="#">Services</a>
@@ -192,8 +204,8 @@ class BotShow extends Component {
 
 BotShow.defaultProps = {
   botAddress: '',
-  address: 'teat1al54h8fy75h078syz54z6hke6l9x232zq3j9st',
-  privateKey: 'CJUPdD38vwc2wMC3hDsySB7YQ6AFLGuU6QYQYaiSeBsK',
+  address: '',
+  privateKey: '',
   onClose() {},
 };
 

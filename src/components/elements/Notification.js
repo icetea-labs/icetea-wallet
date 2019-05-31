@@ -38,7 +38,7 @@ const notifi = {
     checkDevice.isMobile()
       ? alertCus(e)
       : notification.notice({
-          duration: '5',
+          duration: 5,
           content: (
             <span className="notification">
               <img src={iconWarning} alt="" />
