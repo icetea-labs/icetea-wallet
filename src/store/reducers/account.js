@@ -62,7 +62,7 @@ const addChildKey = (state, action) => {
       current = {};
     } else {
       current = JSON.parse(current);
-      current.childKey.push({ address: childKey.address, index: childKey.index, selected: false });
+      current.childKey.push({ index: childKey.index, address: childKey.address, selected: false });
       current.indexKey = action.data.indexKey;
       sessionStorage.setItem('user', JSON.stringify(current));
     }

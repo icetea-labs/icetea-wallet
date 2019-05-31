@@ -7,6 +7,7 @@ import Layout from '../../layout/Layout';
 import { Icon } from '../../elements/utils';
 import Pagination from '../../elements/PaginationPro';
 import * as actions from '../../../store/actions/account';
+import notifi from '../../elements/Notification';
 
 const BotContent = styled.div`
   background: #232937;
@@ -219,7 +220,7 @@ class BotStore extends Component {
     const address = 'system.botstore';
     const contract = tweb3.contract(address);
     const arrbots = await contract.methods.query().call();
-    console.log('All Bot', arrbots);
+    // console.log('All Bot', arrbots);
     return arrbots;
   };
 
@@ -249,10 +250,16 @@ class BotStore extends Component {
   };
 
   connectBot = botAddress => {
-    const { privateKey, setNeedAuth } = this.props;
-    // show get password for get privatekey.
-    if (!privateKey) setNeedAuth(true);
+    const { privateKey, setNeedAuth, address } = this.props;
 
+    if (!address) {
+      notifi.warn('Please go to unlock wallet!');
+      return;
+    }
+    if (!privateKey) {
+      // show get password for get privatekey.
+      setNeedAuth(true);
+    }
     // show pu bot.
     this.setState({ isRunBot: true, botAddress });
     // return privateKey ? this.showBot(botAddress) : this.getKeyAndshowBot(botAddress);

@@ -155,6 +155,7 @@ class GetKeyFromSessionStorage extends PureComponent {
               if (account.privateKey) {
                 privateKey = utils.recoverAccountFromPrivateKey(account.privateKey, password, account.address);
               } else {
+                console.log('account.index', account.index);
                 ({ privateKey } = utils.recoverAccountFromMneomnic(mnemonic, account.index));
               }
               break;

@@ -43,11 +43,11 @@ class ByMnemonic extends PureComponent {
         });
         try {
           const resp = utils.recoverAccountFromMneomnic(mnemonic);
-          const { privateKey, address } = resp;
+          const { privateKey, address, index } = resp;
 
           // e.useDefaultSigningDelegate();
           // console.log('privateKey', privateKey);
-          props.unlock(privateKey, address, '', password, mnemonic);
+          props.unlock(privateKey, address, '', password, mnemonic, index);
         } catch (err) {
           this.setState({
             errMsg: err.message,

@@ -4,6 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
+import { codec, AccountType } from 'icetea-common';
 import { zIndex } from '../../constants/styles';
 import logo from '../../assets/img/logo.svg';
 import cancelblack from '../../assets/img/cancelblack.svg';
@@ -472,12 +473,18 @@ class Header extends PureComponent {
 
   _createAccount = async () => {
     const { mnemonic, indexKey, addNewAccount, setNeedAuth } = this.props;
+    // const indexTmp = indexKey + 1;
+    // let account = {};
     if (mnemonic) {
-      const account = utils.createAccountWithMneomnic(mnemonic, indexKey + 1);
+      // do {
+      //   indexTmp += 1;
+      //   account = utils.createAccountWithMneomnic(mnemonic, indexTmp);
+      // } while (!codec.isAddressType(account.address, AccountType.BANK_ACCOUNT));
+      const account = utils.recoverAccountFromMneomnic(mnemonic, indexKey + 1);
       const { balance } = await tweb3.getBalance(account.address);
       const childKey = {
-        indexKey: indexKey + 1,
         address: account.address,
+        indexKey: account.index,
         privateKey: '',
         balance,
         selected: false,
@@ -497,11 +504,11 @@ class Header extends PureComponent {
     const { mnemonic, childKey, setAccount } = this.props;
     const selectedAddress = childKey[index].address;
     let privateKey = '';
-    // console.log('aa', childKey[index].address);
+    // console.log('aa', index, childKey[index].index);
     if (mnemonic) {
-      ({ privateKey } = utils.recoverAccountFromMneomnic(mnemonic, index));
+      ({ privateKey } = utils.recoverAccountFromMneomnic(mnemonic, childKey[index].index));
     }
-
+    // console.log('privateKey', childKey[index].index, privateKey);
     setAccount({
       address: selectedAddress,
       privateKey,
@@ -519,7 +526,7 @@ class Header extends PureComponent {
   render() {
     const { confirmLogout, showMobileMenu } = this.state;
     const { className, bgColor, address, childKey, needAuth } = this.props;
-    console.log('render header');
+    // console.log('render header');
 
     const Menus = this._getMenus().map(el => {
       // console.log('Menus', el);
