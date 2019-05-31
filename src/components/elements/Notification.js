@@ -2,6 +2,7 @@ import React from 'react';
 import 'rc-notification/assets/index.css';
 import Notification from 'rc-notification';
 import iconSuccess from '../../assets/img/success-icon.png';
+import iconWarning from '../../assets/img/warning-icon.png';
 import { checkDevice } from './utils';
 
 let notification = null;
@@ -40,7 +41,7 @@ const notifi = {
           duration: '5',
           content: (
             <span className="notification">
-              <img src={iconSuccess} alt="" />
+              <img src={iconWarning} alt="" />
               {e}
             </span>
           ),
