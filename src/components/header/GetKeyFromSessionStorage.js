@@ -99,15 +99,15 @@ class GetKeyFromSessionStorage extends PureComponent {
     };
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     window.document.body.addEventListener('keydown', this._keydown);
-  };
+  }
 
-  componentWillUnmount = () => {
+  componentWillUnmount() {
     clearTimeout(this.timeoutHanle1);
     clearTimeout(this.timeoutHanle2);
     window.document.body.removeEventListener('keydown', this._keydown);
-  };
+  }
 
   _passwordChange = value => {
     this.setState({
@@ -150,8 +150,7 @@ class GetKeyFromSessionStorage extends PureComponent {
 
           for (let i = 0; i < userInfo.childKey.length; i += 1) {
             const account = userInfo.childKey[i];
-            console.log('account', account);
-            console.log('mnemonic', mnemonic);
+            // console.log('account', account);
             if (account.address === address) {
               if (account.privateKey) {
                 privateKey = utils.recoverAccountFromPrivateKey(account.privateKey, password, account.address);
@@ -171,7 +170,7 @@ class GetKeyFromSessionStorage extends PureComponent {
             this.setState({
               loading: false,
             });
-            triggerElement && triggerElement.click();
+            // triggerElement && triggerElement.click();
             this._close();
           }, 50);
         } catch (log) {
@@ -192,7 +191,7 @@ class GetKeyFromSessionStorage extends PureComponent {
   render() {
     const { needAuth } = this.props;
     const { errMsg, loading } = this.state;
-
+    // console.log('render password');
     return needAuth ? (
       <QueueAnim animConfig={{ opacity: [1, 0] }}>
         <WrapperPu key={1}>
@@ -235,7 +234,7 @@ const mapStateToProps = state => {
     needAuth: account.needAuth,
     address: account.address,
     encryptedData: account.encryptedData,
-    mnemonic: account.mnemonic,
+    // mnemonic: account.mnemonic,
   };
 };
 

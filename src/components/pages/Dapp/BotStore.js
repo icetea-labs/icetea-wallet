@@ -6,7 +6,6 @@ import tweb3 from '../../../service/tweb3';
 import Layout from '../../layout/Layout';
 import { Icon } from '../../elements/utils';
 import Pagination from '../../elements/PaginationPro';
-import GetKeyFromSessionStorage from '../../header/GetKeyFromSessionStorage';
 import * as actions from '../../../store/actions/account';
 
 const BotContent = styled.div`
@@ -198,7 +197,6 @@ class BotStore extends Component {
     super(props);
     this.state = {
       bots: [],
-      botStore: [],
       botFilter: [],
       isRunBot: false,
       botAddress: '',
@@ -214,7 +212,7 @@ class BotStore extends Component {
   setBotStore = async () => {
     const arrBot = await this.getBotList();
     const storeBots = await this.getBotInfo(arrBot);
-    this.setState({ bots: storeBots, botStore: storeBots });
+    this.setState({ bots: storeBots });
   };
 
   getBotList = async () => {
@@ -251,22 +249,27 @@ class BotStore extends Component {
   };
 
   connectBot = botAddress => {
-    const { privateKey } = this.props;
-    return privateKey ? this.showBotPu(botAddress) : this.getKeyFromSeasionStogae();
+    const { privateKey, setNeedAuth } = this.props;
+    // show get password for get privatekey.
+    if (!privateKey) setNeedAuth(true);
+
+    // show pu bot.
+    this.setState({ isRunBot: true, botAddress });
+    // return privateKey ? this.showBot(botAddress) : this.getKeyAndshowBot(botAddress);
   };
 
-  showBotPu = botAddress => {
-    this.setState({
-      isRunBot: true,
-      botAddress,
-    });
-  };
+  // showBot = botAddress => {
+  //   this.setState({
+  //     isRunBot: true,
+  //     botAddress,
+  //   });
+  // };
 
-  getKeyFromSeasionStogae = () => {
-    const { props } = this;
-    props.setNeedAuth(true);
-    this.setState({ isRunBot: false });
-  };
+  // getKeyAndshowBot = botAddress => {
+  //   const { props } = this;
+  //   props.setNeedAuth(true);
+  //   this.setState({ isRunBot: true, botAddress });
+  // };
 
   _onCloseBot = () => {
     this.setState({
@@ -398,11 +401,10 @@ class BotStore extends Component {
               )}
             </Wrap>
           </BotContainer>
-          {isRunBot && (
+          {isRunBot && privateKey && (
             <BotShow onClose={this._onCloseBot} botAddress={botAddress} address={address} privateKey={privateKey} />
           )}
         </BotContent>
-        {privateKey && <GetKeyFromSessionStorage />}
       </Layout>
     );
   }
