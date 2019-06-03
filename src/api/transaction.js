@@ -72,9 +72,9 @@ const transaction = {
       const conditionsByTo = `tx.to='${params.address}' AND tx.height > 0`;
       const conditionsByFrom = `tx.from='${params.address}' AND tx.height > 0`;
       // get by to address
-      const myTxsByTo = await tweb3.getPastEvents(eventName, systemAddr, conditionsByTo, params.options);
+      const myTxsByTo = await tweb3.getPastEvents(eventName, conditionsByTo, params.options);
       // get by from address
-      const myTxsByFrom = await tweb3.getPastEvents(eventName, systemAddr, conditionsByFrom, params.options);
+      const myTxsByFrom = await tweb3.getPastEvents(eventName, conditionsByFrom, params.options);
       const myTxs = myTxsByFrom.txs.concat(myTxsByTo.txs);
       let transactions = utils.fmtTxs(myTxs);
       transactions = await utils.addTimeToTx(transactions);
