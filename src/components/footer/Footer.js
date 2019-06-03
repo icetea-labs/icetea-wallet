@@ -1,29 +1,119 @@
-import React, { Component } from 'react';
-import './Footer.css';
+import React, { PureComponent } from 'react';
+import styled from 'styled-components';
 
-class Footer extends Component {
+import { zIndex } from '../../constants/styles';
+import { termOfService, forums, faq, telegram, twitter } from '../../config/networks';
+
+const FooterWapper = styled.div`
+  height: 50px;
+  line-height: 50px;
+  background: #12161c;
+  width: 100%;
+  color: #48515d;
+  display: flex;
+  font-size: 13px;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  z-index: ${zIndex.footer};
+  @media (max-width: 768px) {
+    justify-content: flex-start;
+    display: none;
+  }
+`;
+
+const LeftFooter = styled.ul`
+  display: flex;
+  margin-left: 90px;
+  li {
+    margin-right: 30px;
+  }
+  a {
+    color: inherit;
+    &:hover {
+      color: #f0b90b;
+    }
+  }
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const RightFooter = styled.div`
+  display: flex;
+  margin-right: 90px;
+  @media (max-width: 768px) {
+    margin-right: 0;
+    width: 100%;
+    justify-content: space-around;
+  }
+`;
+
+const CopyRight = styled.div`
+  margin-right: 5px;
+`;
+
+const SocialFooter = styled.ul`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  li {
+    margin-right: 5px;
+    a {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #212833;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      i {
+        color: #848e9c;
+      }
+      &:hover i {
+        color: #f0b90b;
+      }
+    }
+  }
+`;
+
+class Footer extends PureComponent {
   render() {
     return (
-      <div>
-        <div className="sc-cIShpX cGiNMj">
-          <ul className="sc-kafWEX cEyVCf" />
-          <div className="sc-feJyhm hlyVZS">
-            <div className="sc-iELTvK kJqula">© 2018 - 2019 Ice Tea. All rights reserved.</div>
-            <ul className="sc-cmTdod eNsIra">
-              <li>
-                <a href="https://icetea.io/" target="blank" rel="noopener">
-                  <i className="iconfont icon-telegram sc-dnqmqq caBmDY" size="14" color="" />
-                </a>
-              </li>
-              <li>
-                <a href="https://icetea.io/" target="blank" rel="noopener">
-                  <i className="iconfont icon-twitter sc-dnqmqq caBmDY" size="14" color="" />
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      <FooterWapper>
+        <LeftFooter>
+          <li>
+            <a href={termOfService} target="blank" rel="noopener">
+              Terms of Service
+            </a>
+          </li>
+          <li>
+            <a href={forums} target="blank" rel="noopener">
+              Forums
+            </a>
+          </li>
+          <li>
+            <a href={faq} target="blank" rel="noopener">
+              Docs / FAQ
+            </a>
+          </li>
+        </LeftFooter>
+        <RightFooter>
+          <CopyRight>© 2018 - 2019 Ice Tea. All rights reserved.</CopyRight>
+          <SocialFooter>
+            <li>
+              <a href={telegram} target="blank" rel="noopener">
+                <i className="iconfont icon-telegram" size="14" color="" />
+              </a>
+            </li>
+            <li>
+              <a href={twitter} target="blank" rel="noopener">
+                <i className="iconfont icon-twitter" size="14" color="" />
+              </a>
+            </li>
+          </SocialFooter>
+        </RightFooter>
+      </FooterWapper>
     );
   }
 }
