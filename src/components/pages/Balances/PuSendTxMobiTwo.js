@@ -43,7 +43,7 @@ const WrapperBtnCloseCus = styled(WrapperBtnClose)`
 class PuSendTxMobiTwo extends PureComponent {
   _keydown = e => {
     const { cancel } = this.props;
-    27 === e.keyCode && cancel();
+    e.keyCode === 27 && cancel();
   };
 
   componentDidMount = () => {
@@ -86,8 +86,8 @@ class PuSendTxMobiTwo extends PureComponent {
 PuSendTxMobiTwo.defaultProps = {
   okText: '',
   cancelText: '',
-  confirm: function() {},
-  cancel: function() {},
+  confirm() {},
+  cancel() {},
   children: null,
 };
 

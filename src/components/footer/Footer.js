@@ -11,12 +11,12 @@ class Footer extends Component {
             <div className="sc-iELTvK kJqula">© 2018 - 2019 Ice Tea. All rights reserved.</div>
             <ul className="sc-cmTdod eNsIra">
               <li>
-                <a href="https://t.me/BinanceDEXchange " target="blank" rel="noopener">
+                <a href="https://icetea.io/" target="blank" rel="noopener">
                   <i className="iconfont icon-telegram sc-dnqmqq caBmDY" size="14" color="" />
                 </a>
               </li>
               <li>
-                <a href="https://www.twitter.com/binance_dex" target="blank" rel="noopener">
+                <a href="https://icetea.io/" target="blank" rel="noopener">
                   <i className="iconfont icon-twitter sc-dnqmqq caBmDY" size="14" color="" />
                 </a>
               </li>

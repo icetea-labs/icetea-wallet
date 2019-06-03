@@ -47,7 +47,7 @@ class index extends PureComponent {
   componentWillReceiveProps(nextProps) {
     // this.getHistory();
     const { address } = this.props;
-    // console.log('address', address, '--', prevProps.address);
+    console.log('address', address, '--', nextProps.address);
     if (address !== nextProps.address) {
       this.getHistory(nextProps.address);
     }
