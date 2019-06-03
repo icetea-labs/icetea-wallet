@@ -13,3 +13,4 @@ export const faq = 'https://icetea.io/';
 export const forums = 'https://icetea.io/';
 export const mainnet = 'https://icetea.io/';
 export const testnet = 'https://icetea.io/';
+export const iteaScan = 'http://localhost:3006';

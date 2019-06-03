@@ -7,6 +7,7 @@ import Table from '../../elements/TablePro';
 import * as actions from '../../../store/actions/transaction';
 import Layout from '../../layout';
 // import TxHash from './TxHash';
+
 import {
   Wrapper,
   Content,
