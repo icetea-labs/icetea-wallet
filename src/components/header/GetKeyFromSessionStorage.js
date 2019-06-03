@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import QueueAnim from 'rc-queue-anim';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import tweb3 from '../../service/tweb3';
 
 import * as actions from '../../store/actions/account';
 import { zIndex } from '../../constants/styles';
@@ -167,11 +168,15 @@ class GetKeyFromSessionStorage extends PureComponent {
             cipher: password,
           });
 
+          // Set default account
+          tweb3.wallet.importAccount(privateKey);
+          tweb3.wallet.defaultAccount = address;
+
           this.timeoutHanle2 = setTimeout(() => {
             this.setState({
               loading: false,
             });
-            // triggerElement && triggerElement.click();
+            triggerElement && triggerElement.click();
             this._close();
           }, 50);
         } catch (log) {

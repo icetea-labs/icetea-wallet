@@ -4,7 +4,6 @@ import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import { codec, AccountType } from 'icetea-common';
 import { zIndex } from '../../constants/styles';
 import logo from '../../assets/img/logo.svg';
 import cancelblack from '../../assets/img/cancelblack.svg';
@@ -509,10 +508,18 @@ class Header extends PureComponent {
       ({ privateKey } = utils.recoverAccountFromMneomnic(mnemonic, childKey[index].index));
     }
     // console.log('privateKey', childKey[index].index, privateKey);
+
     setAccount({
       address: selectedAddress,
       privateKey,
     });
+
+    if (privateKey) {
+      // Set default account
+      tweb3.wallet.importAccount(privateKey);
+      tweb3.wallet.defaultAccount = selectedAddress;
+    }
+
     let current = sessionStorage.getItem('user');
     if (!current) {
       current = {};

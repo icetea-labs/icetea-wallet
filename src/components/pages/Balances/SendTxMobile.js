@@ -227,7 +227,7 @@ class SendTxMobile extends PureComponent {
 
   _setMaxValue = () => {
     const { state } = this;
-    let t = state.availableBalance;
+    const t = state.availableBalance;
     this.setState({
       amount: t,
     });
@@ -235,7 +235,7 @@ class SendTxMobile extends PureComponent {
 
   _amountChange = e => {
     // const { props } = this;
-    if ('' !== e) {
+    if (e !== '') {
       e = parseFloat(e);
       // const a = props.transferFee;
       // e -= a;
@@ -250,10 +250,8 @@ class SendTxMobile extends PureComponent {
   };
 
   _memoChange = e => {
-    var t = e.currentTarget.value;
-    this.setState({
-      memo: t,
-    });
+    const memo = e.currentTarget.value;
+    this.setState({ memo });
   };
 
   _showSend = () => {
@@ -264,8 +262,7 @@ class SendTxMobile extends PureComponent {
     }
 
     try {
-      let rs = ecc.validateAddress(to);
-      // console.log('acc CK', rs);
+      ecc.validateAddress(to);
     } catch {
       notifi.warn('invalid address');
       return;
@@ -296,7 +293,7 @@ class SendTxMobile extends PureComponent {
 
     tweb3.wallet.importAccount(privateKey);
     // console.log('privateKey', privateKey);
-    let balanceofVip = await tweb3.getBalance(address);
+    const balanceofVip = await tweb3.getBalance(address);
     // console.log('CK login balance:', balanceofVip);
     const amountToUnit = toUNIT(parseFloat(amount));
     // console.log('CK amount:', amountToUnit);
@@ -338,11 +335,11 @@ class SendTxMobile extends PureComponent {
                 <DivSelectWordBase align="center" justify="space-between">
                   <p className="fee">
                     Fee
-                    <span>{transferFee + ' ITEA'}</span>
+                    <span>{`${transferFee} ITEA`}</span>
                   </p>
                   <p className="fee">
                     Available
-                    <span>{' ' + availableBalance}</span>
+                    <span>{` ${availableBalance}`}</span>
                   </p>
                 </DivSelectWordBase>
                 <Button onClick={this._showSend} loading={isSending} width="100%">
@@ -379,7 +376,7 @@ class SendTxMobile extends PureComponent {
                   <div className="row">
                     <div className="title">Fee:</div>
                     <div className="value">
-                      <span>{transferFee + '  ITEA'}</span>
+                      <span>{`${transferFee}  ITEA`}</span>
                     </div>
                   </div>
                 </SendTxTwoWrapper>
@@ -396,7 +393,7 @@ class SendTxMobile extends PureComponent {
 SendTxMobile.defaultProps = {
   balance: {},
   history: {},
-  send: function() {},
+  send() {},
   address: '',
   privateKey: '',
   tokens: [],
