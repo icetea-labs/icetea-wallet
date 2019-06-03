@@ -7,6 +7,7 @@ import Table from '../../elements/TablePro';
 import * as actions from '../../../store/actions/transaction';
 import Layout from '../../layout';
 // import TxHash from './TxHash';
+
 import {
   Wrapper,
   Content,
@@ -47,7 +48,7 @@ class index extends PureComponent {
   componentWillReceiveProps(nextProps) {
     // this.getHistory();
     const { address } = this.props;
-    // console.log('address', address, '--', prevProps.address);
+    // console.log('address', address, '--', nextProps.address);
     if (address !== nextProps.address) {
       this.getHistory(nextProps.address);
     }

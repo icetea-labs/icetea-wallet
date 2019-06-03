@@ -9,7 +9,11 @@ export const node = {
 }[currentServer];
 export const network = window.localStorage.getItem('network') || node[0];
 export const explorer = 'https://icetea.io/';
+export const termOfService = 'https://icetea.io/';
 export const faq = 'https://icetea.io/';
 export const forums = 'https://icetea.io/';
+export const telegram = 'https://icetea.io/';
+export const twitter = 'https://icetea.io/';
 export const mainnet = 'https://icetea.io/';
 export const testnet = 'https://icetea.io/';
+export const iteaScan = 'http://localhost:3006';

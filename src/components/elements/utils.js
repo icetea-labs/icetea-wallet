@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { zIndex } from '../../constants/styles';
+import { iteaScan } from '../../config/networks';
 // For create keystore
 export const Header1 = styled.div`
   font-size: 24px;
   font-weight: bold;
-  margin-top: 10px;
+  margin-top: 10px;}
   padding-bottom: 18px;
   text-align: center;
   font-family: DIN;
@@ -496,9 +497,11 @@ const HashLoading = styled.div`
 `;
 export class TxHash extends PureComponent {
   _gotoExplorer = () => {
-    // const e = this.props.hash;
-    // window.open("".concat(f.a, "/tx/").concat(e), "blank");
+    const { props } = this;
+    const e = props.hash;
+    window.open(''.concat(iteaScan, '/tx/').concat(e), 'blank');
   };
+
   render() {
     const { hash, width } = this.props;
     return (
