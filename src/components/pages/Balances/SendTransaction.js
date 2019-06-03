@@ -46,7 +46,7 @@ class SendTransaction extends PureComponent {
     console.log('CK login balance:', balanceofVip);
     const amountToUnit = toUNIT(parseFloat(amount));
     console.log('CK amount:', amountToUnit);
-    await tweb3.transfer(to, amountToUnit);
+    await tweb3.transfer(to, amountToUnit, address);
     notifi.info('Success! Transaction broadcasted.');
 
     props.onSendSuccess();
