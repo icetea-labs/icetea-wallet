@@ -47,9 +47,10 @@ class index extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     // this.getHistory();
-    const { address } = this.props;
+    const { address, balance } = this.props;
+    // console.log('balance', balance, '--', nextProps.balance);
     // console.log('address', address, '--', nextProps.address);
-    if (address !== nextProps.address) {
+    if (address !== nextProps.address || balance !== nextProps.balance) {
       this.getHistory(nextProps.address);
     }
   }
@@ -304,12 +305,13 @@ index.defaultProps = {
 };
 
 const mapStateToProps = state => {
-  const { address } = state.account;
+  const { address, balance } = state.account;
   const { transactionHistory } = state.transaction;
   return {
     transactionHistory: transactionHistory.tx,
     total: transactionHistory.total,
     address,
+    balance,
     isFetching: state.transaction.isFetching,
   };
 };

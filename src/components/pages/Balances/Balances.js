@@ -229,21 +229,21 @@ const AvaiWrapper = styled.div`
 `;
 
 class Balances extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       showSend: false,
       showTbl: [],
       showMbTbl: [],
       showMobileCode: false,
       showSendMobi: false,
+      balanceState: '',
     };
   }
 
-  componentWillMount() {
-    this.renderTbl();
-    this.renderMobileTbl();
-  }
+  componentWillMount = async () => {
+    checkDevice.isMobile() ? this.renderMobileTbl() : this.renderTbl();
+  };
 
   componentWillReceiveProps(nextProps) {
     const { address } = this.props;
@@ -302,7 +302,9 @@ class Balances extends Component {
   renderTbl = async addr => {
     try {
       const { address } = this.props;
-      // const address = user.address;
+      if (!address) {
+        return;
+      }
       const result = await tweb3.getBalance(addr || address);
       const tblTmp = [
         {
@@ -312,6 +314,7 @@ class Balances extends Component {
           availableBalance: toTEA(result.balance),
         },
       ];
+
       this.setState({
         showTbl: tblTmp.map((data, index) => (
           <tr key={index}>
@@ -340,6 +343,7 @@ class Balances extends Component {
             </td>
           </tr>
         )),
+        balanceState: result.balance,
       });
     } catch (err) {
       // console.log(err);
@@ -349,7 +353,6 @@ class Balances extends Component {
   renderMobileTbl = async () => {
     try {
       const { privateKey, address } = this.props;
-      // const address = user.address;
       const result = await tweb3.getBalance(address);
       const tblTmp = [
         {
@@ -404,7 +407,6 @@ class Balances extends Component {
     const { props } = this;
     const { showSend, sendingAsset, showTbl, showMobileCode, showMbTbl, showSendMobi } = this.state;
     const { privateKey, address } = this.props;
-    // console.log('CHECK render', props.address);
     return (
       <div>
         <MobileWrapper>
@@ -502,7 +504,7 @@ class Balances extends Component {
                   <SendTransaction
                     onSendSuccess={this.renderTbl}
                     bncClient=""
-                    assets={props._buildBalances}
+                    assets={props.buildBalances}
                     privateKey={privateKey}
                     sendingAsset={sendingAsset}
                     // address={user.address}
@@ -513,9 +515,7 @@ class Balances extends Component {
                   />
                 )}
               </div>
-              <div>
-                <TransactionHistory />
-              </div>
+              <div>{<TransactionHistory />}</div>
             </div>
           </NotMobileWrapper>
         </Layout>
@@ -546,6 +546,7 @@ const mapStateToProps = state => {
     userInfo: account.userInfo,
     privateKey: account.privateKey,
     address: account.address,
+    balance: account.balance,
   };
 };
 const mapDispatchToProps = dispatch => {
