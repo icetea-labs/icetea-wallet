@@ -39,8 +39,10 @@ const FooterUpper = styled.div`
 
 class FooterCus extends PureComponent {
   goHome = () => {
-    this.props.history.push('/home');
+    const { props } = this;
+    props.history.push('/home');
   };
+
   render() {
     return (
       <FooterWrapper>
