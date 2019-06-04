@@ -237,7 +237,6 @@ class Balances extends Component {
       showMbTbl: [],
       showMobileCode: false,
       showSendMobi: false,
-      balanceState: '',
     };
   }
 
@@ -343,7 +342,6 @@ class Balances extends Component {
             </td>
           </tr>
         )),
-        balanceState: result.balance,
       });
     } catch (err) {
       // console.log(err);
