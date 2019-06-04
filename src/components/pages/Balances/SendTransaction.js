@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import QueueAnim from 'rc-queue-anim';
+import { connect } from 'react-redux';
 
 import { WrapperSend, OutBox, Title, WrapperTab, DisplayTab, Tab, ButtonCus } from './StyledTransaction';
 import { ButtonWrapper } from './StyledSTOne';
@@ -10,6 +11,7 @@ import SendTransactionTwo from './SendTransactionTwo';
 import { Button } from '../../elements/Button';
 import tweb3 from '../../../service/tweb3';
 import { toUNIT } from '../../../utils/utils';
+import * as actions from '../../../store/actions/account';
 
 class SendTransaction extends PureComponent {
   constructor(props) {
@@ -30,8 +32,6 @@ class SendTransaction extends PureComponent {
   _gotoStepOne = () => {
     this.setState({
       step: 'one',
-      amount: this.state.amount,
-      memo: this.state.memo,
     });
   };
 
@@ -41,13 +41,27 @@ class SendTransaction extends PureComponent {
     const { privateKey, address } = this.props;
 
     tweb3.wallet.importAccount(privateKey);
-    console.log('privateKey', privateKey);
-    const balanceofVip = await tweb3.getBalance(address);
-    console.log('CK login balance:', balanceofVip);
+    // console.log('privateKey', privateKey);
+    await tweb3.getBalance(address);
+    // console.log('CK login balance:', balanceofVip);
     const amountToUnit = toUNIT(parseFloat(amount));
-    console.log('CK amount:', amountToUnit);
+    // console.log('CK amount:', amountToUnit);
     await tweb3.transfer(to, amountToUnit, address);
     notifi.info('Success! Transaction broadcasted.');
+
+    // update balance of all child
+    const { childKey, setBalanceChildKey, setAccount } = this.props;
+    const childKeyTmp = [];
+    for (let i = 0; i < childKey.length; i += 1) {
+      const { balance } = await tweb3.getBalance(childKey[i].address);
+      childKey[i].balance = balance;
+      childKeyTmp.push(childKey[i]);
+    }
+    setBalanceChildKey(childKeyTmp);
+
+    const blAfterTran = await tweb3.getBalance(address);
+    // console.log('CK login balance After:', blAfterTran);
+    setAccount({ balance: blAfterTran.balance });
 
     props.onSendSuccess();
     props.close();
@@ -56,7 +70,6 @@ class SendTransaction extends PureComponent {
   render() {
     const { step, to, amount, asset, memo, isSending } = this.state;
     const { close, assets, address, bncClient, sendingAsset } = this.props;
-    console.log('Send Transaction State CK', this.state);
     return (
       <QueueAnim animConfig={{ opacity: [1, 0] }}>
         <WrapperSend key={1}>
@@ -124,4 +137,28 @@ SendTransaction.defaultProps = {
   sendingAsset: {},
 };
 
-export default SendTransaction;
+const mapStateToProps = state => {
+  const { account } = state;
+  return {
+    userInfo: account.userInfo,
+    privateKey: account.privateKey,
+    address: account.address,
+    balance: account.balance,
+    childKey: account.childKey,
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    setAccount: data => {
+      dispatch(actions.setAccount(data));
+    },
+    setBalanceChildKey: data => {
+      dispatch(actions.setBalanceChildKey(data));
+    },
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SendTransaction);

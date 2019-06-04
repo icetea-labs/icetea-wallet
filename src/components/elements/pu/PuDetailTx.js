@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import QueueAnim from 'rc-queue-anim';
 import styled from 'styled-components';
 import { PuLayout, Icon, FontDin } from '../utils';
@@ -61,103 +61,101 @@ const WrapperClose = styled.div`
   }
 `;
 
-function popupwindow(url, title, w, h) {
-  const left = window.screen.width / 2 - w / 2;
-  const top = window.screen.height / 2 - h / 2;
-  return window.open(
-    url,
-    title,
-    `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${w}, height=${h}, top=${top}, left=${left}`
-  );
-}
-
-function txHashDetail(event) {
-  const url = `${iteaScan}/tx/${event}`;
-  popupwindow(url, 'title', 800, 600);
-}
-
-function blockDetail(event) {
-  const url = `${iteaScan}/block/${event}`;
-  popupwindow(url, 'title', 800, 600);
-}
-
-function PuDetailTx(props) {
-  const { detail, close } = props;
-  console.log('Detail', detail);
-  return (
-    <QueueAnim animConfig={{ opacity: [1, 0] }}>
-      <PuLayout key={1}>
-        <QueueAnim delay={100} type={['top', 'bottom']}>
-          <Container key={2}>
-            <Title>Transaction History</Title>
-            <Content>
-              <Row>
-                <div className="title">Tx Hash:</div>
-                <div className="value">
-                  <a
-                    href="#"
-                    rel="noopener"
-                  >
-                    {detail.txHash}
-                  </a>
-                </div>
-              </Row>
-              <Row>
-                <div className="title">Block#:</div>
-                <div className="value">
-                  <a href="#" rel="noopener">
-                    {detail.blockHeight}
-                  </a>
-                </div>
-              </Row>
-              <Row>
-                <div className="title">To:</div>
-                <div className="value">
-                  <a href="#" rel="noopener">
-                    {detail.toAddr}
-                  </a>
-                </div>
-              </Row>
-              <Row>
-                <div className="title">From:</div>
-                <div className="value">
-                  <a href="#" rel="noopener">
-                    {detail.fromAddr}
-                  </a>
-                </div>
-              </Row>
-              <Row>
-                <div className="title">Confirm Time:</div>
-                <div className="value">
-                  <FontDin value={detail.date} />
-                </div>
-              </Row>
-              <Row>
-                <div className="title">Amount:</div>
-                <div className="value">
-                  <FontDin value={detail.value} />
-                </div>
-              </Row>
-              <Row>
-                <div className="title">Fee:</div>
-                <div className="value">
-                  <FontDin value={detail.txFee} />
-                </div>
-              </Row>
-            </Content>
-            <WrapperClose onClick={close}>
-              <Icon type="close" size="18" />
-            </WrapperClose>
-          </Container>
-        </QueueAnim>
-      </PuLayout>
-    </QueueAnim>
-  );
+class PuDetailTx extends PureComponent {
+  render() {
+    const { detail, close } = this.props;
+    return (
+      <QueueAnim animConfig={{ opacity: [1, 0] }}>
+        <PuLayout key={1}>
+          <QueueAnim delay={100} type={['top', 'bottom']}>
+            <Container key={2}>
+              <Title>Transaction History</Title>
+              <Content>
+                <Row>
+                  <div className="title">Tx Hash:</div>
+                  <div className="value">
+                    <a
+                      style={{ display: 'table-cell' }}
+                      href={`${iteaScan}/tx/${detail.txHash}`}
+                      rel="noopener"
+                      target="blank"
+                    >
+                      {detail.txHash}
+                    </a>
+                  </div>
+                </Row>
+                <Row>
+                  <div className="title">Block#:</div>
+                  <div className="value">
+                    <a
+                      style={{ display: 'table-cell' }}
+                      href={`${iteaScan}/block/${detail.blockHeight}`}
+                      rel="noopener"
+                      target="blank"
+                    >
+                      {detail.blockHeight}
+                    </a>
+                  </div>
+                </Row>
+                <Row>
+                  <div className="title">To:</div>
+                  <div className="value">
+                    <a
+                      style={{ display: 'table-cell' }}
+                      href={`${iteaScan}/contract/${detail.toAddr}`}
+                      rel="noopener"
+                      target="blank"
+                    >
+                      {detail.toAddr}
+                    </a>
+                  </div>
+                </Row>
+                <Row>
+                  <div className="title">From:</div>
+                  <div className="value">
+                    <a
+                      style={{ display: 'table-cell' }}
+                      href={`${iteaScan}/contract/${detail.fromAddr}`}
+                      rel="noopener"
+                      target="blank"
+                    >
+                      {detail.fromAddr}
+                    </a>
+                  </div>
+                </Row>
+                <Row>
+                  <div className="title">Confirm Time:</div>
+                  <div className="value">
+                    <FontDin value={detail.date} />
+                  </div>
+                </Row>
+                <Row>
+                  <div className="title">Amount:</div>
+                  <div className="value">
+                    <FontDin value={detail.value} />
+                  </div>
+                </Row>
+                <Row>
+                  <div className="title">Fee:</div>
+                  <div className="value">
+                    <FontDin value={detail.txFee} />
+                  </div>
+                </Row>
+              </Content>
+              <WrapperClose onClick={close}>
+                <Icon type="close" size="18" />
+              </WrapperClose>
+            </Container>
+          </QueueAnim>
+        </PuLayout>
+      </QueueAnim>
+    );
+  }
 }
 
 PuDetailTx.defaultProps = {
   detail: {},
-  close: function() {},
+  close() {},
 };
 
 export default PuDetailTx;

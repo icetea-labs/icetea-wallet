@@ -35,20 +35,9 @@ const WrapperTwo = styled(Wrapper)`
   }
 `;
 
-const WrapperClose = styled.div`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  cursor: pointer;
-  color: #848e9c;
-  &:hover {
-    color: #f0b90b;
-  }
-`;
-
 class SendTransactionTwo extends PureComponent {
   render() {
-    const { asset, to, from, amount, memo } = this.props;
+    const { to, from, amount, memo } = this.props;
     return (
       <div>
         <Title>

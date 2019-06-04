@@ -6,6 +6,7 @@ const initialState = Object.assign(
     address: '',
     cipher: '',
     privateKey: '',
+    balance: '',
     keyStore: '',
     mnemonic: '',
     encryptedData: '',

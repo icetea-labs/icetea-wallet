@@ -174,9 +174,9 @@ class SendTransactionOne extends PureComponent {
 
   render() {
     const { to, amount, asset, memo, amountErr, addressErr, memoErr, availableBalance } = this.state;
-    const e = this._genAssetsOptions();
+    const genAsset = this._genAssetsOptions();
     const u =
-      e.find(e => {
+      genAsset.find(e => {
         return e.value === asset.asset;
       }) || {};
 
