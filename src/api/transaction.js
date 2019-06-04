@@ -3,6 +3,7 @@ import { ecc } from 'icetea-common';
 import dateFormat from 'dateformat';
 import tweb3 from '../service/tweb3';
 import { toTEA } from '../utils/utils';
+
 const utils = {
   fmtTxs: txs => {
     Object.keys(txs).forEach(k => {
@@ -11,7 +12,7 @@ const utils = {
       t.blockHeight = t.height;
 
       const data = decodeTX(t.tx);
-      let from = data.from;
+      let { from } = data;
       if (!from) {
         const pubkey = data.evidence.pubkey || data.evidence[0].pubkey;
         from = ecc.toAddress(pubkey);
@@ -67,8 +68,8 @@ const utils = {
 const transaction = {
   getTxHistory(params) {
     return new Promise(async resolve => {
-      const systemAddr = 'system';
-      let eventName = 'Transferred';
+      // const systemAddr = 'system';
+      const eventName = 'Transferred';
       const conditionsByTo = `tx.to='${params.address}' AND tx.height > 0`;
       const conditionsByFrom = `tx.from='${params.address}' AND tx.height > 0`;
       // get by to address
