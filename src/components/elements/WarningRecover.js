@@ -93,7 +93,7 @@ class WarningRecover extends PureComponent {
 
   static defaultProps = {
     defaultChecked: false,
-    handleCheckChange: function() {},
+    handleCheckChange() {},
   };
 
   render() {

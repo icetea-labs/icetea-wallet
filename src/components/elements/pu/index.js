@@ -1,1 +1,1 @@
-export { default } from './PuDetailTx.js'
+export { default } from './PuDetailTx';

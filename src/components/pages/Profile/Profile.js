@@ -3,7 +3,6 @@ import Select from 'react-select';
 import { connect } from 'react-redux';
 import BaseLayout from '../../layout/BaseLayout';
 import tweb3 from '../../../service/tweb3';
-import { utils } from '../../../utils/utils';
 import notifi from '../../elements/Notification';
 import {
   Container,

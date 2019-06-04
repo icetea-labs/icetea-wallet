@@ -167,11 +167,13 @@ const GuideWrapper = styled.ul`
 
 class Home extends Component {
   gotoTrade = () => {
-    this.props.history.push('/unlock');
+    const { props } = this;
+    props.history.push('/unlock');
   };
 
   gotoCreate = () => {
-    this.props.history.push('/create');
+    const { props } = this;
+    props.history.push('/create');
   };
 
   render() {

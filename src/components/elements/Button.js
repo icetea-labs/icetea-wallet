@@ -8,7 +8,7 @@ class Button extends PureComponent {
   };
 
   render() {
-    var { disabled, children, loading, width, height } = this.props;
+    const { disabled, children, loading, width, height } = this.props;
     return (
       <>
         {disabled ? (
@@ -26,7 +26,7 @@ class Button extends PureComponent {
 Button.defaultProps = {
   disabled: false,
   loading: false,
-  onClick: function() {},
+  onClick() {},
   children: null,
   width: '',
   height: '',

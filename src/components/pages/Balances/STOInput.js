@@ -71,12 +71,14 @@ export default class STOInput extends PureComponent {
   }
 
   _getDecimal = e => {
-    return this.props.type !== 'number' ? 0 : e && e.includes('.') ? e.split('.')[1].length : 0;
+    const { type } = this.props;
+    return type !== 'number' ? 0 : e && e.includes('.') ? e.split('.')[1].length : 0;
   };
 
   _textChange = e => {
-    var stateValue = this.state.value;
-    var value = e.currentTarget.value.trim();
+    const { state, props } = this;
+    let stateValue = state.value;
+    const value = e.currentTarget.value.trim();
 
     if (this._getDecimal(value) <= 8) {
       stateValue = value;
@@ -85,13 +87,14 @@ export default class STOInput extends PureComponent {
       {
         value: stateValue,
       },
-      () => this.props.onChange(stateValue)
+      () => props.onChange(stateValue)
     );
   };
 
   componentDidUpdate = preProps => {
-    const t = this.props.defaultValue;
-    const n = this.state.value;
+    const { props, state } = this;
+    const t = props.defaultValue;
+    const n = state.value;
     preProps.defaultValue !== t &&
       parseFloat(n) !== parseFloat(t) &&
       this.setState({
@@ -99,18 +102,19 @@ export default class STOInput extends PureComponent {
       });
   };
 
-  _clear = e => {
+  _clear = () => {
+    const { props } = this;
     this.setState(
       {
         value: '',
       },
-      () => this.props.onChange('', false)
+      () => props.onChange('', false)
     );
   };
 
   render() {
-    var { value } = this.state;
-    var { title, defaultValue, type, autoFocus } = this.props;
+    const { value } = this.state;
+    const { title, defaultValue, type, autoFocus } = this.props;
 
     return (
       <InputLabel>
@@ -130,7 +134,7 @@ export default class STOInput extends PureComponent {
 }
 
 STOInput.defaultProps = {
-  onChange: function() {},
+  onChange() {},
   title: '',
   type: 'text',
   value: '',
