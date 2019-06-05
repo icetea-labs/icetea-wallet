@@ -20,6 +20,7 @@ class SendTransaction extends PureComponent {
       asset: null,
       to: '',
       step: 'one',
+      isSending: false,
       // amount: '',
       // memo: '',
     };
@@ -39,6 +40,10 @@ class SendTransaction extends PureComponent {
     const { props } = this;
     const { amount, to } = this.state;
     const { privateKey, address } = this.props;
+
+    this.setState({
+      isSending: true,
+    });
 
     tweb3.wallet.importAccount(privateKey);
     // console.log('privateKey', privateKey);
