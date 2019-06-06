@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import BotShow from './BotShow';
 import tweb3 from '../../../service/tweb3';
-import Layout from '../../layout/Layout';
 import { Icon } from '../../elements/utils';
 import Pagination from '../../elements/PaginationPro';
 import * as actions from '../../../store/actions/account';
@@ -381,38 +380,36 @@ class BotStore extends Component {
     const { address, privateKey } = this.props;
     const total = bots.length;
     return (
-      <Layout>
-        <BotContent>
-          <BotContainer>
-            <WrapFilter>
-              <Icon type="search" />
-              <input type="text" onChange={this.botStoreChange} placeholder="Filtered by name" />
-            </WrapFilter>
-            <CategoryTitle>All Store Bots</CategoryTitle>
-            <Wrap>
-              {botFilter.length > 0 ? (
-                this.showFilterBots()
-              ) : (
-                <div>
-                  <div className="botslist">{this.showBots()}</div>
-                  <Pagination
-                    showQuickJumper
-                    showSizeChanger
-                    defaultPageSize={pageSize}
-                    defaultCurrent={current}
-                    onShowSizeChange={this.onShowSizeChange}
-                    onChange={this.onChange}
-                    total={total}
-                  />
-                </div>
-              )}
-            </Wrap>
-          </BotContainer>
-          {isRunBot && privateKey && (
-            <BotShow onClose={this._onCloseBot} botAddress={botAddress} address={address} privateKey={privateKey} />
-          )}
-        </BotContent>
-      </Layout>
+      <BotContent>
+        <BotContainer>
+          <WrapFilter>
+            <Icon type="search" />
+            <input type="text" onChange={this.botStoreChange} placeholder="Filtered by name" />
+          </WrapFilter>
+          <CategoryTitle>All Store Bots</CategoryTitle>
+          <Wrap>
+            {botFilter.length > 0 ? (
+              this.showFilterBots()
+            ) : (
+              <div>
+                <div className="botslist">{this.showBots()}</div>
+                <Pagination
+                  showQuickJumper
+                  showSizeChanger
+                  defaultPageSize={pageSize}
+                  defaultCurrent={current}
+                  onShowSizeChange={this.onShowSizeChange}
+                  onChange={this.onChange}
+                  total={total}
+                />
+              </div>
+            )}
+          </Wrap>
+        </BotContainer>
+        {isRunBot && privateKey && (
+          <BotShow onClose={this._onCloseBot} botAddress={botAddress} address={address} privateKey={privateKey} />
+        )}
+      </BotContent>
     );
   }
 }
