@@ -479,22 +479,40 @@ class Balances extends Component {
                     </div>
                   </div>
                 </div>
-                {showSend && privateKey && (
-                  <SendTransaction
-                    onSendSuccess={this.renderTbl}
-                    bncClient=""
-                    assets={props.buildBalances}
-                    privateKey={privateKey}
-                    sendingAsset={sendingAsset}
-                    // address={user.address}
-                    address={address}
-                    // account_number={user.account_number}
-                    // sequence={parseInt(user.sequence, 10)}
-                    close={this._closeSendModal}
-                  />
-                )}
+                <div>
+                  <div className="sc-hvvHee cOshIS">
+                    <table className="sc-fQejPQ sc-cPuPxo dcZana">
+                      <thead className="sc-eSePXt byspTh">
+                        <tr>
+                          <th>Asset</th>
+                          <th>Name</th>
+                          <th>Total Balance</th>
+                          <th>Available Balance</th>
+                          <th />
+                        </tr>
+                      </thead>
+                      <tbody className="sc-fvLVrH gjcHsq">{showTbl}</tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-              <div>{<TransactionHistory />}</div>
+              {showSend && privateKey && (
+                <SendTransaction
+                  onSendSuccess={this.renderTbl}
+                  bncClient=""
+                  assets={props.buildBalances}
+                  privateKey={privateKey}
+                  sendingAsset={sendingAsset}
+                  // address={user.address}
+                  address={address}
+                  // account_number={user.account_number}
+                  // sequence={parseInt(user.sequence, 10)}
+                  close={this._closeSendModal}
+                />
+              )}
+            </div>
+            <div>
+              <TransactionHistory />
             </div>
           </div>
         </NotMobileWrapper>
