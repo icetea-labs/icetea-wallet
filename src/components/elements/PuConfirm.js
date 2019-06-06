@@ -38,7 +38,7 @@ const WrapperBtnCloseCus = styled(WrapperBtnClose)`
   line-height: 20px;
 `;
 
-class PuConfirmMnemonic extends PureComponent {
+class PuConfirm extends PureComponent {
   render() {
     const { confirm, cancel, cancelText, okText, children } = this.props;
     return (
@@ -66,7 +66,7 @@ class PuConfirmMnemonic extends PureComponent {
   }
 }
 
-PuConfirmMnemonic.defaultProps = {
+PuConfirm.defaultProps = {
   okText: '',
   cancelText: '',
   confirm() {},
@@ -74,5 +74,5 @@ PuConfirmMnemonic.defaultProps = {
   children: null,
 };
 
-export { PuConfirmMnemonic };
-export default PuConfirmMnemonic;
+export { PuConfirm };
+export default PuConfirm;

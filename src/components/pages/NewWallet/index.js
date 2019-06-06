@@ -15,7 +15,7 @@ import pencil from '../../../assets/img/pencil.svg';
 import logo from '../../../assets/img/logo.svg';
 
 import { Header1 } from '../../elements/utils';
-import { PuConfirmMnemonic, PuShowPrivateKey } from '../../elements';
+import { PuConfirm, PuShowPrivateKey } from '../../elements';
 
 import FooterCus from '../FooterCus';
 
@@ -149,12 +149,12 @@ class index extends PureComponent {
         </QueueAnim>
         {showPrivateKey && <PuShowPrivateKey privateKey={privateKey} close={this._closeModal} />}
         {confirmMnemonic && (
-          <PuConfirmMnemonic okText="Yes" cancelText="Go Back" confirm={this._continue} cancel={this._hide}>
+          <PuConfirm okText="Yes" cancelText="Go Back" confirm={this._continue} cancel={this._hide}>
             <WrapperImgPencil>
               <img src={pencil} alt="" />
               <p>Are you sure you have noted down your Mnemonic Phrase?</p>
             </WrapperImgPencil>
-          </PuConfirmMnemonic>
+          </PuConfirm>
         )}
       </div>
       // </ThemeProvider>
