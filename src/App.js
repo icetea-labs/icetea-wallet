@@ -3,9 +3,23 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { connect } from 'react-redux';
 
+import Layout from './components/layout';
 import routes from './router';
 import { theme } from './constants/styles';
 import { GlobaLoading } from './components/elements';
+
+const RouteLayout = ({ component: Component, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={matchProps => (
+        <Layout>
+          <Component {...matchProps} />
+        </Layout>
+      )}
+    />
+  );
+};
 
 class App extends PureComponent {
   componentDidMount() {
@@ -17,14 +31,23 @@ class App extends PureComponent {
     window.removeEventListener('resize', this._resizeWindow);
   }
 
-  showContentMenu = list => {
-    let res = null;
-    if (list.length > 0) {
-      res = list.map((route, index) => {
-        return <Route key={index} path={route.path} exact={route.exact} component={route.component} />;
+  showContentMenu = values => {
+    let routeNotLayout = [];
+    let routesLayout = [];
+
+    if (values.addheader) {
+      routesLayout = values.addheader.map(route => {
+        return <RouteLayout key={route.path} path={route.path} exact={route.exact} component={route.component} />;
       });
     }
-    return res;
+
+    if (values.noheader) {
+      routeNotLayout = values.noheader.map(route => {
+        return <Route key={route.path} path={route.path} exact={route.exact} component={route.component} />;
+      });
+    }
+
+    return routesLayout.concat(routeNotLayout);
   };
 
   hideProgressive = () => {
@@ -33,6 +56,7 @@ class App extends PureComponent {
 
   render() {
     const { isLoading } = this.props;
+
     return (
       <ThemeProvider theme={theme}>
         <div>

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import styled from 'styled-components';
 
-import Layout from '../../layout';
 import SendTransaction from './SendTransaction';
 import tweb3 from '../../../service/tweb3';
 import TransactionHistory from '../Transaction';
@@ -451,74 +450,72 @@ class Balances extends Component {
             </Wrapper>
           </MobileWrapper>
         )}
-        <Layout>
-          <NotMobileWrapper>
-            <div className="sc-lnrBVv kvEeOF">
-              <div className="sc-kIWQTW jfuazO">
-                <div className="sc-hMjcWo jvYfux">
-                  <div className="sc-gCwZxT iWYAnd">
-                    <div>
-                      <span>Balances</span>
-                      <span className="text-address">
-                        <i id="copyText">{address}</i>
-                      </span>
-                    </div>
-                    <div className="sc-jDwBTQ cPxcHa">
-                      <div className="sc-fATqzn cNStFF">
-                        <Icon type="qrcode" size={18} />
-                        <div className="qrCode">
-                          <div size="174" className="qrcode-box sc-iSDuPN iulYhq">
-                            <QRCode size={174} className="qrForm" value={address} />
-                          </div>
+        <NotMobileWrapper>
+          <div className="sc-lnrBVv kvEeOF">
+            <div className="sc-kIWQTW jfuazO">
+              <div className="sc-hMjcWo jvYfux">
+                <div className="sc-gCwZxT iWYAnd">
+                  <div>
+                    <span>Balances</span>
+                    <span className="text-address">
+                      <i id="copyText">{address}</i>
+                    </span>
+                  </div>
+                  <div className="sc-jDwBTQ cPxcHa">
+                    <div className="sc-fATqzn cNStFF">
+                      <Icon type="qrcode" size={18} />
+                      <div className="qrCode">
+                        <div size="174" className="qrcode-box sc-iSDuPN iulYhq">
+                          <QRCode size={174} className="qrForm" value={address} />
                         </div>
                       </div>
-                      <div className="sc-fATqzn cNStFF">
-                        <CopyToClipboard text={address} onCopy={this._copyAddress}>
-                          <span title="copy address">
-                            <Icon type="copy" size={18} />
-                          </span>
-                        </CopyToClipboard>
-                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <div className="sc-hvvHee cOshIS">
-                      <table className="sc-fQejPQ sc-cPuPxo dcZana">
-                        <thead className="sc-eSePXt byspTh">
-                          <tr>
-                            <th>Asset</th>
-                            <th>Name</th>
-                            <th>Total Balance</th>
-                            <th>Available Balance</th>
-                            <th />
-                          </tr>
-                        </thead>
-                        <tbody className="sc-fvLVrH gjcHsq">{showTbl}</tbody>
-                      </table>
+                    <div className="sc-fATqzn cNStFF">
+                      <CopyToClipboard text={address} onCopy={this._copyAddress}>
+                        <span title="copy address">
+                          <Icon type="copy" size={18} />
+                        </span>
+                      </CopyToClipboard>
                     </div>
                   </div>
                 </div>
-                {showSend && privateKey && (
-                  <SendTransaction
-                    onSendSuccess={this.renderTbl}
-                    bncClient=""
-                    assets={props._buildBalances}
-                    privateKey={privateKey}
-                    sendingAsset={sendingAsset}
-                    // address={user.address}
-                    address={address}
-                    // account_number={user.account_number}
-                    // sequence={parseInt(user.sequence, 10)}
-                    close={this._closeSendModal}
-                  />
-                )}
+                <div>
+                  <div className="sc-hvvHee cOshIS">
+                    <table className="sc-fQejPQ sc-cPuPxo dcZana">
+                      <thead className="sc-eSePXt byspTh">
+                        <tr>
+                          <th>Asset</th>
+                          <th>Name</th>
+                          <th>Total Balance</th>
+                          <th>Available Balance</th>
+                          <th />
+                        </tr>
+                      </thead>
+                      <tbody className="sc-fvLVrH gjcHsq">{showTbl}</tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-              <div>
-                <TransactionHistory />
-              </div>
+              {showSend && privateKey && (
+                <SendTransaction
+                  onSendSuccess={this.renderTbl}
+                  bncClient=""
+                  assets={props._buildBalances}
+                  privateKey={privateKey}
+                  sendingAsset={sendingAsset}
+                  // address={user.address}
+                  address={address}
+                  // account_number={user.account_number}
+                  // sequence={parseInt(user.sequence, 10)}
+                  close={this._closeSendModal}
+                />
+              )}
             </div>
-          </NotMobileWrapper>
-        </Layout>
+            <div>
+              <TransactionHistory />
+            </div>
+          </div>
+        </NotMobileWrapper>
       </div>
     );
   }

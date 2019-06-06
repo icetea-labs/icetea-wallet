@@ -266,33 +266,31 @@ class index extends PureComponent {
     const { total, address, isFetching } = this.props;
     const { detail, pageSize, current } = this.state;
     return (
-      <Layout>
-        <Wrapper>
-          <Content>
-            <Title>Transaction History</Title>
-            <WrapperHeader>
-              <GroupCalendar hasType={false} hasPair={false} onFilterChange={this.filter} defaultDate={new Date()} />
-              <WrapperTextFullHistory>
-                Not every transaction is included below. For full history, please refer to
-                <a href={''.concat('....', '/address/').concat(address)} target="_blank" rel="noopener noreferrer">
-                  here
-                </a>
-                .
-              </WrapperTextFullHistory>
-            </WrapperHeader>
-            {isFetching && <div>Loading</div>}
-            <Table
-              columns={this.buildColumns()}
-              dataSource={this.buildDataSource()}
-              paging={this.paging}
-              total={total}
-              current={current}
-              pageSize={pageSize}
-            />
-            {detail && <PuDetailTx detail={detail} close={this.clearDetail} />}
-          </Content>
-        </Wrapper>
-      </Layout>
+      <Wrapper>
+        <Content>
+          <Title>Transaction History</Title>
+          <WrapperHeader>
+            <GroupCalendar hasType={false} hasPair={false} onFilterChange={this.filter} defaultDate={new Date()} />
+            <WrapperTextFullHistory>
+              Not every transaction is included below. For full history, please refer to
+              <a href={''.concat('....', '/address/').concat(address)} target="_blank" rel="noopener noreferrer">
+                here
+              </a>
+              .
+            </WrapperTextFullHistory>
+          </WrapperHeader>
+          {isFetching && <div>Loading</div>}
+          <Table
+            columns={this.buildColumns()}
+            dataSource={this.buildDataSource()}
+            paging={this.paging}
+            total={total}
+            current={current}
+            pageSize={pageSize}
+          />
+          {detail && <PuDetailTx detail={detail} close={this.clearDetail} />}
+        </Content>
+      </Wrapper>
     );
   }
 }
