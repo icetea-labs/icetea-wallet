@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { zIndex } from '../../../constants/styles';
-import { Button } from '../../elements/Button';
 
 export const WrapperSend = styled.div`
   position: fixed;

@@ -455,7 +455,7 @@ export const WrapperBtnClose = styled.div`
 // For DivSelectWord
 export const DivSelectWordBase = styled.div`
   align-items: ${props => props.align};
-  background: ${props => (props.bg == 'theme' ? props.theme.bg : '')};
+  background: ${props => (props.bg === 'theme' ? props.theme.bg : '')};
   display: flex;
   flex: ${props => props.flex};
   flex-basis: ${props => props.basis};

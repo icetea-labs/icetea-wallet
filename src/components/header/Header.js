@@ -502,6 +502,7 @@ class Header extends PureComponent {
   _selectAccount = index => {
     const { mnemonic, childKey, setAccount } = this.props;
     const selectedAddress = childKey[index].address;
+    const selectedBalance = childKey[index].balance;
     let privateKey = '';
     // console.log('aa', index, childKey[index].index);
     if (mnemonic) {
@@ -512,6 +513,7 @@ class Header extends PureComponent {
     setAccount({
       address: selectedAddress,
       privateKey,
+      balance: selectedBalance,
     });
 
     if (privateKey) {
@@ -526,6 +528,7 @@ class Header extends PureComponent {
     } else {
       current = JSON.parse(current);
       current.address = selectedAddress;
+      current.balance = selectedBalance;
       sessionStorage.setItem('user', JSON.stringify(current));
     }
   };
@@ -685,7 +688,18 @@ Header.defaultProps = {
 };
 
 const mapStateToProps = state => {
-  const { privateKey, needAuth, address, encryptedData, cipher, flags, childKey, mnemonic, indexKey } = state.account;
+  const {
+    privateKey,
+    needAuth,
+    address,
+    encryptedData,
+    cipher,
+    flags,
+    childKey,
+    mnemonic,
+    indexKey,
+    balance,
+  } = state.account;
   return {
     needAuth,
     privateKey,
@@ -697,6 +711,7 @@ const mapStateToProps = state => {
     indexKey,
     flags,
     isIpValid: state.globalData.isIpValid,
+    balance,
   };
 };
 

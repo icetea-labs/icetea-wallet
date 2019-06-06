@@ -17,14 +17,14 @@ class Clock extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      datetime: dateFormat(new Date(), 'yyyy-mm-dd HH:mm:ss'),
+      datetime: dateFormat(new Date(), 'yyyy-mm-dd HH:MM:ss'),
     };
   }
 
   componentDidMount() {
     this.intervalHandler = setInterval(() => {
       this.setState({
-        datetime: dateFormat(new Date(), 'yyyy-mm-dd HH:mm:ss'),
+        datetime: dateFormat(new Date(), 'yyyy-mm-dd HH:MM:ss'),
       });
     }, 1e3);
   }

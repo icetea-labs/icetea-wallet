@@ -228,8 +228,8 @@ const AvaiWrapper = styled.div`
 `;
 
 class Balances extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       showSend: false,
       showTbl: [],
@@ -239,10 +239,9 @@ class Balances extends Component {
     };
   }
 
-  componentWillMount() {
-    this.renderTbl();
-    this.renderMobileTbl();
-  }
+  componentWillMount = async () => {
+    checkDevice.isMobile() ? this.renderMobileTbl() : this.renderTbl();
+  };
 
   componentWillReceiveProps(nextProps) {
     const { address } = this.props;
@@ -301,7 +300,9 @@ class Balances extends Component {
   renderTbl = async addr => {
     try {
       const { address } = this.props;
-      // const address = user.address;
+      if (!address) {
+        return;
+      }
       const result = await tweb3.getBalance(addr || address);
       const tblTmp = [
         {
@@ -311,6 +312,7 @@ class Balances extends Component {
           availableBalance: toTEA(result.balance),
         },
       ];
+
       this.setState({
         showTbl: tblTmp.map((data, index) => (
           <tr key={index}>
@@ -348,7 +350,6 @@ class Balances extends Component {
   renderMobileTbl = async () => {
     try {
       const { privateKey, address } = this.props;
-      // const address = user.address;
       const result = await tweb3.getBalance(address);
       const tblTmp = [
         {
@@ -403,7 +404,6 @@ class Balances extends Component {
     const { props } = this;
     const { showSend, sendingAsset, showTbl, showMobileCode, showMbTbl, showSendMobi } = this.state;
     const { privateKey, address } = this.props;
-    // console.log('CHECK render', props.address);
     return (
       <div>
         <MobileWrapper>
@@ -479,40 +479,22 @@ class Balances extends Component {
                     </div>
                   </div>
                 </div>
-                <div>
-                  <div className="sc-hvvHee cOshIS">
-                    <table className="sc-fQejPQ sc-cPuPxo dcZana">
-                      <thead className="sc-eSePXt byspTh">
-                        <tr>
-                          <th>Asset</th>
-                          <th>Name</th>
-                          <th>Total Balance</th>
-                          <th>Available Balance</th>
-                          <th />
-                        </tr>
-                      </thead>
-                      <tbody className="sc-fvLVrH gjcHsq">{showTbl}</tbody>
-                    </table>
-                  </div>
-                </div>
+                {showSend && privateKey && (
+                  <SendTransaction
+                    onSendSuccess={this.renderTbl}
+                    bncClient=""
+                    assets={props.buildBalances}
+                    privateKey={privateKey}
+                    sendingAsset={sendingAsset}
+                    // address={user.address}
+                    address={address}
+                    // account_number={user.account_number}
+                    // sequence={parseInt(user.sequence, 10)}
+                    close={this._closeSendModal}
+                  />
+                )}
               </div>
-              {showSend && privateKey && (
-                <SendTransaction
-                  onSendSuccess={this.renderTbl}
-                  bncClient=""
-                  assets={props._buildBalances}
-                  privateKey={privateKey}
-                  sendingAsset={sendingAsset}
-                  // address={user.address}
-                  address={address}
-                  // account_number={user.account_number}
-                  // sequence={parseInt(user.sequence, 10)}
-                  close={this._closeSendModal}
-                />
-              )}
-            </div>
-            <div>
-              <TransactionHistory />
+              <div>{<TransactionHistory />}</div>
             </div>
           </div>
         </NotMobileWrapper>
@@ -543,6 +525,7 @@ const mapStateToProps = state => {
     userInfo: account.userInfo,
     privateKey: account.privateKey,
     address: account.address,
+    balance: account.balance,
   };
 };
 const mapDispatchToProps = dispatch => {

@@ -166,7 +166,7 @@ export const List = styled.li`
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    color: #F0B90B;
+    color: #f0b90b;
     cursor: pointer;
     margin-left: 5px;
   }

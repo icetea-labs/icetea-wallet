@@ -172,7 +172,7 @@ class TablePro extends PureComponent {
 
   isDataShow = item => {
     const { columns } = this.state;
-    for (let i = 0; i < columns.length; i++) {
+    for (let i = 0; i < columns.length; i += 1) {
       if (columns[i].dataIndex === item) {
         return true;
       }
