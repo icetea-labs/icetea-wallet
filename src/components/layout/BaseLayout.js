@@ -4,9 +4,16 @@ import Header from '../header/Header';
 import Footer from '../footer/Footer';
 
 const Main = styled.div`
-  padding: 50px 0;
-  background: #252b39;
+  background: #232937;
+  color: #ffffff;
+  position: absolute;
+  width: 100%;
+  margin-top: -10px;
   min-height: calc(100vh - 100px);
+  @media (max-width: 768px) {
+    margin-top: -16px;
+    padding-top: 20px;
+  }
 `;
 const Wrapper = styled.div`
   .container {
