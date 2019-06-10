@@ -384,6 +384,7 @@ class Header extends PureComponent {
       showSearchIcon: false,
       chooseAcc: false,
       accounts: {},
+      accSeleted: 'bankAcc',
     };
   }
 
@@ -496,9 +497,27 @@ class Header extends PureComponent {
     });
   };
 
-  _createAcc = () => {};
+  _setAcc = e => {
+    this.setState({
+      accSeleted: e.target.value,
+    });
+  };
 
-  _createAccount = async () => {
+  _createAcc = e => {
+    e.preventDefault();
+    const { state } = this;
+    const accSel = state.accSeleted;
+    if (accSel === 'bankAcc') {
+      this._createAccBank();
+    }
+    if (accSel === 'regAcc') {
+      this._createAccReg();
+    }
+  };
+
+  _createAccReg = () => {};
+
+  _createAccBank = async () => {
     const { mnemonic, indexKey, addNewAccount, setNeedAuth } = this.props;
     // const indexTmp = indexKey + 1;
     // let account = {};
@@ -562,9 +581,10 @@ class Header extends PureComponent {
   };
 
   render() {
-    const { confirmLogout, showMobileMenu, chooseAcc } = this.state;
+    const { confirmLogout, showMobileMenu, chooseAcc, accSeleted } = this.state;
     const { className, bgColor, address, childKey, needAuth } = this.props;
     // console.log('render header');
+    console.log('selected CK', accSeleted);
 
     const Menus = this._getMenus().map(el => {
       // console.log('Menus', el);
@@ -703,15 +723,17 @@ class Header extends PureComponent {
           <PuConfirm
             cancelText="Cancel"
             okText="Create"
-            confirm={this._createAcc(this.state)}
+            confirm={this._createAcc}
             cancel={() => this.setState({ chooseAcc: false })}
           >
             <RadioTitle>
               <span>Which type of account do you want to create?</span>
               <hr />
-              <RadioWRapper onChange={this._createAcc}>
-                <input type="radio" value="MALE" defaultChecked name="gender" /> Bank Account
-                <input type="radio" value="FEMALE" name="gender" /> Regular Account
+              <RadioWRapper>
+                <input type="radio" value="bankAcc" checked={accSeleted === 'bankAcc'} onChange={this._setAcc} /> Bank
+                Account
+                <input type="radio" value="regAcc" checked={accSeleted === 'regAcc'} onChange={this._setAcc} /> Regular
+                Account
               </RadioWRapper>
             </RadioTitle>
           </PuConfirm>
