@@ -9,7 +9,7 @@ import logo from '../../assets/img/logo.svg';
 import cancelblack from '../../assets/img/cancelblack.svg';
 import { Icon, checkDevice } from '../elements/utils';
 import MenuMobile from '../menu/MenuMobile';
-import { PuConfirmMnemonic } from '../elements/PuConfirmMnemonic';
+import { PuConfirm } from '../elements/PuConfirm';
 import notifi from '../elements/Notification';
 import Clock from './Clock';
 import GetKeyFromSessionStorage from './GetKeyFromSessionStorage';
@@ -355,6 +355,25 @@ const ImageLogout = styled.div`
   background: url(${cancelblack}) 0% 0% / contain;
 `;
 
+const RadioTitle = styled.div`
+  font-size: 16px;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 10px 0 20px 0;
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  span {
+    height: 10px;
+    wight: 400px;
+  }
+`;
+
+const RadioWRapper = styled.div`
+  -webkit-appearance: display;
+  display: block;
+`;
+
 class Header extends PureComponent {
   constructor(props) {
     super(props);
@@ -363,7 +382,9 @@ class Header extends PureComponent {
       confirmLogout: false,
       showMobileMenu: false,
       showSearchIcon: false,
+      chooseAcc: false,
       accounts: {},
+      accSeleted: 'bankAcc',
     };
   }
 
@@ -470,7 +491,33 @@ class Header extends PureComponent {
     });
   };
 
-  _createAccount = async () => {
+  _chooseAccount = () => {
+    this.setState({
+      chooseAcc: true,
+    });
+  };
+
+  _setAcc = e => {
+    this.setState({
+      accSeleted: e.target.value,
+    });
+  };
+
+  _createAcc = e => {
+    e.preventDefault();
+    const { state } = this;
+    const accSel = state.accSeleted;
+    if (accSel === 'bankAcc') {
+      this._createAccBank();
+    }
+    if (accSel === 'regAcc') {
+      this._createAccReg();
+    }
+  };
+
+  _createAccReg = () => {};
+
+  _createAccBank = async () => {
     const { mnemonic, indexKey, addNewAccount, setNeedAuth } = this.props;
     // const indexTmp = indexKey + 1;
     // let account = {};
@@ -534,9 +581,10 @@ class Header extends PureComponent {
   };
 
   render() {
-    const { confirmLogout, showMobileMenu } = this.state;
+    const { confirmLogout, showMobileMenu, chooseAcc, accSeleted } = this.state;
     const { className, bgColor, address, childKey, needAuth } = this.props;
     // console.log('render header');
+    console.log('selected CK', accSeleted);
 
     const Menus = this._getMenus().map(el => {
       // console.log('Menus', el);
@@ -616,7 +664,7 @@ class Header extends PureComponent {
                 </ListAccount>
 
                 <ItemsAccount>
-                  <li onClick={this._createAccount} role="presentation">
+                  <li onClick={this._chooseAccount} role="presentation">
                     Create Account
                   </li>
                   <li onClick={this._importAccount} role="presentation">
@@ -659,7 +707,7 @@ class Header extends PureComponent {
           <MenuMobile address={address} close={this._hideMobileMenu} closeWallet={this._showConfirmLogout} />
         )}
         {confirmLogout && (
-          <PuConfirmMnemonic
+          <PuConfirm
             cancelText="Go Back"
             okText="Yes"
             confirm={this._confirmSignout(this.state)}
@@ -669,7 +717,26 @@ class Header extends PureComponent {
               <ImageLogout />
               <p>Are you sure you want to close wallet?</p>
             </ContentLogout>
-          </PuConfirmMnemonic>
+          </PuConfirm>
+        )}
+        {chooseAcc && (
+          <PuConfirm
+            cancelText="Cancel"
+            okText="Create"
+            confirm={this._createAcc}
+            cancel={() => this.setState({ chooseAcc: false })}
+          >
+            <RadioTitle>
+              <span>Which type of account do you want to create?</span>
+              <hr />
+              <RadioWRapper>
+                <input type="radio" value="bankAcc" checked={accSeleted === 'bankAcc'} onChange={this._setAcc} /> Bank
+                Account
+                <input type="radio" value="regAcc" checked={accSeleted === 'regAcc'} onChange={this._setAcc} /> Regular
+                Account
+              </RadioWRapper>
+            </RadioTitle>
+          </PuConfirm>
         )}
         {needAuth && <GetKeyFromSessionStorage />}
       </WrapperHeader>
