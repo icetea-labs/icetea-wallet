@@ -355,25 +355,98 @@ const ImageLogout = styled.div`
   background: url(${cancelblack}) 0% 0% / contain;
 `;
 
-const RadioTitle = styled.div`
-  font-size: 16px;
-  -webkit-box-pack: center;
-  justify-content: center;
-  padding: 10px 0 20px 0;
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  span {
-    height: 10px;
-    wight: 400px;
+export const RadioAccountsTypes = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 28px;
+  padding-right: 20px;
+  /* border-right: 1px solid rgba(234, 236, 239); */
+  li {
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+    width: 200px;
+    padding-left: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    border-radius: 3px;
+    border-left: 4px solid #fff;
+    font-size: 15px;
+    position: relative;
+    box-sizing: border-box;
+    color: #263147;
+    font-weight: 400;
+    &:hover {
+      background: #fff;
+      font-weight: 600;
+      box-shadow: 0px 0px 15px 0px rgba(223, 226, 231, 0.5);
+      border-left: 4px solid #f0b90b;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+    svg {
+      width: 30px;
+      height: 28px;
+      margin-left: -2px;
+    }
+    .selected {
+      width: 12px;
+      height: 12px;
+      display: block;
+      border: 1px solid rgba(132, 142, 156, 1);
+      opacity: 0.5;
+      border-radius: 50%;
+      position: absolute;
+      background: #fff;
+      right: 10px;
+      &:before {
+        content: '';
+        position: absolute;
+        display: none;
+        width: 8px;
+        height: 8px;
+        background: #f0b90b;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
   }
+  .on {
+    background: #fff;
+    box-shadow: 0px 0px 15px 0px rgba(223, 226, 231, 0.5);
+    border-left: 4px solid #f0b90b;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    font-weight: 600;
+  }
+  li.on .selected {
+    display: block;
+    border-color: #f0b90b;
+    opacity: 1;
+    &:before {
+      display: block;
+    }
+  }
+  /* @media (min-width: 320px) and (max-width: 623px) {
+    display: none;
+  } */
 `;
 
-const RadioWRapper = styled.div`
-  -webkit-appearance: display;
-  display: block;
-`;
-
+const accountsTypes = [
+  {
+    text: 'Bank Account',
+    selected: true,
+    recommended: true,
+  },
+  {
+    text: 'Regular Account',
+    selected: false,
+    recommended: true,
+  },
+];
 class Header extends PureComponent {
   constructor(props) {
     super(props);
@@ -382,9 +455,12 @@ class Header extends PureComponent {
       confirmLogout: false,
       showMobileMenu: false,
       showSearchIcon: false,
-      chooseAcc: false,
+      chooseAcc: true,
       accounts: {},
-      accSeleted: 'bankAcc',
+      types: accountsTypes,
+      selectedType: accountsTypes.filter(item => {
+        return !!item.selected;
+      })[0].text,
     };
   }
 
@@ -580,11 +656,27 @@ class Header extends PureComponent {
     }
   };
 
+  _selectType = items => {
+    let value;
+    const { types } = this.state;
+    types.forEach(el => {
+      if (el.text === items.text) {
+        el.selected = true;
+        value = items.text;
+      } else {
+        el.selected = false;
+      }
+    });
+
+    this.setState({
+      selectedType: value,
+    });
+  };
+
   render() {
-    const { confirmLogout, showMobileMenu, chooseAcc, accSeleted } = this.state;
+    const { confirmLogout, showMobileMenu, chooseAcc, types } = this.state;
     const { className, bgColor, address, childKey, needAuth } = this.props;
-    // console.log('render header');
-    console.log('selected CK', accSeleted);
+    console.log('render header');
 
     const Menus = this._getMenus().map(el => {
       // console.log('Menus', el);
@@ -615,6 +707,22 @@ class Header extends PureComponent {
             <div className="accout-balances">{toTEA(el.balance) || 0} TEA</div>
           </div>
         </div>
+      );
+    });
+
+    const listItems = types.map(item => {
+      return (
+        <li
+          className={item.selected ? 'on' : ''}
+          onClick={() => this._selectType(item)}
+          key={item.text}
+          role="presentation"
+          data-cy={'menu-'.concat(item.text)}
+        >
+          <span>{item.text}</span>
+          {/* {item.recommended && <UnlockRecommend src={unlockRecommend} />} */}
+          <div className="selected" />
+        </li>
       );
     });
 
@@ -726,16 +834,10 @@ class Header extends PureComponent {
             confirm={this._createAcc}
             cancel={() => this.setState({ chooseAcc: false })}
           >
-            <RadioTitle>
-              <span>Which type of account do you want to create?</span>
-              <hr />
-              <RadioWRapper>
-                <input type="radio" value="bankAcc" checked={accSeleted === 'bankAcc'} onChange={this._setAcc} /> Bank
-                Account
-                <input type="radio" value="regAcc" checked={accSeleted === 'regAcc'} onChange={this._setAcc} /> Regular
-                Account
-              </RadioWRapper>
-            </RadioTitle>
+            <ContentLogout>
+              <p>Which type of account do you want to create?</p>
+              <RadioAccountsTypes>{listItems}</RadioAccountsTypes>
+            </ContentLogout>
           </PuConfirm>
         )}
         {needAuth && <GetKeyFromSessionStorage />}
