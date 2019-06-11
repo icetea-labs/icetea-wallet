@@ -1,6 +1,6 @@
 import * as bip39 from 'bip39';
 import HDKey from 'hdkey';
-import { ecc, codec, AccountType } from 'icetea-common';
+import { ecc, codec, AccountType } from '@iceteachain/common';
 import decode from './decode';
 import paths from '../config/walletPaths';
 
@@ -40,16 +40,20 @@ export const utils = {
       address,
     };
   },
-  recoverAccountFromMneomnic(mnemonic, index = 0) {
+  recoverAccountFromMneomnic(mnemonic, options = { index: 0, type: AccountType.BANK_ACCOUNT }) {
+    const typeTMP =
+      options.type === AccountType.REGULAR_ACCOUNT ? AccountType.REGULAR_ACCOUNT : AccountType.BANK_ACCOUNT;
     let privateKey = '';
     let address = '';
     let indexBase = '';
+
     do {
-      indexBase = index;
-      privateKey = this.getPrivateKeyFromMnemonic(mnemonic, index);
+      indexBase = options.index;
+      privateKey = this.getPrivateKeyFromMnemonic(mnemonic, options.index);
       ({ address } = ecc.toPubKeyAndAddress(privateKey));
-      index += 1;
-    } while (!codec.isAddressType(address, AccountType.BANK_ACCOUNT));
+      options.index += 1;
+      console.log('index', options.index);
+    } while (options.index < 100 && !codec.isAddressType(address, typeTMP));
 
     return {
       privateKey,
@@ -57,6 +61,7 @@ export const utils = {
       index: indexBase,
     };
   },
+
   getPrivateKeyFromMnemonic(mnemonic, index = 0) {
     if (!bip39.validateMnemonic(mnemonic)) {
       throw new Error('wrong mnemonic format');
@@ -87,6 +92,7 @@ export const utils = {
     const { address } = ecc.toPubKeyAndAddressBuffer(privateKey);
     return address;
   },
+
   encryptMnemonic(mnemonic, password) {
     const options = {
       kdf: 'pbkdf2',
@@ -102,6 +108,7 @@ export const utils = {
     const dk = createRandom();
     return keythereum.dump(password, mnemonic, dk.salt, dk.iv, options);
   },
+
   decryptMnemonic(mnemonicObj, password) {
     // type uint8array
     const mnemonic = keythereum.recover(password, mnemonicObj);

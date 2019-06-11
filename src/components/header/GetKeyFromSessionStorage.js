@@ -157,20 +157,20 @@ class GetKeyFromSessionStorage extends PureComponent {
                 privateKey = utils.recoverAccountFromPrivateKey(account.privateKey, password, account.address);
               } else {
                 // console.log('account.index', account.index);
-                ({ privateKey } = utils.recoverAccountFromMneomnic(mnemonic, account.index));
+                privateKey = utils.getPrivateKeyFromMnemonic(mnemonic, account.index);
               }
               break;
             }
           }
+          // Set default account
+          tweb3.wallet.importAccount(privateKey);
+          tweb3.wallet.defaultAccount = address;
+
           setAccount({
             privateKey,
             mnemonic,
             cipher: password,
           });
-
-          // Set default account
-          tweb3.wallet.importAccount(privateKey);
-          tweb3.wallet.defaultAccount = address;
 
           this.timeoutHanle2 = setTimeout(() => {
             this.setState({

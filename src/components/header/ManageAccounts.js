@@ -3,7 +3,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import { AccountType } from '@iceteachain/common';
+import { codec, AccountType } from '@iceteachain/common';
 import tweb3 from '../../service/tweb3';
 import * as actions from '../../store/actions/account';
 import { utils, toTEA } from '../../utils/utils';
@@ -84,23 +84,23 @@ class ManageAccounts extends PureComponent {
     const selectedAddress = childKey[index].address;
     const selectedBalance = childKey[index].balance;
     let privateKey = '';
-    // console.log('aa', index, childKey[index].index);
+    console.log('childKey', childKey);
+    console.log('aa', index, childKey[index].index);
     if (mnemonic) {
-      ({ privateKey } = utils.recoverAccountFromMneomnic(mnemonic, childKey[index].index));
+      privateKey = utils.getPrivateKeyFromMnemonic(mnemonic, childKey[index].index);
     }
     // console.log('privateKey', childKey[index].index, privateKey);
+    if (privateKey) {
+      // Set default account
+      tweb3.wallet.importAccount(privateKey);
+      tweb3.wallet.defaultAccount = selectedAddress;
+    }
 
     setAccount({
       address: selectedAddress,
       privateKey,
       balance: selectedBalance,
     });
-
-    if (privateKey) {
-      // Set default account
-      tweb3.wallet.importAccount(privateKey);
-      tweb3.wallet.defaultAccount = selectedAddress;
-    }
 
     let current = sessionStorage.getItem('user');
     if (!current) {
@@ -142,20 +142,34 @@ class ManageAccounts extends PureComponent {
   };
 
   _createAccountWithType = async () => {
-    const { mnemonic, indexKey, addNewAccount } = this.props;
+    const { mnemonic, addBankAccount, addRegularAccount, indexBankKey, indexRegularKey } = this.props;
     const { selectedType } = this.state;
-
-    const account = utils.recoverAccountFromMneomnic(mnemonic, indexKey + 1);
-    const { balance } = await tweb3.getBalance(account.address);
-
     const childKey = {
-      address: account.address,
-      indexKey: account.index,
+      address: '',
+      indexKey: 0,
       privateKey: '',
-      balance,
+      balance: 0,
       selected: false,
     };
-    addNewAccount(childKey);
+    const options = { index: 0, type: AccountType.BANK_ACCOUNT };
+    let account = null;
+
+    if (selectedType === AccountType.BANK_ACCOUNT) {
+      options.index = indexBankKey + 1;
+      options.type = AccountType.BANK_ACCOUNT;
+      account = utils.recoverAccountFromMneomnic(mnemonic, options);
+    } else {
+      options.index = indexRegularKey + 1;
+      options.type = AccountType.REGULAR_ACCOUNT;
+      account = utils.recoverAccountFromMneomnic(mnemonic, options);
+    }
+
+    const { balance } = await tweb3.getBalance(account.address);
+    childKey.address = account.address;
+    childKey.indexKey = account.index;
+    childKey.balance = balance;
+
+    selectedType === AccountType.BANK_ACCOUNT ? addBankAccount(childKey) : addRegularAccount(childKey);
     notifi.info('Create success');
 
     this.setState({
@@ -195,7 +209,11 @@ class ManageAccounts extends PureComponent {
           </div>
           <div className="account-info">
             <div className="accout-name">Account {index + 1}</div>
-            <div className="accout-balances">{toTEA(el.balance) || 0} TEA</div>
+            <div className="accout-balances">
+              {codec.isAddressType(el.address, AccountType.REGULAR_ACCOUNT)
+                ? 'REGULAR ACCOUNT'
+                : `${toTEA(el.balance) || 0} TEA`}
+            </div>
           </div>
         </div>
       );
@@ -313,9 +331,11 @@ const mapStateToProps = state => {
     flags,
     childKey,
     mnemonic,
-    indexKey,
+    indexBankKey,
+    indexRegularKey,
     balance,
   } = state.account;
+
   return {
     needAuth,
     privateKey,
@@ -324,7 +344,8 @@ const mapStateToProps = state => {
     cipher,
     childKey,
     mnemonic,
-    indexKey,
+    indexBankKey,
+    indexRegularKey,
     flags,
     isIpValid: state.globalData.isIpValid,
     balance,
@@ -336,8 +357,11 @@ const mapDispatchToProps = dispatch => {
     setAccount: data => {
       dispatch(actions.setAccount(data));
     },
-    addNewAccount: data => {
-      dispatch(actions.addNewAccount(data));
+    addBankAccount: data => {
+      dispatch(actions.addBankAccount(data));
+    },
+    addRegularAccount: data => {
+      dispatch(actions.addRegularAccount(data));
     },
     importNewAccount: data => {
       dispatch(actions.importNewAccount(data));

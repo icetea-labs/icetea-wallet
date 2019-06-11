@@ -1,3 +1,4 @@
+import { AccountType } from '@iceteachain/common';
 import { actionTypes } from '../actions/account';
 
 const initialState = Object.assign(
@@ -10,7 +11,8 @@ const initialState = Object.assign(
     keyStore: '',
     mnemonic: '',
     encryptedData: '',
-    indexKey: 0,
+    indexBankKey: 0,
+    indexRegularKey: 0,
     childKey: [],
     flags: {
       isHardware: false,
@@ -34,14 +36,15 @@ const initialState = Object.assign(
       resp.flags = user.flags || {};
       resp.encryptedData = user.mnemonic;
       // resp.mnemonic = user.mnemonic;
-      resp.indexKey = user.indexKey;
+      resp.indexBankKey = user.indexBankKey;
+      resp.indexRegularKey = user.indexRegularKey;
       resp.childKey = user.childKey;
     }
     return resp;
   })()
 );
 
-const addChildKey = (state, action) => {
+const addChildKey = (state, action, type) => {
   const childKey = {
     index: action.data.indexKey,
     address: action.data.address,
@@ -57,14 +60,18 @@ const addChildKey = (state, action) => {
   });
 
   if (isNewAddress) {
+    // add to state
     state.childKey.push(childKey);
+    // add to storage
     let current = sessionStorage.getItem('user');
     if (!current) {
       current = {};
     } else {
       current = JSON.parse(current);
       current.childKey.push({ index: childKey.index, address: childKey.address, selected: false });
-      current.indexKey = action.data.indexKey;
+      type === AccountType.BANK_ACCOUNT
+        ? (current.indexBankKey = action.data.indexKey)
+        : (current.indexRegularKey = action.data.indexKey);
       sessionStorage.setItem('user', JSON.stringify(current));
     }
   }
@@ -76,9 +83,13 @@ const account = (state = initialState, action) => {
       // addChildKey(state, action);
       return Object.assign({}, state, action.data);
 
-    case actionTypes.ADD_NEW_ACCOUNT:
-      addChildKey(state, action);
-      return Object.assign({}, state, { indexKey: action.data.indexKey });
+    case actionTypes.ADD_NEW_BANK_ACCOUNT:
+      addChildKey(state, action, AccountType.BANK_ACCOUNT);
+      return Object.assign({}, state, { indexBankKey: action.data.indexKey });
+
+    case actionTypes.ADD_NEW_REGULAR_ACCOUNT:
+      addChildKey(state, action, AccountType.REGULAR_ACCOUNT);
+      return Object.assign({}, state, { indexRegularKey: action.data.indexKey });
 
     case actionTypes.IMPORT_NEW_ACCOUNT:
       return addChildKey(state, action);

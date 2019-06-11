@@ -3,7 +3,8 @@
  */
 export const actionTypes = {
   SET_ACCOUNT: 'account/SET_ACCOUNT',
-  ADD_NEW_ACCOUNT: 'account/ADD_NEW_ACCOUNT',
+  ADD_NEW_BANK_ACCOUNT: 'account/ADD_NEW_BANK_ACCOUNT',
+  ADD_NEW_REGULAR_ACCOUNT: 'account/ADD_NEW_REGULAR_ACCOUNT',
   IMPORT_NEW_ACCOUNT: 'account/IMPORT_NEW_ACCOUNT',
   SET_BALANCE_CHILDKEY: 'account/SET_BALANCE_CHILDKEY',
   SET_USER_INFO: 'account/SET_USER_INFO',
@@ -17,8 +18,12 @@ export const setAccount = data => ({
   type: actionTypes.SET_ACCOUNT,
   data,
 });
-export const addNewAccount = data => ({
-  type: actionTypes.ADD_NEW_ACCOUNT,
+export const addBankAccount = data => ({
+  type: actionTypes.ADD_NEW_BANK_ACCOUNT,
+  data,
+});
+export const addRegularAccount = data => ({
+  type: actionTypes.ADD_NEW_REGULAR_ACCOUNT,
   data,
 });
 export const importNewAccount = data => ({
