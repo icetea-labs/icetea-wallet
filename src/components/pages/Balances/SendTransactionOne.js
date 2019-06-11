@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { ecc } from 'icetea-common';
+import { ecc, codec } from 'icetea-common';
 
 import { Wrapper, Error, MaxValue, FeeAva, Fee, Ava, ButtonWrapper } from './StyledSTOne';
 import { Button } from '../../elements/Button';
@@ -113,6 +113,11 @@ class SendTransactionOne extends PureComponent {
       ecc.validateAddress(to);
     } catch {
       this.setState({ addressErr: 'Invalid address! Please Try Again' });
+      return;
+    }
+
+    if (codec.isRegularAddress(to)) {
+      this.setState({ addressErr: 'Cannot transfer to regular account.' });
       return;
     }
 
