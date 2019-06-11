@@ -21,7 +21,7 @@ import {
   ListAccount,
   ItemsAccount,
   WrapAccount,
-  ContentLogout,
+  PUContents,
   ImageLogout,
   RadioAccountsTypes,
 } from './ManageAccountsStyled';
@@ -167,6 +167,12 @@ class ManageAccounts extends PureComponent {
     console.log('aaaaa');
   };
 
+  _showConfirmLogout = () => {
+    this.setState({
+      isShowLogout: true,
+    });
+  };
+
   _confirmSignout = () => {
     return () => {
       // userStorage.isWalletConnect && state && state.disconnect();
@@ -174,12 +180,6 @@ class ManageAccounts extends PureComponent {
       window.localStorage.removeItem('walletconnect');
       window.location.reload();
     };
-  };
-
-  _showConfirmLogout = () => {
-    this.setState({
-      isShowLogout: true,
-    });
   };
 
   render() {
@@ -271,10 +271,10 @@ class ManageAccounts extends PureComponent {
             confirm={this._confirmSignout(this.state)}
             cancel={() => this.setState({ isShowLogout: false })}
           >
-            <ContentLogout>
+            <PUContents>
               <ImageLogout />
               <p>Are you sure you want to close wallet?</p>
-            </ContentLogout>
+            </PUContents>
           </PuConfirm>
         )}
         {privateKey && isShowSelectAccountType && (
@@ -284,10 +284,10 @@ class ManageAccounts extends PureComponent {
             confirm={this._createAccountWithType}
             cancel={() => this.setState({ isShowSelectAccountType: false })}
           >
-            <ContentLogout>
+            <PUContents>
               <p>Which type of account do you want to create?</p>
               <RadioAccountsTypes>{ListSelectItems}</RadioAccountsTypes>
-            </ContentLogout>
+            </PUContents>
           </PuConfirm>
         )}
         {needAuth && <GetKeyFromSessionStorage />}
