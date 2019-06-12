@@ -57,7 +57,7 @@ const WrapperBtn = styled.div`
   justify-content: flex-end;
   align-items: center;
   a {
-    color: #f0b90b;
+    color: #15b5dd;
     font-size: 14px;
   }
 `;
@@ -86,7 +86,7 @@ const WrapperBtnClose = styled.div`
   line-height: 20px;
   color: ${props => props.theme.fontColor};
   &:hover {
-    color: #f0b90b;
+    color: #15b5dd;
   }
 `;
 

@@ -49,7 +49,7 @@ export const ProfileWrap = styled.div`
       height: 28px;
       min-height: 28px;
       &:hover {
-        border: 1px solid rgb(240, 185, 11);
+        border: 1px solid rgb(21, 181, 221);
       }
     }
   }
@@ -71,7 +71,7 @@ export const Button = styled.button`
   min-width: 120px;
   margin-bottom: 15px;
   color: #ffffff;
-  background: rgb(240, 185, 11);
+  background: rgb(21, 181, 221);
   text-transform: capitalize;
   line-height: 30px;
   border: none;
@@ -102,7 +102,7 @@ export const InputText = styled.input`
   transition: none;
   &:focus {
     transition: border-bottom-color 0.6s ease;
-    border-bottom-color: rgb(240, 185, 11);
+    border-bottom-color: rgb(21, 181, 221);
     box-shadow: none;
     outline: none;
   }
@@ -166,7 +166,7 @@ export const List = styled.li`
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    color: #f0b90b;
+    color: #15b5dd;
     cursor: pointer;
     margin-left: 5px;
   }

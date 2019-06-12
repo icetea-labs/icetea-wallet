@@ -12,7 +12,7 @@
         </filter>
         <linearGradient x1="111.539463%" y1="88.6971464%" x2="0%" y2="0%" id="linearGradient-3">
             <stop stop-color="#F9DD1A" offset="0%"></stop>
-            <stop stop-color="#F0B90B" offset="100%"></stop>
+            <stop stop-color="#15b5dd" offset="100%"></stop>
         </linearGradient>
     </defs>
     <g id="unlock" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">

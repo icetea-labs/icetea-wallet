@@ -18,14 +18,14 @@ const Container = styled.div`
     outline: none;
     font-size: 14px;
     border-bottom: 1px solid ${props => props.borderColor};
-    caret-color: #f0b90b;
+    caret-color: #15b5dd;
     padding: 0;
     padding-bottom: 10px;
     color: ${props => props.theme.fontColor};
     background: inherit;
     position: relative;
     &:focus {
-      border-color: #f0b90b;
+      border-color: #15b5dd;
     }
   }
   .label {

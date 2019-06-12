@@ -16,7 +16,7 @@ import { zIndex } from '../../../constants/styles';
 const Wrapper = styled.div`
   background: #000;
   position: relative;
-  border-color: #f0b90b;
+  border-color: #15b5dd;
   padding-top: 45px;
 `;
 
@@ -105,7 +105,7 @@ const MaxValue = styled.div`
   position: absolute;
   right: 20px;
   bottom: 30px;
-  color: #f0b90b;
+  color: #15b5dd;
 `;
 
 const SendTxTwoWrapper = styled.div`
@@ -174,14 +174,14 @@ const TabFixed = styled.div`
     user-select: none;
   }
   .tab.on {
-    color: #f0b90b;
+    color: #15b5dd;
     font-weight: 600;
   }
   .tab-scrollbar {
     position: absolute;
     bottom: 1px;
     left: 10px;
-    background: #f0b90b;
+    background: #15b5dd;
     height: 2px;
     width: 50px;
     transition: all 200ms ease-in-out;

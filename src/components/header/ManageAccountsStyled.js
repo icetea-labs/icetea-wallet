@@ -8,7 +8,7 @@ export const ItemsSubMenu = styled.div`
   position: relative;
   &:hover {
     background: ${props => props.theme.headerDropdownBg};
-    color: #f0b90b;
+    color: #15b5dd;
   }
   ul li:not(.wallet-address) {
     animation: userappear 0.3s ease-in-out;
@@ -54,7 +54,7 @@ export const AccountMenu = styled.ul`
     font-size: 13px;
     &:hover {
       background: #12161c;
-      color: #f0b90b;
+      color: #15b5dd;
     }
     a {
       height: 100%;
@@ -92,7 +92,7 @@ export const AccountMenu = styled.ul`
       i {
         margin-right: 10px;
         &:hover {
-          color: #f0b90b;
+          color: #15b5dd;
         }
       }
       span {
@@ -117,7 +117,7 @@ export const WrapAccount = styled.div`
     font-size: 13px;
     &:hover {
       background: #12161c;
-      color: #f0b90b;
+      color: #15b5dd;
     }
   }
   .account-avt {
@@ -135,7 +135,7 @@ export const WrapAccount = styled.div`
     color: #ffffff;
     &:hover {
       .accout-name {
-        color: #f0b90b;
+        color: #15b5dd;
       }
     }
   }
@@ -167,7 +167,7 @@ export const ItemsAccount = styled.ul`
     font-size: 13px;
     &:hover {
       background: #12161c;
-      color: #f0b90b;
+      color: #15b5dd;
     }
     a {
       height: 100%;
@@ -223,7 +223,7 @@ export const RadioAccountsTypes = styled.div`
       background: #fff;
       font-weight: 600;
       box-shadow: 0px 0px 15px 0px rgba(223, 226, 231, 0.5);
-      border-left: 4px solid #f0b90b;
+      border-left: 4px solid #15b5dd;
       border-top-left-radius: 4px;
       border-bottom-left-radius: 4px;
     }
@@ -248,7 +248,7 @@ export const RadioAccountsTypes = styled.div`
         display: none;
         width: 8px;
         height: 8px;
-        background: #f0b90b;
+        background: #15b5dd;
         border-radius: 50%;
         top: 50%;
         left: 50%;
@@ -259,14 +259,14 @@ export const RadioAccountsTypes = styled.div`
   .on {
     background: #fff;
     box-shadow: 0px 0px 15px 0px rgba(223, 226, 231, 0.5);
-    border-left: 4px solid #f0b90b;
+    border-left: 4px solid #15b5dd;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
     font-weight: 600;
   }
   li.on .selected {
     display: block;
-    border-color: #f0b90b;
+    border-color: #15b5dd;
     opacity: 1;
     &:before {
       display: block;

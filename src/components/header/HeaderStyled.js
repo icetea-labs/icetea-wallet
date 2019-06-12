@@ -24,7 +24,7 @@ export const LogoDisplay = styled.div`
   display: flex;
 `;
 export const LogoWrapper = styled.div`
-  color: #f0b90b;
+  color: #15b5dd;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -116,7 +116,7 @@ export const ItemsSubMenuWapper = styled.ul`
     margin-left: 0;
     &:hover {
       background: #1e273a;
-      color: #f0b90b;
+      color: #15b5dd;
     }
     @media (max-width: 768px) {
       background: inherit;

@@ -166,8 +166,8 @@ const TitleAsset = styled.div`
 
 const BtnCus = styled(BtnActive)`
   background: inherit;
-  border: 1px solid #f0b90b;
-  color: #f0b90b;
+  border: 1px solid #15b5dd;
+  color: #15b5dd;
   width: 170px;
   a {
     color: inherit;

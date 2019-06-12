@@ -13,7 +13,7 @@ const TableBase = styled.table`
     border: 1px solid #f0f0f0;
   }
 `;
-// const TheadStyled = styled.thead`background:#f7f7f7;background-size:auto 100%;tr{font-size:14px;color:#666;border:1px solid #f0f0f0;:first-child{border:1px solid #f0f0f0;border-bottom:4px solid #f0f0f0;}}th{background-color:#f7f7f7;padding:0px 0px 0px 10px;height:56px;text-align:center;word-break:break-all;color:#333;font-size:13px;font-weight:600;cursor:pointer;border:none;position:sticky;top:-1px;&:hover{color:#f0b90b;}&:first-child{border-right:1px solid #f0f0f0;padding:0;&:hover{color:#333;}}:last-child{padding-right:10px;}}.showSortMark{i{display:none;}}.sortHd{i{display:inline-block;}}}`;
+// const TheadStyled = styled.thead`background:#f7f7f7;background-size:auto 100%;tr{font-size:14px;color:#666;border:1px solid #f0f0f0;:first-child{border:1px solid #f0f0f0;border-bottom:4px solid #f0f0f0;}}th{background-color:#f7f7f7;padding:0px 0px 0px 10px;height:56px;text-align:center;word-break:break-all;color:#333;font-size:13px;font-weight:600;cursor:pointer;border:none;position:sticky;top:-1px;&:hover{color:#15b5dd;}&:first-child{border-right:1px solid #f0f0f0;padding:0;&:hover{color:#333;}}:last-child{padding-right:10px;}}.showSortMark{i{display:none;}}.sortHd{i{display:inline-block;}}}`;
 const TableHead = styled.thead`
   background: #fdfdfd;
   background-size: auto 100%;

@@ -138,7 +138,7 @@ export const DivControlBtn = styled.div`
   a {
     color: inherit;
     &:hover {
-      color: #f0b90b;
+      color: #15b5dd;
     }
   }
   margin-top: 40px;
@@ -165,7 +165,7 @@ export const DivUnlockLink = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
-  color: #f0b90b;
+  color: #15b5dd;
   i {
     margin-right: 10px;
   }
@@ -191,8 +191,8 @@ export const DivFooter = styled.div`
 `;
 export const DivFooterCheckBox = styled.div`
   & input:checked + label span:first-child {
-    background: rgb(240, 185, 10);
-    border-color: rgb(240, 185, 10);
+    background: rgb(21, 181, 220);
+    border-color: rgb(21, 181, 220;
     animation: 0.4s ease 0s 1 normal none running wave;
   }
 `;
@@ -221,7 +221,7 @@ export const DivPreviousBt = styled.div`
   font-size: 14px;
   color: #848e9c;
   &:hover {
-    color: #f0b90b;
+    color: #15b5dd;
   }
   a {
     color: inherit;
@@ -281,7 +281,8 @@ export const BtnActive = styled.button`
   text-align: center;
   font-size: 14px;
   font-weight: bold;
-  background: linear-gradient(90deg, rgba(239, 184, 11, 1) 0%, rgba(251, 218, 60, 1) 100%);
+  /* background: linear-gradient(90deg, rgba(239, 184, 11, 1) 0%, rgba(251, 218, 60, 1) 100%); */
+  background: linear-gradient(90deg, rgba(24, 123, 221, 1) 0%, rgba(52, 197, 249, 1) 100%);
   border-radius: 3px;
   cursor: pointer;
   color: #fff;
@@ -426,15 +427,15 @@ export const PuBtnCancel = styled(BtnActive)`
   height: 34px;
   line-height: 34px;
   background: #fff;
-  border: 1px solid #f0b90b;
-  color: #f0b90b;
+  border: 1px solid #15b5dd;
+  color: #15b5dd;
   margin-right: 10px;
   box-sizing: border-box;
 `;
 export const PuBtnGoback = styled(BtnActive)`
   background: inherit;
-  color: #f0b90b;
-  border: 1px solid #f0b90b;
+  color: #15b5dd;
+  border: 1px solid #15b5dd;
   box-shadow: none;
   height: 34px;
   line-height: 34px;
@@ -449,7 +450,7 @@ export const WrapperBtnClose = styled.div`
   cursor: pointer;
   color: #848e9c;
   &:hover {
-    color: #f0b90b;
+    color: #15b5dd;
   }
 `;
 // For DivSelectWord
@@ -484,11 +485,11 @@ const Hash = styled.div`
   overflow: hidden;
   white-space: nowrap;
   &:hover {
-    color: #f0b90b;
+    color: #15b5dd;
   }
 `;
 const HashLoading = styled.div`
-  color: #f0b90b;
+  color: #15b5dd;
   display: flex;
   line-height: 16px;
   span {

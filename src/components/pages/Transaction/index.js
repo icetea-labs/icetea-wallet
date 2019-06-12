@@ -178,7 +178,7 @@ class index extends PureComponent {
         key: '',
         render: e => (
           <div onClick={() => this.showDetail(e)} role="presentation">
-            <Icon type="detail-D" color="#848E9C" hoverColor="#F0B90B" />
+            <Icon type="detail-D" color="#848E9C" hoverColor="#15b5dd" />
           </div>
         ),
       },

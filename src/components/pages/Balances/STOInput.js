@@ -12,7 +12,7 @@ const InputLabel = styled.div`
     height: 100%;
     outline: none;
     font-size: 14px;
-    caret-color: #f0b90b;
+    caret-color: #15b5dd;
     color: ${props => props.theme.inputColor};
     background: inherit;
     padding: 5px 0 10px;
@@ -34,7 +34,7 @@ const InputLabel = styled.div`
   }
 
   input:focus + .border-bottom {
-    background: #f0b90b;
+    background: #15b5dd;
   }
 
   .label {

@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   & input:checked + label span:first-child {
-    background: rgb(240, 185, 10);
-    border-color: rgb(240, 185, 10);
+    background: rgb(21, 181, 220);
+    border-color: rgb(21, 181, 220);
     animation: 0.4s ease 0s 1 normal none running wave;
   }
   & input:checked + label span:first-child::before {
@@ -36,7 +36,7 @@ const Label = styled.label`
     transition: all 0.2s ease 0s;
   }
   &:hover span:first-child {
-    border-color: rgb(240, 185, 10);
+    border-color: rgb(21, 181, 220);
   }
   & > span {
     display: inline-block;
@@ -51,7 +51,7 @@ const Label = styled.label`
     display: block;
     transform: scale(0);
     opacity: 1;
-    background: rgb(240, 185, 10);
+    background: rgb(21, 181, 220);
     border-radius: 50%;
   }
   & > span:first-child svg {
@@ -81,7 +81,7 @@ const Span = styled.span`
 `;
 const DivText = styled.div`
   & a {
-    color: rgb(240, 185, 11);
+    color: rgb(21, 181, 221);
   }
 `;
 

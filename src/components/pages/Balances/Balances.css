@@ -79,7 +79,7 @@
   background: rgb(255, 255, 255);
   border-width: 2px;
   border-style: solid;
-  border-color: rgb(240, 185, 11);
+  border-color: rgb(21, 181, 221);
   border-image: initial;
   padding: 10px;
 }
@@ -197,7 +197,7 @@ tbody {
   box-sizing: border-box;
   font-size: 13px;
   margin-right: 10px;
-  color: rgb(240, 185, 11);
+  color: rgb(21, 181, 221);
   border-radius: 3px;
   overflow: hidden;
   outline: none;
@@ -206,11 +206,11 @@ tbody {
   border-width: 1px;
   border-style: solid;
   border-image: initial;
-  border-color: rgb(240, 185, 11);
+  border-color: rgb(21, 181, 221);
 }
 .ircCEl:hover {
   color: rgb(255, 255, 255);
-  background: rgb(240, 185, 11);
+  background: rgb(21, 181, 221);
 }
 
 .gjcHsq tr:hover {
