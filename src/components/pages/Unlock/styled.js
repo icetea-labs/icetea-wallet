@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
   justify-content: center;
 `;
 export const Logo = styled.div`
-  color: #f0b90b;
+  color: #15b5dd;
   height: 80px;
   cursor: pointer;
   position: absolute;
@@ -123,7 +123,7 @@ export const Menu = styled.div`
       background: #fff;
       font-weight: 600;
       box-shadow: 0px 0px 15px 0px rgba(223, 226, 231, 0.5);
-      border-left: 4px solid #f0b90b;
+      border-left: 4px solid #15b5dd;
       border-top-left-radius: 4px;
       border-bottom-left-radius: 4px;
     }
@@ -148,7 +148,7 @@ export const Menu = styled.div`
         display: none;
         width: 8px;
         height: 8px;
-        background: #f0b90b;
+        background: #15b5dd;
         border-radius: 50%;
         top: 50%;
         left: 50%;
@@ -159,14 +159,14 @@ export const Menu = styled.div`
   .on {
     background: #fff;
     box-shadow: 0px 0px 15px 0px rgba(223, 226, 231, 0.5);
-    border-left: 4px solid #f0b90b;
+    border-left: 4px solid #15b5dd;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
     font-weight: 600;
   }
   li.on .selected {
     display: block;
-    border-color: #f0b90b;
+    border-color: #15b5dd;
     opacity: 1;
     &:before {
       display: block;
@@ -298,7 +298,7 @@ export const MnBtnFoolter = styled(BaseBtnFoolter)`
 `;
 export const MnLinkCreateNew = styled.div`
   font-size: 14px;
-  color: #f0b90b;
+  color: #15b5dd;
   cursor: pointer;
 `;
 // For unlock by PrivateKey

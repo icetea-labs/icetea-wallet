@@ -19,7 +19,7 @@ const Wrapper = styled(MnemonicItemBase)`
     color: #848e9c;
   }
   &:hover {
-    background: #f0b90b;
+    background: #15b5dd;
     color: #fff;
     i {
       color: #fff;

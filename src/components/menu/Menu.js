@@ -21,7 +21,7 @@ const SubMenuWapper = styled.div`
     margin-left: 0;
     &:hover {
       background: #1e273a;
-      color: #f0b90b;
+      color: #15b5dd;
     }
     @media (max-width: 768px) {
       background: inherit;
@@ -47,7 +47,7 @@ const UlLink = styled.ul`
     font-size: 13px;
   }
   & li:hover {
-    color: rgb(240, 185, 11);
+    color: rgb(21, 181, 221);
     background: rgb(37, 45, 56);
   }
   & li:hover ul {

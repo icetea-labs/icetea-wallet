@@ -84,7 +84,7 @@ export const BtnFoolter = styled(DivSelectWordBase)`
   box-shadow: ${props => props.theme.boxShadow};
 `;
 export const WrapperBtn = styled.div`
-  color: ${props => (props.selected ? '#F0B90B' : '#848E9C')};
+  color: ${props => (props.selected ? '#15b5dd' : '#848E9C')};
   cursor: pointer;
   margin: ${props => props.margin || '0 2px'};
   outline: 0;
@@ -95,7 +95,7 @@ export const WrapperBtn = styled.div`
   padding: 0 5px;
   border-radius: 3px;
   &:hover {
-    color: #f0b90b;
+    color: #15b5dd;
   }
 `;
 export const ToggleCalendar = styled.input`
@@ -122,7 +122,7 @@ export const WrapperTextFullHistory = styled.div`
   color: #212833;
   font-size: 12px;
   a {
-    color: #f0b90b;
+    color: #15b5dd;
     margin-left: 3px;
   }
 `;
@@ -187,7 +187,7 @@ export const ButtonSeach = styled(Button)`
   font-size: 13px;
   margin-right: 10px;
   &:hover {
-    border-color: #f0b90b;
-    color: #f0b90b;
+    border-color: #15b5dd;
+    color: #15b5dd;
   }
 `;

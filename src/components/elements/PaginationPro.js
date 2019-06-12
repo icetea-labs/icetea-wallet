@@ -12,32 +12,32 @@ const Wrapper1 = styled.div`
   display: flex;
   justify-content: flex-end;
   .rc-pagination-item-active {
-    background-color: #f0b90b;
-    border-color: #f0b90b;
+    background-color: #15b5dd;
+    border-color: #15b5dd;
   }
   .rc-pagination-item:hover {
-    border-color: #f0b90b;
+    border-color: #15b5dd;
   }
   .rc-pagination-options:hover {
-    border-color: #f0b90b;
+    border-color: #15b5dd;
   }
 
   .rc-pagination-item:hover a {
-    color: #f0b90b;
+    color: #15b5dd;
   }
   .rc-pagination-options-quick-jumper input:hover {
-    border-color: #f0b90b;
+    border-color: #15b5dd;
   }
   .rc-select-enabled .rc-select-selection:hover {
-    border-color: #f0b90b;
-    box-shadow: 0 0 2px #f0b90b;
+    border-color: #15b5dd;
+    box-shadow: 0 0 2px #15b5dd;
   }
   .rc-select-enabled .rc-select-selection:active {
-    border-color: #f0b90b;
+    border-color: #15b5dd;
   }
   .rc-select-focused .rc-select-selection {
-    border-color: #f0b90b;
-    box-shadow: 0 0 2px #f0b90b;
+    border-color: #15b5dd;
+    box-shadow: 0 0 2px #15b5dd;
   }
   .rc-pagination-item-active:hover a {
     color: rgb(255, 255, 255);
@@ -83,21 +83,21 @@ const Wrapper2 = styled.div`
     outline: none;
   }
   .rc-pagination-item:hover {
-    border-color: #f0b90b;
+    border-color: #15b5dd;
   }
   .rc-pagination-item:hover a {
-    color: #f0b90b;
+    color: #15b5dd;
   }
   .rc-pagination-item-active {
-    background-color: #f0b90b;
-    border-color: #f0b90b;
+    background-color: #15b5dd;
+    border-color: #15b5dd;
     &:hover a {
       color: #fff;
     }
   }
   .rc-pagination-jump-prev:hover:after,
   .rc-pagination-jump-next:hover:after {
-    color: #f0b90b;
+    color: #15b5dd;
   }
   /* Add */
   .rc-pagination-options-quick-jumper {
@@ -108,14 +108,14 @@ const Wrapper2 = styled.div`
     height: 32px;
   }
   .rc-pagination-options-quick-jumper input:hover {
-    border-color: #f0b90b;
+    border-color: #15b5dd;
   }
   .rc-pagination-options-quick-jumper button:active,
   .rc-pagination-options-quick-jumper button:focus,
   .rc-pagination-options-quick-jumper button:hover {
-    color: #f0b90b;
+    color: #15b5dd;
     background-color: #fff;
-    border-color: #f0b90b;
+    border-color: #15b5dd;
   }
   /* select */
   .rc-select-selection--single .rc-select-selection__rendered {

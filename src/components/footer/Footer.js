@@ -31,7 +31,7 @@ const LeftFooter = styled.ul`
   a {
     color: inherit;
     &:hover {
-      color: #f0b90b;
+      color: #15b5dd;
     }
   }
   @media (max-width: 768px) {
@@ -71,7 +71,7 @@ const SocialFooter = styled.ul`
         color: #848e9c;
       }
       &:hover i {
-        color: #f0b90b;
+        color: #15b5dd;
       }
     }
   }

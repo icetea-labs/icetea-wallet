@@ -396,7 +396,7 @@ textarea {
 }
 
 input:focus,textarea:focus {
-  border-color: #f0b90b
+  border-color: #15b5dd
 }
 
 ::-webkit-input-placeholder {

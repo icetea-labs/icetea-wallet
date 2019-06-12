@@ -45,7 +45,7 @@ const Row = styled.div`
     a {
       color: inherit;
       &:hover {
-        color: #f0b90b;
+        color: #15b5dd;
       }
     }
   }
@@ -57,7 +57,7 @@ const WrapperClose = styled.div`
   cursor: pointer;
   color: #848e9c;
   &:hover {
-    color: #f0b90b;
+    color: #15b5dd;
   }
 `;
 

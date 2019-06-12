@@ -58,7 +58,7 @@ export const MaxValue = styled.div`
   position: absolute;
   right: 20px;
   bottom: 10px;
-  color: #f0b90b;
+  color: #15b5dd;
   cursor: pointer;
 `;
 

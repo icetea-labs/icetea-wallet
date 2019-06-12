@@ -56,7 +56,7 @@ const BotItems = styled.div`
   }
   &:hover {
     transition: border-color 0.6s ease;
-    border: 1px solid rgb(240, 185, 11);
+    border: 1px solid rgb(21, 181, 221);
   }
   .bot_header {
     display: flex;

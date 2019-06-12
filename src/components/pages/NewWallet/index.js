@@ -27,7 +27,7 @@ const DivWallet = styled.div`
   justify-content: center;
 `;
 const DivLogo = styled.div`
-  color: #f0b90b;
+  color: #15b5dd;
   height: 80px;
   cursor: pointer;
   position: absolute;

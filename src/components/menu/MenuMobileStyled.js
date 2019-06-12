@@ -27,7 +27,7 @@ export const WrapperMenu = styled.div`
     border-bottom: 1px solid #212833;
     padding: 10px 0;
     li.current {
-      color: #f0b90b;
+      color: #15b5dd;
       &:before {
         content: ' ';
         position: absolute;
@@ -36,7 +36,7 @@ export const WrapperMenu = styled.div`
         width: 12px;
         left: 0;
         bottom: 6px;
-        background: #f0b90b;
+        background: #15b5dd;
       }
     }
     li {

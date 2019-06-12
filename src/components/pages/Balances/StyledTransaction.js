@@ -40,7 +40,7 @@ export const DisplayTab = styled.div`
 export const Tab = styled.div`
   width: 60px;
   height: 3px;
-  background: ${({ bg }) => bg || '#F0B90B'};
+  background: ${({ bg }) => bg || '#15b5dd'};
   margin-right: 10px;
 `;
 
@@ -54,7 +54,7 @@ export const ButtonCus = styled.div`
   -webkit-box-pack: center;
   justify-content: center;
   position: relative;
-  color: rgb(240, 185, 11);
+  color: rgb(21, 181, 221);
   box-sizing: border-box;
   margin-right: 10px;
   height: 34px;
@@ -64,7 +64,7 @@ export const ButtonCus = styled.div`
   outline: none;
   border-width: 1px;
   border-style: solid;
-  border-color: rgb(240, 185, 11);
+  border-color: rgb(21, 181, 221);
   border-image: initial;
   background: rgb(255, 255, 255);
 `;

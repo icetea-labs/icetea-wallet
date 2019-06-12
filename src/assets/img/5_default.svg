@@ -7,8 +7,8 @@
 	.st1{display:inline;opacity:0.5;fill:none;stroke:#848E9C;stroke-width:2;enable-background:new    ;}
 	.st2{fill:#1F2530;stroke:#848E9C;stroke-width:2;}
 	.st3{fill:none;stroke:#848E9C;stroke-width:2;stroke-linecap:square;}
-	.st4{fill:#1A1F29;stroke:#F0B90B;stroke-width:2;}
-	.st5{fill:#F0B90B;}
+	.st4{fill:#1A1F29;stroke:#15b5dd;stroke-width:2;}
+	.st5{fill:#15b5dd;}
 	.st6{fill:#848E9C;}
 	.st7{opacity:0.4;}
 	.st8{opacity:0.5;fill:none;stroke:#848E9C;stroke-width:2;enable-background:new    ;}

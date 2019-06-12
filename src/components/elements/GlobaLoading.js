@@ -20,7 +20,7 @@ const Rect = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
   div {
-    background-color: rgb(245, 188, 0);
+    background-color: #15b5dd;
     height: 100%;
     width: 3px;
     display: inline-block;
