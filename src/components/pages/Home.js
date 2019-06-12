@@ -1,20 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
-import Layout from '../layout';
-import { BtnActive } from '../elements/utils';
-import default1 from '../../assets/img/1_default.svg';
-import hover1 from '../../assets/img/1_hover.svg';
-import default2 from '../../assets/img/2_default.svg';
-import hover2 from '../../assets/img/2_hover.svg';
-import default3 from '../../assets/img/3_default.svg';
-import hover3 from '../../assets/img/3_hover.svg';
-import default4 from '../../assets/img/4_default.svg';
-import hover4 from '../../assets/img/4_hover.svg';
-import default5 from '../../assets/img/5_default.svg';
-import hover5 from '../../assets/img/5_hover.svg';
-import default6 from '../../assets/img/6_default.svg';
-import hover6 from '../../assets/img/6_hover.svg';
+import banner from '../../assets/img/banner.png';
+import logo from '../../assets/img/logo.svg';
 
 const AllBg = styled.div`
   box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px 0px;
@@ -26,7 +14,7 @@ const AllBg = styled.div`
   display: flex;
   flex-direction: column;
   min-width: 1024px;
-  background: linear-gradient(102deg, rgb(40, 47, 63) 0%, rgb(18, 22, 28) 100%);
+  background: #fff;
 `;
 
 const HomeWrapper = styled.div`
@@ -39,134 +27,152 @@ const HomeWrapper = styled.div`
 `;
 
 const HomeOutBox = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const HomeTitle = styled.p`
-  font-size: 40px;
-  color: #fff;
-  text-align: center;
-  font-weight: 500;
-  white-space: nowrap;
-  min-width: 750px;
-  @media (max-width: 1440px) {
-    transform: scale(0.8);
+  @media (min-width: 1025px) {
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
   }
 `;
 
-const HomeSubTitle = styled.p`
-  font-size: 20px;
-  color: #fff;
-  text-align: center;
-  @media (max-width: 1440px) {
-    transform: scale(0.8);
+const PageContainer = styled.div`
+  @media (min-width: 1025px) {
+    margin: 0 auto;
+    max-width: 1024px;
+    padding: 0 20px;
+    display: block;
   }
 `;
 
-const HomeBtnWrap = styled.div`
-  margin-top: 60px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  z-index: 10;
-  font-family: 'ProximaNova';
-`;
-
-const BtnWrapper = styled(HomeBtnWrap)`
-  justify-content: center;
-  margin-top: 24px;
-`;
-
-const BtnCus = styled(BtnActive)`
-  margin-right: 40px;
-  width: 170px;
-  a {
-    color: inherit;
-    width: 100%;
-    &:hover {
-      text-decoration: none;
+const Banner = styled.div`
+  @media (min-width: 1025px) {
+    padding: 30px;
+    padding-right: 0;
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+  }
+  .banner-text {
+    -webkit-box-flex: 1;
+    flex: 1;
+    display: block;
+    color: #003945;
+    h1 {
+      font-size: 45px;
+      font-weight: 700;
+      line-height: 47px;
+      margin-bottom: 8px;
+      letter-spacing: -1px;
+    }
+    p {
+      color: #506175;
+      margin-top: 17px;
+      max-width: 420px;
+      @media (min-width: 1025px) {
+        color: #506175;
+        line-height: 21px;
+      }
     }
   }
-  @media (max-width: 1440px) {
-    width: 110px;
-    height: 30px;
-    line-height: 28px;
-    font-size: 12px;
-  }
-`;
-
-const BtnCus1 = styled(BtnActive)`
-  background: inherit;
-  border: 1px solid #f0b90b;
-  color: #f0b90b;
-  width: 170px;
-  &:hover {
-    background: linear-gradient(90deg, rgba(239, 184, 11, 1) 0%, rgba(251, 218, 60, 1) 100%);
-    color: #fff;
-  }
-  a {
-    color: inherit;
-    width: 100%;
-    &:hover {
-      text-decoration: none;
+  .banner-image {
+    -webkit-box-flex: 1;
+    flex: 1;
+    display: block;
+    img {
+      @media (min-width: 1025px) {
+        height: 452px;
+        margin: 0 0 0 auto;
+        display: block;
+      }
+      @media (max-width: 1024px) and (max-width: 1100px) and (min-width: 415px) {
+        height: auto;
+        margin-left: 20px;
+        width: 300px;
+      }
     }
   }
-  @media (max-width: 1440px) {
-    width: 110px;
-    height: 30px;
-    line-height: 28px;
-    font-size: 12px;
-  }
 `;
 
-const GuideWrapper = styled.ul`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 50px;
-  a:hover {
+const PromoCard = styled.div`
+  grid-column-gap: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  a {
+    background-color: transparent;
     text-decoration: none;
   }
-  li {
-    color: #eaecef;
-    font-weight: 300;
-    font-size: 16px;
-    line-height: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    white-space: nowrap;
-    width: 157px;
-    height: 150px;
-    cursor: pointer;
-    img {
-      width: 100px;
-      height: 100px;
-    }
-    img.hover {
-      display: none;
-    }
-    &:hover img.hover {
-      display: block;
-      transform: scale(1.2);
-    }
-    &:hover img.default {
-      display: none;
-    }
+`;
+
+const Card = styled.div`
+  &.createWallet {
+    background-color: #5a78f0;
   }
-  @media (max-width: 1440px) {
-    margin-top: 10px;
-    li {
-      transform: scale(0.8);
-    }
+
+  &.accessWallet {
+    background-color: #05c0a5;
+  }
+
+  &:hover {
+    -webkit-box-shadow: 0 5px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 24px rgba(0, 0, 0, 0.15);
+    top: -20px;
+  }
+  @media (min-width: 1025px) {
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 24px rgba(0, 0, 0, 0.15);
+    top: 0px;
+    height: 100%;
+    border-radius: 4px;
+    color: #fff;
+    margin-bottom: 0;
+    padding: 30px 40px;
+    position: relative;
+  }
+  @media (max-width: 1024px) and (min-width: 415px) {
+    border-radius: 4px;
+    color: #fff;
+    margin-bottom: 10px;
+    padding: 30px 40px;
+    position: relative;
+  }
+`;
+
+const CardWrapper = styled.div`
+  -webkit-box-align: center;
+  text-decoration: none;
+  align-items: center;
+  display: flex;
+`;
+
+const CardImage = styled.div`
+  padding-right: 40px;
+  img {
+    width: 87px;
+  }
+`;
+
+const CardContent = styled.div`
+  color: #fff;
+  h2 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  p {
+    line-height: 19px;
+    margin-bottom: 20px;
+  }
+  .button {
+    color: #fff;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 500;
   }
 `;
 
 class Home extends Component {
-  gotoTrade = () => {
+  gotoUnlock = () => {
     const { props } = this;
     props.history.push('/unlock');
   };
@@ -181,62 +187,57 @@ class Home extends Component {
       <AllBg>
         <HomeWrapper>
           <HomeOutBox>
-            <HomeTitle>IceTea Wallet (TESTNET)</HomeTitle>
-            <HomeSubTitle>A powerful Wallet</HomeSubTitle>
-            <BtnWrapper>
-              <BtnCus onClick={this.gotoTrade}>
-                <span>Acess Your Wallet</span>
-              </BtnCus>
-              <BtnCus1 onClick={this.gotoCreate}>
-                <span>Create A Wallet</span>
-              </BtnCus1>
-            </BtnWrapper>
-            <GuideWrapper>
-              <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
-                <li>
-                  <img src={default1} className="default" alt="" />
-                  <img src={hover1} className="hover" alt="" />
-                  <span>How to Create a Wallet</span>
-                </li>
-              </a>
-              <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
-                <li>
-                  <img alt="" src={default2} className="default" />
-                  <img alt="" src={hover2} className="hover" />
-                  <span>How to Access Your Wallet</span>
-                </li>
-              </a>
-              <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
-                <li>
-                  <img alt="" src={default3} className="default" />
-                  <img alt="" src={hover3} className="hover" />
-                  <span>Interface Guide</span>
-                </li>
-              </a>
-            </GuideWrapper>
-            <GuideWrapper>
-              <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
-                <li>
-                  <img alt="" src={default4} className="default" />
-                  <img alt="" src={hover4} className="hover" />
-                  <span>Funding Your Testnet Account</span>
-                </li>
-              </a>
-              <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
-                <li>
-                  <img alt="" src={default5} className="default" />
-                  <img alt="" src={hover5} className="hover" />
-                  <span>IceTea Explorer Guide</span>
-                </li>
-              </a>
-              <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
-                <li>
-                  <img alt="" src={default6} className="default" />
-                  <img alt="" src={hover6} className="hover" />
-                  <span>Things to Avoid</span>
-                </li>
-              </a>
-            </GuideWrapper>
+            <PageContainer>
+              <Banner>
+                <div className="banner-text">
+                  <h1>Icetea Wallet</h1>
+                  <p>
+                    Icetea Wallet is a free, client-side interface helping you interact with the Icetea blockchain. Our
+                    easy-to-use, open-source platform allows you to generate wallets, interact with smart contracts, and
+                    so much more.
+                  </p>
+                </div>
+                <div className="banner-image">
+                  <img src={banner} alt="" />
+                </div>
+              </Banner>
+              <PromoCard>
+                <div onClick={this.gotoCreate}>
+                  <Card className="createWallet">
+                    <CardWrapper>
+                      <CardImage>
+                        <img src={logo} alt="" />
+                      </CardImage>
+                      <CardContent>
+                        <h2>Create A New Wallet</h2>
+                        <p>
+                          Obtain an TEA address and generate your private key. Saving and safekeeping the key will be
+                          your responsibility.
+                        </p>
+                        <p className="button">Get Started &gt;&gt;&gt;</p>
+                      </CardContent>
+                    </CardWrapper>
+                  </Card>
+                </div>
+                <div onClick={this.gotoUnlock}>
+                  <Card className="accessWallet">
+                    <CardWrapper>
+                      <CardImage>
+                        <img src={logo} alt="" />
+                      </CardImage>
+                      <CardContent>
+                        <h2>Access My Wallet</h2>
+                        <p>
+                          Send or swap your TEA, interact with smart contracts, and more! This is where the magic
+                          happens..
+                        </p>
+                        <p className="button">Access Now &gt;&gt;&gt;</p>
+                      </CardContent>
+                    </CardWrapper>
+                  </Card>
+                </div>
+              </PromoCard>
+            </PageContainer>
           </HomeOutBox>
         </HomeWrapper>
       </AllBg>
