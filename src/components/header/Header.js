@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import { zIndex } from '../../constants/styles';
+import logoHeader from '../../assets/img/headerLogo.svg';
 import logo from '../../assets/img/logo.svg';
 import cancelblack from '../../assets/img/cancelblack.svg';
 import { Icon, checkDevice } from '../elements/utils';
@@ -46,8 +47,8 @@ const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
   img {
-    width: 50px;
-    height: 40px;
+    width: 150px;
+    /* height: 50px; */
   }
 `;
 const OclockWrapper = styled.div`
@@ -584,7 +585,7 @@ class Header extends PureComponent {
     const { confirmLogout, showMobileMenu, chooseAcc, accSeleted } = this.state;
     const { className, bgColor, address, childKey, needAuth } = this.props;
     // console.log('render header');
-    console.log('selected CK', accSeleted);
+    // console.log('selected CK', accSeleted);
 
     const Menus = this._getMenus().map(el => {
       // console.log('Menus', el);
@@ -622,7 +623,7 @@ class Header extends PureComponent {
       <WrapperHeader className={className} bgColor={bgColor}>
         <LogoDisplay>
           <LogoWrapper onClick={this._clickLogo}>
-            <img src={logo} alt="" />
+            <img src={logoHeader} alt="" />
           </LogoWrapper>
           {/* mobile.. */}
         </LogoDisplay>
