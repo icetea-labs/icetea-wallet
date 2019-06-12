@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import logo from '../../assets/img/logo.svg';
+import logoHeader from '../../assets/img/headerLogo.svg';
 import { Icon, checkDevice } from '../elements/utils';
 import { mainnet, testnet, currentServer, explorer, faq, forums } from '../../config/networks';
 
@@ -117,7 +117,7 @@ class Header extends PureComponent {
       <WrapperHeader className={className} bgColor={bgColor}>
         <LogoDisplay>
           <LogoWrapper onClick={this._clickLogo}>
-            <img src={logo} alt="" />
+            <img src={logoHeader} alt="" />
           </LogoWrapper>
           {/* mobile.. */}
         </LogoDisplay>

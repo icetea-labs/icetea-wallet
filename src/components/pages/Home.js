@@ -179,70 +179,66 @@ class Home extends Component {
   render() {
     return (
       <AllBg>
-        <Layout>
-          <React.Fragment>
-            <HomeWrapper>
-              <HomeOutBox>
-                <HomeTitle>IceTea Wallet (TESTNET)</HomeTitle>
-                <HomeSubTitle>A powerful Wallet</HomeSubTitle>
-                <BtnWrapper>
-                  <BtnCus onClick={this.gotoTrade}>
-                    <span>Acess Your Wallet</span>
-                  </BtnCus>
-                  <BtnCus1 onClick={this.gotoCreate}>
-                    <span>Create A Wallet</span>
-                  </BtnCus1>
-                </BtnWrapper>
-                <GuideWrapper>
-                  <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
-                    <li>
-                      <img src={default1} className="default" alt="" />
-                      <img src={hover1} className="hover" alt="" />
-                      <span>How to Create a Wallet</span>
-                    </li>
-                  </a>
-                  <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
-                    <li>
-                      <img alt="" src={default2} className="default" />
-                      <img alt="" src={hover2} className="hover" />
-                      <span>How to Access Your Wallet</span>
-                    </li>
-                  </a>
-                  <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
-                    <li>
-                      <img alt="" src={default3} className="default" />
-                      <img alt="" src={hover3} className="hover" />
-                      <span>Interface Guide</span>
-                    </li>
-                  </a>
-                </GuideWrapper>
-                <GuideWrapper>
-                  <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
-                    <li>
-                      <img alt="" src={default4} className="default" />
-                      <img alt="" src={hover4} className="hover" />
-                      <span>Funding Your Testnet Account</span>
-                    </li>
-                  </a>
-                  <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
-                    <li>
-                      <img alt="" src={default5} className="default" />
-                      <img alt="" src={hover5} className="hover" />
-                      <span>IceTea Explorer Guide</span>
-                    </li>
-                  </a>
-                  <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
-                    <li>
-                      <img alt="" src={default6} className="default" />
-                      <img alt="" src={hover6} className="hover" />
-                      <span>Things to Avoid</span>
-                    </li>
-                  </a>
-                </GuideWrapper>
-              </HomeOutBox>
-            </HomeWrapper>
-          </React.Fragment>
-        </Layout>
+        <HomeWrapper>
+          <HomeOutBox>
+            <HomeTitle>IceTea Wallet (TESTNET)</HomeTitle>
+            <HomeSubTitle>A powerful Wallet</HomeSubTitle>
+            <BtnWrapper>
+              <BtnCus onClick={this.gotoTrade}>
+                <span>Acess Your Wallet</span>
+              </BtnCus>
+              <BtnCus1 onClick={this.gotoCreate}>
+                <span>Create A Wallet</span>
+              </BtnCus1>
+            </BtnWrapper>
+            <GuideWrapper>
+              <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
+                <li>
+                  <img src={default1} className="default" alt="" />
+                  <img src={hover1} className="hover" alt="" />
+                  <span>How to Create a Wallet</span>
+                </li>
+              </a>
+              <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
+                <li>
+                  <img alt="" src={default2} className="default" />
+                  <img alt="" src={hover2} className="hover" />
+                  <span>How to Access Your Wallet</span>
+                </li>
+              </a>
+              <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
+                <li>
+                  <img alt="" src={default3} className="default" />
+                  <img alt="" src={hover3} className="hover" />
+                  <span>Interface Guide</span>
+                </li>
+              </a>
+            </GuideWrapper>
+            <GuideWrapper>
+              <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
+                <li>
+                  <img alt="" src={default4} className="default" />
+                  <img alt="" src={hover4} className="hover" />
+                  <span>Funding Your Testnet Account</span>
+                </li>
+              </a>
+              <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
+                <li>
+                  <img alt="" src={default5} className="default" />
+                  <img alt="" src={hover5} className="hover" />
+                  <span>IceTea Explorer Guide</span>
+                </li>
+              </a>
+              <a href="https://icetea.io/" target="_blank" rel="noopener noreferrer">
+                <li>
+                  <img alt="" src={default6} className="default" />
+                  <img alt="" src={hover6} className="hover" />
+                  <span>Things to Avoid</span>
+                </li>
+              </a>
+            </GuideWrapper>
+          </HomeOutBox>
+        </HomeWrapper>
       </AllBg>
     );
   }

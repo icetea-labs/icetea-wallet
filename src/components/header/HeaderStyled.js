@@ -29,8 +29,8 @@ export const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
   img {
-    width: 50px;
-    height: 40px;
+    width: 150px;
+    /* height: 40px; */
   }
 `;
 export const OclockWrapper = styled.div`
