@@ -2,9 +2,11 @@ import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import QueueAnim from 'rc-queue-anim';
+
+import { codec, AccountType } from '@iceteachain/common';
 import * as actions from '../../../store/actions/account';
 import logo from '../../../assets/img/logo.svg';
-import unlock_recommend from '../../../assets/img/unlock_recommend.svg';
+import unlockRecommend from '../../../assets/img/unlock_recommend.svg';
 import ByMnemonic from './ByMnemonic';
 import SelectUnlockType from './SelectUnlockType';
 import { utils } from '../../../utils';
@@ -22,7 +24,6 @@ import {
   UnlockRecommend,
 } from './styled';
 import FooterCus from '../FooterCus';
-import { encode } from '../../../utils';
 
 const itemsMenu = [
   {
@@ -107,6 +108,8 @@ class index extends PureComponent {
 
   _unlock = (privateKey, address, keyStore, password, mnemonic, indexKey) => {
     const { props } = this;
+    let isBankAccount = '';
+
     setTimeout(() => {
       let encryptedData = '';
       if (mnemonic) {
@@ -114,14 +117,20 @@ class index extends PureComponent {
       }
       if (address) {
         const childKey = {
-          address,
+          index: 0,
+          address: '',
           privateKey: '',
           balance: 0,
           selected: true,
         };
+        childKey.index = indexKey;
+        childKey.address = address;
+
+        isBankAccount = codec.isAddressType(address, AccountType.BANK_ACCOUNT);
 
         props.setAccount({
-          indexKey,
+          indexBankKey: isBankAccount ? indexKey : 0,
+          indexRegularKey: isBankAccount ? 0 : indexKey,
           address,
           privateKey,
           cipher: password,
@@ -134,16 +143,18 @@ class index extends PureComponent {
         });
         // this.props.getAccount(address)
         // !o.isHardware && privateKey && (n = Object(v.b)(e, r));
-
+        delete childKey.privateKey;
+        delete childKey.balance;
         sessionStorage.setItem(
           'user',
           JSON.stringify({
-            indexKey,
+            indexBankKey: isBankAccount ? indexKey : 0,
+            indexRegularKey: isBankAccount ? 0 : indexKey,
             address,
             mnemonic: encryptedData || mnemonic,
             // mnemonic,
             flags: false, // o
-            childKey: [{ index: indexKey, address, selected: true }],
+            childKey: [childKey],
           })
         );
 
@@ -187,7 +198,7 @@ class index extends PureComponent {
           data-cy={'menu-'.concat(item.text)}
         >
           <span>{item.text}</span>
-          {item.recommended && <UnlockRecommend src={unlock_recommend} />}
+          {item.recommended && <UnlockRecommend src={unlockRecommend} />}
           <div className="selected" />
         </li>
       );
