@@ -67,7 +67,7 @@ const Banner = styled.div`
     p {
       color: #506175;
       margin-top: 17px;
-      max-width: 420px;
+      max-width: 450px;
       @media (min-width: 1025px) {
         color: #506175;
         line-height: 21px;
@@ -211,7 +211,7 @@ class Home extends Component {
                       <CardContent>
                         <h2>Create A New Wallet</h2>
                         <p>
-                          Obtain an TEA address and generate your private key. Saving and safekeeping the key will be
+                          Obtain an mnemonic and generate your TEA address. Saving and safekeeping the mnemonic will be
                           your responsibility.
                         </p>
                         <p className="button">Get Started &gt;&gt;&gt;</p>
