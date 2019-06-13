@@ -51,6 +51,7 @@ export const StyledUlTag = styled.ul`
   flex-direction: row;
   .menu-item-selected {
     color: #15b5dd;
+    text-decoration: underline;
   }
   li {
     padding: 0 15px;
