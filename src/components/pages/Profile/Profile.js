@@ -61,7 +61,7 @@ class Profile extends Component {
       return;
     }
     if (!privateKey) {
-      // this.props.setNeedAuth(true);
+      this.props.setNeedAuth(true);
     }
     this.setState({
       selectedWallet: address,
