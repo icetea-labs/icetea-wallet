@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BtnActive } from '../../elements/utils';
 
 export const Container = styled.div`
   padding: 30px 0;
@@ -17,10 +18,10 @@ export const ItemsTitle = styled.h3`
 export const ProfileWrap = styled.div`
   font-size: 15px;
   color: #ffffff;
-  .get-tea {
+  /* .get-tea {
     width: 120px;
     margin-bottom: 15px;
-  }
+  } */
   .select {
     max-width: 500px;
     margin-bottom: 10px;
@@ -68,30 +69,54 @@ export const Label = styled.label`
 
 export const LabelPro = styled.label`
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 100px;
   font-size: 20px;
-  padding: 10px;
+  padding: 30px;
 `;
 
-export const Button = styled.button`
-  display: block;
+export const Button = styled(BtnActive)`
+  margin-bottom: 50px;
+  background: inherit;
+  border: 1px solid #15b5dd;
+  color: #15b5dd;
+  width: 170px;
+  border-radius: 20px;
+  cursor: pointer; 
+  &:hover {
+    background: linear-gradient(90deg, rgba(20, 180, 221, 1) 0%, rgba(21, 181, 220, 1) 100%);
+    color: #fff;
+  }
+  a {
+    color: inherit;
+    width: 100%;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  @media (max-width: 1440px) {
+    width: 110px;
+    height: 30px;
+    line-height: 28px;
+    font-size: 12px;
+  }
+  /* display: block;
   min-width: 120px;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
   color: #ffffff;
   background: #15b5dd;
   text-transform: capitalize;
   line-height: 30px;
   border: none;
   border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  cursor: pointer; */
+  /* transition: all 0.3s ease;
   &:focus {
     outline: none;
   }
   &:hover {
     color: #12161c;
     box-shadow: 1px 2px 11px 0px #0a1223;
-  }
+  } */
 `;
 
 export const InputText = styled.input`
