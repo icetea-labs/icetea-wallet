@@ -84,8 +84,8 @@ class ManageAccounts extends PureComponent {
     const selectedAddress = childKey[index].address;
     const selectedBalance = childKey[index].balance;
     let privateKey = '';
-    console.log('childKey', childKey);
-    console.log('aa', index, childKey[index].index);
+    // console.log('childKey', childKey);
+    // console.log('aa', index, childKey[index].index);
     if (mnemonic) {
       privateKey = utils.getPrivateKeyFromMnemonic(mnemonic, childKey[index].index);
     }

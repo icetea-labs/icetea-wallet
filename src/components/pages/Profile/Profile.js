@@ -11,6 +11,7 @@ import {
   ProfileWrap,
   FormGroups,
   Label,
+  LabelPro,
   Button,
   InputText,
   List,
@@ -49,12 +50,16 @@ class Profile extends Component {
     };
   }
 
-  handleWalletAddress = address => {
-    if (!address.value) {
+  componentDidMount() {
+    this.handleWalletAddress();
+  }
+
+  handleWalletAddress = () => {
+    const { privateKey, address } = this.props;
+    if (!address) {
       notifi.warn('Please got to unlock wallet!');
       return;
     }
-    const { privateKey } = this.props;
     if (!privateKey) {
       this.props.setNeedAuth(true);
     }
@@ -62,8 +67,8 @@ class Profile extends Component {
       selectedWallet: address,
       isHidden: false,
     });
-    this.loadAlias(address.value);
-    this.loadDid(address.value);
+    this.loadAlias(address);
+    this.loadDid(address);
   };
 
   registerFaucetEvent = () => {
@@ -369,7 +374,7 @@ class Profile extends Component {
           <ProfileWrap>
             <PageTitle>Profile</PageTitle>
             <div className="signin-groups">
-              <Label>Signin as:</Label>
+              {/* <Label>Signin as:</Label>
               <div className="select">
                 <Select
                   value={selectedWallet}
@@ -377,10 +382,10 @@ class Profile extends Component {
                   options={options}
                   isSearchable={false}
                 />
-              </div>
+              </div> */}
               <div className="set-profile">
                 <p>
-                  <Label>{selectedWallet ? `Signed-in address: ${selectedWallet.value}` : 'Signed-in address:'}</Label>
+                  <LabelPro className="lTitle">{address ? `Signed-in address: ${address}` : 'Signed-in address:'}</LabelPro>
                 </p>
               </div>
             </div>
@@ -529,10 +534,11 @@ class Profile extends Component {
 }
 
 const mapStateToProps = state => {
+  const { account } = state;
   return {
-    address: state.account.address,
-    privateKey: state.account.privateKey,
-    cipher: state.account.cipher,
+    address: account.address,
+    privateKey: account.privateKey,
+    cipher: account.cipher,
   };
 };
 

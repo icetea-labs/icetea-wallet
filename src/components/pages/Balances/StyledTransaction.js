@@ -54,7 +54,7 @@ export const ButtonCus = styled.div`
   -webkit-box-pack: center;
   justify-content: center;
   position: relative;
-  color: rgb(21, 181, 221);
+  color: #15b5dd;
   box-sizing: border-box;
   margin-right: 10px;
   height: 34px;
@@ -64,7 +64,7 @@ export const ButtonCus = styled.div`
   outline: none;
   border-width: 1px;
   border-style: solid;
-  border-color: rgb(21, 181, 221);
+  border-color: #15b5dd;
   border-image: initial;
   background: rgb(255, 255, 255);
 `;

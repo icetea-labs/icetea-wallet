@@ -52,7 +52,7 @@ export const InputPass = styled.div`
     width: 100%;
     height: 100%;
     font-size: 14px;
-    caret-color: rgb(21, 181, 221);
+    caret-color: #15b5dd;
     color: rgb(72, 81, 93);
     border-style: none none solid;
     outline: none;
@@ -61,7 +61,7 @@ export const InputPass = styled.div`
     background: inherit;
   }
   & input:focus {
-    border-color: rgb(21, 181, 221);
+    border-color: #15b5dd;
   }
 `;
 export const InputConfirmPass = styled.div`
@@ -191,8 +191,8 @@ export const DivFooter = styled.div`
 `;
 export const DivFooterCheckBox = styled.div`
   & input:checked + label span:first-child {
-    background: rgb(21, 181, 220);
-    border-color: rgb(21, 181, 220;
+    background: #15b5dd;
+    border-color: #15b5dd;
     animation: 0.4s ease 0s 1 normal none running wave;
   }
 `;

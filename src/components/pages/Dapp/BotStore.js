@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import Select from 'rc-select';
 import BotShow from './BotShow';
 import tweb3 from '../../../service/tweb3';
 import { Icon } from '../../elements/utils';
-import Pagination from '../../elements/PaginationPro';
+// import Pagination from '../../elements/PaginationPro';
+import PaginationPro from '../../elements/PaginationPro';
 import * as actions from '../../../store/actions/account';
 import notifi from '../../elements/Notification';
 
@@ -56,7 +58,7 @@ const BotItems = styled.div`
   }
   &:hover {
     transition: border-color 0.6s ease;
-    border: 1px solid rgb(21, 181, 221);
+    border: 1px solid #15b5dd;
   }
   .bot_header {
     display: flex;
@@ -393,7 +395,8 @@ class BotStore extends Component {
             ) : (
               <div>
                 <div className="botslist">{this.showBots()}</div>
-                <Pagination
+                <PaginationPro
+                  selectComponentClass={Select}
                   showQuickJumper
                   showSizeChanger
                   defaultPageSize={pageSize}
