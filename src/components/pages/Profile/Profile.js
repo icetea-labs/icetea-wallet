@@ -392,7 +392,7 @@ class Profile extends Component {
             <div className="orther-groups" hidden={isHidden}>
               <ItemsTitle>Faucet</ItemsTitle>
               <Button className="get-tea" onClick={this.registerFaucetEvent}>
-                GET 100 TEA
+                <span>GET 100 TEA</span>
               </Button>
               <FormGroups className="form-groups">
                 <ItemsTitle>Alias</ItemsTitle>
@@ -405,7 +405,7 @@ class Profile extends Component {
                 />
                 {aliasErr && <Error>{aliasErr}</Error>}
                 <Button className="btn btn-upadte" onClick={this.registerUpdateAliasEvent}>
-                  Update
+                  <span>UPDATE</span>
                 </Button>
               </FormGroups>
 
@@ -437,7 +437,7 @@ class Profile extends Component {
                 />
                 {(tagsNameErr || tagsValueErr) && <Error>Name and Value field is required </Error>}
                 <Button className="btn btn-add" onClick={this.registerAddTagEvent}>
-                  Add
+                  <span>ADD</span>
                 </Button>
               </FormGroups>
 
@@ -453,7 +453,7 @@ class Profile extends Component {
                 />
                 {thresholdErr && <Error>{thresholdErr}</Error>}
                 <Button className="btn btn-upadte" onClick={this.registerUpdateThresholdEvent}>
-                  Update
+                  <span>UPDATE</span>
                 </Button>
                 <Label>Owner list</Label>
                 {Object.keys(ownersList).length > 0 &&
@@ -481,7 +481,7 @@ class Profile extends Component {
                 />
                 {(ownerErr || weightErr) && <Error>Owner and weight field is required </Error>}
                 <Button className="btn btn-add" onClick={this.registerAddOwnerEvent}>
-                  Add
+                  <span>ADD</span>
                 </Button>
               </FormGroups>
 
@@ -522,7 +522,7 @@ class Profile extends Component {
                   <Error>Inheritor, Wait Days and Lock Days field is required</Error>
                 )}
                 <Button className="btn btn-add" onClick={this.registerAddInheEvent}>
-                  add
+                  <span>ADD</span>
                 </Button>
               </FormGroups>
             </div>
