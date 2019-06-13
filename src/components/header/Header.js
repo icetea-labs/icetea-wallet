@@ -20,49 +20,53 @@ import {
   ItemsSubMenuWapper,
 } from './HeaderStyled';
 
+const authenticated = [
+  {
+    text: 'Transactions',
+    path: '/transactionHistory',
+    selected: false,
+  },
+  {
+    text: 'Balances',
+    path: '/balances',
+    selected: true,
+  },
+  {
+    text: 'BotStore',
+    path: '/botStore',
+    selected: false,
+  },
+  {
+    text: 'Profile',
+    path: '/profile',
+    selected: false,
+  },
+];
+
+const unauthenticated = [
+  {
+    text: 'Create New Wallet',
+    path: '/create',
+  },
+  {
+    text: 'Unlock Wallet',
+    path: '/unlock',
+  },
+];
 class Header extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       showMobileMenu: false,
+      selectMenuItems: props.address ? authenticated : unauthenticated,
       // showSearchIcon: false,
     };
   }
 
-  _getMenus = () => {
-    const { address } = this.props;
-
-    const authenticated = [
-      {
-        text: 'Transactions',
-        path: '/transactionHistory',
-      },
-      {
-        text: 'Balances',
-        path: '/balances',
-      },
-      {
-        text: 'BotStore',
-        path: '/botStore',
-      },
-      {
-        text: 'Profile',
-        path: '/profile',
-      },
-    ];
-
-    const unauthenticated = [
-      {
-        text: 'Create New Wallet',
-        path: '/create',
-      },
-      {
-        text: 'Unlock Wallet',
-        path: '/unlock',
-      },
-    ];
-    return address ? authenticated : unauthenticated;
-  };
+  // _getMenus = () => {
+  //   const { address } = this.props;
+  //   return address ? authenticated : unauthenticated;
+  // };
 
   _showMobileMenu = () => {
     this.setState({
@@ -91,12 +95,24 @@ class Header extends PureComponent {
     });
   };
 
+  _menuSelect = item => {
+    const { selectMenuItems } = this.state;
+
+    selectMenuItems.forEach(el => {
+      if (el.text === item.text) {
+        el.selected = true;
+      } else {
+        el.selected = false;
+      }
+    });
+  };
+
   render() {
-    const { showMobileMenu } = this.state;
+    const { showMobileMenu, selectMenuItems } = this.state;
     const { className, bgColor, address } = this.props;
     console.log('render header');
 
-    const MenuItems = this._getMenus().map(el => {
+    const MenuItems = selectMenuItems.map(el => {
       // console.log('Menus', el);
       return el.subMenus ? (
         <li className="withSubMenus" key={el.text}>
@@ -105,7 +121,7 @@ class Header extends PureComponent {
           <i className="triangle" />
         </li>
       ) : (
-        <li key={el.text}>
+        <li onClick={() => this._menuSelect(el)} className={el.selected ? 'menu-item-selected' : ''} key={el.text}>
           <Link to={el.path}>
             <span>{el.text}</span>
           </Link>
