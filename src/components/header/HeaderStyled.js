@@ -49,6 +49,9 @@ export const MenuDisplay = styled.div`
 export const StyledUlTag = styled.ul`
   display: flex;
   flex-direction: row;
+  .menu-item-selected {
+    color: #15b5dd;
+  }
   li {
     padding: 0 15px;
     height: 50px;
@@ -59,9 +62,13 @@ export const StyledUlTag = styled.ul`
     position: relative;
     &:hover {
       background: rgba(33, 40, 51, 0.5);
+      color: #15b5dd;
       span {
         text-decoration: underline;
       }
+    }
+    .active {
+      color: #15b5dd;
     }
     a {
       height: 100%;
@@ -70,6 +77,7 @@ export const StyledUlTag = styled.ul`
       font-size: 13px;
       &:hover {
         text-decoration: none;
+        color: #15b5dd;
       }
     }
     &:hover ul {

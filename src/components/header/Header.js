@@ -25,7 +25,6 @@ class Header extends PureComponent {
     super(props);
     this.state = {
       showMobileMenu: false,
-      // showSearchIcon: false,
     };
   }
 
@@ -36,18 +35,22 @@ class Header extends PureComponent {
       {
         text: 'Transactions',
         path: '/transactionHistory',
+        selected: false,
       },
       {
         text: 'Balances',
         path: '/balances',
+        selected: true,
       },
       {
         text: 'BotStore',
         path: '/botStore',
+        selected: false,
       },
       {
         text: 'Profile',
         path: '/profile',
+        selected: false,
       },
     ];
 
@@ -55,10 +58,12 @@ class Header extends PureComponent {
       {
         text: 'Create New Wallet',
         path: '/create',
+        selected: false,
       },
       {
         text: 'Unlock Wallet',
         path: '/unlock',
+        selected: false,
       },
     ];
     return address ? authenticated : unauthenticated;
@@ -94,7 +99,6 @@ class Header extends PureComponent {
   render() {
     const { showMobileMenu } = this.state;
     const { className, bgColor, address } = this.props;
-    console.log('render header');
 
     const MenuItems = this._getMenus().map(el => {
       // console.log('Menus', el);

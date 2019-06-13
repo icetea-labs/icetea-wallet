@@ -140,7 +140,7 @@ textarea {
   line-height: 23px;
   box-sizing: border-box;
   font-size: 13px;
-  color: rgb(21, 181, 221);
+  color: #15b5dd;
   border-radius: 3px;
   outline: none;
   background: rgb(255, 255, 255);
@@ -148,10 +148,10 @@ textarea {
   border-width: 1px;
   border-style: solid;
   border-image: initial;
-  border-color: rgb(21, 181, 221);
+  border-color: #15b5dd;
   margin-left: auto;
 }
 .ircCEl1:hover {
   color: rgb(255, 255, 255);
-  background: rgb(21, 181, 221);
+  background: #15b5dd;
 }

@@ -6,7 +6,7 @@ export const Container = styled.div`
 
 export const PageTitle = styled.h1`
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 export const ItemsTitle = styled.h3`
@@ -49,7 +49,7 @@ export const ProfileWrap = styled.div`
       height: 28px;
       min-height: 28px;
       &:hover {
-        border: 1px solid rgb(21, 181, 221);
+        border: 1px solid #15b5dd;
       }
     }
   }
@@ -66,12 +66,19 @@ export const Label = styled.label`
   margin-bottom: 10px;
 `;
 
+export const LabelPro = styled.label`
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 20px;
+  padding: 10px;
+`;
+
 export const Button = styled.button`
   display: block;
   min-width: 120px;
   margin-bottom: 15px;
   color: #ffffff;
-  background: rgb(21, 181, 221);
+  background: #15b5dd;
   text-transform: capitalize;
   line-height: 30px;
   border: none;
@@ -102,7 +109,7 @@ export const InputText = styled.input`
   transition: none;
   &:focus {
     transition: border-bottom-color 0.6s ease;
-    border-bottom-color: rgb(21, 181, 221);
+    border-bottom-color: #15b5dd;
     box-shadow: none;
     outline: none;
   }
