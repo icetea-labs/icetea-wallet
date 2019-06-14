@@ -102,7 +102,7 @@ class SendTransactionOne extends PureComponent {
 
   _submit = () => {
     const { props } = this;
-    const { to, amount } = this.state;
+    const { to, amount, availableBalance } = this.state;
 
     if (!to) {
       this.setState({ addressErr: 'To address should not be null' });
@@ -123,6 +123,11 @@ class SendTransactionOne extends PureComponent {
 
     if (!amount) {
       this.setState({ amountErr: 'Amount should not be null' });
+      return;
+    }
+
+    if (amount > availableBalance) {
+      this.setState({ amountErr: 'Amount should smaller than balance' });
       return;
     }
 

@@ -51,11 +51,18 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    this.handleWalletAddress();
+    this.handleWalletAddress(this.props.address);
   }
 
-  handleWalletAddress = () => {
-    const { privateKey, address } = this.props;
+  componentWillReceiveProps(nextProps) {
+    const { address } = this.props;
+    if (address !== nextProps.address) {
+      this.handleWalletAddress(nextProps.address);
+    }
+  }
+
+  handleWalletAddress = address => {
+    const { privateKey } = this.props;
     if (!address) {
       notifi.warn('Please got to unlock wallet!');
       return;
@@ -64,9 +71,10 @@ class Profile extends Component {
       this.props.setNeedAuth(true);
     }
     this.setState({
-      selectedWallet: address,
+      // selectedWallet: address,
       isHidden: false,
     });
+
     this.loadAlias(address);
     this.loadDid(address);
   };
@@ -385,7 +393,9 @@ class Profile extends Component {
               </div> */}
               <div className="set-profile">
                 <p>
-                  <LabelPro className="lTitle">{address ? `Signed-in address: ${address}` : 'Signed-in address:'}</LabelPro>
+                  <LabelPro className="lTitle">
+                    {address ? `Signed-in address: ${address}` : 'Signed-in address:'}
+                  </LabelPro>
                 </p>
               </div>
             </div>

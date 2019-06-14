@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import QueueAnim from 'rc-queue-anim';
-import { PuLayout, PuBtnGoback, PuBtnNext, WrapperBtnClose, Icon } from './utils';
+import { PuLayout, PuBtnGoback, PuBtnNext, WrapperBtnClose, Icon, Loading } from './utils';
 
 const PuContainer = styled.div`
   min-width: 320px;
@@ -39,8 +39,13 @@ const WrapperBtnCloseCus = styled(WrapperBtnClose)`
 `;
 
 class PuConfirm extends PureComponent {
+  _handleClick = e => {
+    const { props } = this;
+    props.loading || (props.confirm && props.confirm(e));
+  };
+
   render() {
-    const { confirm, cancel, cancelText, okText, children } = this.props;
+    const { cancel, cancelText, okText, children, loading } = this.props;
     return (
       <QueueAnim animConfig={{ opacity: [1, 0] }}>
         <PuLayout key={1}>
@@ -51,8 +56,8 @@ class PuConfirm extends PureComponent {
                 <PuBtnGoback onClick={cancel}>
                   <span>{cancelText}</span>
                 </PuBtnGoback>
-                <PuBtnNext onClick={confirm}>
-                  <span>{okText}</span>
+                <PuBtnNext onClick={this._handleClick}>
+                  <span>{loading ? <Loading /> : okText}</span>
                 </PuBtnNext>
               </PuFoolterBtn>
               <WrapperBtnCloseCus onClick={cancel}>
@@ -67,6 +72,7 @@ class PuConfirm extends PureComponent {
 }
 
 PuConfirm.defaultProps = {
+  loading: false,
   okText: '',
   cancelText: '',
   confirm() {},
