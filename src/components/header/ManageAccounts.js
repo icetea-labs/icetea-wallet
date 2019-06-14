@@ -47,6 +47,7 @@ class ManageAccounts extends PureComponent {
     this.state = {
       isShowLogout: false,
       isShowSelectAccountType: false,
+      loading: false,
       types: accountsTypes,
       selectedType: accountsTypes.filter(item => {
         return !!item.selected;
@@ -142,6 +143,9 @@ class ManageAccounts extends PureComponent {
   };
 
   _createAccountWithType = async () => {
+    this.setState({
+      loading: true,
+    });
     const { mnemonic, addBankAccount, addRegularAccount, indexBankKey, indexRegularKey } = this.props;
     const { selectedType } = this.state;
     const childKey = {
@@ -153,7 +157,6 @@ class ManageAccounts extends PureComponent {
     };
     const options = { index: 0, type: AccountType.BANK_ACCOUNT };
     let account = null;
-
     if (selectedType === AccountType.BANK_ACCOUNT) {
       options.index = indexBankKey + 1;
       options.type = AccountType.BANK_ACCOUNT;
@@ -169,12 +172,15 @@ class ManageAccounts extends PureComponent {
     childKey.indexKey = account.index;
     childKey.balance = balance;
 
-    selectedType === AccountType.BANK_ACCOUNT ? addBankAccount(childKey) : addRegularAccount(childKey);
-    notifi.info('Create success');
+    setTimeout(() => {
+      selectedType === AccountType.BANK_ACCOUNT ? addBankAccount(childKey) : addRegularAccount(childKey);
+      notifi.info('Create success');
 
-    this.setState({
-      isShowSelectAccountType: false,
-    });
+      this.setState({
+        isShowSelectAccountType: false,
+        loading: false,
+      });
+    }, 1000);
   };
 
   _importAccount = () => {
@@ -198,7 +204,8 @@ class ManageAccounts extends PureComponent {
 
   render() {
     const { address, privateKey, childKey, needAuth } = this.props;
-    const { isShowLogout, isShowSelectAccountType, types } = this.state;
+    const { isShowLogout, isShowSelectAccountType, types, loading } = this.state;
+    // console.log(this.state);
 
     const Accounts = childKey.map((el, index) => {
       return (
@@ -297,6 +304,7 @@ class ManageAccounts extends PureComponent {
         )}
         {privateKey && isShowSelectAccountType && (
           <PuConfirm
+            loading={loading}
             cancelText="Cancel"
             okText="Create"
             confirm={this._createAccountWithType}

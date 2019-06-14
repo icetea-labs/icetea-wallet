@@ -110,7 +110,7 @@ class Header extends PureComponent {
   render() {
     const { showMobileMenu, selectMenuItems } = this.state;
     const { className, bgColor, address } = this.props;
-    console.log('render header');
+    // console.log('render header');
 
     const MenuItems = selectMenuItems.map(el => {
       // console.log('Menus', el);
