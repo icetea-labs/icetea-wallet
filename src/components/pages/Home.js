@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import banner from '../../assets/img/banner.png';
-import logo from '../../assets/img/logo.svg';
+import newWallet from '../../assets/img/newWallet.svg';
+import unlockWallet from '../../assets/img/unlockWallet.svg';
 
 const AllBg = styled.div`
   box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px 0px;
@@ -123,14 +124,14 @@ const Card = styled.div`
     box-shadow: 0 5px 24px rgba(0, 0, 0, 0.15);
     top: 0px;
     height: 100%;
-    border-radius: 4px;
+    border-radius: 10px;
     color: #fff;
     margin-bottom: 0;
     padding: 30px 40px;
     position: relative;
   }
   @media (max-width: 1024px) and (min-width: 415px) {
-    border-radius: 4px;
+    border-radius: 10px;
     color: #fff;
     margin-bottom: 10px;
     padding: 30px 40px;
@@ -206,7 +207,7 @@ class Home extends Component {
                   <Card className="createWallet">
                     <CardWrapper>
                       <CardImage>
-                        <img src={logo} alt="" />
+                        <img src={newWallet} alt="" />
                       </CardImage>
                       <CardContent>
                         <h2>Create A New Wallet</h2>
@@ -223,7 +224,7 @@ class Home extends Component {
                   <Card className="accessWallet">
                     <CardWrapper>
                       <CardImage>
-                        <img src={logo} alt="" />
+                        <img src={unlockWallet} alt="" />
                       </CardImage>
                       <CardContent>
                         <h2>Access My Wallet</h2>

@@ -29,7 +29,7 @@ const LeftFooter = styled.ul`
     margin-right: 30px;
   }
   a {
-    color: inherit;
+    color: #ffff;
     &:hover {
       color: #15b5dd;
     }
@@ -42,6 +42,7 @@ const LeftFooter = styled.ul`
 const RightFooter = styled.div`
   display: flex;
   margin-right: 90px;
+  color: #ffff;
   @media (max-width: 768px) {
     margin-right: 0;
     width: 100%;
@@ -50,6 +51,7 @@ const RightFooter = styled.div`
 `;
 
 const CopyRight = styled.div`
+  display: flex;
   margin-right: 5px;
 `;
 
@@ -68,7 +70,7 @@ const SocialFooter = styled.ul`
       justify-content: center;
       align-items: center;
       i {
-        color: #848e9c;
+        color: #ffff;
       }
       &:hover i {
         color: #15b5dd;
