@@ -53,12 +53,27 @@ const unauthenticated = [
     path: '/unlock',
   },
 ];
+
+function setSelectedItem() {
+  let path = window.location.pathname;
+  path = path.replace(/\/$/, '');
+  path = decodeURIComponent(path);
+  authenticated.forEach(item => {
+    if (item.path === path) {
+      item.selected = true;
+    } else {
+      item.selected = false;
+    }
+  });
+  return true;
+}
+
 class Header extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       showMobileMenu: false,
-      selectMenuItems: props.address ? authenticated : unauthenticated,
+      selectMenuItems: setSelectedItem() && props.address ? authenticated : unauthenticated,
       // showSearchIcon: false,
     };
   }
