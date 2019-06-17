@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { ecc } from 'icetea-common';
+import { ecc } from '@iceteachain/common';
 import tweb3 from '../../../service/tweb3';
 import { toTEA, toUNIT } from '../../../utils/utils';
 

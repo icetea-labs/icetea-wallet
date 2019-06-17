@@ -1,16 +1,18 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
+import React, { PureComponent } from 'react';
+import { SupportMnemonic } from './styled';
 
 class ByPrivateKey extends PureComponent {
-  render () {
+  render() {
     return (
-      <div />
-    )
+      <div>
+        <SupportMnemonic>
+          <span>Current version only support Mnemonic Phrase.</span>
+        </SupportMnemonic>
+      </div>
+    );
   }
 }
 
-ByPrivateKey.propTypes = {
+ByPrivateKey.propTypes = {};
 
-}
-
-export default ByPrivateKey
+export default ByPrivateKey;

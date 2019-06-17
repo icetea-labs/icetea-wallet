@@ -35,7 +35,10 @@ export const LogoWrapper = styled.div`
 `;
 export const OclockWrapper = styled.div`
   margin-left: 20px;
-  padding-top: 10px;
+  /* padding-top: 10px; */
+  text-align: justify;
+  align-items: center;
+  display: flex;
   @media (max-width: 868px) {
     display: none;
   }

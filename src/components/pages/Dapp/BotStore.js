@@ -27,6 +27,9 @@ const BotContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 30px 0 100px 0;
+  .noBot {
+    font-size: 18px;
+  }
   @media (max-width: 1200px) {
     max-width: 960px;
   }
@@ -388,26 +391,32 @@ class BotStore extends Component {
             <Icon type="search" />
             <input type="text" onChange={this.botStoreChange} placeholder="Filtered by name" />
           </WrapFilter>
-          <CategoryTitle>All Store Bots</CategoryTitle>
-          <Wrap>
-            {botFilter.length > 0 ? (
-              this.showFilterBots()
-            ) : (
-              <div>
-                <div className="botslist">{this.showBots()}</div>
-                <PaginationPro
-                  selectComponentClass={Select}
-                  showQuickJumper
-                  showSizeChanger
-                  defaultPageSize={pageSize}
-                  defaultCurrent={current}
-                  onShowSizeChange={this.onShowSizeChange}
-                  onChange={this.onChange}
-                  total={total}
-                />
-              </div>
-            )}
-          </Wrap>
+          <CategoryTitle>All bots</CategoryTitle>
+          {total > 0 ? (
+            <Wrap>
+              {botFilter.length > 0 ? (
+                this.showFilterBots()
+              ) : (
+                <div>
+                  <div className="botslist">{this.showBots()}</div>
+                  <PaginationPro
+                    selectComponentClass={Select}
+                    showQuickJumper
+                    showSizeChanger
+                    defaultPageSize={pageSize}
+                    defaultCurrent={current}
+                    onShowSizeChange={this.onShowSizeChange}
+                    onChange={this.onChange}
+                    total={total}
+                  />
+                </div>
+              )}
+            </Wrap>
+          ) : (
+            <div className="noBot">
+              <span>No registered bot. Register one.</span>
+            </div>
+          )}
         </BotContainer>
         {isRunBot && privateKey && (
           <BotShow onClose={this._onCloseBot} botAddress={botAddress} address={address} privateKey={privateKey} />

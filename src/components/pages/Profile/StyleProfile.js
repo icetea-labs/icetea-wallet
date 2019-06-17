@@ -81,7 +81,7 @@ export const Button = styled(BtnActive)`
   color: #15b5dd;
   width: 170px;
   border-radius: 20px;
-  cursor: pointer; 
+  cursor: pointer;
   &:hover {
     background: linear-gradient(90deg, rgba(20, 180, 221, 1) 0%, rgba(21, 181, 220, 1) 100%);
     color: #fff;

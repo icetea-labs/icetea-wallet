@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { ecc, codec } from 'icetea-common';
+import { ecc, codec } from '@iceteachain/common';
 
 import { Wrapper, Error, MaxValue, FeeAva, Fee, Ava, ButtonWrapper } from './StyledSTOne';
 import { Button } from '../../elements/Button';

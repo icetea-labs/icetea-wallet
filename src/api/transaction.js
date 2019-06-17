@@ -1,5 +1,5 @@
-import { decodeTX } from 'icetea-web3/src/utils';
-import { ecc } from 'icetea-common';
+import { decodeTX } from '@iceteachain/web3/src/utils';
+import { ecc } from '@iceteachain/common';
 import dateFormat from 'dateformat';
 import tweb3 from '../service/tweb3';
 import { toTEA } from '../utils/utils';

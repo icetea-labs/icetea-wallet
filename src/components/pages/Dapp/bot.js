@@ -272,7 +272,7 @@ async function connectBot(botAddr, privateKey) {
     pushToQueue('command', r, botInfo.stateAccess);
   });
 
-  console.log('Connect to Contract', contract);
+  // console.log('Connect to Contract', contract);
 
   handleInterval = setInterval(() => {
     handleQueue(contract, botInfo.stateAccess);

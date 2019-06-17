@@ -1,16 +1,5 @@
 const keythereum = require('keythereum');
-const randomBytes = require('randombytes');
-const { codec } = require('icetea-common');
-
-function createRandom() {
-  const keyBytes = 32;
-  const ivBytes = 16;
-  const random = randomBytes(keyBytes + ivBytes + keyBytes);
-  return {
-    iv: random.slice(keyBytes, keyBytes + ivBytes),
-    salt: random.slice(keyBytes + ivBytes),
-  };
-}
+const { codec } = require('@iceteachain/common');
 
 /**
  * @privateKey
@@ -27,7 +16,7 @@ function encode(privateKey, password) {
     },
   };
 
-  const dk = createRandom();
+  const dk = keythereum.create();
   return keythereum.dump(password, codec.toBuffer(privateKey), dk.salt, dk.iv, options);
 }
 

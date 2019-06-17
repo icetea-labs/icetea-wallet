@@ -22,17 +22,17 @@ import {
 
 const authenticated = [
   {
-    text: 'Transactions',
-    path: '/transactionHistory',
-    selected: false,
-  },
-  {
     text: 'Balances',
     path: '/balances',
     selected: true,
   },
   {
-    text: 'BotStore',
+    text: 'Transactions',
+    path: '/transactionHistory',
+    selected: false,
+  },
+  {
+    text: 'Bot Store',
     path: '/botStore',
     selected: false,
   },
@@ -158,24 +158,22 @@ class Header extends PureComponent {
           </OclockWrapper>
         )}
         <MenuDisplay>
-          <StyledUlTag>
-            <li>
-              <a href={explorer}>Explorer</a>
-            </li>
-            {MenuItems}
-          </StyledUlTag>
+          <StyledUlTag>{MenuItems}</StyledUlTag>
           {address && <ManageAccounts address={address} />}
           <StyledUlTag>
             <li className="withSubMenus">
               <Icon type="detail-D" />
               <ItemsSubMenuWapper className="subMenus">
                 <li>
-                  <a href={faq}>Docs / FAQ</a>
+                  <a href={explorer}>Explorer</a>
                 </li>
                 <li>
                   <a href={forums}>Forums</a>
                 </li>
                 <li>{currentServer === 'mainnet' ? <a href={mainnet}>Mainnet</a> : <a href={testnet}>Testnet</a>}</li>
+                <li>
+                  <a href={faq}>Docs / FAQ</a>
+                </li>
               </ItemsSubMenuWapper>
             </li>
           </StyledUlTag>
