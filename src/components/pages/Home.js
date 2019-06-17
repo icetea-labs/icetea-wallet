@@ -59,7 +59,7 @@ const Banner = styled.div`
     p {
       color: #506175;
       margin-top: 17px;
-      max-width: 450px;
+      /* max-width: 450px; */
       @media (min-width: 1025px) {
         color: #506175;
         line-height: 21px;
@@ -67,7 +67,7 @@ const Banner = styled.div`
       @media (max-width: 414px) {
         color: #506175;
         margin-top: 17px;
-        max-width: 325px;
+        /* max-width: 325px; */
         height: 126px;
         line-height: 21px;
         font-size: 14px;
