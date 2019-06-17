@@ -62,14 +62,14 @@ class Profile extends Component {
   }
 
   handleWalletAddress = address => {
-    const { privateKey } = this.props;
+    // const { privateKey } = this.props;
     if (!address) {
       notifi.warn('Please got to unlock wallet!');
       return;
     }
-    if (!privateKey) {
-      this.props.setNeedAuth(true);
-    }
+    // if (!privateKey) {
+    //   this.props.setNeedAuth(true);
+    // }
     this.setState({
       // selectedWallet: address,
       isHidden: false,
@@ -80,18 +80,22 @@ class Profile extends Component {
   };
 
   registerFaucetEvent = () => {
-    const { address } = this.props;
-    tweb3
-      .contract('system.faucet')
-      .methods.request(/* address */)
-      .sendCommit({ from: address })
-      .then(r => {
-        notifi.info('Success');
-      })
-      .catch(error => {
-        //window.alert(String(error));
-        notifi.warn('You already received 100000000 microtea. No more.');
-      });
+    const { address, privateKey } = this.props;
+    if (!privateKey) {
+      this.props.setNeedAuth(true);
+    } else {
+      tweb3
+        .contract('system.faucet')
+        .methods.request(/* address */)
+        .sendCommit({ from: address })
+        .then(r => {
+          notifi.info('Success');
+        })
+        .catch(error => {
+          //window.alert(String(error));
+          notifi.warn('You already received 100000000 microtea. No more.');
+        });
+    }
   };
 
   handleAlias = e => {
@@ -100,24 +104,28 @@ class Profile extends Component {
 
   registerUpdateAliasEvent = () => {
     const { alias } = this.state;
-    const { address } = this.props;
-    if (!alias) {
-      this.setState({ aliasErr: 'Alias field is required' });
-      return;
-    }
+    const { address, privateKey } = this.props;
 
-    tweb3
-      .contract('system.alias')
-      .methods.register(alias, address)
-      .sendCommit({ from: address })
-      .then(r => {
-        this.loadAlias(address);
-        notifi.info('Success');
-      })
-      .catch(error => {
-        console.error(error);
-        window.alert(String(error));
-      });
+    if (!privateKey) {
+      this.props.setNeedAuth(true);
+    } else {
+      if (!alias) {
+        this.setState({ aliasErr: 'Alias field is required' });
+        return;
+      }
+      tweb3
+        .contract('system.alias')
+        .methods.register(alias, address)
+        .sendCommit({ from: address })
+        .then(r => {
+          this.loadAlias(address);
+          notifi.info('Success');
+        })
+        .catch(error => {
+          console.error(error);
+          window.alert(String(error));
+        });
+    }
   };
 
   loadAlias = targetAddress => {
@@ -141,25 +149,29 @@ class Profile extends Component {
   };
 
   registerAddTagEvent = () => {
-    const { address } = this.props;
+    const { address, privateKey } = this.props;
     const name = this.state.tagsName;
     const value = this.state.tagsValue;
-    if (!name || !value) {
-      this.setState({ tagsNameErr: 'Err', tagsValueErr: 'Err' });
-      return;
+    if (!privateKey) {
+      this.props.setNeedAuth(true);
+    } else {
+      if (!name || !value) {
+        this.setState({ tagsNameErr: 'Err', tagsValueErr: 'Err' });
+        return;
+      }
+      tweb3
+        .contract('system.did')
+        .methods.setTag(address, name, value)
+        .sendCommit({ from: address })
+        .then(r => {
+          this.loadDid(address);
+          notifi.info('Success');
+        })
+        .catch(error => {
+          console.error(error);
+          window.alert(String(error));
+        });
     }
-    tweb3
-      .contract('system.did')
-      .methods.setTag(address, name, value)
-      .sendCommit({ from: address })
-      .then(r => {
-        this.loadDid(address);
-        notifi.info('Success');
-      })
-      .catch(error => {
-        console.error(error);
-        window.alert(String(error));
-      });
   };
 
   registerRemoveTagEvent = tag => {
@@ -213,24 +225,28 @@ class Profile extends Component {
   };
 
   registerUpdateThresholdEvent = () => {
-    const { address } = this.props;
+    const { address, privateKey } = this.props;
     const { threshold } = this.state;
-    if (!threshold) {
-      this.setState({ thresholdErr: 'threshold field is required' });
-      return;
+    if (!privateKey) {
+      this.props.setNeedAuth(true);
+    } else {
+      if (!threshold) {
+        this.setState({ thresholdErr: 'threshold field is required' });
+        return;
+      }
+      tweb3
+        .contract('system.did')
+        .methods.setThreshold(address, +threshold)
+        .sendCommit({ from: address })
+        .then(r => {
+          this.setState({ threshold: r.result });
+          notifi.info('Success');
+        })
+        .catch(error => {
+          console.error(error);
+          window.alert(String(error));
+        });
     }
-    tweb3
-      .contract('system.did')
-      .methods.setThreshold(address, +threshold)
-      .sendCommit({ from: address })
-      .then(r => {
-        this.setState({ threshold: r.result });
-        notifi.info('Success');
-      })
-      .catch(error => {
-        console.error(error);
-        window.alert(String(error));
-      });
   };
 
   handleOwner = e => {
@@ -242,26 +258,29 @@ class Profile extends Component {
   };
 
   registerAddOwnerEvent = () => {
-    const { address } = this.props;
+    const { address, privateKey } = this.props;
     let { owner, weight } = this.state;
     weight = parseInt(weight);
-    if (!owner || !weight) {
-      this.setState({ ownerErr: 'err', weightErr: 'err' });
-      return;
+    if (!privateKey) {
+      this.props.setNeedAuth(true);
+    } else {
+      if (!owner || !weight) {
+        this.setState({ ownerErr: 'err', weightErr: 'err' });
+        return;
+      }
+      tweb3
+        .contract('system.did')
+        .methods.addOwner(address, owner, weight)
+        .sendCommit({ from: address })
+        .then(r => {
+          this.loadDid(address);
+          notifi.info('Success');
+        })
+        .catch(error => {
+          console.error(error);
+          window.alert(String(error));
+        });
     }
-
-    tweb3
-      .contract('system.did')
-      .methods.addOwner(address, owner, weight)
-      .sendCommit({ from: address })
-      .then(r => {
-        this.loadDid(address);
-        notifi.info('Success');
-      })
-      .catch(error => {
-        console.error(error);
-        window.alert(String(error));
-      });
   };
 
   registerRemoveOwnerEvent = owner => {
@@ -297,32 +316,36 @@ class Profile extends Component {
   };
 
   registerAddInheEvent = () => {
-    const { address } = this.props;
+    const { address, privateKey } = this.props;
     const { inheritor } = this.state;
     let { waitDays, lockDays } = this.state;
     waitDays = parseInt(waitDays);
     lockDays = parseInt(lockDays);
-    if (!inheritor || !waitDays || !lockDays) {
-      this.setState({
-        inheritorErr: 'err',
-        waitDaysErr: 'err',
-        lockDaysErr: 'err',
-      });
-      return;
-    }
+    if (!privateKey) {
+      this.props.setNeedAuth(true);
+    } else {
+      if (!inheritor || !waitDays || !lockDays) {
+        this.setState({
+          inheritorErr: 'err',
+          waitDaysErr: 'err',
+          lockDaysErr: 'err',
+        });
+        return;
+      }
 
-    tweb3
-      .contract('system.did')
-      .methods.addInheritor(address, inheritor, waitDays, lockDays)
-      .sendCommit({ from: address })
-      .then(r => {
-        this.loadDid(address);
-        notifi.info('Success');
-      })
-      .catch(error => {
-        console.error(error);
-        window.alert(String(error));
-      });
+      tweb3
+        .contract('system.did')
+        .methods.addInheritor(address, inheritor, waitDays, lockDays)
+        .sendCommit({ from: address })
+        .then(r => {
+          this.loadDid(address);
+          notifi.info('Success');
+        })
+        .catch(error => {
+          console.error(error);
+          window.alert(String(error));
+        });
+    }
   };
 
   registerRemoveInheEvent = inheritor => {

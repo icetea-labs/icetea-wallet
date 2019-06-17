@@ -6,7 +6,7 @@ class ByPrivateKey extends PureComponent {
     return (
       <div>
         <SupportMnemonic>
-          <span>Current version only support Mnemonic Phase.</span>
+          <span>Current version only support Mnemonic Phrase.</span>
         </SupportMnemonic>
       </div>
     );
