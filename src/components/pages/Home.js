@@ -5,37 +5,6 @@ import banner from '../../assets/img/banner.png';
 import newWallet from '../../assets/img/newWallet.svg';
 import unlockWallet from '../../assets/img/unlockWallet.svg';
 
-const AllBg = styled.div`
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px 0px;
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  bottom: 0px;
-  right: 0px;
-  display: flex;
-  flex-direction: column;
-  min-width: 1024px;
-  background: #fff;
-`;
-
-const HomeWrapper = styled.div`
-  position: absolute;
-  top: 50px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  min-height: 650px;
-`;
-
-const HomeOutBox = styled.div`
-  @media (min-width: 1025px) {
-    font-family: Montserrat, sans-serif;
-    font-size: 14px;
-    margin: 0;
-    padding: 0;
-  }
-`;
-
 const PageContainer = styled.div`
   @media (min-width: 1025px) {
     margin: 0 auto;
