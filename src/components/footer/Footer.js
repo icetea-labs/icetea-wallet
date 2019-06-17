@@ -51,8 +51,12 @@ const RightFooter = styled.div`
 `;
 
 const CopyRight = styled.div`
-  display: flex;
+  display: block;
   margin-right: 5px;
+  line-height: 25px;
+  .trada {
+    margin-top: 2px;
+  }
 `;
 
 const SocialFooter = styled.ul`
@@ -101,7 +105,14 @@ class Footer extends PureComponent {
           </li>
         </LeftFooter>
         <RightFooter>
-          <CopyRight>© 2018 - 2019 Ice Tea. All rights reserved.</CopyRight>
+          <CopyRight>
+            <h3 className="trada">
+              <span>© 2018 - 2019 Icetea. All rights reserved.</span>
+            </h3>
+            <div>
+              <span>© Icons from the Noun Project</span>
+            </div>
+          </CopyRight>
           <SocialFooter>
             <li>
               <a href={telegram} target="blank" rel="noopener">

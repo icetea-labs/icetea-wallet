@@ -388,7 +388,7 @@ class BotStore extends Component {
             <Icon type="search" />
             <input type="text" onChange={this.botStoreChange} placeholder="Filtered by name" />
           </WrapFilter>
-          <CategoryTitle>All Store Bots</CategoryTitle>
+          <CategoryTitle>All bots</CategoryTitle>
           <Wrap>
             {botFilter.length > 0 ? (
               this.showFilterBots()
