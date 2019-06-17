@@ -31,6 +31,7 @@ const FooterUpper = styled.div`
   a {
     color: #848484;
     padding: 0px 10px;
+    cursor: pointer; 
   }
   .nav-link {
     position: relative;
@@ -51,7 +52,7 @@ class FooterCus extends PureComponent {
             <a onClick={this.goHome}>Home</a>
           </div>
         </FooterUpper>
-        <div>© 2018 - 2019 Ice Tea. All rights reserved.</div>
+        <div>© 2018 - 2019 Icetea. All rights reserved.</div>
       </FooterWrapper>
     );
   }

@@ -8,6 +8,7 @@ import * as actions from '../../../store/actions/account';
 import logo from '../../../assets/img/logo.svg';
 import unlockRecommend from '../../../assets/img/unlock_recommend.svg';
 import ByMnemonic from './ByMnemonic';
+import ByPrivateKey from './ByPrivateKey';
 import SelectUnlockType from './SelectUnlockType';
 import { utils } from '../../../utils';
 import {
@@ -223,6 +224,9 @@ class index extends PureComponent {
                   </WrapperSelect>
                   <Menu>{listItems}</Menu>
                 </WrapperMenu>
+                {selectedType === 'WalletConnect' && <ByPrivateKey />}
+                {selectedType === 'Ledger Device' && <ByPrivateKey />}
+                {selectedType === 'KeyStore File' && <ByPrivateKey />}
                 {selectedType === 'Mnemonic Phrase' && <ByMnemonic unlock={this._unlock} />}
               </Content>
             </InBox>

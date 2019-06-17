@@ -29,7 +29,7 @@ const LeftFooter = styled.ul`
     margin-right: 30px;
   }
   a {
-    color: inherit;
+    color: #ffff;
     &:hover {
       color: #15b5dd;
     }
@@ -42,6 +42,7 @@ const LeftFooter = styled.ul`
 const RightFooter = styled.div`
   display: flex;
   margin-right: 90px;
+  color: #ffff;
   @media (max-width: 768px) {
     margin-right: 0;
     width: 100%;
@@ -50,7 +51,12 @@ const RightFooter = styled.div`
 `;
 
 const CopyRight = styled.div`
+  display: block;
   margin-right: 5px;
+  line-height: 25px;
+  .trada {
+    margin-top: 2px;
+  }
 `;
 
 const SocialFooter = styled.ul`
@@ -68,7 +74,7 @@ const SocialFooter = styled.ul`
       justify-content: center;
       align-items: center;
       i {
-        color: #848e9c;
+        color: #ffff;
       }
       &:hover i {
         color: #15b5dd;
@@ -99,7 +105,14 @@ class Footer extends PureComponent {
           </li>
         </LeftFooter>
         <RightFooter>
-          <CopyRight>© 2018 - 2019 Ice Tea. All rights reserved.</CopyRight>
+          <CopyRight>
+            <h3 className="trada">
+              <span>© 2018 - 2019 Icetea. All rights reserved.</span>
+            </h3>
+            <div>
+              <span>© Icons from the Noun Project</span>
+            </div>
+          </CopyRight>
           <SocialFooter>
             <li>
               <a href={telegram} target="blank" rel="noopener">

@@ -222,6 +222,14 @@ export const WarningTooltip = styled.div`
     display: block;
   }
 `;
+
+export const SupportMnemonic = styled.p`
+  color: #f23051;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 16px;
+`;
+
 export const MnTitle = styled.div`
   font-size: 18px;
   padding: 10px 0;
