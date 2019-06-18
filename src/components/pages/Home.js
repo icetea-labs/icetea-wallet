@@ -60,6 +60,7 @@ const Banner = styled.div`
       color: #506175;
       margin-top: 17px;
       /* max-width: 450px; */
+      font-size: 18px;
       @media (min-width: 1025px) {
         color: #506175;
         line-height: 21px;
@@ -70,18 +71,20 @@ const Banner = styled.div`
         /* max-width: 325px; */
         height: 126px;
         line-height: 21px;
-        font-size: 14px;
+        font-size: 18px;
       }
     }
     @media (max-width: 1024px) and (min-width: 415px) {
       -webkit-box-flex: 1;
       -ms-flex: 1;
       flex: 1;
+      font-size: 18px;
     }
     @media (max-width: 414px) {
       -webkit-box-flex: 1;
       -ms-flex: 1;
       flex: 1;
+      font-size: 18px;
     }
   }
   .banner-image {
@@ -171,6 +174,7 @@ const Card = styled.div`
     margin-bottom: 15px;
     padding: 11px;
     position: relative;
+    font-size: 18px;
   }
 `;
 
@@ -200,7 +204,7 @@ const CardContent = styled.div`
     margin-bottom: 5px;
 
     @media (max-width: 414px) {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 500;
       margin-bottom: 0;
       text-align: center;
