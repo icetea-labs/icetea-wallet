@@ -9,13 +9,13 @@ export const node = {
 }[currentServer];
 export const network = window.localStorage.getItem('network') || node[0];
 export const explorer = 'https://devtools.icetea.io/';
-export const termOfService = 'https://icetea.io/terms.html';
+export const termOfService = 'https://icetea.io/terms';
 export const faq = 'https://docs.icetea.io/';
 export const forums = 'https://t.me/iceteachain';
 export const telegram = 'https://t.me/iceteachain';
 export const twitter = 'https://twitter.com/iceteachain';
 export const mainnet = 'https://icetea.io/';
-export const testnet = 'https://icetea.io/testnet.html';
+export const testnet = 'https://icetea.io/testnet';
 export const iteaScan = process.env.REACT_APP_SCAN;
 export const iteaScanTx = process.env.REACT_APP_SCAN_TX;
 export const iteaScanBlock = process.env.REACT_APP_SCAN_BLOCK;
