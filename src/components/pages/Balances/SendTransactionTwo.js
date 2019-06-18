@@ -41,8 +41,8 @@ class SendTransactionTwo extends PureComponent {
     return (
       <div>
         <Title>
-          <span className="name">ITEA</span>
-          <span className="fullName">IceTea Chain Native Token</span>
+          <span className="name">TEA</span>
+          <span className="fullName">Icetea Native Token</span>
         </Title>
         <WrapperTwo>
           <div className="title">To:</div>
@@ -61,8 +61,8 @@ class SendTransactionTwo extends PureComponent {
           <div className="value">{memo}</div>
         </WrapperTwo>
         <WrapperTwo>
-          <div className="title">Fee:</div>
-          <div className="value">0.1 ITEA</div>
+          <div className="title">Gas Limit:</div>
+          <div className="value">0 TEA</div>
         </WrapperTwo>
       </div>
     );

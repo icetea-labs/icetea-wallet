@@ -163,7 +163,7 @@ class index extends PureComponent {
         ), // Object(z.d)(e.value, 4)
       },
       {
-        title: 'TxFee',
+        title: 'Gas Limit',
         dataIndex: 'txFee',
         key: 'TxFee',
         render: e => (

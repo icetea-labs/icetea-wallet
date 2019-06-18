@@ -8,12 +8,15 @@ export const node = {
   mainnet: ['icetea21.io', 'icetea22.io', 'icetea23.io', 'icetea23.io'],
 }[currentServer];
 export const network = window.localStorage.getItem('network') || node[0];
-export const explorer = 'https://icetea.io/';
-export const termOfService = 'https://icetea.io/';
-export const faq = 'https://icetea.io/';
-export const forums = 'https://icetea.io/';
+export const explorer = 'https://devtools.icetea.io/';
+export const termOfService = 'https://icetea.io/terms.html';
+export const faq = 'https://docs.icetea.io/';
+export const forums = 'https://t.me/iceteachain';
 export const telegram = 'https://t.me/iceteachain';
-export const twitter = 'https://icetea.io/';
+export const twitter = 'https://twitter.com/iceteachain';
 export const mainnet = 'https://icetea.io/';
-export const testnet = 'https://icetea.io/';
-export const iteaScan = 'http://localhost:3006';
+export const testnet = 'https://icetea.io/testnet.html';
+export const iteaScan = process.env.REACT_APP_SCAN;
+export const iteaScanTx = process.env.REACT_APP_SCAN_TX;
+export const iteaScanBlock = process.env.REACT_APP_SCAN_BLOCK;
+export const iteaScanAddress = process.env.REACT_APP_SCAN_ADDR;
