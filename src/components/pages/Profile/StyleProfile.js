@@ -75,7 +75,6 @@ export const LabelPro = styled.label`
 `;
 
 export const Button = styled(BtnActive)`
-  margin-bottom: 50px;
   background: inherit;
   border: 1px solid #15b5dd;
   color: #15b5dd;
@@ -208,4 +207,39 @@ export const Error = styled.p`
   color: red;
   font-size: 13px;
   margin-bottom: 15px;
+`;
+
+export const WarningText = styled.div`
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 16px;
+  margin-left: 40px;
+  color: #48515d;
+  display: flex;
+  position: relative;
+  span {
+    color: #f23051;
+  }
+`;
+export const WarningTooltip = styled.div`
+  margin-left: 8px;
+  cursor: pointer;
+  color: #848e9c;
+  img {
+    width: 20px;
+  }
+  .tips {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    color: #848e9c;
+    display: none;
+    font-size: 12px;
+    background: #fbfbfb;
+    border: 1px solid rgba(234, 236, 239, 0.5);
+  }
+  &:hover .tips {
+    display: block;
+  }
 `;

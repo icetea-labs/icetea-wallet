@@ -157,7 +157,7 @@ function setCommands(commands, defStateAccess) {
     a.textContent = c.text || c.value;
     t.appendChild(a);
     a.onclick = () => {
-      // closeNav();
+      closeNav();
       // botui.action.hide()
       say(c.text || c.value, { human: true });
       console.log('Check', `${c.text} Xem ${c.value}`);
@@ -168,7 +168,6 @@ function setCommands(commands, defStateAccess) {
 
 function handleQueue(contract, defStateAccess) {
   if (queue.length) {
-    console.log('Handle Queue', contract);
     const item = queue.shift();
     callContract(
       contract.methods[`on${item.type}`],
@@ -179,6 +178,7 @@ function handleQueue(contract, defStateAccess) {
       { sendback: item.sendback }
     )
       .then(contractResult => {
+        console.log(contractResult);
         return speak(contractResult.messages || contractResult).then(speakResult => {
           if (typeof speakResult === 'object') {
             speakResult.sendback = contractResult.sendback;
