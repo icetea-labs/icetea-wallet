@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import QueueAnim from 'rc-queue-anim';
 import styled from 'styled-components';
 import { PuLayout, Icon, FontDin } from '../utils';
-import { iteaScan } from '../../../config/networks';
+import { iteaScanTx, iteaScanBlock, iteaScanAddress } from '../../../config/networks';
 
 const Container = styled.div`
   min-width: 320px;
@@ -76,7 +76,7 @@ class PuDetailTx extends PureComponent {
                   <div className="value">
                     <a
                       style={{ display: 'table-cell' }}
-                      href={`${iteaScan}/tx/${detail.txHash}`}
+                      href={iteaScanTx.replace('{hash}', detail.txHash)}
                       rel="noopener"
                       target="blank"
                     >
@@ -89,7 +89,7 @@ class PuDetailTx extends PureComponent {
                   <div className="value">
                     <a
                       style={{ display: 'table-cell' }}
-                      href={`${iteaScan}/block/${detail.blockHeight}`}
+                      href={iteaScanBlock.replace('{height}', detail.blockHeight)}
                       rel="noopener"
                       target="blank"
                     >
@@ -102,7 +102,7 @@ class PuDetailTx extends PureComponent {
                   <div className="value">
                     <a
                       style={{ display: 'table-cell' }}
-                      href={`${iteaScan}/contract/${detail.toAddr}`}
+                      href={iteaScanAddress.replace('{address}', detail.toAddr)}
                       rel="noopener"
                       target="blank"
                     >
@@ -115,7 +115,7 @@ class PuDetailTx extends PureComponent {
                   <div className="value">
                     <a
                       style={{ display: 'table-cell' }}
-                      href={`${iteaScan}/contract/${detail.fromAddr}`}
+                      href={iteaScanAddress.replace('{address}', detail.fromAddr)}
                       rel="noopener"
                       target="blank"
                     >

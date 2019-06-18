@@ -313,7 +313,7 @@ class SendTxMobile extends PureComponent {
         <React.Fragment>
           <Wrapper>
             <Title>
-              <div>ITEA</div>
+              <div>TEA</div>
             </Title>
             <SendTxOne>
               <InputBox>
@@ -334,8 +334,8 @@ class SendTxMobile extends PureComponent {
                 <textarea className="textarea" onChange={this._memoChange} />
                 <DivSelectWordBase align="center" justify="space-between">
                   <p className="fee">
-                    Fee
-                    <span>{`${transferFee} ITEA`}</span>
+                    Gas Limit
+                    <span>{`${transferFee} TEA`}</span>
                   </p>
                   <p className="fee">
                     Available
@@ -352,8 +352,8 @@ class SendTxMobile extends PureComponent {
                 <SendTxTwoWrapper>
                   <div className="header">Confirm Transaction</div>
                   <div className="title">
-                    <span className="name">ITEA</span>
-                    <span className="fullName">IceTea Chain Native Token</span>
+                    <span className="name">TEA</span>
+                    <span className="fullName">Icetea Native Token</span>
                   </div>
                   <div className="row">
                     <div className="title">To:</div>
@@ -374,9 +374,9 @@ class SendTxMobile extends PureComponent {
                     <div className="value">{memo}</div>
                   </div>
                   <div className="row">
-                    <div className="title">Fee:</div>
+                    <div className="title">Gas Limit:</div>
                     <div className="value">
-                      <span>{`${transferFee}  ITEA`}</span>
+                      <span>{`${transferFee}  TEA`}</span>
                     </div>
                   </div>
                 </SendTxTwoWrapper>
