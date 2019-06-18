@@ -160,7 +160,7 @@ function setCommands(commands, defStateAccess) {
       closeNav();
       // botui.action.hide()
       say(c.text || c.value, { human: true });
-      console.log('Check', `${c.text} Xem ${c.value}`);
+      // console.log('Check', `${c.text} Xem ${c.value}`);
       pushToQueue('command', c, c.stateAccess || defStateAccess);
     };
   });
