@@ -5,6 +5,7 @@ import GroupCalendar from './GroupCalendar';
 import PuDetailTx from '../../elements/pu';
 import Table from '../../elements/TablePro';
 import * as actions from '../../../store/actions/transaction';
+import { iteaScanAddress } from '../../../config/networks';
 import Layout from '../../layout';
 // import TxHash from './TxHash';
 
@@ -274,8 +275,8 @@ class index extends PureComponent {
             <GroupCalendar hasType={false} hasPair={false} onFilterChange={this.filter} defaultDate={new Date()} />
             <WrapperTextFullHistory>
               Not every transaction is included below. For full history, please refer to
-              <a href={''.concat('....', '/address/').concat(address)} target="_blank" rel="noopener noreferrer">
-                here
+              <a href={iteaScanAddress.replace('{address}', address)} target="_blank" rel="noopener noreferrer">
+                here  
               </a>
               .
             </WrapperTextFullHistory>

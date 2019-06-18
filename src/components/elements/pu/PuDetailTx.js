@@ -76,7 +76,7 @@ class PuDetailTx extends PureComponent {
                   <div className="value">
                     <a
                       style={{ display: 'table-cell' }}
-                      href={iteaScanTx.replace(detail.txHash)}
+                      href={iteaScanTx.replace('{hash}', detail.txHash)}
                       rel="noopener"
                       target="blank"
                     >
@@ -89,7 +89,7 @@ class PuDetailTx extends PureComponent {
                   <div className="value">
                     <a
                       style={{ display: 'table-cell' }}
-                      href={iteaScanBlock.replace(detail.blockHeight)}
+                      href={iteaScanBlock.replace('{height}', detail.blockHeight)}
                       rel="noopener"
                       target="blank"
                     >
@@ -102,7 +102,7 @@ class PuDetailTx extends PureComponent {
                   <div className="value">
                     <a
                       style={{ display: 'table-cell' }}
-                      href={iteaScanAddress.replace(detail.toAddr)}
+                      href={iteaScanAddress.replace('{address}', detail.toAddr)}
                       rel="noopener"
                       target="blank"
                     >
@@ -115,7 +115,7 @@ class PuDetailTx extends PureComponent {
                   <div className="value">
                     <a
                       style={{ display: 'table-cell' }}
-                      href={iteaScanAddress.replace(detail.fromAddr)}
+                      href={iteaScanAddress.replace('{address}', detail.fromAddr)}
                       rel="noopener"
                       target="blank"
                     >
