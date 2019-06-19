@@ -106,7 +106,7 @@ const index = {
       path: '/profile',
       exact: true,
       component: Loadable({
-        loader: () => import('../components/pages/Profile/Profile'),
+        loader: () => import('../components/pages/Profile'),
         loading: Loading,
         delay: 500,
         timeout: 5e4,

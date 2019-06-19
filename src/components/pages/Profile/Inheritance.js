@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 
 import STOInput from '../Balances/STOInput';
-import { Wrapper, Content, Title, OwnerList, Button, Table, THead, TBody, OwnerAdd, Note, Guide } from './StyleProfile';
+import { Wrapper, Content, Title, OwnerList, Table, THead, TBody, OwnerAdd, Note, Guide } from './StyleProfile';
+import { H2, TabWrapper, MediaContent, TapWrapperContent, Button } from './Styled';
 
 class Inheritance extends PureComponent {
   constructor(props) {
@@ -24,10 +25,10 @@ class Inheritance extends PureComponent {
   render() {
     const { addOrAlias, wait, lock } = this.state;
     return (
-      <Wrapper>
-        <Content>
-          <Title>Inheritance</Title>
-          <OwnerList>
+      <TabWrapper>
+        <MediaContent>
+          <H2>Inheritance</H2>
+          <TapWrapperContent>
             <Table>
               <THead>
                 <tr>
@@ -82,9 +83,9 @@ class Inheritance extends PureComponent {
                 Please check out <a href="https://docs.icetea.io/">Icetea documentation</a> about inheritance flow.
               </span>
             </Guide>
-          </OwnerList>
-        </Content>
-      </Wrapper>
+          </TapWrapperContent>
+        </MediaContent>
+      </TabWrapper>
     );
   }
 }

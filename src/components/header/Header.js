@@ -54,7 +54,7 @@ const unauthenticated = [
   },
 ];
 
-function setSelectedItem() {
+function setSelectedMenuItem() {
   let path = window.location.pathname;
   path = path.replace(/\/$/, '');
   path = decodeURIComponent(path);
@@ -73,7 +73,7 @@ class Header extends PureComponent {
     super(props);
     this.state = {
       showMobileMenu: false,
-      selectMenuItems: setSelectedItem() && props.address ? authenticated : unauthenticated,
+      selectMenuItems: setSelectedMenuItem() && props.address ? authenticated : unauthenticated,
       // showSearchIcon: false,
     };
   }
