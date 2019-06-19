@@ -41,7 +41,7 @@ export const utils = {
       privateKey = this.getPrivateKeyFromMnemonic(mnemonic, options.index);
       ({ address } = ecc.toPubKeyAndAddress(privateKey));
       options.index += 1;
-      console.log('index', options.index);
+      // console.log('index', options.index);
     } while (options.index < 100 && !codec.isAddressType(address, typeTMP));
 
     return {
