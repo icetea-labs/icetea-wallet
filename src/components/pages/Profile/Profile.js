@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Select, { Option, SelectPropTypes } from 'rc-select';
 import 'rc-select/assets/index.css';
@@ -10,20 +9,12 @@ import 'rc-tabs/assets/index.css';
 import tweb3 from '../../../service/tweb3';
 import { toTEA } from '../../../utils/utils';
 import General from './General';
+import AccOwners from './AccOwners';
+import Inheritance from './Inheritance';
 
 import { H1, H2, Wrapper, MediaContent, WrapperContent, RadioGroup } from './Styled';
 // import '../assets/index.less';
 import { setNeedAuth } from '../../../store/actions/account';
-
-const Item = styled.div`
-  font-size: 16px;
-  color: #212833;
-  font-weight: bold;
-`;
-const Text = styled.div`
-  font-size: 12px;
-  color: #848e9c;
-`;
 
 class Profile extends PureComponent {
   constructor(props) {
@@ -75,7 +66,7 @@ class Profile extends PureComponent {
     }
   };
 
-  onChange = async value => {
+  tabOnChange = async value => {
     console.log(`selected ${value}`);
   };
 
@@ -99,14 +90,6 @@ class Profile extends PureComponent {
         </Option>
       );
     });
-    // console.log('childKey', childKey);
-    // const balance = toTEA(
-    //   childKey.filter(child => {
-    //     return child.address === address;
-    //   })[0].balance
-    // );
-
-    // console.log('balance', balance);
 
     return (
       <Wrapper>
@@ -147,16 +130,16 @@ class Profile extends PureComponent {
                 destroyInactiveTabPane
                 renderTabBar={() => <ScrollableInkTabBar onTabClick={this.onTabClick} />}
                 renderTabContent={() => <TabContent />}
-                onChange={this.onChange}
+                onChange={this.tabOnChange}
               >
                 <TabPane tab="General" key="1" placeholder="loading 1">
                   <General address={selectedAddress} balance={balance} />
                 </TabPane>
                 <TabPane tab="Owners" key="2" placeholder="loading 2">
-                  <General address={selectedAddress} balance={110} />
+                  <AccOwners address={selectedAddress} balance={110} />
                 </TabPane>
                 <TabPane tab="Inheritance" key="3" placeholder="loading 3">
-                  <General address={selectedAddress} balance={110} />
+                  <Inheritance address={selectedAddress} balance={110} />
                 </TabPane>
               </Tabs>
             </div>
