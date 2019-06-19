@@ -165,14 +165,14 @@ class Header extends PureComponent {
               <Icon type="detail-D" />
               <ItemsSubMenuWapper className="subMenus">
                 <li>
-                  <a href={explorer}>Explorer</a>
+                  <a href={explorer}>DevTools</a>
                 </li>
                 <li>
-                  <a href={forums}>Forums</a>
+                  <a href={forums}>Telegram</a>
                 </li>
                 <li>{currentServer === 'mainnet' ? <a href={mainnet}>Mainnet</a> : <a href={testnet}>Testnet</a>}</li>
                 <li>
-                  <a href={faq}>Docs / FAQ</a>
+                  <a href={faq}>Docs</a>
                 </li>
               </ItemsSubMenuWapper>
             </li>

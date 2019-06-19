@@ -114,10 +114,10 @@ export default class STOInput extends PureComponent {
 
   render() {
     const { value } = this.state;
-    const { title, defaultValue, type, autoFocus } = this.props;
+    const { title, defaultValue, type, autoFocus, styleName } = this.props;
 
     return (
-      <InputLabel>
+      <InputLabel className={styleName}>
         <p className={value || defaultValue ? 'label label-value' : 'label'}>{title}</p>
         <div>
           <input type={type} placeholder={title} value={value} autoFocus={autoFocus} onChange={this._textChange} />
@@ -140,4 +140,5 @@ STOInput.defaultProps = {
   value: '',
   defaultValue: '',
   autoFocus: false,
+  styleName: '',
 };

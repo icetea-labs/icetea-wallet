@@ -95,22 +95,22 @@ class Footer extends PureComponent {
           </li>
           <li>
             <a href={forums} target="blank" rel="noopener">
-              Forums
+              Telegram
             </a>
           </li>
           <li>
             <a href={faq} target="blank" rel="noopener">
-              Docs / FAQ
+              Docs
             </a>
           </li>
         </LeftFooter>
         <RightFooter>
           <CopyRight>
             <h3 className="trada">
-              <span>© 2018 - 2019 Icetea. All rights reserved.</span>
+              <span>© 2019 Trada Tech</span>
             </h3>
             <div>
-              <span>© Icons from the Noun Project</span>
+              <span>Icons from the Noun Project</span>
             </div>
           </CopyRight>
           <SocialFooter>

@@ -15,20 +15,8 @@ import { toTEA } from '../../../utils/utils';
 
 const itemsMenu = [
   {
-    text: 'ITEA',
+    text: 'TEA',
     selected: true,
-  },
-  {
-    text: 'BTC',
-    selected: false,
-  },
-  {
-    text: 'ETH',
-    selected: false,
-  },
-  {
-    text: 'VNI',
-    selected: false,
   },
 ];
 
@@ -249,9 +237,9 @@ class SendTransactionOne extends PureComponent {
         <Wrapper style={{ border: 'none', marginTop: '20px' }}>
           <FeeAva>
             <Fee>
-              <span className="fee-title">Fee:</span>
-              <span className="fee-value">0.1 </span>
-              <span>ITEA</span>
+              <span className="fee-title">Gas Limit:</span>
+              <span className="fee-value">0 </span>
+              <span>TEA</span>
             </Fee>
             <Ava>
               <span className="Available-title">Available:</span>

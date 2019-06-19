@@ -171,7 +171,7 @@ class MenuMobile extends PureComponent {
             </div>
             <div className="forums">
               <a href={forums} target="_blank" rel="noopener noreferrer">
-                Forums
+                Telegram
               </a>
             </div>
           </DivSelectWordBase>

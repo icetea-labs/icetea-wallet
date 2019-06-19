@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { zIndex } from '../../constants/styles';
-import { iteaScan } from '../../config/networks';
+import { iteaScanTx } from '../../config/networks';
 // For create keystore
 export const Header1 = styled.div`
   font-size: 24px;
@@ -499,8 +499,9 @@ const HashLoading = styled.div`
 export class TxHash extends PureComponent {
   _gotoExplorer = () => {
     const { props } = this;
-    const e = props.hash;
-    window.open(''.concat(iteaScan, '/tx/').concat(e), 'blank');
+    const hash = props.hash;
+    const url = iteaScanTx.replace('{hash}', hash)
+    window.open(url, 'blank');
   };
 
   render() {
