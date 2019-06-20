@@ -2,7 +2,7 @@ import React from 'react';
 import 'rc-notification/assets/index.css';
 import Notification from 'rc-notification';
 import iconSuccess from '../../assets/img/success.svg';
-import iconWarning from '../../assets/img/warning.png';
+import iconWarning from '../../assets/img/warning.svg';
 import { checkDevice } from './utils';
 
 let notification = null;
