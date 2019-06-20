@@ -127,9 +127,10 @@ class index extends PureComponent {
         };
         childKey.index = indexKey;
         childKey.address = address;
+        childKey.privateKey = privateKey;
 
         isBankAccount = codec.isAddressType(address, AccountType.BANK_ACCOUNT);
-
+        console.log('privateKey', privateKey);
         props.setAccount({
           indexBankKey: isBankAccount ? indexKey : 0,
           indexRegularKey: isBankAccount ? 0 : indexKey,
