@@ -55,20 +55,21 @@ class ManageAccounts extends PureComponent {
     };
   }
 
+  // check viec lien tuc setaccount.
   async componentDidMount() {
     await this.updateBalance();
   }
 
   updateBalance = async () => {
-    const { childKey, setBalanceChildKey } = this.props;
+    const { childKey, setAccount } = this.props;
     const childKeyTmp = [];
-    // console.log('childKey', childKey);
     for (let i = 0; i < childKey.length; i += 1) {
-      const { balance } = await tweb3.getBalance(childKey[i].address);
-      childKey[i].balance = balance;
-      childKeyTmp.push(childKey[i]);
+      const newChild = Object.assign({}, childKey[i]);
+      const { balance } = await tweb3.getBalance(newChild.address);
+      newChild.balance = balance;
+      childKeyTmp.push(newChild);
     }
-    setBalanceChildKey(childKeyTmp);
+    setAccount({ childKey: childKeyTmp });
   };
 
   _gotoExplorer = () => {
@@ -91,16 +92,11 @@ class ManageAccounts extends PureComponent {
       privateKey = utils.getPrivateKeyFromMnemonic(mnemonic, childKey[index].index);
     }
     // console.log('privateKey', childKey[index].index, privateKey);
-    if (privateKey) {
-      // Set default account
-      tweb3.wallet.importAccount(privateKey);
-      tweb3.wallet.defaultAccount = selectedAddress;
-    }
 
     setAccount({
       address: selectedAddress,
-      privateKey,
       balance: selectedBalance,
+      privateKey,
     });
 
     let current = sessionStorage.getItem('user');
@@ -149,11 +145,11 @@ class ManageAccounts extends PureComponent {
     const { mnemonic, addBankAccount, addRegularAccount, indexBankKey, indexRegularKey } = this.props;
     const { selectedType } = this.state;
     const childKey = {
-      address: '',
       indexKey: 0,
-      privateKey: '',
-      balance: 0,
+      address: '',
       selected: false,
+      balance: 0,
+      privateKey: '',
     };
     const options = { index: 0, type: AccountType.BANK_ACCOUNT };
     let account = null;
@@ -171,6 +167,9 @@ class ManageAccounts extends PureComponent {
     childKey.address = account.address;
     childKey.indexKey = account.index;
     childKey.balance = balance;
+    childKey.privateKey = utils.getPrivateKeyFromMnemonic(mnemonic, account.index);
+
+    tweb3.wallet.importAccount(childKey.privateKey);
 
     setTimeout(() => {
       selectedType === AccountType.BANK_ACCOUNT ? addBankAccount(childKey) : addRegularAccount(childKey);
@@ -180,7 +179,7 @@ class ManageAccounts extends PureComponent {
         isShowSelectAccountType: false,
         loading: false,
       });
-    }, 1000);
+    }, 500);
   };
 
   _importAccount = () => {
@@ -205,7 +204,6 @@ class ManageAccounts extends PureComponent {
   render() {
     const { address, privateKey, childKey, needAuth } = this.props;
     const { isShowLogout, isShowSelectAccountType, types, loading } = this.state;
-    // console.log(this.state);
 
     const Accounts = childKey.map((el, index) => {
       return (
@@ -330,33 +328,20 @@ ManageAccounts.defaultProps = {
 };
 
 const mapStateToProps = state => {
-  const {
-    privateKey,
-    needAuth,
-    address,
-    encryptedData,
-    cipher,
-    flags,
-    childKey,
-    mnemonic,
-    indexBankKey,
-    indexRegularKey,
-    balance,
-  } = state.account;
-
+  const { account } = state;
   return {
-    needAuth,
-    privateKey,
-    address,
-    encryptedData,
-    cipher,
-    childKey,
-    mnemonic,
-    indexBankKey,
-    indexRegularKey,
-    flags,
+    needAuth: account.needAuth,
+    privateKey: account.privateKey,
+    address: account.address,
+    encryptedData: account.encryptedData,
+    cipher: account.cipher,
+    childKey: account.childKey,
+    mnemonic: account.mnemonic,
+    indexBankKey: account.indexBankKey,
+    indexRegularKey: account.indexRegularKey,
+    flags: account.flags,
     isIpValid: state.globalData.isIpValid,
-    balance,
+    balance: account.balance,
   };
 };
 

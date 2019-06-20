@@ -4,6 +4,7 @@ import { codec } from '@iceteachain/common';
 import { connect } from 'react-redux';
 import notifi from '../../elements/Notification';
 import tweb3 from '../../../service/tweb3';
+import { toTEA } from '../../../utils/utils';
 import * as actions from '../../../store/actions/account';
 
 import { H2, TabWrapper, MediaContent, TapWrapperContent, WrapperButton, Button } from './Styled';
@@ -16,24 +17,34 @@ class General extends PureComponent {
     if (!privateKey) {
       setNeedAuth(true);
     } else {
-      console.log('faucet address: ', address);
+      console.log('faucet address: ', address, '-', privateKey);
       tweb3
         .contract('system.faucet')
         .methods.request(/* address */)
         .sendCommit({ from: address })
-        .then(() => {
-          notifi.info('Success');
+        .then(async r => {
+          notifi.info(`Faucet Success: ${toTEA(r.returnValue)} TEA`);
+          console.log('r', r.returnValue);
+
+          const { childKey, setAccount } = this.props;
+          const childKeyTmp = [];
+          for (let i = 0; i < childKey.length; i += 1) {
+            const newChild = Object.assign({}, childKey[i]);
+            const { balance } = await tweb3.getBalance(newChild.address);
+            newChild.balance = balance;
+            childKeyTmp.push(newChild);
+          }
+          setAccount({ childKey: childKeyTmp });
         })
         .catch(error => {
-          window.alert(String(error));
-          notifi.warn('You already received 100000000 microtea. No more.');
+          console.log(error);
+          notifi.warn(String(error));
         });
     }
   };
 
   render() {
     const { address, balance } = this.props;
-    console.log('address', address, codec.isBankAddress(address));
 
     return (
       <TabWrapper>
@@ -46,11 +57,11 @@ class General extends PureComponent {
             </div>
             <div className="row">
               <p className="header">Balance:</p>
-              <p> {balance} TEA</p>
+              <p> {toTEA(balance)} TEA</p>
             </div>
 
             <WrapperButton>
-              <Button className="get-tea" onClick={this.registerFaucetEvent}>
+              <Button width="170px" className="get-tea" onClick={this.registerFaucetEvent}>
                 <span>Get TEA from Faucet</span>
               </Button>
             </WrapperButton>
@@ -69,7 +80,7 @@ General.defaultProps = {
 const mapStateToProps = state => {
   const { account } = state;
   return {
-    privateKey: account.privateKey,
+    childKey: account.childKey,
   };
 };
 
@@ -77,6 +88,12 @@ const mapDispatchToProps = dispatch => {
   return {
     setNeedAuth: data => {
       dispatch(actions.setNeedAuth(data));
+    },
+    setBalanceChildKey: data => {
+      dispatch(actions.setBalanceChildKey(data));
+    },
+    setAccount: data => {
+      dispatch(actions.setAccount(data));
     },
   };
 };

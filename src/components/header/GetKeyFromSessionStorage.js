@@ -143,7 +143,7 @@ class GetKeyFromSessionStorage extends PureComponent {
 
       this.timeoutHanle1 = setTimeout(() => {
         try {
-          const { address } = this.props;
+          const { address, childKey } = this.props;
           let privateKey = '';
           let mnemonic = '';
 
@@ -162,14 +162,23 @@ class GetKeyFromSessionStorage extends PureComponent {
               break;
             }
           }
-          // Set default account
-          tweb3.wallet.importAccount(privateKey);
-          tweb3.wallet.defaultAccount = address;
+
+          // add privatekey for child
+          const newChildKey = [];
+          for (let i = 0; i < childKey.length; i += 1) {
+            const child = childKey[i] || {};
+            const privateKeyForChild = utils.getPrivateKeyFromMnemonic(mnemonic, child.index);
+            child.privateKey = privateKeyForChild;
+            newChildKey.push(child);
+            // importAccount into tweb3
+            tweb3.wallet.importAccount(privateKeyForChild);
+          }
 
           setAccount({
             privateKey,
             mnemonic,
             cipher: password,
+            childKey: newChildKey,
           });
 
           this.timeoutHanle2 = setTimeout(() => {
@@ -240,6 +249,7 @@ const mapStateToProps = state => {
     needAuth: account.needAuth,
     address: account.address,
     encryptedData: account.encryptedData,
+    childKey: account.childKey,
     // mnemonic: account.mnemonic,
   };
 };

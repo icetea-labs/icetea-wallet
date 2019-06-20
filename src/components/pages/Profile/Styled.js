@@ -184,7 +184,7 @@ export const Button = styled(BtnActive)`
   background: inherit;
   border: 1px solid #15b5dd;
   color: #15b5dd;
-  width: 170px;
+  width: ${props => props.width || '110px'};
   border-radius: 20px;
   cursor: pointer;
   &:hover {
@@ -199,7 +199,7 @@ export const Button = styled(BtnActive)`
     }
   }
   @media (max-width: 1440px) {
-    width: 110px;
+    width: ${props => props.width || '110px'};
     height: 30px;
     line-height: 28px;
     font-size: 12px;
