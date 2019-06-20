@@ -47,7 +47,6 @@ class Inheritance extends PureComponent {
   }
 
   loadDid = address => {
-    console.log('loadDid Add', address);
     tweb3
       .contract('system.did')
       .methods.query(address)
@@ -55,7 +54,6 @@ class Inheritance extends PureComponent {
       .then(props => {
         if (props) {
           const { inheritors } = props;
-          console.log('Inheritors', Object.keys(inheritors).length);
           if (inheritors && Object.keys(inheritors).length) {
             this.setState({ inheritorList: Object.assign({}, inheritors) });
           } else {
@@ -145,7 +143,7 @@ class Inheritance extends PureComponent {
 
   render() {
     const { inheritor, wait, lock, inheritorList, msgErr, isShowDel } = this.state;
-    console.log('inheritorList CK', Object.keys(inheritorList));
+    // console.log('inheritorList CK', Object.keys(inheritorList));
     const inheritTBL = Object.keys(inheritorList).map(key => (
       <tr key={key}>
         <td>{key}</td>
@@ -156,7 +154,6 @@ class Inheritance extends PureComponent {
         </td>
       </tr>
     ));
-    // console.log('inheritTBL CK', inheritTBL);
 
     return (
       <TabWrapper>

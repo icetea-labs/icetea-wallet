@@ -41,6 +41,13 @@ class AccOwners extends PureComponent {
     this.loadDid(address);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { address } = this.props;
+    if (address !== nextProps.address) {
+      this.loadDid(nextProps.address);
+    }
+  }
+
   loadDid = address => {
     tweb3
       .contract('system.did')
@@ -52,13 +59,15 @@ class AccOwners extends PureComponent {
           if (threshold) {
             this.setState({ weight: threshold });
           } else {
-            this.setState({ weight: 1 });
+            this.setState({ weight: '' });
           }
           if (owners && Object.keys(owners).length) {
             this.setState({ ownersList: Object.assign({}, owners) });
           } else {
             this.setState({ ownersList: {} });
           }
+        } else {
+          this.setState({ weight: '', ownersList: {} });
         }
       });
   };
@@ -85,7 +94,7 @@ class AccOwners extends PureComponent {
     if (!privateKey) {
       setNeedAuth(true);
     } else {
-      if (!ownerAdd || !weight) {
+      if (!ownerAdd) {
         this.setState({ msgErr: 'Owner field is required.' });
         return;
       }
@@ -115,12 +124,13 @@ class AccOwners extends PureComponent {
   _setOwnerWeight = () => {
     const { address, privateKey } = this.props;
     const { setNeedAuth } = this.props;
-    const { weight } = this.state;
+    let { weight } = this.state;
+    weight = parseInt(weight, 10);
     if (!privateKey) {
       setNeedAuth(true);
     } else {
       if (!weight) {
-        this.setState({ weightErr: 'Weight field is required.' });
+        this.setState({ weightErr: 'Weight field is required number.' });
         return;
       }
       tweb3
@@ -264,12 +274,18 @@ class AccOwners extends PureComponent {
     );
   }
 }
+
+AccOwners.defaultProps = {
+  address: '',
+  privateKey: '',
+};
+
 const mapStateToProps = state => {
   const { account } = state;
   return {
-    address: account.address,
-    privateKey: account.privateKey,
-    cipher: account.cipher,
+    // address: account.address,
+    // privateKey: account.privateKey,
+    childKey: account.childKey,
   };
 };
 
