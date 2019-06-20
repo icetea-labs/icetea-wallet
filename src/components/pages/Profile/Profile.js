@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { codec } from '@iceteachain/common';
 import Select, { Option, SelectPropTypes } from 'rc-select';
 import 'rc-select/assets/index.css';
 import Tabs, { TabPane } from 'rc-tabs';
@@ -12,7 +13,6 @@ import AccOwners from './AccOwners';
 import Inheritance from './Inheritance';
 
 import { H1, H2, Wrapper, MediaContent, WrapperContent, RadioGroup } from './Styled';
-// import '../assets/index.less';
 import { setNeedAuth } from '../../../store/actions/account';
 
 class Profile extends PureComponent {
@@ -34,16 +34,33 @@ class Profile extends PureComponent {
         radioValue: value,
         currentAddress: value === 'one' ? address : selectedValue,
       });
-      console.log('new');
     }
   };
 
-  selectOnChange = async value => {
-    // console.log(`selectOnChange selected ${value}`);
+  selectOnChange = value => {
+    // console.log('selectOnChange', value);
     this.setState({
       selectedValue: value,
       currentAddress: value,
     });
+  };
+
+  onSelect = value => {
+    // console.log('onSelect', value);
+  };
+
+  onKeyDown = value => {
+    // console.log('onKeyDown', value);
+    try {
+      if (codec.isAddressType(value)) {
+        this.setState({
+          selectedValue: value,
+          currentAddress: value,
+        });
+      }
+    } catch (e) {
+      // console.log(e);
+    }
   };
 
   tabOnChange = async value => {
@@ -52,7 +69,7 @@ class Profile extends PureComponent {
 
   render() {
     const { radioValue, currentAddress } = this.state;
-    const { address, childKey } = this.props;
+    const { address, privateKey, childKey } = this.props;
     const Options = childKey.map(el => {
       // console.log(el);
       return (
@@ -66,7 +83,7 @@ class Profile extends PureComponent {
       return currentAddress === el.address;
     })[0];
 
-    console.log('render selectedValue', currentAddress);
+    const signers = { address, privateKey, isRepresent: !child };
 
     return (
       <Wrapper>
@@ -94,8 +111,13 @@ class Profile extends PureComponent {
                   className="custom-select"
                   optionFilterProp="desc"
                   onChange={this.selectOnChange}
-                  // allowClear
+                  onSelect={this.onSelect}
+                  onInputKeyDown={this.onKeyDown}
+                  notFoundContent=""
+                  allowClear
                   placeholder="Please input address"
+                  combobox
+                  backfill
                 >
                   {Options}
                 </Select>
@@ -112,6 +134,7 @@ class Profile extends PureComponent {
                 <TabPane tab="General" key="1" placeholder="loading 1">
                   <General
                     address={currentAddress}
+                    signers={signers}
                     privateKey={(child && child.privateKey) || ''}
                     balance={(child && child.balance) || ''}
                   />
