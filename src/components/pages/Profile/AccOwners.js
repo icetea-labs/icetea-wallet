@@ -21,18 +21,47 @@ import {
 import nr from '../../../assets/img/nr.svg';
 import tweb3 from '../../../service/tweb3';
 import notifi from '../../elements/Notification';
-import { setNeedAuth } from '../../../store/actions/account';
+import * as actions from '../../../store/actions/account';
 
 class AccOwners extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       radioValue: 'one',
-      ownerA: '',
+      ownerAdd: '',
+      msgErr: '',
+      ownersList: {},
       weight: '',
       weightErr: '',
     };
   }
+
+  componentDidMount() {
+    const { address } = this.props;
+    this.loadDid(address);
+  }
+
+  loadDid = address => {
+    tweb3
+      .contract('system.did')
+      .methods.query(address)
+      .call()
+      .then(props => {
+        if (props) {
+          const { owners, threshold } = props;
+          if (threshold) {
+            this.setState({ weight: threshold });
+          } else {
+            this.setState({ weight: 1 });
+          }
+          if (owners && Object.keys(owners).length) {
+            this.setState({ ownersList: Object.assign({}, owners) });
+          } else {
+            this.setState({ ownersList: {} });
+          }
+        }
+      });
+  };
 
   radioOnChange = value => {
     const { radioValue } = this.state;
@@ -43,9 +72,41 @@ class AccOwners extends PureComponent {
     }
   };
 
-  _ownerChange = () => {};
+  _ownerChange = e => {
+    this.setState({ msgErr: '', ownerAdd: e });
+  };
 
-  _addOwner = () => {};
+  _addOwner = () => {
+    const { address, privateKey } = this.props;
+    const { ownerAdd } = this.state;
+    const { setNeedAuth } = this.props;
+    let { weight } = this.state;
+    weight = parseInt(weight, 10);
+    if (!privateKey) {
+      setNeedAuth(true);
+    } else {
+      if (!ownerAdd || !weight) {
+        this.setState({ msgErr: 'Owner field is required.' });
+        return;
+      }
+      if (!weight) {
+        this.setState({ msgErr: 'Weight field is required number.' });
+        return;
+      }
+      tweb3
+        .contract('system.did')
+        .methods.addOwner(address, ownerAdd, weight)
+        .sendCommit({ from: address })
+        .then(r => {
+          this.loadDid(address);
+          notifi.info('Success');
+        })
+        .catch(error => {
+          console.error(error);
+          window.alert(String(error));
+        });
+    }
+  };
 
   _ownerWeightChange = e => {
     this.setState({ weightErr: '', weight: e });
@@ -53,12 +114,13 @@ class AccOwners extends PureComponent {
 
   _setOwnerWeight = () => {
     const { address, privateKey } = this.props;
+    const { setNeedAuth } = this.props;
     const { weight } = this.state;
     if (!privateKey) {
-      this.props.setNeedAuth(true);
+      setNeedAuth(true);
     } else {
       if (!weight) {
-        this.setState({ weightErr: 'Weight field is required' });
+        this.setState({ weightErr: 'Weight field is required.' });
         return;
       }
       tweb3
@@ -76,8 +138,43 @@ class AccOwners extends PureComponent {
     }
   };
 
+  _deleteOwner = owner => {
+    const { address, privateKey } = this.props;
+    const { setNeedAuth } = this.props;
+    if (!privateKey) {
+      setNeedAuth(true);
+    } else {
+      if (!window.confirm(`Sure to delete ${owner}?`)) {
+        return;
+      }
+
+      tweb3
+        .contract('system.did')
+        .methods.removeOwner(address, owner)
+        .sendCommit({ from: address })
+        .then(r => {
+          this.loadDid(address);
+          notifi.info('Success');
+        })
+        .catch(error => {
+          console.error(error);
+          window.alert(String(error));
+        });
+    }
+  };
+
   render() {
-    const { ownerA, radioValue, weight, weightErr } = this.state;
+    const { ownerAdd, msgErr, ownersList, radioValue, weight, weightErr } = this.state;
+    const ownersListTBL = Object.keys(ownersList).map(key => (
+      <tr key={key}>
+        <td>{key}</td>
+        <td>{ownersList[key]}</td>
+        <td>
+          <span onClick={() => this._deleteOwner(key)}>X</span>
+        </td>
+      </tr>
+    ));
+
     return (
       <TabWrapper>
         <MediaContent>
@@ -113,38 +210,29 @@ class AccOwners extends PureComponent {
                       <th />
                     </tr>
                   </THead>
-                  <TBody>
-                    <tr>
-                      <td>teat13qe0ntm2l4k9m567rxlevdkxxpa74685n8vdhn</td>
-                      <td>1</td>
-                      <td>x</td>
-                    </tr>
-                    <tr>
-                      <td>teat1l3dgxy0nyud7vh9cwcem73had74q2us5uxp04v</td>
-                      <td>1</td>
-                      <td>x</td>
-                    </tr>
-                    <tr>
-                      <td>teat1l3dgxy0nyud7vh9cwcem73had74q2us5uxp04v</td>
-                      <td>1</td>
-                      <td>x</td>
-                    </tr>
-                  </TBody>
+                  <TBody>{ownersListTBL}</TBody>
                 </Table>
                 <OwnerAdd>
                   <STOInput
                     title="Owner address or alias"
                     styleName="addText"
                     type="text"
-                    defaulValue={ownerA}
+                    defaulValue={ownerAdd}
                     onChange={this._ownerChange}
                     autoFocus
                   />
-                  <STOInput title="Weight" type="text" onChange={this._ownerChange} onFocus={this._ownerChange} />
+                  <STOInput
+                    title="Weight"
+                    type="number"
+                    defaulValue={weight}
+                    onChange={this._ownerWeightChange}
+                    onFocus={this._ownerWeightChange}
+                  />
                   <Button onClick={this._addOwner}>
                     <span>Add</span>
                   </Button>
                 </OwnerAdd>
+                {msgErr && <Error>{msgErr}</Error>}
                 <WarningText>
                   <span>Require approval weight of at least (?):</span>
                   <WarningTooltip>
@@ -159,7 +247,7 @@ class AccOwners extends PureComponent {
                   <STOInput
                     title="Weight"
                     type="number"
-                    defaulValue={weight}
+                    value={weight}
                     onChange={this._ownerWeightChange}
                     onFocus={this._ownerWeightChange}
                   />
@@ -188,7 +276,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setNeedAuth: data => {
-      dispatch(setNeedAuth(data));
+      dispatch(actions.setNeedAuth(data));
     },
   };
 };
