@@ -48,33 +48,39 @@ const addChildKey = (state, action, type) => {
   const childKey = {
     index: action.data.indexKey,
     address: action.data.address,
-    privateKey: action.data.privateKey || '',
-    balance: action.data.balance || 0,
     selected: action.data.selected || false,
+    balance: action.data.balance || 0,
+    privateKey: action.data.privateKey || '',
   };
   let isNewAddress = true;
-  state.childKey.forEach(element => {
-    if (element === childKey.address) {
-      isNewAddress = false;
-    }
-  });
+  let userInfo = sessionStorage.getItem('user');
+  userInfo = (userInfo && JSON.parse(userInfo)) || {};
 
-  if (isNewAddress) {
-    // add to state
-    state.childKey.push(childKey);
-    // add to storage
-    let current = sessionStorage.getItem('user');
-    if (!current) {
-      current = {};
-    } else {
-      current = JSON.parse(current);
-      current.childKey.push({ index: childKey.index, address: childKey.address, selected: false });
-      type === AccountType.BANK_ACCOUNT
-        ? (current.indexBankKey = action.data.indexKey)
-        : (current.indexRegularKey = action.data.indexKey);
-      sessionStorage.setItem('user', JSON.stringify(current));
+  for (let i = 0; i < userInfo.childKey.length; i += 1) {
+    const account = userInfo.childKey[i];
+    // console.log('account', account);
+    if (account.address === childKey.address) {
+      isNewAddress = false;
+      break;
     }
   }
+
+  if (isNewAddress) {
+    // add to storage
+    userInfo.childKey.push({ index: childKey.index, address: childKey.address, selected: false });
+    type === AccountType.BANK_ACCOUNT
+      ? (userInfo.indexBankKey = action.data.indexKey)
+      : (userInfo.indexRegularKey = action.data.indexKey);
+
+    sessionStorage.setItem('user', JSON.stringify(userInfo));
+
+    const newChildKey = state.childKey.slice(0);
+    newChildKey.push(childKey);
+
+    return newChildKey;
+  }
+
+  return state.childKey;
 };
 
 const account = (state = initialState, action) => {
@@ -84,12 +90,20 @@ const account = (state = initialState, action) => {
       return Object.assign({}, state, action.data);
 
     case actionTypes.ADD_NEW_BANK_ACCOUNT:
-      addChildKey(state, action, AccountType.BANK_ACCOUNT);
-      return Object.assign({}, state, { indexBankKey: action.data.indexKey });
+      return Object.assign(
+        {},
+        state,
+        { indexBankKey: action.data.indexKey },
+        { childKey: addChildKey(state, action, AccountType.BANK_ACCOUNT) }
+      );
 
     case actionTypes.ADD_NEW_REGULAR_ACCOUNT:
-      addChildKey(state, action, AccountType.REGULAR_ACCOUNT);
-      return Object.assign({}, state, { indexRegularKey: action.data.indexKey });
+      return Object.assign(
+        {},
+        state,
+        { indexRegularKey: action.data.indexKey },
+        { childKey: addChildKey(state, action, AccountType.REGULAR_ACCOUNT) }
+      );
 
     case actionTypes.IMPORT_NEW_ACCOUNT:
       return addChildKey(state, action);

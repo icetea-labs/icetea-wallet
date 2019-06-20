@@ -11,6 +11,7 @@ import ByMnemonic from './ByMnemonic';
 import ByPrivateKey from './ByPrivateKey';
 import SelectUnlockType from './SelectUnlockType';
 import { utils } from '../../../utils';
+import tweb3 from '../../../service/tweb3';
 import {
   Wrapper,
   Logo,
@@ -120,9 +121,9 @@ class index extends PureComponent {
         const childKey = {
           index: 0,
           address: '',
-          privateKey: '',
-          balance: 0,
           selected: true,
+          balance: 0,
+          privateKey: '',
         };
         childKey.index = indexKey;
         childKey.address = address;
@@ -142,10 +143,14 @@ class index extends PureComponent {
           encryptedData,
           userInfo: {},
         });
+        // set defaultAccount for tweb3
+        tweb3.wallet.importAccount(privateKey);
+        tweb3.wallet.defaultAccount = address;
         // this.props.getAccount(address)
         // !o.isHardware && privateKey && (n = Object(v.b)(e, r));
-        delete childKey.privateKey;
-        delete childKey.balance;
+        const newChildKey = Object.assign({}, childKey);
+        delete newChildKey.privateKey;
+        delete newChildKey.balance;
         sessionStorage.setItem(
           'user',
           JSON.stringify({
@@ -155,7 +160,7 @@ class index extends PureComponent {
             mnemonic: encryptedData || mnemonic,
             // mnemonic,
             flags: false, // o
-            childKey: [childKey],
+            childKey: [newChildKey],
           })
         );
 
