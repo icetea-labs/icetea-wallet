@@ -17,9 +17,9 @@ import {
   Guide,
   Error,
 } from './Styled';
-import { setNeedAuth } from '../../../store/actions/account';
 import notifi from '../../elements/Notification';
-import { PuConfirm } from '../../elements/PuConfirm';
+// import { PuConfirm } from '../../elements/PuConfirm';
+import * as actions from '../../../store/actions/account';
 
 class Inheritance extends PureComponent {
   constructor(props) {
@@ -59,12 +59,13 @@ class Inheritance extends PureComponent {
 
   _addInherit = () => {
     const { address, privateKey } = this.props;
+    const { setNeedAuth } = this.props;
     const { inheritor } = this.state;
     let { wait, lock } = this.state;
-    wait = parseInt(wait);
-    lock = parseInt(lock);
+    wait = parseInt(wait, 10);
+    lock = parseInt(lock, 10);
     if (!privateKey) {
-      this.props.setNeedAuth(true);
+      setNeedAuth(true);
     } else {
       if (!inheritor) {
         this.setState({
@@ -97,10 +98,11 @@ class Inheritance extends PureComponent {
 
   _deleteInherit = inheritor => {
     const { address, privateKey } = this.props;
+    const { setNeedAuth } = this.props;
     if (!privateKey) {
-      this.props.setNeedAuth(true);
+      setNeedAuth(true);
     } else {
-      if (!window.confirm('Sure to delete ' + inheritor + '?')) {
+      if (!window.confirm(`Sure to delete ${inheritor}?`)) {
         return;
       }
 
@@ -120,15 +122,15 @@ class Inheritance extends PureComponent {
   };
 
   _addOrAliasChange = e => {
-    this.setState({ inheritorErr: '', inheritor: e });
+    this.setState({ msgErr: '', inheritor: e });
   };
 
   _waitChange = e => {
-    this.setState({ waitErr: '', wait: e });
+    this.setState({ msgErr: '', wait: e });
   };
 
   _lockChange = e => {
-    this.setState({ lockErr: '', lock: e });
+    this.setState({ msgErr: '', lock: e });
   };
 
   render() {
@@ -216,19 +218,23 @@ class Inheritance extends PureComponent {
   }
 }
 
+Inheritance.defaultProps = {
+  address: '',
+  privateKey: '',
+};
+
 const mapStateToProps = state => {
   const { account } = state;
   return {
-    address: account.address,
-    privateKey: account.privateKey,
-    cipher: account.cipher,
+    // address: account.address,
+    // privateKey: account.privateKey,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     setNeedAuth: data => {
-      dispatch(setNeedAuth(data));
+      dispatch(actions.setNeedAuth(data));
     },
   };
 };
