@@ -11,17 +11,27 @@ import { H2, TabWrapper, MediaContent, TapWrapperContent, WrapperButton, Button 
 
 class General extends PureComponent {
   registerFaucetEvent = () => {
-    const { address, privateKey } = this.props;
+    const { address, privateKey, signers } = this.props;
     const { setNeedAuth } = this.props;
+    let privateKeyTMP = '';
+    let opts = '';
 
-    if (!privateKey) {
+    if (signers.isRepresent) {
+      privateKeyTMP = signers.privateKey;
+      opts = { from: address, signers: signers.address };
+    } else {
+      privateKeyTMP = privateKey;
+      opts = { from: address };
+    }
+
+    if (!privateKeyTMP) {
       setNeedAuth(true);
     } else {
-      console.log('faucet address: ', address, '-', privateKey);
+      console.log('faucet address: ', address, '-', privateKeyTMP);
       tweb3
         .contract('system.faucet')
         .methods.request(/* address */)
-        .sendCommit({ from: address })
+        .sendCommit(opts)
         .then(async r => {
           notifi.info(`Faucet Success: ${toTEA(r.returnValue)} TEA`);
           console.log('r', r.returnValue);
@@ -45,6 +55,20 @@ class General extends PureComponent {
 
   render() {
     const { address, balance } = this.props;
+    const typeOfAccount = (() => {
+      try {
+        if (codec.isBankAddress(address)) {
+          return 'Bank account';
+        }
+        if (codec.isRegularAddress(address)) {
+          return 'Regular account';
+        }
+
+        return 'Invalid address';
+      } catch (e) {
+        return 'Invalid address';
+      }
+    })();
 
     return (
       <TabWrapper>
@@ -53,7 +77,7 @@ class General extends PureComponent {
           <TapWrapperContent>
             <div className="row">
               <p className="header">Type:</p>
-              <p> {codec.isBankAddress(address) ? 'Bank account' : 'Regular account'}</p>
+              <p> {typeOfAccount}</p>
             </div>
             <div className="row">
               <p className="header">Balance:</p>

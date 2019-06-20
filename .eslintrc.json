@@ -20,7 +20,7 @@
     "no-nested-ternary": 0,
     "no-console": 0,
     "prettier/prettier": ["error", { "singleQuote": true }],
-    "prefer-destructuring": ["error", { "object": true, "array": false }],
+    // "prefer-destructuring": ["error", { "object": true, "array": false }],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   },
   "env": {
