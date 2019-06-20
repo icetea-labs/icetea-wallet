@@ -40,7 +40,7 @@ export const RadioGroup = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
-  li {
+  & > li {
     height: 40px;
     line-height: 40px;
     cursor: pointer;
@@ -101,7 +101,7 @@ export const RadioGroup = styled.div`
     border-bottom-left-radius: 4px; */
     font-weight: 600;
   }
-  li.on .selected {
+  & > li.on .selected {
     display: block;
     border-color: #15b5dd;
     opacity: 1;

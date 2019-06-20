@@ -38,12 +38,20 @@ class Profile extends PureComponent {
     }
   };
 
-  selectOnChange = async value => {
-    // console.log(`selectOnChange selected ${value}`);
+  selectOnChange = value => {
+    // console.log('selectOnChange', value);
     this.setState({
       selectedValue: value,
       currentAddress: value,
     });
+  };
+
+  onSelect = value => {
+    // console.log('onSelect', value);
+  };
+
+  onKeyDown = value => {
+    // console.log('onKeyDown', value);
   };
 
   tabOnChange = async value => {
@@ -66,7 +74,7 @@ class Profile extends PureComponent {
       return currentAddress === el.address;
     })[0];
 
-    console.log('render selectedValue', currentAddress);
+    // console.log('render selectedValue', currentAddress);
 
     return (
       <Wrapper>
@@ -94,8 +102,13 @@ class Profile extends PureComponent {
                   className="custom-select"
                   optionFilterProp="desc"
                   onChange={this.selectOnChange}
-                  // allowClear
+                  onSelect={this.onSelect}
+                  onInputKeyDown={this.onKeyDown}
+                  notFoundContent=""
+                  allowClear
                   placeholder="Please input address"
+                  combobox
+                  backfill
                 >
                   {Options}
                 </Select>
