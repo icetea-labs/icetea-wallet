@@ -15,11 +15,10 @@ import {
   OwnerAdd,
   Note,
   Guide,
-  Error,
 } from './Styled';
 import notifi from '../../elements/Notification';
-// import { PuConfirm } from '../../elements/PuConfirm';
 import * as actions from '../../../store/actions/account';
+import { Icon } from '../../elements/utils';
 
 class Inheritance extends PureComponent {
   constructor(props) {
@@ -29,8 +28,9 @@ class Inheritance extends PureComponent {
       lock: '',
       inheritor: '',
       inheritorList: {},
-      msgErr: '',
-      isShowDel: false,
+      inheErr: '',
+      waitErr: '',
+      lockErr: '',
     };
   }
 
@@ -77,13 +77,19 @@ class Inheritance extends PureComponent {
     } else {
       if (!inheritor) {
         this.setState({
-          msgErr: 'Address or alias field is required',
+          inheErr: 'Address or alias field is required',
         });
         return;
       }
-      if (!wait || !lock) {
+      if (!wait) {
         this.setState({
-          msgErr: 'Wait and Lock field is required number',
+          waitErr: 'Wait field is required number',
+        });
+        return;
+      }
+      if (!lock) {
+        this.setState({
+          lockErr: 'Lock field is required number',
         });
         return;
       }
@@ -94,6 +100,11 @@ class Inheritance extends PureComponent {
         .then(() => {
           this.loadDid(address);
           notifi.info('Add inheritance success!');
+          this.setState({
+            inheritor: '',
+            wait: '',
+            lock: '',
+          });
         })
         .catch(error => {
           console.error(error);
@@ -110,9 +121,9 @@ class Inheritance extends PureComponent {
     if (!privateKey) {
       setNeedAuth(true);
     } else {
-      if (!window.confirm(`Sure to delete ${inheritor}?`)) {
-        return;
-      }
+      // if (!window.confirm(`Sure to delete ${inheritor}?`)) {
+      //   return;
+      // }
 
       tweb3
         .contract('system.did')
@@ -130,27 +141,29 @@ class Inheritance extends PureComponent {
   };
 
   _addOrAliasChange = e => {
-    this.setState({ msgErr: '', inheritor: e });
+    this.setState({ inheErr: '', inheritor: e });
   };
 
   _waitChange = e => {
-    this.setState({ msgErr: '', wait: e });
+    this.setState({ waitErr: '', wait: e });
   };
 
   _lockChange = e => {
-    this.setState({ msgErr: '', lock: e });
+    this.setState({ lockErr: '', lock: e });
   };
 
   render() {
-    const { inheritor, wait, lock, inheritorList, msgErr, isShowDel } = this.state;
+    const { inheritor, wait, lock, inheritorList, inheErr, waitErr, lockErr } = this.state;
     // console.log('inheritorList CK', Object.keys(inheritorList));
     const inheritTBL = Object.keys(inheritorList).map(key => (
       <tr key={key}>
-        <td>{key}</td>
-        <td>{inheritorList[key].waitPeriod}</td>
-        <td>{inheritorList[key].lockPeriod}</td>
-        <td>
-          <span onClick={() => this._deleteInherit(key)}>X</span>
+        <td style={{ width: '40%' }}>{key}</td>
+        <td style={{ width: '20%' }}>{inheritorList[key].waitPeriod}</td>
+        <td style={{ width: '20%' }}>{inheritorList[key].lockPeriod}</td>
+        <td style={{ width: '20%' }}>
+          <span onClick={() => this._deleteInherit(key)}>
+            <Icon type="delete" color="#848E9C" hoverColor="#15b5dd" />
+          </span>
         </td>
       </tr>
     ));
@@ -173,7 +186,8 @@ class Inheritance extends PureComponent {
             </Table>
             <OwnerAdd>
               <STOInput
-                width="360px"
+                msgErr={inheErr}
+                width="40%"
                 title="Address or alias"
                 type="text"
                 defaultValue={inheritor}
@@ -181,6 +195,8 @@ class Inheritance extends PureComponent {
                 autoFocus
               />
               <STOInput
+                msgErr={waitErr}
+                width="20%"
                 title="Wait"
                 type="number"
                 defaultValue={wait}
@@ -188,6 +204,8 @@ class Inheritance extends PureComponent {
                 onFocus={this._waitChange}
               />
               <STOInput
+                msgErr={lockErr}
+                width="20%"
                 title="Lock"
                 type="number"
                 defaultValue={lock}
@@ -198,7 +216,6 @@ class Inheritance extends PureComponent {
                 <span>Add</span>
               </Button>
             </OwnerAdd>
-            {msgErr && <Error>{msgErr}</Error>}
             <Note>
               <p>- Wait: how many days the inheritor has to wait before he/she can make inheritance claim</p>
               <p>- Lock: how many days he/she is locked after a rejected inheritance claim</p>
@@ -208,16 +225,6 @@ class Inheritance extends PureComponent {
                 Please check out <a href="https://docs.icetea.io/">Icetea documentation</a> about inheritance flow.
               </span>
             </Guide>
-            {/* {isShowDel && (
-              <PuConfirm
-                cancelText="Cancel"
-                okText="OK"
-                confirm={this._confirmDelete}
-                cancel={() => this.setState({ isShowDel: false })}
-              >
-                <p>Are you sure you want to close wallet?</p>
-              </PuConfirm>
-            )} */}
           </TapWrapperContent>
         </MediaContent>
       </TabWrapper>

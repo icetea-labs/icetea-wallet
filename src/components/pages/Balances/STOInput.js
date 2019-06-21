@@ -3,10 +3,14 @@ import styled from 'styled-components';
 import { Icon } from '../../elements/utils';
 
 // Component 1093
+const Wrapper = styled.div`
+  /* position: relative; */
+  display: block;
+  width: ${props => (props.width ? props.width : '')};
+`;
 
 const InputLabel = styled.div`
   position: relative;
-  width: ${props => (props.width ? props.width : '')};
   input {
     border: none;
     width: 100%;
@@ -63,6 +67,11 @@ const Clear = styled.div`
   cursor: pointer;
 `;
 
+const Error = styled.p`
+  color: red;
+  font-size: 13px;
+`;
+
 export default class STOInput extends PureComponent {
   constructor(props) {
     super(props);
@@ -115,27 +124,31 @@ export default class STOInput extends PureComponent {
 
   render() {
     const { value } = this.state;
-    const { title, defaultValue, type, autoFocus, width } = this.props;
+    const { title, defaultValue, type, autoFocus, width, msgErr } = this.props;
 
     return (
-      <InputLabel width={width}>
-        <p className={value || defaultValue ? 'label label-value' : 'label'}>{title}</p>
-        <div>
-          <input type={type} placeholder={title} value={value} autoFocus={autoFocus} onChange={this._textChange} />
-          <div className="border-bottom" />
-          {(!!value || !!defaultValue) && (
-            <Clear onClick={this._clear}>
-              <Icon type="clear" size="14" />
-            </Clear>
-          )}
-        </div>
-      </InputLabel>
+      <Wrapper width={width}>
+        <InputLabel>
+          <p className={value || defaultValue ? 'label label-value' : 'label'}>{title}</p>
+          <div>
+            <input type={type} placeholder={title} value={value} autoFocus={autoFocus} onChange={this._textChange} />
+            <div className="border-bottom" />
+            {(!!value || !!defaultValue) && (
+              <Clear onClick={this._clear}>
+                <Icon type="clear" size="14" />
+              </Clear>
+            )}
+          </div>
+        </InputLabel>
+        <div> {msgErr && <Error>{msgErr}</Error>}</div>
+      </Wrapper>
     );
   }
 }
 
 STOInput.defaultProps = {
   onChange() {},
+  msgErr: '',
   title: '',
   width: '',
   type: 'text',
