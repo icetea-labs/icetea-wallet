@@ -225,7 +225,8 @@ class AccOwners extends PureComponent {
                 <OwnerAdd>
                   <STOInput
                     title="Owner address or alias"
-                    styleName="addText"
+                    // styleName="addText"
+                    width="360px"
                     type="text"
                     defaultValue={ownerAdd}
                     onChange={this._ownerChange}

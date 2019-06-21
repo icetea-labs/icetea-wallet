@@ -173,7 +173,7 @@ class Inheritance extends PureComponent {
             </Table>
             <OwnerAdd>
               <STOInput
-                styleName="addText"
+                width="360px"
                 title="Address or alias"
                 type="text"
                 defaultValue={inheritor}
