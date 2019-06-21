@@ -309,6 +309,9 @@ export const TBody = styled.tbody`
     text-indent: 10px;
     border-left: 1px solid rgb(255, 255, 255);
   }
+  tr td:last-child {
+    /* styles */
+  }
   tr:hover {
     box-shadow: rgba(90, 102, 124, 0.2) 0px 1px 20px;
   }
@@ -319,9 +322,6 @@ export const OwnerAdd = styled.div`
   padding: 20px 0px;
   margin-left: 40px;
   display: flex;
-  .addText {
-    width: 360px;
-  }
 `;
 
 export const Note = styled.div`
@@ -375,6 +375,7 @@ export const WarningText = styled.div`
   font-size: 16px;
   line-height: 16px;
   margin-left: 40px;
+  margin-bottom: 10px;
   color: #48515d;
   display: flex;
   position: relative;
@@ -391,7 +392,7 @@ export const WarningTooltip = styled.div`
   }
   .tips {
     position: absolute;
-    left: 0;
+    left: 50px;
     width: 100%;
     padding: 10px;
     color: #848e9c;

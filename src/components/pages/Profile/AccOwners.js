@@ -16,12 +16,12 @@ import {
   WarningText,
   WarningTooltip,
   RadioGroup,
-  Error,
 } from './Styled';
 import nr from '../../../assets/img/nr.svg';
 import tweb3 from '../../../service/tweb3';
 import notifi from '../../elements/Notification';
 import * as actions from '../../../store/actions/account';
+import { Icon } from '../../elements/utils';
 
 class AccOwners extends PureComponent {
   constructor(props) {
@@ -29,10 +29,12 @@ class AccOwners extends PureComponent {
     this.state = {
       radioValue: 'one',
       ownerAdd: '',
-      msgErr: '',
+      ownerErr: '',
       ownersList: {},
       weight: '',
       weightErr: '',
+      threshold: '',
+      thresholdErr: '',
     };
   }
 
@@ -57,9 +59,9 @@ class AccOwners extends PureComponent {
         if (props) {
           const { owners, threshold } = props;
           if (threshold) {
-            this.setState({ weight: threshold });
+            this.setState({ weight: threshold, threshold: threshold });
           } else {
-            this.setState({ weight: '' });
+            this.setState({ weight: 1, threshold: 1 });
           }
           if (owners && Object.keys(owners).length) {
             this.setState({ ownersList: Object.assign({}, owners) });
@@ -67,7 +69,7 @@ class AccOwners extends PureComponent {
             this.setState({ ownersList: {} });
           }
         } else {
-          this.setState({ weight: '', ownersList: {} });
+          this.setState({ weight: 1, threshold: 1, ownersList: {} });
         }
       });
   };
@@ -82,7 +84,7 @@ class AccOwners extends PureComponent {
   };
 
   _ownerChange = e => {
-    this.setState({ msgErr: '', ownerAdd: e });
+    this.setState({ ownerErr: '', ownerAdd: e });
   };
 
   _addOwner = () => {
@@ -95,24 +97,25 @@ class AccOwners extends PureComponent {
       setNeedAuth(true);
     } else {
       if (!ownerAdd) {
-        this.setState({ msgErr: 'Owner field is required.' });
+        this.setState({ ownerErr: 'Owner field is required.' });
         return;
       }
       if (!weight) {
-        this.setState({ msgErr: 'Weight field is required number.' });
+        this.setState({ weightErr: 'Weight field is required number.' });
         return;
       }
       tweb3
         .contract('system.did')
         .methods.addOwner(address, ownerAdd, weight)
         .sendCommit({ from: address })
-        .then(r => {
+        .then(() => {
           this.loadDid(address);
-          notifi.info('Success');
+          notifi.info('Add owner success!');
+          this.setState({ ownerAdd: '', weight: '' });
         })
         .catch(error => {
           console.error(error);
-          window.alert(String(error));
+          notifi.warn(String(error));
         });
     }
   };
@@ -121,29 +124,33 @@ class AccOwners extends PureComponent {
     this.setState({ weightErr: '', weight: e });
   };
 
+  _ownerThresholdChange = e => {
+    this.setState({ thresholdErr: '', threshold: e });
+  };
+
   _setOwnerWeight = () => {
     const { address, privateKey } = this.props;
     const { setNeedAuth } = this.props;
-    let { weight } = this.state;
-    weight = parseInt(weight, 10);
+    let { threshold } = this.state;
+    threshold = parseInt(threshold, 10);
     if (!privateKey) {
       setNeedAuth(true);
     } else {
-      if (!weight) {
-        this.setState({ weightErr: 'Weight field is required number.' });
+      if (!threshold) {
+        this.setState({ thresholdErr: 'Weight field is required number.' });
         return;
       }
       tweb3
         .contract('system.did')
-        .methods.setThreshold(address, +weight)
+        .methods.setThreshold(address, +threshold)
         .sendCommit({ from: address })
         .then(r => {
-          this.setState({ weight: r.result });
-          notifi.info('Success');
+          this.setState({ threshold: r.result });
+          notifi.info('Set owner weight success!');
         })
         .catch(error => {
           console.error(error);
-          window.alert(String(error));
+          notifi.warn(String(error));
         });
     }
   };
@@ -154,33 +161,35 @@ class AccOwners extends PureComponent {
     if (!privateKey) {
       setNeedAuth(true);
     } else {
-      if (!window.confirm(`Sure to delete ${owner}?`)) {
-        return;
-      }
+      // if (!window.confirm(`Sure to delete ${owner}?`)) {
+      //   return;
+      // }
 
       tweb3
         .contract('system.did')
         .methods.removeOwner(address, owner)
         .sendCommit({ from: address })
-        .then(r => {
+        .then(() => {
           this.loadDid(address);
-          notifi.info('Success');
+          notifi.info('Delete owner success!');
         })
         .catch(error => {
           console.error(error);
-          window.alert(String(error));
+          notifi.warn(String(error));
         });
     }
   };
 
   render() {
-    const { ownerAdd, msgErr, ownersList, radioValue, weight, weightErr } = this.state;
+    const { ownerAdd, ownerErr, ownersList, radioValue, weight, weightErr, threshold, thresholdErr } = this.state;
     const ownersListTBL = Object.keys(ownersList).map(key => (
       <tr key={key}>
-        <td>{key}</td>
-        <td>{ownersList[key]}</td>
-        <td>
-          <span onClick={() => this._deleteOwner(key)}>X</span>
+        <td style={{ width: '30%' }}>{key}</td>
+        <td style={{ width: '20%' }}>{ownersList[key]}</td>
+        <td style={{ width: '20%' }}>
+          <span onClick={() => this._deleteOwner(key)}>
+            <Icon type="delete" color="#848E9C" hoverColor="#15b5dd" />
+          </span>
         </td>
       </tr>
     ));
@@ -224,17 +233,20 @@ class AccOwners extends PureComponent {
                 </Table>
                 <OwnerAdd>
                   <STOInput
+                    msgErr={ownerErr}
                     title="Owner address or alias"
-                    styleName="addText"
+                    width="43%"
                     type="text"
-                    defaulValue={ownerAdd}
+                    defaultValue={ownerAdd}
                     onChange={this._ownerChange}
                     autoFocus
                   />
                   <STOInput
+                    msgErr={weightErr}
                     title="Weight"
+                    width="29%"
                     type="number"
-                    defaulValue={weight}
+                    defaultValue={weight}
                     onChange={this._ownerWeightChange}
                     onFocus={this._ownerWeightChange}
                   />
@@ -242,7 +254,6 @@ class AccOwners extends PureComponent {
                     <span>Add</span>
                   </Button>
                 </OwnerAdd>
-                {msgErr && <Error>{msgErr}</Error>}
                 <WarningText>
                   <span>Require approval weight of at least (?):</span>
                   <WarningTooltip>
@@ -255,17 +266,17 @@ class AccOwners extends PureComponent {
                 </WarningText>
                 <OwnerAdd>
                   <STOInput
+                    msgErr={thresholdErr}
                     title="Weight"
                     type="number"
-                    value={weight}
-                    onChange={this._ownerWeightChange}
-                    onFocus={this._ownerWeightChange}
+                    defaultValue={threshold}
+                    onChange={this._ownerThresholdChange}
+                    onFocus={this._ownerThresholdChange}
                   />
                   <Button onClick={this._setOwnerWeight}>
                     <span>Set</span>
                   </Button>
                 </OwnerAdd>
-                {weightErr && <Error>{weightErr}</Error>}
               </OwnerList>
             )}
           </TapWrapperContent>
