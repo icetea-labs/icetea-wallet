@@ -24,8 +24,8 @@ export const H2 = styled.div`
   color: #212833;
   font-size: 18px;
   background: #fff;
-  height: 40px;
-  line-height: 40px;
+  height: 30px;
+  line-height: 30px;
 `;
 export const WrapperContent = styled.div`
   /* display: flex; */
@@ -155,43 +155,80 @@ export const TabWrapper = styled.div`
   /* background: #fdfdfd; */
   display: flex;
   justify-content: center;
+  margin-bottom: 50px;
+`;
+export const WrapperBlock = styled.div`
+  padding: 0 0 10px 0;
 `;
 export const TapWrapperContent = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
   /* box-shadow: 0px 1px 20px 0px rgba(90, 102, 124, 0.08); */
-  padding: 0 5px 100px 15px;
-  p {
-    height: 40px;
-    line-height: 40px;
-    font-size: 16px;
-    font-weight: 500;
-  }
+  padding: 0 15px 0 15px;
   .row {
     display: inline-flex;
     .header {
       font-weight: 600;
       margin-right: 10px;
     }
+    p {
+      height: 30px;
+      line-height: 30px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+  .alias {
+    display: inline-flex;
+  }
+  .tags-note {
+    margin: 0 0 25px 0;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    font-weight: 500;
+    color: #f23051;
+  }
+  .tags-table {
+    width: 470px;
+    /* min-height: 350px; */
   }
 `;
+export const StyledText = styled.div`
+  color: #212833;
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
 export const WrapperButton = styled.div`
   margin: 15px 0 15px 0;
 `;
+export const WrapperTexinput = styled.div`
+  margin-right: 20px;
+  input {
+    width: 90%;
+    height: 30px;
+    outline: none;
+    font-size: 16px;
+    font-family: 'DIN';
+  }
+`;
 
 export const Button = styled(BtnActive)`
+  width: ${props => (props.width ? props.width : '100px')};
+  height: ${props => (props.height ? props.height : '28px')};
+  line-height: ${props => (props.height ? props.height : '28px')};
   background: inherit;
   border: 1px solid #15b5dd;
   color: #15b5dd;
-  width: ${props => props.width || '110px'};
-  border-radius: 20px;
-  cursor: pointer;
+  border-radius: 6px;
   &:hover {
     background: linear-gradient(90deg, rgba(20, 180, 221, 1) 0%, rgba(21, 181, 220, 1) 100%);
     color: #fff;
   }
-  a {
+  /* a {
     color: inherit;
     width: 100%;
     &:hover {
@@ -199,11 +236,9 @@ export const Button = styled(BtnActive)`
     }
   }
   @media (max-width: 1440px) {
-    width: ${props => props.width || '110px'};
     height: 30px;
     line-height: 28px;
-    font-size: 12px;
-  }
+  } */
   /* display: block;
   min-width: 120px;
   margin-bottom: 30px;

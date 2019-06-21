@@ -144,16 +144,17 @@ class PaginationPro extends PureComponent {
   };
 
   render() {
-    const { total, pageSize, current } = this.props;
+    const { total, defaultPageSize, defaultCurrent, showQuickJumper, showSizeChanger } = this.props;
+
     return (
       <Wrapper1>
         <Wrapper2>
           <Pagination
             selectComponentClass={Select}
-            showQuickJumper
-            showSizeChanger
-            defaultPageSize={pageSize}
-            defaultCurrent={current}
+            showQuickJumper={!!showQuickJumper}
+            showSizeChanger={!!showSizeChanger}
+            defaultPageSize={defaultPageSize}
+            defaultCurrent={defaultCurrent}
             onShowSizeChange={this.onShowSizeChange}
             onChange={this.onChange}
             total={total}
@@ -166,16 +167,16 @@ class PaginationPro extends PureComponent {
 }
 
 PaginationPro.propTypes = {
-  current: PropTypes.number,
-  pageSize: PropTypes.number,
+  defaultCurrent: PropTypes.number,
+  defaultPageSize: PropTypes.number,
   total: PropTypes.number,
   onShowSizeChange: PropTypes.func,
   onChange: PropTypes.func,
 };
 
 PaginationPro.defaultProps = {
-  current: 1,
-  pageSize: 10,
+  defaultCurrent: 1,
+  defaultPageSize: 10,
   total: 0,
   onShowSizeChange: {},
   onChange: {},
