@@ -9,7 +9,7 @@ const FooterWapper = styled.div`
   line-height: 50px;
   background: #12161c;
   width: 100%;
-  color: #48515d;
+  color: #848e9c;
   display: flex;
   font-size: 13px;
   justify-content: space-between;
@@ -29,7 +29,7 @@ const LeftFooter = styled.ul`
     margin-right: 30px;
   }
   a {
-    color: #ffff;
+    color: inherit;
     &:hover {
       color: #15b5dd;
     }
@@ -40,9 +40,8 @@ const LeftFooter = styled.ul`
 `;
 
 const RightFooter = styled.div`
-  display: flex;
+  display: block;
   margin-right: 90px;
-  color: #ffff;
   @media (max-width: 768px) {
     margin-right: 0;
     width: 100%;
@@ -52,10 +51,17 @@ const RightFooter = styled.div`
 
 const CopyRight = styled.div`
   display: block;
-  margin-right: 5px;
-  line-height: 25px;
-  .trada {
-    margin-top: 2px;
+  margin: 3px 0;
+  line-height: 18px;
+  a {
+    color: inherit;
+    &:hover {
+      color: #15b5dd;
+    }
+  }
+  .footer-trada {
+    display: flex;
+    align-items: center;
   }
 `;
 
@@ -63,6 +69,7 @@ const SocialFooter = styled.ul`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: auto 10px;
   li {
     margin-right: 5px;
     a {
@@ -73,8 +80,9 @@ const SocialFooter = styled.ul`
       display: flex;
       justify-content: center;
       align-items: center;
+      text-decoration: none;
       i {
-        color: #ffff;
+        color: #848e9c;
       }
       &:hover i {
         color: #15b5dd;
@@ -89,42 +97,57 @@ class Footer extends PureComponent {
       <FooterWapper>
         <LeftFooter>
           <li>
-            <a href={termOfService} target="blank" rel="noopener">
+            <a href={termOfService} target="_blank" rel="noopener noreferrer">
               Terms of Service
             </a>
           </li>
           <li>
-            <a href={forums} target="blank" rel="noopener">
+            <a href={forums} target="_blank" rel="noopener noreferrer">
               Telegram
             </a>
           </li>
           <li>
-            <a href={faq} target="blank" rel="noopener">
+            <a href={faq} target="_blank" rel="noopener noreferrer">
               Docs
             </a>
           </li>
         </LeftFooter>
         <RightFooter>
           <CopyRight>
-            <h3 className="trada">
-              <span>© 2019 Trada Tech</span>
-            </h3>
+            <div className="footer-trada">
+              <p>
+                &copy; 2019 &nbsp;
+                <a href="https://trada.tech/team.html" target="_blank" rel="noopener noreferrer">
+                  TradaTech
+                </a>
+              </p>
+              <SocialFooter>
+                <li>
+                  <a href={telegram} target="_blank" rel="noopener noreferrer">
+                    <i className="iconfont icon-telegram" size="14" color="" />
+                  </a>
+                </li>
+                <li>
+                  <a href={twitter} target="blank" rel="noopener noreferrer">
+                    <i className="iconfont icon-twitter" size="14" color="" />
+                  </a>
+                </li>
+              </SocialFooter>
+            </div>
             <div>
-              <span>Icons from the Noun Project</span>
+              <p>
+                Icons by &nbsp;
+                <a target="_blank" href="https://thenounproject.com/" rel="noopener noreferrer">
+                  the Noun Project &nbsp;
+                </a>
+                (
+                <a target="_blank" href="https://thenounproject.com/" rel="noopener noreferrer">
+                  icon list
+                </a>
+                ).
+              </p>
             </div>
           </CopyRight>
-          <SocialFooter>
-            <li>
-              <a href={telegram} target="blank" rel="noopener">
-                <i className="iconfont icon-telegram" size="14" color="" />
-              </a>
-            </li>
-            <li>
-              <a href={twitter} target="blank" rel="noopener">
-                <i className="iconfont icon-twitter" size="14" color="" />
-              </a>
-            </li>
-          </SocialFooter>
         </RightFooter>
       </FooterWapper>
     );

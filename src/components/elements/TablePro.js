@@ -243,7 +243,7 @@ class TablePro extends PureComponent {
     const { paging, total, dataSource, pageSize, current, showQuickJumper, showSizeChanger } = this.props;
     return (
       <div>
-        <WrapperTable>{this.generateTable()}</WrapperTable>
+        <WrapperTable>{dataSource.length > 0 && this.generateTable()}</WrapperTable>
         {paging && dataSource.length > 0 && (
           <PaginationPro
             selectComponentClass={Select}

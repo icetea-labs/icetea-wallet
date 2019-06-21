@@ -165,7 +165,7 @@ export const TapWrapperContent = styled.div`
   flex-direction: column;
   margin-top: 10px;
   /* box-shadow: 0px 1px 20px 0px rgba(90, 102, 124, 0.08); */
-  padding: 0 15px 0 15px;
+  padding: 0 15px;
   .row {
     display: inline-flex;
     .header {
@@ -192,7 +192,7 @@ export const TapWrapperContent = styled.div`
   }
   .tags-table {
     width: 470px;
-    /* min-height: 350px; */
+    min-height: 100px;
   }
 `;
 export const StyledText = styled.div`
@@ -203,7 +203,7 @@ export const StyledText = styled.div`
 `;
 
 export const WrapperButton = styled.div`
-  margin: 15px 0 15px 0;
+  margin: 5px 0 10px;
 `;
 export const WrapperTexinput = styled.div`
   margin-right: 20px;
@@ -218,8 +218,8 @@ export const WrapperTexinput = styled.div`
 
 export const Button = styled(BtnActive)`
   width: ${props => (props.width ? props.width : '100px')};
-  height: ${props => (props.height ? props.height : '28px')};
-  line-height: ${props => (props.height ? props.height : '28px')};
+  height: ${props => (props.height ? props.height : '32px')};
+  line-height: ${props => (props.height ? props.height : '30px')};
   background: inherit;
   border: 1px solid #15b5dd;
   color: #15b5dd;
@@ -228,35 +228,6 @@ export const Button = styled(BtnActive)`
     background: linear-gradient(90deg, rgba(20, 180, 221, 1) 0%, rgba(21, 181, 220, 1) 100%);
     color: #fff;
   }
-  /* a {
-    color: inherit;
-    width: 100%;
-    &:hover {
-      text-decoration: none;
-    }
-  }
-  @media (max-width: 1440px) {
-    height: 30px;
-    line-height: 28px;
-  } */
-  /* display: block;
-  min-width: 120px;
-  margin-bottom: 30px;
-  color: #ffffff;
-  background: #15b5dd;
-  text-transform: capitalize;
-  line-height: 30px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer; */
-  /* transition: all 0.3s ease;
-  &:focus {
-    outline: none;
-  }
-  &:hover {
-    color: #12161c;
-    box-shadow: 1px 2px 11px 0px #0a1223;
-  } */
 `;
 
 export const Table = styled.table`

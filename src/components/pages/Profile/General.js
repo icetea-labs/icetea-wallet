@@ -161,12 +161,13 @@ class General extends PureComponent {
         .contract('system.did')
         .methods.setTag(address, name, value)
         .sendCommit({ from: address })
-        .then(() => {
+        .then(resp => {
           this.reLoadData(address);
           this.setState({
             tagsName: '',
             tagsValue: '',
           });
+          console.log('Tag resp: ', resp);
           notifi.info(`Tag name [${name}] added.`);
         })
         .catch(error => {
