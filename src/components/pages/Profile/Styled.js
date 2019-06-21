@@ -350,9 +350,6 @@ export const OwnerAdd = styled.div`
   padding: 20px 0px;
   margin-left: 40px;
   display: flex;
-  .addText {
-    width: 360px;
-  }
 `;
 
 export const Note = styled.div`

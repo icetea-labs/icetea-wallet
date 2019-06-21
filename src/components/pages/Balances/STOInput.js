@@ -6,6 +6,7 @@ import { Icon } from '../../elements/utils';
 
 const InputLabel = styled.div`
   position: relative;
+  width: ${props => (props.width ? props.width : '')};
   input {
     border: none;
     width: 100%;
@@ -56,7 +57,7 @@ const InputLabel = styled.div`
 
 const Clear = styled.div`
   position: absolute;
-  right: 0px;
+  right: 10px;
   bottom: 10px;
   color: ${props => props.theme.fontColor};
   cursor: pointer;
@@ -114,10 +115,10 @@ export default class STOInput extends PureComponent {
 
   render() {
     const { value } = this.state;
-    const { title, defaultValue, type, autoFocus, styleName } = this.props;
+    const { title, defaultValue, type, autoFocus, width } = this.props;
 
     return (
-      <InputLabel className={styleName}>
+      <InputLabel width={width}>
         <p className={value || defaultValue ? 'label label-value' : 'label'}>{title}</p>
         <div>
           <input type={type} placeholder={title} value={value} autoFocus={autoFocus} onChange={this._textChange} />
@@ -136,9 +137,9 @@ export default class STOInput extends PureComponent {
 STOInput.defaultProps = {
   onChange() {},
   title: '',
+  width: '',
   type: 'text',
   value: '',
   defaultValue: '',
   autoFocus: false,
-  styleName: '',
 };
