@@ -106,7 +106,7 @@ function callContract(method, type, value, from, ...params) {
   };
   return method(...params)
     [map[type]]({ value, from })
-    .then(r => (type === 'write' ? r.result : r));
+    .then(r => (type === 'write' ? r.returnValue : r));
 }
 
 async function getBotInfoFromStore(alias) {
