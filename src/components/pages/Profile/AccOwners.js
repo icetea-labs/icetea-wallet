@@ -59,7 +59,7 @@ class AccOwners extends PureComponent {
           if (threshold) {
             this.setState({ weight: threshold });
           } else {
-            this.setState({ weight: '' });
+            this.setState({ weight: 1 });
           }
           if (owners && Object.keys(owners).length) {
             this.setState({ ownersList: Object.assign({}, owners) });
@@ -67,7 +67,7 @@ class AccOwners extends PureComponent {
             this.setState({ ownersList: {} });
           }
         } else {
-          this.setState({ weight: '', ownersList: {} });
+          this.setState({ weight: 1, ownersList: {} });
         }
       });
   };
@@ -106,13 +106,13 @@ class AccOwners extends PureComponent {
         .contract('system.did')
         .methods.addOwner(address, ownerAdd, weight)
         .sendCommit({ from: address })
-        .then(r => {
+        .then(() => {
           this.loadDid(address);
           notifi.info('Success');
         })
         .catch(error => {
           console.error(error);
-          window.alert(String(error));
+          notifi.warn(String(error));
         });
     }
   };
@@ -143,7 +143,7 @@ class AccOwners extends PureComponent {
         })
         .catch(error => {
           console.error(error);
-          window.alert(String(error));
+          notifi.warn(String(error));
         });
     }
   };
@@ -227,14 +227,14 @@ class AccOwners extends PureComponent {
                     title="Owner address or alias"
                     styleName="addText"
                     type="text"
-                    defaulValue={ownerAdd}
+                    defaultValue={ownerAdd}
                     onChange={this._ownerChange}
                     autoFocus
                   />
                   <STOInput
                     title="Weight"
                     type="number"
-                    defaulValue={weight}
+                    defaultValue={weight}
                     onChange={this._ownerWeightChange}
                     onFocus={this._ownerWeightChange}
                   />
@@ -257,7 +257,7 @@ class AccOwners extends PureComponent {
                   <STOInput
                     title="Weight"
                     type="number"
-                    value={weight}
+                    defaultValue={weight}
                     onChange={this._ownerWeightChange}
                     onFocus={this._ownerWeightChange}
                   />

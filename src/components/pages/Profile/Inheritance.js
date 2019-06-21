@@ -91,13 +91,13 @@ class Inheritance extends PureComponent {
         .contract('system.did')
         .methods.addInheritor(address, inheritor, wait, lock)
         .sendCommit({ from: address })
-        .then(r => {
+        .then(() => {
           this.loadDid(address);
-          notifi.info('Success');
+          notifi.info('Add inheritance success!');
         })
         .catch(error => {
           console.error(error);
-          window.alert(String(error));
+          notifi.warn(String(error));
         });
     }
   };
@@ -118,13 +118,13 @@ class Inheritance extends PureComponent {
         .contract('system.did')
         .methods.removeInheritor(address, inheritor)
         .sendCommit({ from: address })
-        .then(r => {
+        .then(() => {
           this.loadDid(address);
-          notifi.info('Success');
+          notifi.info('Delete inheritance success!');
         })
         .catch(error => {
           console.error(error);
-          window.alert(String(error));
+          notifi.warn(String(error));
         });
     }
   };
@@ -176,21 +176,21 @@ class Inheritance extends PureComponent {
                 styleName="addText"
                 title="Address or alias"
                 type="text"
-                defaulValue={inheritor}
+                defaultValue={inheritor}
                 onChange={this._addOrAliasChange}
                 autoFocus
               />
               <STOInput
                 title="Wait"
                 type="number"
-                defaulValue={wait}
+                defaultValue={wait}
                 onChange={this._waitChange}
                 onFocus={this._waitChange}
               />
               <STOInput
                 title="Lock"
                 type="number"
-                defaulValue={lock}
+                defaultValue={lock}
                 onChange={this._lockChange}
                 onFocus={this._lockChange}
               />
