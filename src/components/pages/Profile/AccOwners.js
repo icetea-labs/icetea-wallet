@@ -59,7 +59,7 @@ class AccOwners extends PureComponent {
         if (props) {
           const { owners, threshold } = props;
           if (threshold) {
-            this.setState({ weight: threshold, threshold: threshold });
+            this.setState({ weight: threshold, threshold });
           } else {
             this.setState({ weight: 1, threshold: 1 });
           }
