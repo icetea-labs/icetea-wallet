@@ -17,8 +17,8 @@ export const H1 = styled.div`
   color: #212833;
   font-size: 20px;
   background: #fff;
-  height: 40px;
-  line-height: 40px;
+  height: 30px;
+  line-height: 30px;
 `;
 export const H2 = styled.div`
   color: #212833;
@@ -35,14 +35,24 @@ export const WrapperContent = styled.div`
   box-shadow: 0px 1px 20px 0px rgba(90, 102, 124, 0.08);
   /* height: 40px; */
   padding: 0 5px 0 15px;
+  .rc-tabs-top {
+    border: none;
+  }
+  .rc-tabs-tab-active,
+  .rc-tabs-tab-active:hover {
+    color: #15b5dd;
+  }
+  .rc-tabs-ink-bar {
+    background-color: #15b5dd;
+  }
 `;
 export const RadioGroup = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
   & > li {
-    height: 40px;
-    line-height: 40px;
+    height: 30px;
+    line-height: 30px;
     cursor: pointer;
     width: 600px;
     padding-left: 30px;
@@ -51,7 +61,6 @@ export const RadioGroup = styled.div`
     align-items: center;
     border-radius: 3px;
     border-left: 4px solid #fff;
-    font-size: 14px;
     position: relative;
     box-sizing: border-box;
     color: #263147;
@@ -120,14 +129,12 @@ export const WrapperCombox = styled.div`
 
   .title {
     color: #848e9c;
-    font-size: 14px;
     line-height: 30px;
   }
   input {
     width: 90%;
     height: 30px;
     outline: none;
-    font-size: 16px;
     font-family: 'DIN';
   }
   #spin {
@@ -141,7 +148,6 @@ export const WrapperCombox = styled.div`
     outline: none;
     height: 50px;
     border: 1px solid #dfe2e7;
-    font-size: 14px;
   }
   .amount-input {
     padding-right: 150px;
@@ -158,14 +164,13 @@ export const TabWrapper = styled.div`
   margin-bottom: 50px;
 `;
 export const WrapperBlock = styled.div`
-  padding: 0 0 10px 0;
+  padding-bottom: 10px;
 `;
 export const TapWrapperContent = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
   /* box-shadow: 0px 1px 20px 0px rgba(90, 102, 124, 0.08); */
-  padding: 0 15px;
+  padding: 5px 25px;
   .row {
     display: inline-flex;
     .header {
@@ -175,7 +180,6 @@ export const TapWrapperContent = styled.div`
     p {
       height: 30px;
       line-height: 30px;
-      font-size: 16px;
       font-weight: 500;
     }
   }
@@ -183,8 +187,7 @@ export const TapWrapperContent = styled.div`
     display: inline-flex;
   }
   .tags-note {
-    margin: 0 0 25px 0;
-    font-size: 14px;
+    margin-bottom: 15px;
     height: 30px;
     line-height: 30px;
     font-weight: 500;
@@ -211,15 +214,14 @@ export const WrapperTexinput = styled.div`
     width: 90%;
     height: 30px;
     outline: none;
-    font-size: 16px;
     font-family: 'DIN';
   }
 `;
 
 export const Button = styled(BtnActive)`
   width: ${props => (props.width ? props.width : '100px')};
-  height: ${props => (props.height ? props.height : '32px')};
-  line-height: ${props => (props.height ? props.height : '30px')};
+  height: ${props => (props.height ? props.height : '30px')};
+  line-height: ${props => (props.height ? props.height : '28px')};
   background: inherit;
   border: 1px solid #15b5dd;
   color: #15b5dd;
@@ -235,7 +237,6 @@ export const Table = styled.table`
   border-collapse: sepnarate;
   border-color: rgb(253, 253, 253);
   border-spacing: 0px 5px;
-  font-size: 16px;
   margin-left: 40px;
   tr {
     padding: 10px 0px;
@@ -256,7 +257,6 @@ export const THead = styled.thead`
       text-indent: 10px;
     }
     tr {
-      font-size: 13px;
       color: rgb(72, 81, 93);
       box-shadow: none;
       border-width: initial;
@@ -274,7 +274,6 @@ export const TBody = styled.tbody`
     background-color: rgb(255, 255, 255);
     word-break: break-all;
     cursor: pointer;
-    font-size: 14px;
     color: rgb(33, 40, 51);
     text-align: left;
     line-height: 40px;
@@ -287,7 +286,6 @@ export const TBody = styled.tbody`
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 13px;
       width: 13px;
       height: 13px;
       border-radius: 50%;
@@ -328,7 +326,6 @@ export const OwnerAdd = styled.div`
 
 export const Note = styled.div`
   margin-left: 40px;
-  font-size: 16px;
   border: 2px solid #15b5dd;
   box-sizing: border-box;
   height: 100px;
@@ -341,7 +338,6 @@ export const Note = styled.div`
 
 export const Guide = styled.div`
   margin-left: 40px;
-  font-size: 16px;
   margin-top: 20px;
 `;
 
