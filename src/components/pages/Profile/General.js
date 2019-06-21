@@ -6,13 +6,59 @@ import notifi from '../../elements/Notification';
 import tweb3 from '../../../service/tweb3';
 import { toTEA } from '../../../utils/utils';
 import * as actions from '../../../store/actions/account';
-
-import { H2, TabWrapper, MediaContent, TapWrapperContent, WrapperButton, Button } from './Styled';
+import STOInput from '../Balances/STOInput';
+import {
+  H2,
+  TabWrapper,
+  MediaContent,
+  WrapperBlock,
+  TapWrapperContent,
+  WrapperTexinput,
+  WrapperButton,
+  Button,
+  StyledText,
+} from './Styled';
+import { FontDin, Icon } from '../../elements/utils';
+import Table2 from '../../elements/TablePro';
 
 class General extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      alias: '',
+      aliasErr: '',
+      tagsList: {},
+      tagsValue: '',
+      tagsNameErr: '',
+      tagsValueErr: '',
+      current: 1,
+      pageSize: 5,
+    };
+  }
+
+  componentDidMount() {
+    const { address } = this.props;
+    this.onLoadData(address);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { address } = this.props;
+    if (address !== nextProps.address) {
+      this.onLoadData(nextProps.address);
+    }
+  }
+
+  onLoadData = address => {
+    if (!address) {
+      notifi.warn('Please got to unlock wallet!');
+      return;
+    }
+    this.loadAlias(address);
+    this.reLoadData(address);
+  };
+
   registerFaucetEvent = () => {
-    const { address, privateKey, signers } = this.props;
-    const { setNeedAuth } = this.props;
+    const { address, privateKey, signers, setNeedAuth } = this.props;
     let privateKeyTMP = '';
     let opts = '';
 
@@ -27,15 +73,12 @@ class General extends PureComponent {
     if (!privateKeyTMP) {
       setNeedAuth(true);
     } else {
-      console.log('faucet address: ', address, '-', privateKeyTMP);
       tweb3
         .contract('system.faucet')
         .methods.request(/* address */)
         .sendCommit(opts)
         .then(async r => {
           notifi.info(`Faucet Success: ${toTEA(r.returnValue)} TEA`);
-          console.log('r', r.returnValue);
-
           const { childKey, setAccount } = this.props;
           const childKeyTmp = [];
           for (let i = 0; i < childKey.length; i += 1) {
@@ -53,8 +96,207 @@ class General extends PureComponent {
     }
   };
 
+  handleAlias = value => {
+    this.setState({ alias: value, aliasErr: '' });
+  };
+
+  loadAlias = targetAddress => {
+    tweb3
+      .contract('system.alias')
+      .methods.byAddress(targetAddress)
+      .call()
+      .then(alias => {
+        this.setState({ alias });
+        console.log('alias', alias);
+      });
+  };
+
+  registerUpdateAliasEvent = () => {
+    const { alias } = this.state;
+    const { address, privateKey, setNeedAuth, signers } = this.props;
+
+    if (!privateKey) {
+      setNeedAuth(true);
+    } else {
+      if (!alias) {
+        this.setState({ aliasErr: 'Alias field is required' });
+        return;
+      }
+      tweb3
+        .contract('system.alias')
+        .methods.register(alias, address)
+        .sendCommit({ from: address })
+        .then(() => {
+          this.loadAlias(address);
+          notifi.info('Set alias success!');
+        })
+        .catch(error => {
+          console.error(error);
+          notifi.warn(String(error));
+        });
+    }
+  };
+
+  handleTagsName = value => {
+    this.setState({ tagsName: value, tagsNameErr: '' });
+  };
+
+  handleTagsValue = value => {
+    this.setState({ tagsValue: value, tagsValueErr: '' });
+  };
+
+  registerAddTagEvent = () => {
+    const { address, privateKey, setNeedAuth } = this.props;
+    const { tagsName, tagsValue } = this.state;
+    const name = tagsName;
+    const value = tagsValue;
+    if (!privateKey) {
+      setNeedAuth(true);
+    } else {
+      if (!name || !value) {
+        this.setState({ tagsNameErr: 'Err', tagsValueErr: 'Err' });
+        return;
+      }
+      tweb3
+        .contract('system.did')
+        .methods.setTag(address, name, value)
+        .sendCommit({ from: address })
+        .then(() => {
+          this.reLoadData(address);
+          this.setState({
+            tagsName: '',
+            tagsValue: '',
+          });
+          notifi.info(`Tag name [${name}] added.`);
+        })
+        .catch(error => {
+          console.error(error);
+          notifi.warn(String(error));
+        });
+    }
+  };
+
+  reLoadData = targetAddress => {
+    tweb3
+      .contract('system.did')
+      .methods.query(targetAddress)
+      .call()
+      .then(resp => {
+        if (resp) {
+          const { tags } = resp;
+          tags && Object.keys(tags).length && this.setState({ tagsList: Object.assign({}, tags) });
+        } else {
+          this.setState({ tagsList: {} });
+        }
+      });
+  };
+
+  buildColumns = () => {
+    return [
+      {
+        title: 'Name',
+        headerAlign: 'left',
+        width: '45%',
+        sorter: true,
+        dataIndex: 'name',
+        key: 'TxHash',
+        render: e => (
+          <StyledText>
+            <FontDin value={e.name} />
+          </StyledText>
+        ),
+      },
+      {
+        title: 'Value',
+        dataIndex: 'value',
+        headerAlign: 'left',
+        width: '45%',
+        sorter: true,
+        key: 'Date',
+        render: e => (
+          <StyledText>
+            <FontDin value={e.value} />
+          </StyledText>
+        ),
+      },
+      {
+        title: '',
+        dataIndex: 'remove',
+        headerAlign: 'left',
+        width: '10%',
+        key: '',
+        render: e => (
+          <div onClick={() => this.registerRemoveTagEvent(e)} role="presentation">
+            <Icon type="delete" color="#848E9C" hoverColor="#15b5dd" />
+          </div>
+        ),
+      },
+    ];
+  };
+
+  registerRemoveTagEvent = tag => {
+    const { address, privateKey, setNeedAuth } = this.props;
+
+    if (!privateKey) {
+      setNeedAuth(true);
+    } else {
+      tweb3
+        .contract('system.did')
+        .methods.removeTag(address, tag.name)
+        .sendCommit({ from: address })
+        .then(() => {
+          this.reLoadData(address);
+          notifi.info(`Tag name [${tag.name}] deleted.`);
+        })
+        .catch(error => {
+          console.error(error);
+          notifi.warn(String(error));
+        });
+    }
+  };
+
+  paging = (current, pageSize) => {
+    if (pageSize) {
+      this.setState({
+        current,
+        pageSize,
+      });
+    } else {
+      this.setState({
+        current,
+      });
+    }
+  };
+
+  buildDataSource = () => {
+    const { tagsList, current, pageSize } = this.state;
+
+    const total = Object.keys(tagsList).length;
+    const from = (current - 1) * pageSize;
+    let to = from + pageSize;
+    let newTagsList = [];
+
+    if (total > 0) {
+      if (to > total) to = total;
+      newTagsList = Object.keys(tagsList)
+        .slice(from, to)
+        .map(key => ({ [key]: tagsList[key] }));
+    }
+
+    const dataSource = newTagsList.map(key => {
+      return {
+        name: Object.keys(key)[0],
+        value: key[Object.keys(key)[0]],
+        remove: Object.keys(key)[0],
+      };
+    });
+    return dataSource;
+  };
+
   render() {
+    const { alias, tagsName, tagsValue, tagsList, pageSize, current } = this.state;
     const { address, balance } = this.props;
+    const total = Object.keys(tagsList).length;
     const typeOfAccount = (() => {
       try {
         if (codec.isBankAddress(address)) {
@@ -73,23 +315,74 @@ class General extends PureComponent {
     return (
       <TabWrapper>
         <MediaContent>
-          <H2>Information</H2>
-          <TapWrapperContent>
-            <div className="row">
-              <p className="header">Type:</p>
-              <p> {typeOfAccount}</p>
-            </div>
-            <div className="row">
-              <p className="header">Balance:</p>
-              <p> {toTEA(balance)} TEA</p>
-            </div>
+          <WrapperBlock>
+            <H2>Information</H2>
+            <TapWrapperContent>
+              <div className="row">
+                <p className="header">Type:</p>
+                <p> {typeOfAccount}</p>
+              </div>
+              <div className="row">
+                <p className="header">Balance:</p>
+                <p> {toTEA(balance)} TEA</p>
+              </div>
 
-            <WrapperButton>
-              <Button width="170px" className="get-tea" onClick={this.registerFaucetEvent}>
-                <span>Get TEA from Faucet</span>
-              </Button>
-            </WrapperButton>
-          </TapWrapperContent>
+              <WrapperButton>
+                <Button width="170px" className="get-tea" onClick={this.registerFaucetEvent}>
+                  <span>Get TEA from Faucet</span>
+                </Button>
+              </WrapperButton>
+            </TapWrapperContent>
+          </WrapperBlock>
+          <WrapperBlock>
+            <H2>Alias</H2>
+            <TapWrapperContent>
+              <div className="alias">
+                <WrapperTexinput>
+                  <STOInput title="Address or alias" type="text" defaultValue={alias} onChange={this.handleAlias} />
+                </WrapperTexinput>
+
+                <WrapperButton>
+                  <Button className="get-tea" onClick={this.registerUpdateAliasEvent}>
+                    <span>Set</span>
+                  </Button>
+                </WrapperButton>
+              </div>
+            </TapWrapperContent>
+          </WrapperBlock>
+          <WrapperBlock>
+            <H2>Tags</H2>
+            <TapWrapperContent>
+              <div className="tags-note">
+                <p>Note: these tags are public and unencrypted. Everyone can see.</p>
+              </div>
+              <div className="alias">
+                <WrapperTexinput>
+                  <STOInput title="Name" type="text" defaultValue={tagsName} onChange={this.handleTagsName} />
+                </WrapperTexinput>
+                <WrapperTexinput>
+                  <STOInput title="Value" type="text" defaultValue={tagsValue} onChange={this.handleTagsValue} />
+                </WrapperTexinput>
+                <WrapperButton>
+                  <Button className="get-tea" onClick={this.registerAddTagEvent}>
+                    <span>Set</span>
+                  </Button>
+                </WrapperButton>
+              </div>
+              <div className="tags-table">
+                <Table2
+                  columns={this.buildColumns()}
+                  dataSource={this.buildDataSource()}
+                  paging={this.paging}
+                  total={total}
+                  current={current}
+                  pageSize={pageSize}
+                  showQuickJumper={false}
+                  showSizeChanger={false}
+                />
+              </div>
+            </TapWrapperContent>
+          </WrapperBlock>
         </MediaContent>
       </TabWrapper>
     );

@@ -240,15 +240,15 @@ class TablePro extends PureComponent {
   };
 
   render() {
-    const { paging, total, dataSource, pageSize, current } = this.props;
+    const { paging, total, dataSource, pageSize, current, showQuickJumper, showSizeChanger } = this.props;
     return (
       <div>
         <WrapperTable>{this.generateTable()}</WrapperTable>
         {paging && dataSource.length > 0 && (
           <PaginationPro
             selectComponentClass={Select}
-            showQuickJumper
-            showSizeChanger
+            showQuickJumper={!!showQuickJumper}
+            showSizeChanger={!!showSizeChanger}
             defaultPageSize={pageSize}
             defaultCurrent={current}
             onShowSizeChange={this.onShowSizeChange}
@@ -269,6 +269,8 @@ TablePro.propTypes = {
   paging: PropTypes.func,
   sort: PropTypes.func,
   total: PropTypes.number,
+  showQuickJumper: PropTypes.bool,
+  showSizeChanger: PropTypes.bool,
 };
 
 TablePro.defaultProps = {
@@ -279,5 +281,7 @@ TablePro.defaultProps = {
   paging: null,
   sort() {},
   total: 0,
+  showQuickJumper: true,
+  showSizeChanger: true,
 };
 export default TablePro;

@@ -25,6 +25,15 @@ class Profile extends PureComponent {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { address } = this.props;
+    if (address !== nextProps.address) {
+      this.setState({
+        currentAddress: nextProps.address,
+      });
+    }
+  }
+
   radioOnChange = async value => {
     const { radioValue, selectedValue } = this.state;
     const { address } = this.props;
