@@ -10,6 +10,10 @@ const FooterWrapper = styled.footer`
   margin: 50px 0px 20px 0px;
   color: #848e9c;
   font-size: 14px;
+  a {
+    color: #848484;
+    cursor: pointer;
+  }
   @media (max-width: 768px) {
     display: none;
   }
@@ -29,9 +33,7 @@ const FooterUpper = styled.div`
   align-items: center;
   padding-bottom: 8px;
   a {
-    color: #848484;
     padding: 0px 10px;
-    cursor: pointer; 
   }
   .nav-link {
     position: relative;
@@ -52,7 +54,12 @@ class FooterCus extends PureComponent {
             <a onClick={this.goHome}>Home</a>
           </div>
         </FooterUpper>
-        <div>© 2018 - 2019 Icetea. All rights reserved.</div>
+        <p>
+          &copy; 2019 &nbsp;
+          <a href="https://trada.tech/team.html" target="_blank" rel="noopener noreferrer">
+            TradaTech
+          </a>
+        </p>
       </FooterWrapper>
     );
   }
