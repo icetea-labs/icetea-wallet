@@ -71,7 +71,7 @@ const SocialFooter = styled.ul`
   align-items: center;
   margin: auto 10px;
   li {
-    margin-right: 5px;
+    margin-right: 10px;
     a {
       width: 26px;
       height: 26px;
