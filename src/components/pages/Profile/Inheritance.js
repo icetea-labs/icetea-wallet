@@ -36,13 +36,23 @@ class Inheritance extends PureComponent {
 
   componentDidMount() {
     const { address } = this.props;
-    this.loadDid(address);
+    address && this.loadDid(address);
   }
 
   componentWillReceiveProps(nextProps) {
     const { address } = this.props;
-    if (address !== nextProps.address) {
-      this.loadDid(nextProps.address);
+    if (!nextProps.address) {
+      this.setState({
+        wait: '',
+        lock: '',
+        inheritor: '',
+        inheritorList: {},
+        inheErr: '',
+        waitErr: '',
+        lockErr: '',
+      });
+    } else {
+      address !== nextProps.address && this.loadDid(nextProps.address);
     }
   }
 
