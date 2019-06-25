@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { codec } from '@iceteachain/common';
-import Select, { Option, SelectPropTypes } from 'rc-select';
+import Select, { Option, SelectPropTypes, OptGroup } from 'rc-select';
 import 'rc-select/assets/index.css';
 import Tabs, { TabPane } from 'rc-tabs';
 import TabContent from 'rc-tabs/lib/TabContent';
@@ -89,6 +89,15 @@ class Profile extends PureComponent {
       );
     });
 
+    // const Owners = childKey.map(el => {
+    //   // console.log(el);
+    //   return (
+    //     <Option key={el.address} value={el.address + 1} desc={el.address}>
+    //       {el.address}
+    //     </Option>
+    //   );
+    // });
+    // const ownersLabel = `Owner list of [ ${address} ]`;
     const child = childKey.filter(el => {
       return currentAddress === el.address;
     })[0];
@@ -123,6 +132,7 @@ class Profile extends PureComponent {
                   onChange={this.selectOnChange}
                   onSelect={this.onSelect}
                   onInputKeyDown={this.onKeyDown}
+                  animation="slide-up"
                   notFoundContent=""
                   allowClear
                   placeholder="Please input address"
@@ -130,6 +140,8 @@ class Profile extends PureComponent {
                   backfill
                 >
                   {Options}
+                  {/* <OptGroup label="List accounts">{Options}</OptGroup> */}
+                  {/* <OptGroup label={ownersLabel}>{Owners}</OptGroup> */}
                 </Select>
               </li>
             </RadioGroup>
