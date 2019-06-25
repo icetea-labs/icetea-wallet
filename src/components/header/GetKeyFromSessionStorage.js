@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import tweb3 from '../../service/tweb3';
 
+import * as actionsGlobal from '../../store/actions/globalData';
 import * as actions from '../../store/actions/account';
 import { zIndex } from '../../constants/styles';
 import error from '../../assets/img/error-icon.svg';
@@ -119,6 +120,7 @@ class GetKeyFromSessionStorage extends PureComponent {
   _close = () => {
     const { props } = this;
     props.setNeedAuth(false);
+    props.setAuthEle(null);
   };
 
   _confirm = () => {
@@ -185,6 +187,7 @@ class GetKeyFromSessionStorage extends PureComponent {
             this.setState({
               loading: false,
             });
+
             triggerElement && triggerElement.click();
             this._close();
           }, 50);
@@ -244,13 +247,14 @@ class GetKeyFromSessionStorage extends PureComponent {
 }
 
 const mapStateToProps = state => {
-  const { account } = state;
+  const { account, globalData } = state;
   return {
     needAuth: account.needAuth,
     address: account.address,
     encryptedData: account.encryptedData,
     childKey: account.childKey,
     // mnemonic: account.mnemonic,
+    triggerElement: globalData.triggerElement,
   };
 };
 
@@ -269,6 +273,9 @@ const mapDispatchToProps = dispatch => {
     },
     setNeedAuth: data => {
       dispatch(actions.setNeedAuth(data));
+    },
+    setAuthEle: data => {
+      dispatch(actionsGlobal.setAuthEle(data));
     },
   };
 };

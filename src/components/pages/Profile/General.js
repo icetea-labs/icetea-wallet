@@ -6,6 +6,7 @@ import notifi from '../../elements/Notification';
 import tweb3 from '../../../service/tweb3';
 import { toTEA } from '../../../utils/utils';
 import * as actions from '../../../store/actions/account';
+import * as actionsGlobal from '../../../store/actions/globalData';
 import STOInput from '../Balances/STOInput';
 import {
   H2,
@@ -26,12 +27,13 @@ class General extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      balance: 0,
       alias: '',
-      aliasErr: '',
+      // aliasErr: '',
       tagsList: {},
       tagsValue: '',
-      tagsNameErr: '',
-      tagsValueErr: '',
+      // tagsNameErr: '',
+      // tagsValueErr: '',
       current: 1,
       pageSize: 5,
     };
@@ -44,17 +46,17 @@ class General extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { address } = this.props;
-    console.log('address', nextProps.address);
     if (nextProps.address) {
       nextProps.address !== address && this.onLoadData(nextProps.address);
     } else {
       this.setState({
+        balance: 0,
         alias: '',
-        aliasErr: '',
+        // aliasErr: '',
         tagsList: {},
         tagsValue: '',
-        tagsNameErr: '',
-        tagsValueErr: '',
+        // tagsNameErr: '',
+        // tagsValueErr: '',
         current: 1,
         pageSize: 5,
       });
@@ -62,29 +64,37 @@ class General extends PureComponent {
   }
 
   onLoadData = address => {
+    const { signers } = this.props;
     if (!address) {
       notifi.warn('Please got to unlock wallet!');
       return;
     }
     this.loadAlias(address);
     this.reLoadData(address);
+    signers.isRepresent && this.loadBalance(address);
   };
 
-  registerFaucetEvent = () => {
-    const { address, privateKey, signers, setNeedAuth } = this.props;
-    let privateKeyTMP = '';
-    let opts = '';
+  loadBalance = address => {
+    tweb3.getBalance(address).then(value => {
+      // console.log('value', value);
+      value.balance && this.setState(value);
+    });
+  };
+
+  registerFaucetEvent = event => {
+    event.preventDefault();
+    const { address, privateKey, signers, setNeedAuth, setAuthEle } = this.props;
+    const opts = { from: address };
+    let privateKeyTMP = privateKey;
 
     if (signers.isRepresent) {
       privateKeyTMP = signers.privateKey;
-      opts = { from: address, signers: signers.address };
-    } else {
-      privateKeyTMP = privateKey;
-      opts = { from: address };
+      opts.signers = signers.address;
     }
 
     if (!privateKeyTMP) {
       setNeedAuth(true);
+      setAuthEle(event.currentTarget);
     } else {
       tweb3
         .contract('system.faucet')
@@ -110,7 +120,8 @@ class General extends PureComponent {
   };
 
   handleAlias = value => {
-    this.setState({ alias: value, aliasErr: '' });
+    this.setState({ alias: value });
+    // this.setState({ alias: value, aliasErr: '' });
   };
 
   loadAlias = targetAddress => {
@@ -120,25 +131,32 @@ class General extends PureComponent {
       .call()
       .then(alias => {
         this.setState({ alias });
-        console.log('alias', alias);
       });
   };
 
-  registerUpdateAliasEvent = () => {
+  registerUpdateAliasEvent = event => {
     const { alias } = this.state;
-    const { address, privateKey, setNeedAuth, signers } = this.props;
+    const { address, privateKey, setNeedAuth, signers, setAuthEle } = this.props;
+    const opts = { from: address };
+    let privateKeyTMP = privateKey;
 
-    if (!privateKey) {
+    if (signers.isRepresent) {
+      privateKeyTMP = signers.privateKey;
+      opts.signers = signers.address;
+    }
+
+    if (!privateKeyTMP) {
       setNeedAuth(true);
+      setAuthEle(event.currentTarget);
     } else {
       if (!alias) {
-        this.setState({ aliasErr: 'Alias field is required' });
+        // this.setState({ aliasErr: 'Alias field is required' });
         return;
       }
       tweb3
         .contract('system.alias')
         .methods.register(alias, address)
-        .sendCommit({ from: address })
+        .sendCommit(opts)
         .then(() => {
           this.loadAlias(address);
           notifi.info('Set alias success!');
@@ -151,29 +169,40 @@ class General extends PureComponent {
   };
 
   handleTagsName = value => {
-    this.setState({ tagsName: value, tagsNameErr: '' });
+    this.setState({ tagsName: value });
+    // this.setState({ tagsName: value, tagsNameErr: '' });
   };
 
   handleTagsValue = value => {
-    this.setState({ tagsValue: value, tagsValueErr: '' });
+    this.setState({ tagsValue: value });
+    // this.setState({ tagsValue: value, tagsValueErr: '' });
   };
 
-  registerAddTagEvent = () => {
-    const { address, privateKey, setNeedAuth } = this.props;
+  registerAddTagEvent = event => {
+    const { address, privateKey, signers, setNeedAuth, setAuthEle } = this.props;
     const { tagsName, tagsValue } = this.state;
     const name = tagsName;
     const value = tagsValue;
-    if (!privateKey) {
+    const opts = { from: address };
+    let privateKeyTMP = privateKey;
+
+    if (signers.isRepresent) {
+      privateKeyTMP = signers.privateKey;
+      opts.signers = signers.address;
+    }
+
+    if (!privateKeyTMP) {
       setNeedAuth(true);
+      setAuthEle(event.currentTarget);
     } else {
       if (!name || !value) {
-        this.setState({ tagsNameErr: 'Err', tagsValueErr: 'Err' });
+        // this.setState({ tagsNameErr: 'Err', tagsValueErr: 'Err' });
         return;
       }
       tweb3
         .contract('system.did')
         .methods.setTag(address, name, value)
-        .sendCommit({ from: address })
+        .sendCommit(opts)
         .then(resp => {
           this.reLoadData(address);
           this.setState({
@@ -239,8 +268,8 @@ class General extends PureComponent {
         headerAlign: 'left',
         width: '10%',
         key: '',
-        render: e => (
-          <div onClick={() => this.registerRemoveTagEvent(e)} role="presentation">
+        render: tag => (
+          <div onClick={event => this.registerRemoveTagEvent(tag, event)} role="presentation">
             <Icon type="delete" color="#848E9C" hoverColor="#15b5dd" />
           </div>
         ),
@@ -248,16 +277,24 @@ class General extends PureComponent {
     ];
   };
 
-  registerRemoveTagEvent = tag => {
-    const { address, privateKey, setNeedAuth } = this.props;
+  registerRemoveTagEvent = (tag, event) => {
+    const { address, privateKey, signers, setNeedAuth, setAuthEle } = this.props;
+    const opts = { from: address };
+    let privateKeyTMP = privateKey;
 
-    if (!privateKey) {
+    if (signers.isRepresent) {
+      privateKeyTMP = signers.privateKey;
+      opts.signers = signers.address;
+    }
+    console.log('tag.currentTarget', event.currentTarget);
+    if (!privateKeyTMP) {
       setNeedAuth(true);
+      setAuthEle(event.currentTarget);
     } else {
       tweb3
         .contract('system.did')
         .methods.removeTag(address, tag.name)
-        .sendCommit({ from: address })
+        .sendCommit(opts)
         .then(() => {
           this.reLoadData(address);
           notifi.info(`Tag name [${tag.name}] deleted.`);
@@ -309,7 +346,8 @@ class General extends PureComponent {
 
   render() {
     const { alias, tagsName, tagsValue, tagsList, pageSize, current } = this.state;
-    const { address, balance } = this.props;
+    const { address } = this.props;
+    const { balance } = this.state;
     const total = Object.keys(tagsList).length;
     const typeOfAccount = (() => {
       try {
@@ -414,6 +452,7 @@ const mapStateToProps = state => {
   const { account } = state;
   return {
     childKey: account.childKey,
+    // triggerElement: globalData.triggerElement,
   };
 };
 
@@ -427,6 +466,9 @@ const mapDispatchToProps = dispatch => {
     },
     setAccount: data => {
       dispatch(actions.setAccount(data));
+    },
+    setAuthEle: data => {
+      dispatch(actionsGlobal.setAuthEle(data));
     },
   };
 };
