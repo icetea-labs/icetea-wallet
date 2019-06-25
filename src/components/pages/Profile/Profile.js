@@ -21,7 +21,7 @@ class Profile extends PureComponent {
     this.state = {
       currentAddress: props.address,
       radioValue: 'one',
-      selectedValue: props.address,
+      selectedValue: '',
     };
   }
 
@@ -48,7 +48,7 @@ class Profile extends PureComponent {
   };
 
   selectOnChange = value => {
-    // console.log('selectOnChange', value);
+    console.log('selectOnChange', value);
     this.setState({
       selectedValue: value,
       currentAddress: value,

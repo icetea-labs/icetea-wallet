@@ -27,7 +27,7 @@ class General extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      balance: 0,
+      balance: props.balance,
       alias: '',
       // aliasErr: '',
       tagsList: {},
@@ -40,14 +40,15 @@ class General extends PureComponent {
   }
 
   componentDidMount() {
-    const { address } = this.props;
-    address && this.onLoadData(address);
+    const { address, signers, balance } = this.props;
+    address && this.onLoadData({ address, signers, balance });
   }
 
   componentWillReceiveProps(nextProps) {
     const { address } = this.props;
+    console.log('nextProps', nextProps.address, 'address', address);
     if (nextProps.address) {
-      nextProps.address !== address && this.onLoadData(nextProps.address);
+      nextProps.address !== address && this.onLoadData(nextProps);
     } else {
       this.setState({
         balance: 0,
@@ -63,21 +64,25 @@ class General extends PureComponent {
     }
   }
 
-  onLoadData = address => {
-    const { signers } = this.props;
-    if (!address) {
+  onLoadData = nextProps => {
+    console.log('onLoadData', nextProps);
+    if (!nextProps.address) {
       notifi.warn('Please got to unlock wallet!');
       return;
     }
-    this.loadAlias(address);
-    this.reLoadData(address);
-    signers.isRepresent && this.loadBalance(address);
+    this.loadAlias(nextProps.address);
+    this.reLoadData(nextProps.address);
+    if (nextProps.signers.isRepresent) {
+      this.loadBalance(nextProps.address);
+    } else {
+      this.setState({ balance: nextProps.balance });
+    }
   };
 
   loadBalance = address => {
     tweb3.getBalance(address).then(value => {
-      // console.log('value', value);
-      value.balance && this.setState(value);
+      console.log('loadBalance', value);
+      this.setState(value);
     });
   };
 
@@ -103,14 +108,20 @@ class General extends PureComponent {
         .then(async r => {
           notifi.info(`Faucet Success: ${toTEA(r.returnValue)} TEA`);
           const { childKey, setAccount } = this.props;
-          const childKeyTmp = [];
-          for (let i = 0; i < childKey.length; i += 1) {
-            const newChild = Object.assign({}, childKey[i]);
-            const { balance } = await tweb3.getBalance(newChild.address);
-            newChild.balance = balance;
-            childKeyTmp.push(newChild);
+
+          if (signers.isRepresent) {
+            this.loadBalance(address);
+            console.log('loadBalance');
+          } else {
+            const childKeyTmp = [];
+            for (let i = 0; i < childKey.length; i += 1) {
+              const newChild = Object.assign({}, childKey[i]);
+              const { balance } = await tweb3.getBalance(newChild.address);
+              newChild.balance = balance;
+              childKeyTmp.push(newChild);
+            }
+            setAccount({ childKey: childKeyTmp });
           }
-          setAccount({ childKey: childKeyTmp });
         })
         .catch(error => {
           console.log(error);
@@ -225,9 +236,14 @@ class General extends PureComponent {
       .methods.query(targetAddress)
       .call()
       .then(resp => {
+        // console.log('system.did', resp);
         if (resp) {
           const { tags } = resp;
-          tags && Object.keys(tags).length && this.setState({ tagsList: Object.assign({}, tags) });
+          if (tags) {
+            Object.keys(tags).length && this.setState({ tagsList: Object.assign({}, tags) });
+          } else {
+            this.setState({ tagsList: {} });
+          }
         } else {
           this.setState({ tagsList: {} });
         }
