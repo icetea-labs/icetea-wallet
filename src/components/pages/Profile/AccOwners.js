@@ -21,6 +21,7 @@ import nr from '../../../assets/img/nr.svg';
 import tweb3 from '../../../service/tweb3';
 import notifi from '../../elements/Notification';
 import * as actions from '../../../store/actions/account';
+import * as actionsGlobal from '../../../store/actions/globalData';
 import { Icon } from '../../elements/utils';
 
 class AccOwners extends PureComponent {
@@ -99,14 +100,22 @@ class AccOwners extends PureComponent {
     this.setState({ ownerErr: '', ownerAdd: e });
   };
 
-  _addOwner = () => {
-    const { address, privateKey } = this.props;
+  _addOwner = event => {
+    const { address, privateKey, signers, setAuthEle, setNeedAuth } = this.props;
     const { ownerAdd } = this.state;
-    const { setNeedAuth } = this.props;
     let { weight } = this.state;
     weight = parseInt(weight, 10);
-    if (!privateKey) {
+    const opts = { from: address };
+    let privateKeyTMP = privateKey;
+
+    if (signers.isRepresent) {
+      privateKeyTMP = signers.privateKey;
+      opts.signers = signers.address;
+    }
+
+    if (!privateKeyTMP) {
       setNeedAuth(true);
+      setAuthEle(event.currentTarget);
     } else {
       if (!ownerAdd) {
         this.setState({ ownerErr: 'Owner field is required.' });
@@ -119,7 +128,7 @@ class AccOwners extends PureComponent {
       tweb3
         .contract('system.did')
         .methods.addOwner(address, ownerAdd, weight)
-        .sendCommit({ from: address })
+        .sendCommit(opts)
         .then(() => {
           this.loadDid(address);
           notifi.info('Add owner success!');
@@ -140,13 +149,21 @@ class AccOwners extends PureComponent {
     this.setState({ thresholdErr: '', threshold: e });
   };
 
-  _setOwnerWeight = () => {
-    const { address, privateKey } = this.props;
-    const { setNeedAuth } = this.props;
+  _setOwnerWeight = event => {
+    const { address, privateKey, signers, setAuthEle, setNeedAuth } = this.props;
     let { threshold } = this.state;
     threshold = parseInt(threshold, 10);
-    if (!privateKey) {
+    const opts = { from: address };
+    let privateKeyTMP = privateKey;
+
+    if (signers.isRepresent) {
+      privateKeyTMP = signers.privateKey;
+      opts.signers = signers.address;
+    }
+
+    if (!privateKeyTMP) {
       setNeedAuth(true);
+      setAuthEle(event.currentTarget);
     } else {
       if (!threshold) {
         this.setState({ thresholdErr: 'Weight field is required number.' });
@@ -155,7 +172,7 @@ class AccOwners extends PureComponent {
       tweb3
         .contract('system.did')
         .methods.setThreshold(address, +threshold)
-        .sendCommit({ from: address })
+        .sendCommit(opts)
         .then(r => {
           this.setState({ threshold: r.result });
           notifi.info('Set owner weight success!');
@@ -167,11 +184,19 @@ class AccOwners extends PureComponent {
     }
   };
 
-  _deleteOwner = owner => {
-    const { address, privateKey } = this.props;
-    const { setNeedAuth } = this.props;
-    if (!privateKey) {
+  _deleteOwner = (owner, event) => {
+    const { address, privateKey, signers, setAuthEle, setNeedAuth } = this.props;
+    const opts = { from: address };
+    let privateKeyTMP = privateKey;
+
+    if (signers.isRepresent) {
+      privateKeyTMP = signers.privateKey;
+      opts.signers = signers.address;
+    }
+
+    if (!privateKeyTMP) {
       setNeedAuth(true);
+      setAuthEle(event.currentTarget);
     } else {
       // if (!window.confirm(`Sure to delete ${owner}?`)) {
       //   return;
@@ -180,7 +205,7 @@ class AccOwners extends PureComponent {
       tweb3
         .contract('system.did')
         .methods.removeOwner(address, owner)
-        .sendCommit({ from: address })
+        .sendCommit(opts)
         .then(() => {
           this.loadDid(address);
           notifi.info('Delete owner success!');
@@ -199,7 +224,7 @@ class AccOwners extends PureComponent {
         <td style={{ width: '30%' }}>{key}</td>
         <td style={{ width: '20%' }}>{ownersList[key]}</td>
         <td style={{ width: '20%' }}>
-          <span onClick={() => this._deleteOwner(key)}>
+          <span onClick={event => this._deleteOwner(key, event)}>
             <Icon type="delete" color="#848E9C" hoverColor="#15b5dd" />
           </span>
         </td>
@@ -316,6 +341,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setNeedAuth: data => {
       dispatch(actions.setNeedAuth(data));
+    },
+    setAuthEle: data => {
+      dispatch(actionsGlobal.setAuthEle(data));
     },
   };
 };
