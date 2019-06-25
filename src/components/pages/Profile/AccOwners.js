@@ -236,8 +236,8 @@ class AccOwners extends PureComponent {
                 <Table>
                   <THead>
                     <tr>
-                      <th>Address</th>
-                      <th>Weight</th>
+                      <th style={{ width: '30%' }}>Address</th>
+                      <th style={{ width: '20%' }}>Weight</th>
                       <th />
                     </tr>
                   </THead>

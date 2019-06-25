@@ -272,6 +272,8 @@ export const Table = styled.table`
 `;
 export const THead = styled.thead`
   background: 0% 0% / auto 100% rgb(253, 253, 253);
+  width: 100%;
+  display: table-row-group;
   th {
     background-color: rgb(253, 253, 253);
     word-break: break-all;
@@ -360,9 +362,10 @@ export const Note = styled.div`
   font-size: 16px;
   border: 2px solid #15b5dd;
   box-sizing: border-box;
-  height: 100px;
+  height: 100%;
   width: 75%;
-  line-height: 50px;
+  margin-top: 10px;
+  line-height: 40px;
   p {
     margin-left: 40px;
   }
