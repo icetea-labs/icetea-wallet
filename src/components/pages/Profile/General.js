@@ -17,9 +17,10 @@ import {
   WrapperButton,
   Button,
   StyledText,
+  WrapperTable,
 } from './Styled';
 import { FontDin, Icon } from '../../elements/utils';
-import Table2 from '../../elements/TablePro';
+import Table from '../../elements/TablePro';
 
 class General extends PureComponent {
   constructor(props) {
@@ -38,13 +39,25 @@ class General extends PureComponent {
 
   componentDidMount() {
     const { address } = this.props;
-    this.onLoadData(address);
+    address && this.onLoadData(address);
   }
 
   componentWillReceiveProps(nextProps) {
     const { address } = this.props;
-    if (address !== nextProps.address) {
-      this.onLoadData(nextProps.address);
+    console.log('address', nextProps.address);
+    if (nextProps.address) {
+      nextProps.address !== address && this.onLoadData(nextProps.address);
+    } else {
+      this.setState({
+        alias: '',
+        aliasErr: '',
+        tagsList: {},
+        tagsValue: '',
+        tagsNameErr: '',
+        tagsValueErr: '',
+        current: 1,
+        pageSize: 5,
+      });
     }
   }
 
@@ -161,12 +174,13 @@ class General extends PureComponent {
         .contract('system.did')
         .methods.setTag(address, name, value)
         .sendCommit({ from: address })
-        .then(() => {
+        .then(resp => {
           this.reLoadData(address);
           this.setState({
             tagsName: '',
             tagsValue: '',
           });
+          console.log('Tag resp: ', resp);
           notifi.info(`Tag name [${name}] added.`);
         })
         .catch(error => {
@@ -369,18 +383,20 @@ class General extends PureComponent {
                   </Button>
                 </WrapperButton>
               </div>
-              <div className="tags-table">
-                <Table2
-                  columns={this.buildColumns()}
-                  dataSource={this.buildDataSource()}
-                  paging={this.paging}
-                  total={total}
-                  current={current}
-                  pageSize={pageSize}
-                  showQuickJumper={false}
-                  showSizeChanger={false}
-                />
-              </div>
+              <WrapperTable>
+                <div className="table-cus">
+                  <Table
+                    columns={this.buildColumns()}
+                    dataSource={this.buildDataSource()}
+                    paging={this.paging}
+                    total={total}
+                    current={current}
+                    pageSize={pageSize}
+                    showQuickJumper={false}
+                    showSizeChanger={false}
+                  />
+                </div>
+              </WrapperTable>
             </TapWrapperContent>
           </WrapperBlock>
         </MediaContent>
