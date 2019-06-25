@@ -45,8 +45,12 @@ class General extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { address } = this.props;
-    console.log('nextProps', nextProps.address, 'address', address);
+    const { address, balance } = this.props;
+
+    if (nextProps.balance) {
+      nextProps.balance !== balance && this.setState({ balance: nextProps.balance });
+    }
+
     if (nextProps.address) {
       nextProps.address !== address && this.onLoadData(nextProps);
     } else {
@@ -65,7 +69,6 @@ class General extends PureComponent {
   }
 
   onLoadData = nextProps => {
-    console.log('onLoadData', nextProps);
     if (!nextProps.address) {
       notifi.warn('Please got to unlock wallet!');
       return;
@@ -81,7 +84,7 @@ class General extends PureComponent {
 
   loadBalance = address => {
     tweb3.getBalance(address).then(value => {
-      console.log('loadBalance', value);
+      // console.log('loadBalance', value);
       this.setState(value);
     });
   };
@@ -111,7 +114,6 @@ class General extends PureComponent {
 
           if (signers.isRepresent) {
             this.loadBalance(address);
-            console.log('loadBalance');
           } else {
             const childKeyTmp = [];
             for (let i = 0; i < childKey.length; i += 1) {
@@ -302,7 +304,7 @@ class General extends PureComponent {
       privateKeyTMP = signers.privateKey;
       opts.signers = signers.address;
     }
-    console.log('tag.currentTarget', event.currentTarget);
+    // console.log('tag.currentTarget', event.currentTarget);
     if (!privateKeyTMP) {
       setNeedAuth(true);
       setAuthEle(event.currentTarget);
