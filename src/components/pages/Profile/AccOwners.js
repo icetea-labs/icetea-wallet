@@ -40,13 +40,25 @@ class AccOwners extends PureComponent {
 
   componentDidMount() {
     const { address } = this.props;
-    this.loadDid(address);
+    address && this.loadDid(address);
   }
 
   componentWillReceiveProps(nextProps) {
     const { address } = this.props;
-    if (address !== nextProps.address) {
-      this.loadDid(nextProps.address);
+    // console.log('Add CK', nextProps.address);
+    if (!nextProps.address) {
+      this.setState({
+        radioValue: 'one',
+        ownerAdd: '',
+        ownerErr: '',
+        ownersList: {},
+        weight: '',
+        weightErr: '',
+        threshold: '',
+        thresholdErr: '',
+      });
+    } else {
+      address !== nextProps.address && this.loadDid(nextProps.address);
     }
   }
 
@@ -59,7 +71,7 @@ class AccOwners extends PureComponent {
         if (props) {
           const { owners, threshold } = props;
           if (threshold) {
-            this.setState({ weight: threshold, threshold: threshold });
+            this.setState({ weight: threshold, threshold });
           } else {
             this.setState({ weight: 1, threshold: 1 });
           }

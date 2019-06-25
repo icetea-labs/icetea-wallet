@@ -234,7 +234,7 @@ export const Button = styled(BtnActive)`
 `;
 
 export const Table = styled.table`
-  width: 100%;
+  /* width: 100%; */
   border-collapse: sepnarate;
   border-color: rgb(253, 253, 253);
   border-spacing: 0px 5px;
@@ -319,7 +319,7 @@ export const TBody = styled.tbody`
 `;
 
 export const OwnerAdd = styled.div`
-  width: 100%;
+  /* width: 100%; */
   padding: 20px 0px;
   margin-left: 40px;
   display: flex;

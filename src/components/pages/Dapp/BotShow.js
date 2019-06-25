@@ -159,15 +159,16 @@ class BotShow extends Component {
                 <div id="my-botui-app">
                   <bot-ui />
                 </div>
-                <div className="sidebar">
-                  <div className="background-sidebar" style={{ display: showMenu === true ? 'block' : 'none' }} />
+                <div className="sidebar" id="sidebar">
+                  <div className="background-sidebar" />
                   <div className="menu-icon phone">
                     <i className="fa fa-bars" onClick={this.openBar} />
                   </div>
                   <div
                     className="side-bar_right"
                     id="side-bar_right"
-                    style={{ width: showMenu === true ? '15pc' : '0pc' }}
+                    style={{ width: showMenu === true ? '15pc' : '0px' }}
+                    onBlur={this.hiddenSibar}
                   >
                     <WrapperBtnCloseCus
                       id="btnClose"
@@ -180,6 +181,7 @@ class BotShow extends Component {
                       className="content-rsideba"
                       id="content-rsideba"
                       style={{ display: showMenu === true ? 'block' : 'none' }}
+                      // onBlur={this.hiddenSibar}
                     >
                       <div className="bot-menu-items" id="bot-menu-items">
                         <a href="#">About</a>

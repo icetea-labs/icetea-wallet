@@ -211,7 +211,7 @@ function handleQueue(contract, defStateAccess) {
 }
 
 function closeNav() {
-  byId('side-bar_right').style.width = '0pc';
+  byId('side-bar_right').style.width = '0px';
   byId('content-rsideba').style.display = 'none';
   byId('btnClose').style.display = 'none';
 }
