@@ -4,8 +4,10 @@ import styled from 'styled-components';
 import Select from 'rc-select';
 import Pagination from 'rc-pagination';
 import localeInfo from 'rc-pagination/lib/locale/en_US';
-import '../../assets/styles/pagination.css';
-import '../../assets/styles/locale.css';
+// import '../../assets/styles/pagination.css';
+// import '../../assets/styles/locale.css';
+import 'rc-pagination/assets/index.css';
+import 'rc-select/assets/index.css';
 
 const Wrapper1 = styled.div`
   margin-top: 10px;

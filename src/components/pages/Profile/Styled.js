@@ -29,6 +29,9 @@ export const WrapperPageContent = styled.div`
   .rc-tabs-ink-bar {
     background-color: #15b5dd;
   }
+  .rc-select-selection__clear-icon {
+    font-size: 1.4em;
+  }
 `;
 
 export const H1 = styled.div`
@@ -43,6 +46,7 @@ export const RadioGroup = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
+  font-size: 14px;
   & > li {
     /* height: 30px; */
     /* line-height: 30px; */
@@ -166,6 +170,7 @@ export const TapWrapperContent = styled.div`
   flex-direction: column;
   /* box-shadow: 0px 1px 20px 0px rgba(90, 102, 124, 0.08); */
   padding: 5px 25px;
+  font-size: 14px;
   .row {
     display: inline-flex;
     .header {
@@ -182,6 +187,7 @@ export const TapWrapperContent = styled.div`
     display: inline-flex;
   }
   .tags-note {
+    font-size: 12px;
     margin-bottom: 15px;
     height: 30px;
     line-height: 30px;
