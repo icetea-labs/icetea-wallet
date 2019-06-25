@@ -219,6 +219,17 @@ export const WrapperTexinput = styled.div`
   }
 `;
 
+export const WrapperOwnerInput = styled.div`
+  margin-right: 10px;
+  width: 100%;
+  input {
+    width: 100%;
+    height: 30px;
+    outline: none;
+    font-family: 'DIN';
+  }
+`;
+
 export const Button = styled(BtnActive)`
   width: ${props => (props.width ? props.width : '100px')};
   height: ${props => (props.height ? props.height : '30px')};
@@ -245,6 +256,8 @@ export const Table = styled.table`
 `;
 export const THead = styled.thead`
   background: 0% 0% / auto 100% rgb(253, 253, 253);
+  width: 100%;
+  display: table-row-group;
   th {
     background-color: rgb(253, 253, 253);
     word-break: break-all;
@@ -323,15 +336,26 @@ export const OwnerAdd = styled.div`
   padding: 20px 0px;
   margin-left: 40px;
   display: flex;
+  input {
+    width: 100%;
+    height: 30px;
+    outline: none;
+    font-family: 'DIN';
+  }
+  .ownerButton {
+    margin-left: 20px;
+    margin-top: 5px;
+  }
 `;
 
 export const Note = styled.div`
   margin-left: 40px;
   border: 2px solid #15b5dd;
   box-sizing: border-box;
-  height: 100px;
+  height: 100%;
   width: 75%;
-  line-height: 50px;
+  margin-top: 10px;
+  line-height: 40px;
   p {
     margin-left: 40px;
   }

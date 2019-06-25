@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import nr from '../../../assets/img/nr.svg';
 import error from '../../../assets/img/error-icon.svg';
 import { utils } from '../../../utils';
-import { Button, InputPassword } from '../../elements';
+import { Button, InputPassword, WarningRecover } from '../../elements';
 import { Icon } from '../../elements/utils';
 
 import {
@@ -17,6 +17,7 @@ import {
   MnPasswordError,
   MnBtnFoolter,
   MnLinkCreateNew,
+  WrapperAgree,
 } from './styled';
 
 class ByMnemonic extends PureComponent {
@@ -27,6 +28,7 @@ class ByMnemonic extends PureComponent {
       password: '',
       loading: false,
       isPasswordValid: false,
+      agree: true,
     };
   }
 
@@ -34,7 +36,7 @@ class ByMnemonic extends PureComponent {
     event.preventDefault();
     document.activeElement.blur();
     const { props } = this;
-    const { mnemonic, isPasswordValid, password } = this.state;
+    const { mnemonic, isPasswordValid, password, agree } = this.state;
 
     if (isPasswordValid) {
       if (mnemonic) {
@@ -47,7 +49,7 @@ class ByMnemonic extends PureComponent {
 
           // e.useDefaultSigningDelegate();
           // console.log('privateKey', privateKey);
-          props.unlock(privateKey, address, '', password, mnemonic, index);
+          props.unlock(privateKey, address, '', password, mnemonic, index, agree);
         } catch (err) {
           this.setState({
             errMsg: err.message,
@@ -80,8 +82,17 @@ class ByMnemonic extends PureComponent {
     props.history.push('/create');
   };
 
+  _handleCheckChange = e => {
+    document.activeElement.blur();
+    this.setState({
+      agree: e.target.checked,
+    });
+  };
+
   render() {
-    const { errMsg, isPasswordValid, loading, mnemonic } = this.state;
+    const { errMsg, isPasswordValid, loading, mnemonic, agree } = this.state;
+    const textWarning = 'Encrypt and Store Mnemonic Phrase';
+    // console.log('State CK', agree);
     return (
       <div>
         <MnForm onSubmit={e => this._unlock(e)}>
@@ -120,6 +131,13 @@ class ByMnemonic extends PureComponent {
               <span>{errMsg}</span>
             </MnPasswordError>
           )}
+          <WrapperAgree>
+            <WarningRecover
+              defaultChecked={agree}
+              handleCheckChange={this._handleCheckChange}
+              labelContent={textWarning}
+            />
+          </WrapperAgree>
           <MnBtnFoolter>
             <MnLinkCreateNew className="create-link" onClick={this._gotoCreate}>
               Create a New Wallet

@@ -222,9 +222,11 @@ class Inheritance extends PureComponent {
                 onChange={this._lockChange}
                 onFocus={this._lockChange}
               />
-              <Button onClick={this._addInherit}>
-                <span>Add</span>
-              </Button>
+              <div className="ownerButton">
+                <Button onClick={this._addInherit}>
+                  <span>Add</span>
+                </Button>
+              </div>
             </OwnerAdd>
             <Note>
               <p>- Wait: how many days the inheritor has to wait before he/she can make inheritance claim</p>
