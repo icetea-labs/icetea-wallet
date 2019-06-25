@@ -12,11 +12,10 @@ const globalData = (state = initialState, action) => {
       return Object.assign({}, state, {
         isLoading: action.data,
       });
-    // case types.SET_STEP:
-    //   return {
-    //     ...state,
-    //     showNotLoginNotify: action.data
-    //   }
+    case actionTypes.SET_CONFIRM_AUTH_ELE:
+      return Object.assign({}, state, {
+        triggerElement: action.data,
+      });
     // case types.SET_SHOW_PRIVATEKEY:
     //   return {
     //     ...state,

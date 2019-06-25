@@ -6,6 +6,7 @@ import notifi from '../../elements/Notification';
 import tweb3 from '../../../service/tweb3';
 import { toTEA } from '../../../utils/utils';
 import * as actions from '../../../store/actions/account';
+import * as actionsGlobal from '../../../store/actions/globalData';
 import STOInput from '../Balances/STOInput';
 import {
   H2,
@@ -44,7 +45,6 @@ class General extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { address } = this.props;
-    console.log('address', nextProps.address);
     if (nextProps.address) {
       nextProps.address !== address && this.onLoadData(nextProps.address);
     } else {
@@ -70,8 +70,9 @@ class General extends PureComponent {
     this.reLoadData(address);
   };
 
-  registerFaucetEvent = () => {
-    const { address, privateKey, signers, setNeedAuth } = this.props;
+  registerFaucetEvent = event => {
+    event.preventDefault();
+    const { address, privateKey, signers, setNeedAuth, setAuthEle } = this.props;
     let privateKeyTMP = '';
     let opts = '';
 
@@ -85,6 +86,7 @@ class General extends PureComponent {
 
     if (!privateKeyTMP) {
       setNeedAuth(true);
+      setAuthEle(event.currentTarget);
     } else {
       tweb3
         .contract('system.faucet')
@@ -124,12 +126,13 @@ class General extends PureComponent {
       });
   };
 
-  registerUpdateAliasEvent = () => {
+  registerUpdateAliasEvent = event => {
     const { alias } = this.state;
-    const { address, privateKey, setNeedAuth, signers } = this.props;
+    const { address, privateKey, setNeedAuth, signers, setAuthEle } = this.props;
 
     if (!privateKey) {
       setNeedAuth(true);
+      setAuthEle(event.currentTarget);
     } else {
       if (!alias) {
         this.setState({ aliasErr: 'Alias field is required' });
@@ -158,13 +161,15 @@ class General extends PureComponent {
     this.setState({ tagsValue: value, tagsValueErr: '' });
   };
 
-  registerAddTagEvent = () => {
-    const { address, privateKey, setNeedAuth } = this.props;
+  registerAddTagEvent = event => {
+    const { address, privateKey, setNeedAuth, setAuthEle } = this.props;
     const { tagsName, tagsValue } = this.state;
     const name = tagsName;
     const value = tagsValue;
+
     if (!privateKey) {
       setNeedAuth(true);
+      setAuthEle(event.currentTarget);
     } else {
       if (!name || !value) {
         this.setState({ tagsNameErr: 'Err', tagsValueErr: 'Err' });
@@ -248,11 +253,12 @@ class General extends PureComponent {
     ];
   };
 
-  registerRemoveTagEvent = tag => {
-    const { address, privateKey, setNeedAuth } = this.props;
+  registerRemoveTagEvent = (event, tag) => {
+    const { address, privateKey, setNeedAuth, setAuthEle } = this.props;
 
     if (!privateKey) {
       setNeedAuth(true);
+      setAuthEle(event.currentTarget);
     } else {
       tweb3
         .contract('system.did')
@@ -414,6 +420,7 @@ const mapStateToProps = state => {
   const { account } = state;
   return {
     childKey: account.childKey,
+    // triggerElement: globalData.triggerElement,
   };
 };
 
@@ -427,6 +434,9 @@ const mapDispatchToProps = dispatch => {
     },
     setAccount: data => {
       dispatch(actions.setAccount(data));
+    },
+    setAuthEle: data => {
+      dispatch(actionsGlobal.setAuthEle(data));
     },
   };
 };
