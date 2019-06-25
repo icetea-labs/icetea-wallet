@@ -29,6 +29,9 @@ export const WrapperPageContent = styled.div`
   .rc-tabs-ink-bar {
     background-color: #15b5dd;
   }
+  .rc-select-selection__clear-icon {
+    font-size: 1.4em;
+  }
 `;
 
 export const H1 = styled.div`
