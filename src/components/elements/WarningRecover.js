@@ -89,6 +89,8 @@ class WarningRecover extends PureComponent {
   static defaultProps = {
     defaultChecked: PropTypes.bool.isRequired,
     handleCheckChange: PropTypes.func.isRequired,
+    labelContent: PropTypes.string.isRequired,
+    isCreate: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -115,11 +117,14 @@ class WarningRecover extends PureComponent {
           </span>
           <Span>
             <DivText>
-              I understand that Icetea cannot recover or reset my password or the keystore file. I will make a backup of
-              the keystore file/password, keep them secret, complete all wallet creation steps and agree to all the
-              <a target="_blank" href="/en/terms">
-                &nbsp;terms.
-              </a>
+              {props.labelContent}
+              {/* I understand that Icetea cannot recover or reset my password or the keystore file. I will make a backup of
+              the keystore file/password, keep them secret, complete all wallet creation steps and agree to all the */}
+              {props.isCreate && (
+                <a target="_blank" href="/en/terms">
+                  &nbsp;terms.
+                </a>
+              )}
             </DivText>
           </Span>
         </Label>

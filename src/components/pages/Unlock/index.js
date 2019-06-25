@@ -108,7 +108,7 @@ class index extends PureComponent {
     });
   };
 
-  _unlock = (privateKey, address, keyStore, password, mnemonic, indexKey) => {
+  _unlock = (privateKey, address, keyStore, password, mnemonic, indexKey, isSave) => {
     const { props } = this;
     let isBankAccount = '';
 
@@ -152,19 +152,34 @@ class index extends PureComponent {
         const newChildKey = Object.assign({}, childKey);
         delete newChildKey.privateKey;
         delete newChildKey.balance;
-        sessionStorage.setItem(
-          'user',
-          JSON.stringify({
-            indexBankKey: isBankAccount ? indexKey : 0,
-            indexRegularKey: isBankAccount ? 0 : indexKey,
-            address,
-            mnemonic: encryptedData || mnemonic,
-            // mnemonic,
-            flags: false, // o
-            childKey: [newChildKey],
-          })
-        );
-
+        if (isSave) {
+          sessionStorage.removeItem('user');
+          localStorage.setItem(
+            'user',
+            JSON.stringify({
+              indexBankKey: isBankAccount ? indexKey : 0,
+              indexRegularKey: isBankAccount ? 0 : indexKey,
+              address,
+              mnemonic: encryptedData || mnemonic,
+              // mnemonic,
+              flags: false, // o
+              childKey: [newChildKey],
+            })
+          );
+        } else {
+          sessionStorage.setItem(
+            'user',
+            JSON.stringify({
+              indexBankKey: isBankAccount ? indexKey : 0,
+              indexRegularKey: isBankAccount ? 0 : indexKey,
+              address,
+              mnemonic: encryptedData || mnemonic,
+              // mnemonic,
+              flags: false, // o
+              childKey: [newChildKey],
+            })
+          );
+        }
         props.history.push('/balances');
       }
     });

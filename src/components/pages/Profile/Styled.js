@@ -219,6 +219,17 @@ export const WrapperTexinput = styled.div`
   }
 `;
 
+export const WrapperOwnerInput = styled.div`
+  margin-right: 10px;
+  width: 100%;
+  input {
+    width: 100%;
+    height: 30px;
+    outline: none;
+    font-family: 'DIN';
+  }
+`;
+
 export const Button = styled(BtnActive)`
   width: ${props => (props.width ? props.width : '100px')};
   height: ${props => (props.height ? props.height : '30px')};
@@ -325,6 +336,16 @@ export const OwnerAdd = styled.div`
   padding: 20px 0px;
   margin-left: 40px;
   display: flex;
+  input {
+    width: 100%;
+    height: 30px;
+    outline: none;
+    font-family: 'DIN';
+  }
+  .ownerButton {
+    margin-left: 20px;
+    margin-top: 5px;
+  }
 `;
 
 export const Note = styled.div`

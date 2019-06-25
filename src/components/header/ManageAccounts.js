@@ -99,11 +99,15 @@ class ManageAccounts extends PureComponent {
       privateKey,
     });
 
-    let current = sessionStorage.getItem('user');
-    if (!current) {
-      current = {};
-    } else {
+    let current = localStorage.getItem('user');
+    if (current) {
       current = JSON.parse(current);
+      current.address = selectedAddress;
+      current.balance = selectedBalance;
+      localStorage.setItem('user', JSON.stringify(current));
+    } else {
+      current = sessionStorage.getItem('user');
+      current = (current && JSON.parse(current)) || {};
       current.address = selectedAddress;
       current.balance = selectedBalance;
       sessionStorage.setItem('user', JSON.stringify(current));
@@ -195,6 +199,7 @@ class ManageAccounts extends PureComponent {
   _confirmSignout = () => {
     return () => {
       // userStorage.isWalletConnect && state && state.disconnect();
+      localStorage.removeItem('user');
       sessionStorage.removeItem('user');
       window.localStorage.removeItem('walletconnect');
       window.location.reload();

@@ -44,7 +44,7 @@ class NewWallet01 extends PureComponent {
   };
 
   _rePasswordChange = value => {
-    let obj = {};
+    const obj = {};
     const { props } = this;
     props.password === value && (obj.rePassErr = '');
     obj.rePassword = value;
@@ -58,7 +58,7 @@ class NewWallet01 extends PureComponent {
     });
   };
 
-  _gotoNext = function(e) {
+  _gotoNext = () => {
     document.activeElement.blur();
     const { props } = this;
     const { password } = this.props;
@@ -116,6 +116,11 @@ class NewWallet01 extends PureComponent {
 
   render() {
     const { agree, isPasswordValid, rePassErr, rePassword } = this.state;
+    const textWarning =
+      'I understand that Icetea cannot recover or reset my password or the keystore file. ' +
+      'I will make a backup of the keystore file/password, keep them secret,' +
+      ' complete all wallet creation steps and agree to all the';
+
     return (
       <div>
         <Header2>
@@ -150,7 +155,12 @@ class NewWallet01 extends PureComponent {
           </Button>
         </DivControlBtnKeystore>
         <WrapperAgree>
-          <WarningRecover defaultChecked={agree} handleCheckChange={this._handleCheckChange} />
+          <WarningRecover
+            defaultChecked={agree}
+            handleCheckChange={this._handleCheckChange}
+            isCreate
+            labelContent={textWarning}
+          />
         </WrapperAgree>
       </div>
     );
