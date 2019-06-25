@@ -126,7 +126,7 @@ class GetKeyFromSessionStorage extends PureComponent {
     const { setAccount, encryptedData, triggerElement } = this.props;
     const { password } = this.state;
 
-    let userInfo = localStorage.getItem('user');
+    let userInfo = localStorage.getItem('user') || sessionStorage.getItem('user');
     userInfo = (userInfo && JSON.parse(userInfo)) || {};
 
     if (encryptedData) {

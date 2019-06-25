@@ -153,7 +153,21 @@ class index extends PureComponent {
         delete newChildKey.privateKey;
         delete newChildKey.balance;
         if (isSave) {
+          sessionStorage.removeItem('user');
           localStorage.setItem(
+            'user',
+            JSON.stringify({
+              indexBankKey: isBankAccount ? indexKey : 0,
+              indexRegularKey: isBankAccount ? 0 : indexKey,
+              address,
+              mnemonic: encryptedData || mnemonic,
+              // mnemonic,
+              flags: false, // o
+              childKey: [newChildKey],
+            })
+          );
+        } else {
+          sessionStorage.setItem(
             'user',
             JSON.stringify({
               indexBankKey: isBankAccount ? indexKey : 0,

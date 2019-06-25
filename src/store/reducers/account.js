@@ -28,7 +28,7 @@ const initialState = Object.assign(
   },
   (function getSessionStorage() {
     const resp = {};
-    let user = localStorage.getItem('user');
+    let user = localStorage.getItem('user') || sessionStorage.getItem('user');
 
     if (user && JSON.parse(user).address) {
       user = JSON.parse(user);
@@ -53,8 +53,19 @@ const addChildKey = (state, action, type) => {
     privateKey: action.data.privateKey || '',
   };
   let isNewAddress = true;
-  let userInfo = localStorage.getItem('user');
-  userInfo = (userInfo && JSON.parse(userInfo)) || {};
+  let isLocal = true;
+  let userInfo = {};
+  const userInfoFromLocal = localStorage.getItem('user');
+  const userInfoFromSession = sessionStorage.getItem('user');
+
+  if (userInfoFromLocal) {
+    userInfo = JSON.parse(userInfoFromLocal);
+    isLocal = true;
+  } else {
+    userInfo = (userInfoFromSession && JSON.parse(userInfoFromSession)) || {};
+    isLocal = false;
+  }
+  // userInfo = (userInfo && JSON.parse(userInfo)) || {};
 
   for (let i = 0; i < userInfo.childKey.length; i += 1) {
     const account = userInfo.childKey[i];
@@ -72,7 +83,11 @@ const addChildKey = (state, action, type) => {
       ? (userInfo.indexBankKey = action.data.indexKey)
       : (userInfo.indexRegularKey = action.data.indexKey);
 
+    if (isLocal) {
       localStorage.setItem('user', JSON.stringify(userInfo));
+    } else {
+      sessionStorage.setItem('user', JSON.stringify(userInfo));
+    }
 
     const newChildKey = state.childKey.slice(0);
     newChildKey.push(childKey);
