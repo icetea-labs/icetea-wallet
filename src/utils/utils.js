@@ -8,11 +8,11 @@ const keythereum = require('keythereum');
 
 export const userStorage = {
   isWalletConnect() {
-    let user = sessionStorage.getItem('user') || '{}';
+    let user = localStorage.getItem('user') || '{}';
     return (user = JSON.parse(user)).flags && user.flags.isWalletConnect;
   },
   privateKey() {
-    let user = sessionStorage.getItem('user') || '{}';
+    let user = localStorage.getItem('user') || '{}';
     return !!(user = JSON.parse(user)).privateKey;
   },
 };

@@ -350,3 +350,14 @@ export const DefaultItem = styled.i`
     background-color: ${props => props.theme.dropdownSelectBgColor};
   }
 `;
+
+export const WrapperAgree = styled.div`
+  font-size: 14px;
+  padding: 20px 0;
+  color: #48515d;
+  & label span {
+    white-space: normal;
+    color: #48515d;
+    font-size: 14px;
+  }
+`;

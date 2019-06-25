@@ -28,7 +28,7 @@ const initialState = Object.assign(
   },
   (function getSessionStorage() {
     const resp = {};
-    let user = sessionStorage.getItem('user');
+    let user = localStorage.getItem('user');
 
     if (user && JSON.parse(user).address) {
       user = JSON.parse(user);
@@ -53,7 +53,7 @@ const addChildKey = (state, action, type) => {
     privateKey: action.data.privateKey || '',
   };
   let isNewAddress = true;
-  let userInfo = sessionStorage.getItem('user');
+  let userInfo = localStorage.getItem('user');
   userInfo = (userInfo && JSON.parse(userInfo)) || {};
 
   for (let i = 0; i < userInfo.childKey.length; i += 1) {
@@ -72,7 +72,7 @@ const addChildKey = (state, action, type) => {
       ? (userInfo.indexBankKey = action.data.indexKey)
       : (userInfo.indexRegularKey = action.data.indexKey);
 
-    sessionStorage.setItem('user', JSON.stringify(userInfo));
+      localStorage.setItem('user', JSON.stringify(userInfo));
 
     const newChildKey = state.childKey.slice(0);
     newChildKey.push(childKey);
