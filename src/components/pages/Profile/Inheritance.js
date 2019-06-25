@@ -18,6 +18,7 @@ import {
 } from './Styled';
 import notifi from '../../elements/Notification';
 import * as actions from '../../../store/actions/account';
+import * as actionsGlobal from '../../../store/actions/globalData';
 import { Icon } from '../../elements/utils';
 
 class Inheritance extends PureComponent {
@@ -75,15 +76,23 @@ class Inheritance extends PureComponent {
       });
   };
 
-  _addInherit = () => {
-    const { address, privateKey } = this.props;
-    const { setNeedAuth } = this.props;
+  _addInherit = event => {
+    const { address, privateKey, signers, setAuthEle, setNeedAuth } = this.props;
     const { inheritor } = this.state;
     let { wait, lock } = this.state;
     wait = parseInt(wait, 10);
     lock = parseInt(lock, 10);
-    if (!privateKey) {
+    const opts = { from: address };
+    let privateKeyTMP = privateKey;
+
+    if (signers.isRepresent) {
+      privateKeyTMP = signers.privateKey;
+      opts.signers = signers.address;
+    }
+
+    if (!privateKeyTMP) {
       setNeedAuth(true);
+      setAuthEle(event.currentTarget);
     } else {
       if (!inheritor) {
         this.setState({
@@ -106,7 +115,7 @@ class Inheritance extends PureComponent {
       tweb3
         .contract('system.did')
         .methods.addInheritor(address, inheritor, wait, lock)
-        .sendCommit({ from: address })
+        .sendCommit(opts)
         .then(() => {
           this.loadDid(address);
           notifi.info('Add inheritance success!');
@@ -125,11 +134,19 @@ class Inheritance extends PureComponent {
 
   _confirmDelete = () => {};
 
-  _deleteInherit = inheritor => {
-    const { address, privateKey } = this.props;
-    const { setNeedAuth } = this.props;
-    if (!privateKey) {
+  _deleteInherit = (inheritor, event) => {
+    const { address, privateKey, signers, setAuthEle, setNeedAuth } = this.props;
+    const opts = { from: address };
+    let privateKeyTMP = privateKey;
+
+    if (signers.isRepresent) {
+      privateKeyTMP = signers.privateKey;
+      opts.signers = signers.address;
+    }
+
+    if (!privateKeyTMP) {
       setNeedAuth(true);
+      setAuthEle(event.currentTarget);
     } else {
       // if (!window.confirm(`Sure to delete ${inheritor}?`)) {
       //   return;
@@ -138,7 +155,7 @@ class Inheritance extends PureComponent {
       tweb3
         .contract('system.did')
         .methods.removeInheritor(address, inheritor)
-        .sendCommit({ from: address })
+        .sendCommit(opts)
         .then(() => {
           this.loadDid(address);
           notifi.info('Delete inheritance success!');
@@ -171,7 +188,7 @@ class Inheritance extends PureComponent {
         <td style={{ width: '20%' }}>{inheritorList[key].waitPeriod}</td>
         <td style={{ width: '20%' }}>{inheritorList[key].lockPeriod}</td>
         <td style={{ width: '20%' }}>
-          <span onClick={() => this._deleteInherit(key)}>
+          <span onClick={event => this._deleteInherit(key, event)}>
             <Icon type="delete" color="#848E9C" hoverColor="#15b5dd" />
           </span>
         </td>
@@ -262,6 +279,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setNeedAuth: data => {
       dispatch(actions.setNeedAuth(data));
+    },
+    setAuthEle: data => {
+      dispatch(actionsGlobal.setAuthEle(data));
     },
   };
 };

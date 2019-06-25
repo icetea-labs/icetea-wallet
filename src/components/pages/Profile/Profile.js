@@ -150,10 +150,18 @@ class Profile extends PureComponent {
                   />
                 </TabPane>
                 <TabPane tab="Owners" key="2" placeholder="loading 2">
-                  <AccOwners address={currentAddress} privateKey={(child && child.privateKey) || ''} />
+                  <AccOwners
+                    signers={signers}
+                    address={currentAddress}
+                    privateKey={(child && child.privateKey) || ''}
+                  />
                 </TabPane>
                 <TabPane tab="Inheritance" key="3" placeholder="loading 3">
-                  <Inheritance address={currentAddress} privateKey={(child && child.privateKey) || ''} />
+                  <Inheritance
+                    signers={signers}
+                    address={currentAddress}
+                    privateKey={(child && child.privateKey) || ''}
+                  />
                 </TabPane>
               </Tabs>
             </div>
