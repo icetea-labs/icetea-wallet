@@ -220,8 +220,6 @@ class AccOwners extends PureComponent {
                 <div className="selected" />
                 <span>Default (who has private key is owner)</span>
               </li>
-            </RadioGroup>
-            <RadioGroup>
               <li
                 className={radioValue === 'two' ? 'on' : ''}
                 onClick={() => this.radioOnChange('two')}
@@ -247,7 +245,7 @@ class AccOwners extends PureComponent {
                   <STOInput
                     msgErr={ownerErr}
                     title="Owner address or alias"
-                    width="43%"
+                    width="37%"
                     type="text"
                     defaultValue={ownerAdd}
                     onChange={this._ownerChange}
@@ -256,15 +254,17 @@ class AccOwners extends PureComponent {
                   <STOInput
                     msgErr={weightErr}
                     title="Weight"
-                    width="29%"
+                    width="25%"
                     type="number"
                     defaultValue={weight}
                     onChange={this._ownerWeightChange}
                     onFocus={this._ownerWeightChange}
                   />
-                  <Button onClick={this._addOwner}>
-                    <span>Add</span>
-                  </Button>
+                  <div className="ownerButton">
+                    <Button onClick={this._addOwner}>
+                      <span>Add</span>
+                    </Button>
+                  </div>
                 </OwnerAdd>
                 <WarningText>
                   <span>Require approval weight of at least (?):</span>
