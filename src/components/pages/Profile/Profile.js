@@ -12,7 +12,7 @@ import General from './General';
 import AccOwners from './AccOwners';
 import Inheritance from './Inheritance';
 
-import { H1, H2, Wrapper, MediaContent, WrapperContent, RadioGroup } from './Styled';
+import { H1, H2, Wrapper, MediaContent, WrapperPageContent, RadioGroup } from './Styled';
 import { setNeedAuth } from '../../../store/actions/account';
 
 class Profile extends PureComponent {
@@ -27,11 +27,12 @@ class Profile extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     const { address } = this.props;
-    if (address !== nextProps.address) {
+    const { radioValue } = this.state;
+    address !== nextProps.address &&
+      radioValue === 'one' &&
       this.setState({
         currentAddress: nextProps.address,
       });
-    }
   }
 
   radioOnChange = async value => {
@@ -98,7 +99,7 @@ class Profile extends PureComponent {
       <Wrapper>
         <MediaContent>
           <H1>Profile</H1>
-          <WrapperContent>
+          <WrapperPageContent>
             <H2>Edit profile of</H2>
             <RadioGroup>
               <li
@@ -156,7 +157,7 @@ class Profile extends PureComponent {
                 </TabPane>
               </Tabs>
             </div>
-          </WrapperContent>
+          </WrapperPageContent>
         </MediaContent>
       </Wrapper>
     );

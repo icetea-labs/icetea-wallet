@@ -13,28 +13,12 @@ export const MediaContent = styled.div`
     display: none;
   }
 `;
-export const H1 = styled.div`
-  color: #212833;
-  font-size: 20px;
-  background: #fff;
-  height: 30px;
-  line-height: 30px;
-`;
-export const H2 = styled.div`
-  color: #212833;
-  font-size: 18px;
-  background: #fff;
-  height: 30px;
-  line-height: 30px;
-`;
-export const WrapperContent = styled.div`
-  /* display: flex; */
-  /* justify-content: space-between; */
-  /* align-items: center; */
+export const WrapperPageContent = styled.div`
   background: #fff;
   box-shadow: 0px 1px 20px 0px rgba(90, 102, 124, 0.08);
-  /* height: 40px; */
-  padding: 0 5px 0 15px;
+  padding: 0 15px;
+  line-height: 30px;
+  color: #212833;
   .rc-tabs-top {
     border: none;
   }
@@ -46,13 +30,22 @@ export const WrapperContent = styled.div`
     background-color: #15b5dd;
   }
 `;
+
+export const H1 = styled.div`
+  height: 30px;
+  font-size: 20px;
+`;
+export const H2 = styled.div`
+  height: 30px;
+  font-size: 16px;
+`;
 export const RadioGroup = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
   & > li {
-    height: 30px;
-    line-height: 30px;
+    /* height: 30px; */
+    /* line-height: 30px; */
     cursor: pointer;
     width: 600px;
     padding-left: 30px;
@@ -165,6 +158,8 @@ export const TabWrapper = styled.div`
 `;
 export const WrapperBlock = styled.div`
   padding-bottom: 10px;
+  width: 50%;
+  min-width: 400px;
 `;
 export const TapWrapperContent = styled.div`
   display: flex;
@@ -193,9 +188,14 @@ export const TapWrapperContent = styled.div`
     font-weight: 500;
     color: #f23051;
   }
-  .tags-table {
-    width: 470px;
-    min-height: 100px;
+`;
+export const WrapperTable = styled.div`
+  min-height: ${props => (props['min-height'] ? props['min-height'] : '100px')};
+  .table-cus {
+    tr td {
+      height: 30px;
+      line-height: 30px;
+    }
   }
 `;
 export const StyledText = styled.div`
@@ -210,6 +210,7 @@ export const WrapperButton = styled.div`
 `;
 export const WrapperTexinput = styled.div`
   margin-right: 20px;
+  width: 100%;
   input {
     width: 90%;
     height: 30px;
