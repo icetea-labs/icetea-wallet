@@ -310,9 +310,11 @@ class AccOwners extends PureComponent {
                     onChange={this._ownerThresholdChange}
                     onFocus={this._ownerThresholdChange}
                   />
-                  <Button onClick={this._setOwnerWeight}>
-                    <span>Set</span>
-                  </Button>
+                  <div className="ownerButton">
+                    <Button onClick={this._setOwnerWeight}>
+                      <span>Set</span>
+                    </Button>
+                  </div>
                 </OwnerAdd>
               </OwnerList>
             )}
