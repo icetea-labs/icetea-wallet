@@ -130,7 +130,7 @@ export const Content = styled.div`
   width: 1200px;
   min-width: 960px;
   @media (min-width: 320px) and (max-width: 623px) {
-    display: none;
+    /* display: none; */
   }
 `;
 export const ColorGray = styled.div`
