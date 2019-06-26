@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import nprogress from 'nprogress';
-import 'nprogress/nprogress.css';
+// import 'nprogress/nprogress.css';
 import './FancyRoute.css';
 
 class FancyRoute extends React.Component {
