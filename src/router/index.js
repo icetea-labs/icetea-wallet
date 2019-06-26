@@ -1,11 +1,16 @@
 import React from 'react';
 import Loadable from 'react-loadable';
+import FancyRoute from './FancyRoute';
 
 function Loading({ error }) {
   if (error) {
     return 'Oh nooess!';
   }
-  return <h3>Loading...</h3>;
+  return (
+    <div className="container">
+      <FancyRoute />
+    </div>
+  );
 }
 
 const index = {
