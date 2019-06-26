@@ -206,7 +206,7 @@ class BotStore extends Component {
       isRunBot: false,
       botAddress: '',
       current: 1,
-      pageSize: 12,
+      pageSize: 10,
     };
   }
 

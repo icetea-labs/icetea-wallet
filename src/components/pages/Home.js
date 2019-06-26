@@ -136,6 +136,8 @@ const PromoCard = styled.div`
 `;
 
 const Card = styled.div`
+  cursor: pointer;
+  position: relative;
   &.createWallet {
     background-color: #5a78f0;
   }
@@ -146,6 +148,8 @@ const Card = styled.div`
 
   &:hover {
     -webkit-box-shadow: 0 5px 24px rgba(0, 0, 0, 0.15);
+    -webkit-font-smoothing: antialiased;
+    transition: width 2s;
     box-shadow: 0 5px 24px rgba(0, 0, 0, 0.15);
     top: -20px;
   }
@@ -159,21 +163,18 @@ const Card = styled.div`
     color: #fff;
     margin-bottom: 0;
     padding: 30px 40px;
-    position: relative;
   }
   @media (max-width: 1024px) and (min-width: 415px) {
     border-radius: 4px;
     color: #fff;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
     padding: 30px 40px;
-    position: relative;
   }
   @media (max-width: 414px) {
     border-radius: 4px;
     color: #fff;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
     padding: 11px;
-    position: relative;
     font-size: 18px;
   }
 `;

@@ -26,7 +26,7 @@ const MobileWrapper = styled.div`
 
 const NotMobileWrapper = styled.div`
   @media (max-width: 768px) {
-    display: none;
+    /* display: none; */
   }
 `;
 
