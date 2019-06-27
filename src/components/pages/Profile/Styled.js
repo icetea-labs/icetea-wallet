@@ -10,7 +10,7 @@ export const MediaContent = styled.div`
   width: 1200px;
   min-width: 960px;
   @media (min-width: 320px) and (max-width: 623px) {
-    display: none;
+    /* display: none; */
   }
 `;
 export const WrapperPageContent = styled.div`
@@ -116,7 +116,7 @@ export const RadioGroup = styled.div`
     }
   }
   @media (min-width: 320px) and (max-width: 623px) {
-    display: none;
+    /* display: none; */
   }
 `;
 export const WrapperCombox = styled.div`
@@ -158,7 +158,7 @@ export const TabWrapper = styled.div`
   /* background: #fdfdfd; */
   display: flex;
   justify-content: center;
-  margin-bottom: 50px;
+  margin-bottom: 5px;
 `;
 export const WrapperBlock = styled.div`
   padding-bottom: 10px;
