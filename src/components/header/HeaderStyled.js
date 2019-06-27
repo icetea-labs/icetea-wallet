@@ -14,7 +14,7 @@ export const WrapperHeader = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  z-index: ${zIndex.header};
+  z-index: ${props => (props.needAuth ? zIndex.header + 1 : zIndex.header)};
   @media (max-width: 768px) {
     height: 44px;
     line-height: 44px;
