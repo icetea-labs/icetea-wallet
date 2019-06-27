@@ -124,7 +124,7 @@ class Header extends PureComponent {
 
   render() {
     const { showMobileMenu, selectMenuItems } = this.state;
-    const { className, bgColor, address } = this.props;
+    const { className, bgColor, address, needAuth } = this.props;
     // console.log('render header');
 
     const MenuItems = selectMenuItems.map(el => {
@@ -145,7 +145,7 @@ class Header extends PureComponent {
     });
 
     return (
-      <WrapperHeader className={className} bgColor={bgColor}>
+      <WrapperHeader className={className} bgColor={bgColor} needAuth={needAuth}>
         <LogoDisplay>
           <LogoWrapper onClick={this._clickLogo}>
             <img src={logoHeader} alt="" />
@@ -192,13 +192,15 @@ class Header extends PureComponent {
 Header.defaultProps = {
   dispatch() {},
   bgColor: '',
+  needAuth: false,
 };
 
 const mapStateToProps = state => {
-  const { address, flags } = state.account;
+  const { account } = state;
   return {
-    address,
-    flags,
+    needAuth: account.needAuth,
+    address: account.address,
+    flags: account.flags,
     isIpValid: state.globalData.isIpValid,
   };
 };

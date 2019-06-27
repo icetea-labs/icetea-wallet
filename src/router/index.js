@@ -112,6 +112,16 @@ const index = {
         timeout: 5e4,
       }),
     },
+    {
+      path: '/signTransaction/:tx/:callbackURL',
+      exact: false,
+      component: Loadable({
+        loader: () => import('../components/pages/SignTransaction'),
+        loading: Loading,
+        delay: 500,
+        timeout: 5e4,
+      }),
+    },
   ],
 };
 
