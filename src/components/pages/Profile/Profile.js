@@ -21,52 +21,56 @@ class Profile extends PureComponent {
     super(props);
     this.state = {
       currentAddress: props.address,
-      radioValue: 'one',
-      selectedValue: '',
+      radioVal: 'one',
+      comboBoxSelectedVal: '',
     };
   }
 
   componentWillReceiveProps(nextProps) {
     const { address } = this.props;
-    const { radioValue } = this.state;
+    const { radioVal } = this.state;
+
+    // change address in menu account
     address !== nextProps.address &&
-      radioValue === 'one' &&
+      radioVal === 'one' &&
       this.setState({
         currentAddress: nextProps.address,
       });
   }
 
-  radioOnChange = async value => {
-    const { radioValue, selectedValue } = this.state;
+  radioOnChange = value => {
+    const { radioVal, comboBoxSelectedVal } = this.state;
     const { address } = this.props;
 
-    if (radioValue !== value) {
+    // change address when radio change
+    radioVal !== value &&
       this.setState({
-        radioValue: value,
-        currentAddress: value === 'one' ? address : selectedValue,
+        radioVal: value,
+        currentAddress: value === 'one' ? address : comboBoxSelectedVal,
       });
-    }
   };
 
   selectOnChange = value => {
+    const { radioVal } = this.state;
+    const newObj = { comboBoxSelectedVal: value, currentAddress: value };
+
+    // only combobox selected value change
+    radioVal === 'one' && delete newObj.currentAddress;
+    this.setState(newObj);
     console.log('selectOnChange', value);
-    this.setState({
-      selectedValue: value,
-      currentAddress: value,
-    });
   };
 
-  tabOnChange = async value => {
+  tabOnChange = value => {
     console.log(`selected ${value}`);
   };
 
   render() {
-    const { radioValue, currentAddress } = this.state;
+    const { radioVal, currentAddress } = this.state;
     const { address, privateKey, childKey } = this.props;
     const child = childKey.filter(el => {
       return currentAddress === el.address;
     })[0];
-    const signers = { address, privateKey, isRepresent: !child };
+    const signers = { address, privateKey, isRepresent: currentAddress && !child };
 
     return (
       <Wrapper>
@@ -76,7 +80,7 @@ class Profile extends PureComponent {
             <H2>Edit profile of</H2>
             <RadioGroup>
               <li
-                className={radioValue === 'one' ? 'on' : ''}
+                className={radioVal === 'one' ? 'on' : ''}
                 onClick={() => this.radioOnChange('one')}
                 role="presentation"
               >
@@ -84,7 +88,7 @@ class Profile extends PureComponent {
                 <span>Current account ( {address} )</span>
               </li>
               <li
-                className={radioValue === 'two' ? 'on' : ''}
+                className={radioVal === 'two' ? 'on' : ''}
                 onClick={() => this.radioOnChange('two')}
                 role="presentation"
               >

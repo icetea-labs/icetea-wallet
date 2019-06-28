@@ -90,17 +90,15 @@ class General extends PureComponent {
   };
 
   registerFaucetEvent = event => {
-    event.preventDefault();
-    const { address, privateKey, signers, setNeedAuth, setAuthEle } = this.props;
-    const opts = { from: address };
-    let privateKeyTMP = privateKey;
+    const { signers, setNeedAuth, setAuthEle } = this.props;
+    const { opts, privateKey, address } = this.beforeSubmit();
 
-    if (signers.isRepresent) {
-      privateKeyTMP = signers.privateKey;
-      opts.signers = signers.address;
+    if (!this.validateAddress(opts.signers || opts.from).isvalid) {
+      notifi.warn('Invalid account');
+      return;
     }
 
-    if (!privateKeyTMP) {
+    if (!privateKey) {
       setNeedAuth(true);
       setAuthEle(event.currentTarget);
     } else {
@@ -149,16 +147,15 @@ class General extends PureComponent {
 
   registerUpdateAliasEvent = event => {
     const { alias } = this.state;
-    const { address, privateKey, setNeedAuth, signers, setAuthEle } = this.props;
-    const opts = { from: address };
-    let privateKeyTMP = privateKey;
+    const { setNeedAuth, setAuthEle } = this.props;
+    const { opts, privateKey, address } = this.beforeSubmit();
 
-    if (signers.isRepresent) {
-      privateKeyTMP = signers.privateKey;
-      opts.signers = signers.address;
+    if (!this.validateAddress(opts.signers || opts.from).isvalid) {
+      notifi.warn('Invalid account');
+      return;
     }
 
-    if (!privateKeyTMP) {
+    if (!privateKey) {
       setNeedAuth(true);
       setAuthEle(event.currentTarget);
     } else {
@@ -192,19 +189,18 @@ class General extends PureComponent {
   };
 
   registerAddTagEvent = event => {
-    const { address, privateKey, signers, setNeedAuth, setAuthEle } = this.props;
+    const { setNeedAuth, setAuthEle } = this.props;
     const { tagsName, tagsValue } = this.state;
+    const { opts, privateKey, address } = this.beforeSubmit();
     const name = tagsName;
     const value = tagsValue;
-    const opts = { from: address };
-    let privateKeyTMP = privateKey;
 
-    if (signers.isRepresent) {
-      privateKeyTMP = signers.privateKey;
-      opts.signers = signers.address;
+    if (!this.validateAddress(opts.signers || opts.from).isvalid) {
+      notifi.warn('Invalid account');
+      return;
     }
 
-    if (!privateKeyTMP) {
+    if (!privateKey) {
       setNeedAuth(true);
       setAuthEle(event.currentTarget);
     } else {
@@ -305,6 +301,11 @@ class General extends PureComponent {
       opts.signers = signers.address;
     }
     // console.log('tag.currentTarget', event.currentTarget);
+    if (!this.validateAddress(opts.signers || opts.from).isvalid) {
+      notifi.warn('Invalid account');
+      return;
+    }
+
     if (!privateKeyTMP) {
       setNeedAuth(true);
       setAuthEle(event.currentTarget);
@@ -362,25 +363,39 @@ class General extends PureComponent {
     return dataSource;
   };
 
-  render() {
-    const { alias, tagsName, tagsValue, tagsList, pageSize, current } = this.state;
-    const { address } = this.props;
-    const { balance } = this.state;
-    const total = Object.keys(tagsList).length;
-    const typeOfAccount = (() => {
-      try {
-        if (codec.isBankAddress(address)) {
-          return 'Bank account';
-        }
-        if (codec.isRegularAddress(address)) {
-          return 'Regular account';
-        }
-
-        return 'Invalid address';
-      } catch (e) {
-        return 'Invalid address';
+  validateAddress = address => {
+    try {
+      console.log('address', address);
+      if (codec.isBankAddress(address)) {
+        return { isvalid: true, type: 'Bank account' };
       }
-    })();
+      if (codec.isRegularAddress(address)) {
+        return { isvalid: true, type: 'Regular account' };
+      }
+      return { isvalid: false, type: 'Invalid account' };
+    } catch (e) {
+      return { isvalid: false, type: 'Invalid account' };
+    }
+  };
+
+  beforeSubmit = () => {
+    const { address, privateKey, signers } = this.props;
+    const opts = { from: address };
+    let privateKeyTMP = privateKey;
+
+    if (signers.isRepresent) {
+      privateKeyTMP = signers.privateKey;
+      opts.signers = signers.address;
+    }
+
+    return { opts, privateKey: privateKeyTMP, address };
+  };
+
+  render() {
+    const { balance, alias, tagsName, tagsValue, tagsList, pageSize, current } = this.state;
+    const { address } = this.props;
+    const total = Object.keys(tagsList).length;
+    const { type } = this.validateAddress(address);
 
     return (
       <TabWrapper>
@@ -390,7 +405,7 @@ class General extends PureComponent {
             <TapWrapperContent>
               <div className="row">
                 <p className="header">Type:</p>
-                <p> {typeOfAccount}</p>
+                <p> {type}</p>
               </div>
               <div className="row">
                 <p className="header">Balance:</p>
