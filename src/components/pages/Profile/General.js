@@ -414,7 +414,7 @@ class General extends PureComponent {
               </div>
 
               <WrapperButton>
-                <Button width="170px" className="get-tea" onClick={this.registerFaucetEvent}>
+                <Button width="170px" onClick={this.registerFaucetEvent}>
                   <span>Get TEA from Faucet</span>
                 </Button>
               </WrapperButton>
@@ -429,7 +429,7 @@ class General extends PureComponent {
                 </WrapperTexinput>
 
                 <WrapperButton>
-                  <Button className="get-tea" onClick={this.registerUpdateAliasEvent}>
+                  <Button onClick={this.registerUpdateAliasEvent}>
                     <span>Set</span>
                   </Button>
                 </WrapperButton>
@@ -450,7 +450,7 @@ class General extends PureComponent {
                   <STOInput title="Value" type="text" defaultValue={tagsValue} onChange={this.handleTagsValue} />
                 </WrapperTexinput>
                 <WrapperButton>
-                  <Button className="get-tea" onClick={this.registerAddTagEvent}>
+                  <Button onClick={this.registerAddTagEvent}>
                     <span>Set</span>
                   </Button>
                 </WrapperButton>

@@ -366,7 +366,7 @@ class AccOwners extends PureComponent {
                         />
                       </WrapperTexinput>
                       <WrapperButton>
-                        <Button className="get-tea" onClick={this._setOwnerWeight}>
+                        <Button onClick={this._setOwnerWeight}>
                           <span>Set</span>
                         </Button>
                       </WrapperButton>

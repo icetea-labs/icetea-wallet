@@ -330,7 +330,7 @@ class Inheritance extends PureComponent {
                   />
                 </WrapperTexinput>
                 <WrapperButton>
-                  <Button className="get-tea" onClick={this._addInherit}>
+                  <Button onClick={this._addInherit}>
                     <span>Add</span>
                   </Button>
                 </WrapperButton>
