@@ -11,7 +11,7 @@ import STOInput from '../Balances/STOInput';
 import {
   H2,
   TabWrapper,
-  MediaContent,
+  TabMediaContent,
   WrapperBlock,
   TapWrapperContent,
   WrapperTexinput,
@@ -399,7 +399,7 @@ class General extends PureComponent {
 
     return (
       <TabWrapper>
-        <MediaContent>
+        <TabMediaContent>
           <WrapperBlock>
             <H2>Information</H2>
             <TapWrapperContent>
@@ -470,7 +470,7 @@ class General extends PureComponent {
               </WrapperTable>
             </TapWrapperContent>
           </WrapperBlock>
-        </MediaContent>
+        </TabMediaContent>
       </TabWrapper>
     );
   }

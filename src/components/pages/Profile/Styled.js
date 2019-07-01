@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
 `;
 export const MediaContent = styled.div`
   width: 1200px;
-  min-width: 960px;
+  min-width: 767px;
   @media (min-width: 320px) and (max-width: 623px) {
     /* display: none; */
   }
@@ -166,6 +166,12 @@ export const WrapperBlock = styled.div`
   padding-bottom: 10px;
   width: 50%;
   min-width: 400px;
+`;
+export const TabMediaContent = styled.div`
+  width: 100%;
+  @media (min-width: 320px) and (max-width: 623px) {
+    /* display: none; */
+  }
 `;
 export const TapWrapperContent = styled.div`
   display: flex;
