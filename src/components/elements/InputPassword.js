@@ -112,7 +112,7 @@ class InputPassword extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      agree: false,
+      // agree: false,
       password: '',
       showPassword: false,
     };

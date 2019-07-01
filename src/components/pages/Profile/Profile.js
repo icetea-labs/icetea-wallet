@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { codec } from '@iceteachain/common';
-import Select, { Option, SelectPropTypes, OptGroup } from 'rc-select';
+import Select, { Option, SelectPropTypes } from 'rc-select';
 import 'rc-select/assets/index.css';
 import Tabs, { TabPane } from 'rc-tabs';
 import TabContent from 'rc-tabs/lib/TabContent';
@@ -15,94 +14,63 @@ import Inheritance from './Inheritance';
 import { H1, H2, Wrapper, MediaContent, WrapperPageContent, RadioGroup } from './Styled';
 import { setNeedAuth } from '../../../store/actions/account';
 
+const defaultTabKey = '3';
+
 class Profile extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       currentAddress: props.address,
-      radioValue: 'one',
-      selectedValue: '',
+      radioVal: 'one',
+      comboBoxSelectedVal: '',
     };
   }
 
   componentWillReceiveProps(nextProps) {
     const { address } = this.props;
-    const { radioValue } = this.state;
+    const { radioVal } = this.state;
+
+    // change address in menu account
     address !== nextProps.address &&
-      radioValue === 'one' &&
+      radioVal === 'one' &&
       this.setState({
         currentAddress: nextProps.address,
       });
   }
 
-  radioOnChange = async value => {
-    const { radioValue, selectedValue } = this.state;
+  radioOnChange = value => {
+    const { radioVal, comboBoxSelectedVal } = this.state;
     const { address } = this.props;
 
-    if (radioValue !== value) {
+    // change address when radio change
+    radioVal !== value &&
       this.setState({
-        radioValue: value,
-        currentAddress: value === 'one' ? address : selectedValue,
+        radioVal: value,
+        currentAddress: value === 'one' ? address : comboBoxSelectedVal,
       });
-    }
   };
 
   selectOnChange = value => {
+    const { radioVal } = this.state;
+    const newObj = { comboBoxSelectedVal: value, currentAddress: value };
+
+    // only combobox selected value change
+    radioVal === 'one' && delete newObj.currentAddress;
+    this.setState(newObj);
     console.log('selectOnChange', value);
-    this.setState({
-      selectedValue: value,
-      currentAddress: value,
-    });
   };
 
-  onSelect = value => {
-    // console.log('onSelect', value);
-  };
-
-  onKeyDown = value => {
-    // console.log('onKeyDown', value);
-    try {
-      if (codec.isAddressType(value)) {
-        this.setState({
-          selectedValue: value,
-          currentAddress: value,
-        });
-      }
-    } catch (e) {
-      // console.log(e);
-    }
-  };
-
-  tabOnChange = async value => {
+  tabOnChange = value => {
     console.log(`selected ${value}`);
   };
 
   render() {
-    const { radioValue, currentAddress } = this.state;
+    const { radioVal, currentAddress } = this.state;
     const { address, privateKey, childKey } = this.props;
-    const Options = childKey.map(el => {
-      // console.log(el);
-      return (
-        <Option key={el.index} value={el.address} desc={el.address}>
-          {el.address}
-        </Option>
-      );
-    });
-
-    // const Owners = childKey.map(el => {
-    //   // console.log(el);
-    //   return (
-    //     <Option key={el.address} value={el.address + 1} desc={el.address}>
-    //       {el.address}
-    //     </Option>
-    //   );
-    // });
-    // const ownersLabel = `Owner list of [ ${address} ]`;
     const child = childKey.filter(el => {
       return currentAddress === el.address;
     })[0];
-
-    const signers = { address, privateKey, isRepresent: !child };
+    const signers = { address, privateKey, isRepresent: currentAddress && !child };
 
     return (
       <Wrapper>
@@ -112,7 +80,7 @@ class Profile extends PureComponent {
             <H2>Edit profile of</H2>
             <RadioGroup>
               <li
-                className={radioValue === 'one' ? 'on' : ''}
+                className={radioVal === 'one' ? 'on' : ''}
                 onClick={() => this.radioOnChange('one')}
                 role="presentation"
               >
@@ -120,7 +88,7 @@ class Profile extends PureComponent {
                 <span>Current account ( {address} )</span>
               </li>
               <li
-                className={radioValue === 'two' ? 'on' : ''}
+                className={radioVal === 'two' ? 'on' : ''}
                 onClick={() => this.radioOnChange('two')}
                 role="presentation"
               >
@@ -130,8 +98,6 @@ class Profile extends PureComponent {
                   className="custom-select"
                   optionFilterProp="desc"
                   onChange={this.selectOnChange}
-                  onSelect={this.onSelect}
-                  onInputKeyDown={this.onKeyDown}
                   animation="slide-up"
                   notFoundContent=""
                   allowClear
@@ -139,21 +105,26 @@ class Profile extends PureComponent {
                   combobox
                   backfill
                 >
-                  {Options}
-                  {/* <OptGroup label="List accounts">{Options}</OptGroup> */}
-                  {/* <OptGroup label={ownersLabel}>{Owners}</OptGroup> */}
+                  {childKey.map(el => {
+                    // console.log(el);
+                    return (
+                      <Option key={el.index} value={el.address} desc={el.address}>
+                        {el.address}
+                      </Option>
+                    );
+                  })}
                 </Select>
               </li>
             </RadioGroup>
             <div>
               <Tabs
-                defaultActiveKey="1"
+                defaultActiveKey={defaultTabKey}
                 destroyInactiveTabPane
-                renderTabBar={() => <ScrollableInkTabBar onTabClick={this.onTabClick} />}
+                renderTabBar={() => <ScrollableInkTabBar />}
                 renderTabContent={() => <TabContent />}
                 onChange={this.tabOnChange}
               >
-                <TabPane tab="General" key="1" placeholder="loading 1">
+                <TabPane tab="General" key="1" placeholder="loading general">
                   <General
                     address={currentAddress}
                     signers={signers}
@@ -161,14 +132,14 @@ class Profile extends PureComponent {
                     balance={(child && child.balance) || ''}
                   />
                 </TabPane>
-                <TabPane tab="Owners" key="2" placeholder="loading 2">
+                <TabPane tab="Owners" key="2" placeholder="loading owners">
                   <AccOwners
                     signers={signers}
                     address={currentAddress}
                     privateKey={(child && child.privateKey) || ''}
                   />
                 </TabPane>
-                <TabPane tab="Inheritance" key="3" placeholder="loading 3">
+                <TabPane tab="Inheritance" key="3" placeholder="loading inheritance">
                   <Inheritance
                     signers={signers}
                     address={currentAddress}
@@ -190,9 +161,7 @@ const mapStateToProps = state => {
   return {
     address: account.address,
     privateKey: account.privateKey,
-    cipher: account.cipher,
     childKey: account.childKey,
-    mnemonic: account.mnemonic,
   };
 };
 
