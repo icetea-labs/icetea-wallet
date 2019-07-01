@@ -6,20 +6,22 @@ import STOInput from '../Balances/STOInput';
 import {
   H2,
   TabWrapper,
-  MediaContent,
+  TabMediaContent,
   TapWrapperContent,
   Button,
-  Table,
-  THead,
-  TBody,
-  OwnerAdd,
   Note,
   Guide,
+  WrapperBlock,
+  WrapperTexinput,
+  WrapperButton,
+  WrapperTable,
+  StyledText,
 } from './Styled';
+import { FontDin, Icon } from '../../elements/utils';
+import Table from '../../elements/TablePro';
 import notifi from '../../elements/Notification';
 import * as actions from '../../../store/actions/account';
 import * as actionsGlobal from '../../../store/actions/globalData';
-import { Icon } from '../../elements/utils';
 
 class Inheritance extends PureComponent {
   constructor(props) {
@@ -32,6 +34,8 @@ class Inheritance extends PureComponent {
       inheErr: '',
       waitErr: '',
       lockErr: '',
+      current: 1,
+      pageSize: 5,
     };
   }
 
@@ -51,6 +55,8 @@ class Inheritance extends PureComponent {
         inheErr: '',
         waitErr: '',
         lockErr: '',
+        current: 1,
+        pageSize: 5,
       });
     } else {
       address !== nextProps.address && this.loadDid(nextProps.address);
@@ -148,13 +154,9 @@ class Inheritance extends PureComponent {
       setNeedAuth(true);
       setAuthEle(event.currentTarget);
     } else {
-      // if (!window.confirm(`Sure to delete ${inheritor}?`)) {
-      //   return;
-      // }
-
       tweb3
         .contract('system.did')
-        .methods.removeInheritor(address, inheritor)
+        .methods.removeInheritor(address, inheritor.address)
         .sendCommit(opts)
         .then(() => {
           this.loadDid(address);
@@ -179,83 +181,177 @@ class Inheritance extends PureComponent {
     this.setState({ lockErr: '', lock: e });
   };
 
-  render() {
-    const { inheritor, wait, lock, inheritorList, inheErr, waitErr, lockErr } = this.state;
-    // console.log('inheritorList CK', Object.keys(inheritorList));
-    const inheritTBL = Object.keys(inheritorList).map(key => (
-      <tr key={key}>
-        <td style={{ width: '40%' }}>{key}</td>
-        <td style={{ width: '20%' }}>{inheritorList[key].waitPeriod}</td>
-        <td style={{ width: '20%' }}>{inheritorList[key].lockPeriod}</td>
-        <td style={{ width: '20%' }}>
-          <span onClick={event => this._deleteInherit(key, event)}>
+  buildColumns = () => {
+    return [
+      {
+        title: 'Address (alias)',
+        headerAlign: 'left',
+        width: '56%',
+        sorter: true,
+        dataIndex: 'address',
+        key: 'address',
+        render: e => (
+          <StyledText>
+            <FontDin value={e.address} />
+          </StyledText>
+        ),
+      },
+      {
+        title: 'Wait',
+        dataIndex: 'wait',
+        headerAlign: 'left',
+        width: '17%',
+        sorter: true,
+        key: 'wait',
+        render: e => (
+          <StyledText>
+            <FontDin value={e.wait} />
+          </StyledText>
+        ),
+      },
+      {
+        title: 'Lock',
+        dataIndex: 'lock',
+        headerAlign: 'left',
+        width: '17%',
+        sorter: true,
+        key: 'lock',
+        render: e => (
+          <StyledText>
+            <FontDin value={e.lock} />
+          </StyledText>
+        ),
+      },
+      {
+        title: '',
+        dataIndex: 'remove',
+        headerAlign: 'left',
+        width: '10%',
+        key: '',
+        render: tag => (
+          <div onClick={event => this._deleteInherit(tag, event)} role="presentation">
             <Icon type="delete" color="#848E9C" hoverColor="#15b5dd" />
-          </span>
-        </td>
-      </tr>
-    ));
+          </div>
+        ),
+      },
+    ];
+  };
+
+  buildDataSource = () => {
+    const { inheritorList, current, pageSize } = this.state;
+    // console.log('inheritorList', inheritorList);
+    const total = Object.keys(inheritorList).length;
+    const from = (current - 1) * pageSize;
+    let to = from + pageSize;
+    let newList = [];
+
+    if (total > 0) {
+      if (to > total) to = total;
+      newList = Object.keys(inheritorList)
+        .slice(from, to)
+        .map(key => ({ [key]: inheritorList[key] }));
+    }
+
+    const dataSource = newList.map(item => {
+      const key = Object.keys(item)[0];
+      return {
+        address: key,
+        wait: item[key].waitPeriod,
+        lock: item[key].lockPeriod,
+        remove: key,
+      };
+    });
+    return dataSource;
+  };
+
+  paging = (current, pageSize) => {
+    if (pageSize) {
+      this.setState({
+        current,
+        pageSize,
+      });
+    } else {
+      this.setState({
+        current,
+      });
+    }
+  };
+
+  render() {
+    const { inheritor, wait, lock, inheritorList, inheErr, waitErr, lockErr, current, pageSize } = this.state;
+    const total = Object.keys(inheritorList).length;
 
     return (
       <TabWrapper>
-        <MediaContent>
+        <TabMediaContent>
           <H2>Inheritance</H2>
-          <TapWrapperContent>
-            <Table>
-              <THead>
-                <tr>
-                  <th>Address</th>
-                  <th>Wait(days)</th>
-                  <th>Lock(days)</th>
-                  <th />
-                </tr>
-              </THead>
-              <TBody>{inheritTBL}</TBody>
-            </Table>
-            <OwnerAdd>
-              <STOInput
-                msgErr={inheErr}
-                width="40%"
-                title="Address or alias"
-                type="text"
-                defaultValue={inheritor}
-                onChange={this._addOrAliasChange}
-                autoFocus
-              />
-              <STOInput
-                msgErr={waitErr}
-                width="20%"
-                title="Wait"
-                type="number"
-                defaultValue={wait}
-                onChange={this._waitChange}
-                onFocus={this._waitChange}
-              />
-              <STOInput
-                msgErr={lockErr}
-                width="20%"
-                title="Lock"
-                type="number"
-                defaultValue={lock}
-                onChange={this._lockChange}
-                onFocus={this._lockChange}
-              />
-              <div className="ownerButton">
-                <Button onClick={this._addInherit}>
-                  <span>Add</span>
-                </Button>
+          <WrapperBlock width="70%">
+            <TapWrapperContent>
+              <Note>
+                <p>- Wait: how many days the inheritor has to wait before he/she can make inheritance claim</p>
+                <p>- Lock: how many days he/she is locked after a rejected inheritance claim</p>
+              </Note>
+              <Guide>
+                <span>
+                  Please check out &nbsp;
+                  <a target="_blank" href="https://docs.icetea.io/" rel="noopener noreferrer">
+                    Icetea documentation
+                  </a>
+                  &nbsp; about inheritance flow.
+                </span>
+              </Guide>
+              <div className="alias">
+                <WrapperTexinput>
+                  <STOInput
+                    msgErr={inheErr}
+                    title="Address or alias"
+                    type="text"
+                    defaultValue={inheritor}
+                    onChange={this._addOrAliasChange}
+                    autoFocus
+                  />
+                </WrapperTexinput>
+                <WrapperTexinput width="30%">
+                  <STOInput
+                    msgErr={waitErr}
+                    title="Wait"
+                    type="number"
+                    defaultValue={wait}
+                    onChange={this._waitChange}
+                  />
+                </WrapperTexinput>
+                <WrapperTexinput width="30%">
+                  <STOInput
+                    msgErr={lockErr}
+                    title="Lock"
+                    type="number"
+                    defaultValue={lock}
+                    onChange={this._lockChange}
+                  />
+                </WrapperTexinput>
+                <WrapperButton>
+                  <Button className="get-tea" onClick={this._addInherit}>
+                    <span>Add</span>
+                  </Button>
+                </WrapperButton>
               </div>
-            </OwnerAdd>
-            <Note>
-              <p>- Wait: how many days the inheritor has to wait before he/she can make inheritance claim</p>
-              <p>- Lock: how many days he/she is locked after a rejected inheritance claim</p>
-            </Note>
-            <Guide>
-              <span>
-                Please check out <a href="https://docs.icetea.io/">Icetea documentation</a> about inheritance flow.
-              </span>
-            </Guide>
-          </TapWrapperContent>
-        </MediaContent>
+              <WrapperTable>
+                <div className="table-cus">
+                  <Table
+                    columns={this.buildColumns()}
+                    dataSource={this.buildDataSource()}
+                    paging={this.paging}
+                    total={total}
+                    current={current}
+                    pageSize={pageSize}
+                    showQuickJumper={false}
+                    showSizeChanger={false}
+                  />
+                </div>
+              </WrapperTable>
+            </TapWrapperContent>
+          </WrapperBlock>
+        </TabMediaContent>
       </TabWrapper>
     );
   }

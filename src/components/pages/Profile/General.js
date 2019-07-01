@@ -256,7 +256,7 @@ class General extends PureComponent {
         width: '45%',
         sorter: true,
         dataIndex: 'name',
-        key: 'TxHash',
+        key: 'name',
         render: e => (
           <StyledText>
             <FontDin value={e.name} />
@@ -269,7 +269,7 @@ class General extends PureComponent {
         headerAlign: 'left',
         width: '45%',
         sorter: true,
-        key: 'Date',
+        key: 'value',
         render: e => (
           <StyledText>
             <FontDin value={e.value} />
@@ -353,11 +353,12 @@ class General extends PureComponent {
         .map(key => ({ [key]: tagsList[key] }));
     }
 
-    const dataSource = newTagsList.map(key => {
+    const dataSource = newTagsList.map(item => {
+      const key = Object.keys(item)[0];
       return {
-        name: Object.keys(key)[0],
-        value: key[Object.keys(key)[0]],
-        remove: Object.keys(key)[0],
+        name: key,
+        value: item[key],
+        remove: key,
       };
     });
     return dataSource;
