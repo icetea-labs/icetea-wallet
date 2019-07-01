@@ -136,22 +136,21 @@ class SignTransaction extends PureComponent {
     } else {
       const txSigned = utils.signTransaction(tx, privateKey);
       console.log('txSigned', txSigned);
-
-      fetch(callbackURL, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(txSigned),
-      })
-        .then(res => res.json())
-        .then(response => console.log('Success:', JSON.stringify(response)))
-        .catch(error => console.error('Error:', error));
+      // fetch(callbackURL, {
+      //   method: 'POST',
+      //   headers: {
+      //     Accept: 'application/json',
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(txSigned),
+      // })
+      //   .then(res => res.json())
+      //   .then(response => console.log('Success:', JSON.stringify(response)))
+      //   .catch(error => console.error('Error:', error));
       notifi.info('Success');
       setTimeout(() => {
-        window.close();
-      }, 2000);
+        window.location = callbackURL + txSigned;
+      }, 500);
     }
   };
 
