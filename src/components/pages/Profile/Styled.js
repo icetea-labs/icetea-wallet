@@ -123,9 +123,6 @@ export const RadioGroup = styled.div`
 `;
 export const WrapperCombox = styled.div`
   width: 450px;
-  /* margin-top: 30px; */
-  /* position: relative; */
-
   .title {
     color: #848e9c;
     line-height: 30px;
@@ -135,21 +132,6 @@ export const WrapperCombox = styled.div`
     height: 30px;
     outline: none;
     font-family: 'DIN';
-  }
-  #spin {
-    opacity: 0;
-  }
-  input::-webkit-inner-spin-button {
-    opacity: 0;
-  }
-  .textarea {
-    width: 95%;
-    outline: none;
-    height: 50px;
-    border: 1px solid #dfe2e7;
-  }
-  .amount-input {
-    padding-right: 150px;
   }
   @media (max-width: 768px) {
     width: 100%;
@@ -230,6 +212,12 @@ export const WrapperTexinput = styled.div`
     height: 30px;
     outline: none;
     font-family: 'DIN';
+  }
+  #spin {
+    opacity: 0;
+  }
+  input::-webkit-inner-spin-button {
+    opacity: 0;
   }
 `;
 
