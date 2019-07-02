@@ -144,7 +144,7 @@ class ByMnemonic extends PureComponent {
             </MnLinkCreateNew>
             <Button
               type="submit"
-              // disabled={!isPasswordValid && mnemonic}
+              disabled={!isPasswordValid && mnemonic}
               loading={loading}
               width="170px"
               className="unlock"
