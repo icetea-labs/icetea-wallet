@@ -9,7 +9,7 @@ import logo from '../../../assets/img/logo.svg';
 import unlockRecommend from '../../../assets/img/unlock_recommend.svg';
 import ByMnemonic from './ByMnemonic';
 import ByPrivateKey from './ByPrivateKey';
-import SelectUnlockType from './SelectUnlockType';
+import ComboboxPro from '../../elements/ComboboxPro';
 import { utils } from '../../../utils';
 import tweb3 from '../../../service/tweb3';
 import {
@@ -241,7 +241,7 @@ class index extends PureComponent {
                 <WrapperMenu>
                   <SubTitle>Select how you would like to unlock</SubTitle>
                   <WrapperSelect>
-                    <SelectUnlockType options={this._getSelectTypes()} width="100%" onChange={this._unlockWayChange} />
+                    <ComboboxPro options={this._getSelectTypes()} width="100%" onChange={this._unlockWayChange} />
                   </WrapperSelect>
                   <Menu>{listItems}</Menu>
                 </WrapperMenu>
