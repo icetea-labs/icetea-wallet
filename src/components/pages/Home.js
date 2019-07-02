@@ -62,16 +62,13 @@ const Banner = styled.div`
       /* max-width: 450px; */
       font-size: 18px;
       @media (min-width: 1025px) {
-        color: #506175;
-        line-height: 21px;
+        line-height: 22px;
       }
       @media (max-width: 414px) {
-        color: #506175;
+        line-height: 22px;
         margin-top: 17px;
         /* max-width: 325px; */
         height: 126px;
-        line-height: 21px;
-        font-size: 18px;
       }
     }
     @media (max-width: 1024px) and (min-width: 415px) {
