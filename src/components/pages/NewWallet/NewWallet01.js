@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { encode, utils } from '../../../utils';
 import * as acGlobal from '../../../store/actions/globalData';
 import * as actions from '../../../store/actions/create';
-import { Button, WarningRecover, InputPassword } from '../../elements';
+import { Button, CheckboxPro, InputPassword } from '../../elements';
 import { Header2, DivControlBtnKeystore, DivUnlockLink, Icon } from '../../elements/utils';
 
 const WrapperAgree = styled.div`
@@ -155,7 +155,7 @@ class NewWallet01 extends PureComponent {
           </Button>
         </DivControlBtnKeystore>
         <WrapperAgree>
-          <WarningRecover
+          <CheckboxPro
             defaultChecked={agree}
             handleCheckChange={this._handleCheckChange}
             isCreate

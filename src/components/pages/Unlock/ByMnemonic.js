@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import nr from '../../../assets/img/nr.svg';
 import error from '../../../assets/img/error-icon.svg';
 import { utils } from '../../../utils';
-import { Button, InputPassword, WarningRecover } from '../../elements';
+import { Button, InputPassword, CheckboxPro } from '../../elements';
 import { Icon } from '../../elements/utils';
 
 import {
@@ -132,7 +132,7 @@ class ByMnemonic extends PureComponent {
             </MnPasswordError>
           )}
           <WrapperAgree>
-            <WarningRecover
+            <CheckboxPro
               defaultChecked={agree}
               handleCheckChange={this._handleCheckChange}
               labelContent={textWarning}

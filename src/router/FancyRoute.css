@@ -31,7 +31,7 @@
   top: 0.9375rem;
   right: 0.9375rem;
 } */
-#nprogress .spinner-icon {
+/* #nprogress .spinner-icon {
   width: 1.125rem;
   height: 1.125rem;
   box-sizing: border-box;
@@ -41,7 +41,7 @@
   border-radius: 50%;
   -webkit-animation: nprogress-spinner 400ms linear infinite;
   animation: nprogress-spinner 400ms linear infinite;
-}
+} */
 .nprogress-custom-parent {
   overflow: hidden;
   position: relative;
