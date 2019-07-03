@@ -14,7 +14,7 @@ import Inheritance from './Inheritance';
 import { H1, H2, Wrapper, MediaContent, WrapperPageContent, RadioGroup } from './Styled';
 import { setNeedAuth } from '../../../store/actions/account';
 
-const defaultTabKey = '3';
+const defaultTabKey = '1';
 
 class Profile extends PureComponent {
   constructor(props) {

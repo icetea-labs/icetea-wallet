@@ -6,7 +6,7 @@ import { ecc, codec } from '@iceteachain/common';
 
 import { Wrapper, Error, MaxValue, FeeAva, Fee, Ava, ButtonWrapper } from './StyledSTOne';
 import { Button } from '../../elements/Button';
-import SelectUnlockType from '../Unlock/SelectUnlockType';
+import ComboboxPro from '../../elements/ComboboxPro';
 import STOInput from './STOInput';
 import errorIc from '../../../assets/img/error-icon.png';
 import * as actions from '../../../store/actions/account';
@@ -191,7 +191,7 @@ class SendTransactionOne extends PureComponent {
         >
           <p className="title">Select Asset</p>
 
-          <SelectUnlockType
+          <ComboboxPro
             defaultValue={u.render && u.render()}
             options={this._getSelectTypes()}
             width="100%"
