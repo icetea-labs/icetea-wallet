@@ -4,7 +4,7 @@ import { codec } from '@iceteachain/common';
 import { connect } from 'react-redux';
 import notifi from '../../elements/Notification';
 import tweb3 from '../../../service/tweb3';
-import { toTEA } from '../../../utils/utils';
+import { toTEA } from '../../../utils';
 import * as actions from '../../../store/actions/account';
 import * as actionsGlobal from '../../../store/actions/globalData';
 import STOInput from '../Balances/STOInput';
@@ -466,6 +466,7 @@ class General extends PureComponent {
                     pageSize={pageSize}
                     showQuickJumper={false}
                     showSizeChanger={false}
+                    showHeaderNonData={false}
                   />
                 </div>
               </WrapperTable>

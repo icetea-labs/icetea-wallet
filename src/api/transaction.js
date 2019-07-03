@@ -2,7 +2,7 @@ import { decodeTX } from '@iceteachain/web3/src/utils';
 import { ecc } from '@iceteachain/common';
 import dateFormat from 'dateformat';
 import tweb3 from '../service/tweb3';
-import { toTEA } from '../utils/utils';
+import { toTEA } from '../utils';
 
 const utils = {
   fmtTxs: txs => {
