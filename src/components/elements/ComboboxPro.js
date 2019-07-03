@@ -71,14 +71,9 @@ class ComboboxPro extends Component {
   };
 
   _buildList = () => {
-    // console.log('Call buildList')
     const { state } = this;
     const { withSearchBox } = this.props;
-    const items = state.options.map((value, index) => {
-      return <MenuItem key={index}>{value.render ? value.render : value.text}</MenuItem>;
-    });
 
-    // console.log('items CK', items)
     return (
       <Menu onSelect={this._onSelect}>
         {withSearchBox && (
@@ -87,7 +82,9 @@ class ComboboxPro extends Component {
             <input autoFocus placeholder="Search Asset" onChange={this._onSearch} />
           </MenuItem>
         )}
-        {items}
+        {state.options.map((value, index) => {
+          return <MenuItem key={index}>{value.render ? value.render : value.text}</MenuItem>;
+        })}
       </Menu>
     );
   };
@@ -105,7 +102,7 @@ class ComboboxPro extends Component {
   render() {
     const { width, className } = this.props;
     const { value } = this.state;
-    // console.log('option1 CK', this.props.options)
+
     return (
       <DropWrapper width={width} className={'select '.concat(className || '')}>
         <Dropdown
@@ -135,7 +132,7 @@ ComboboxPro.defaultProps = {
   defaultValue: null,
   onChange() {},
   width: '',
-  withSearchBox: true,
+  withSearchBox: false,
 };
 
 export default ComboboxPro;

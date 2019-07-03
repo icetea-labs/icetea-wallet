@@ -29,35 +29,29 @@ import FooterCus from '../FooterCus';
 
 const itemsMenu = [
   {
+    text: 'Mnemonic Phrase',
+    // img: st.a,
+    selected: true,
+    recommended: true,
+  },
+  {
     text: 'WalletConnect',
-    i18nId: 'common.walletConnect',
     // img: rt.a,
     selected: false,
     recommended: true,
   },
   {
     text: 'Ledger Device',
-    i18nId: 'common.ledgerDevice',
     // img: it.a,
     selected: false,
     recommended: true,
   },
   {
     text: 'KeyStore File',
-    i18nId: 'common.keystoreFile',
-    // img: it.a,
     selected: false,
   },
   {
-    text: 'Mnemonic Phrase',
-    i18nId: 'common.mnemonicPhrase',
-    // img: st.a,
-    selected: true,
-    recommended: true,
-  },
-  {
     text: 'Private Key',
-    i18nId: 'common.privateKey',
     // img: st.a,
     selected: false,
     hide: true,
@@ -108,7 +102,7 @@ class Unlock extends PureComponent {
     });
   };
 
-  _unlock = (privateKey, address, keyStore, password, mnemonic, indexKey, isSave) => {
+  _unlockByMnemonic = (privateKey, address, keyStore, password, mnemonic, indexKey, isSave) => {
     const { props } = this;
     let isBankAccount = '';
 
@@ -248,7 +242,7 @@ class Unlock extends PureComponent {
                 {selectedType === 'WalletConnect' && <ByPrivateKey />}
                 {selectedType === 'Ledger Device' && <ByPrivateKey />}
                 {selectedType === 'KeyStore File' && <ByPrivateKey />}
-                {selectedType === 'Mnemonic Phrase' && <ByMnemonic unlock={this._unlock} />}
+                {selectedType === 'Mnemonic Phrase' && <ByMnemonic unlock={this._unlockByMnemonic} />}
               </Content>
             </InBox>
             <FooterCus />
