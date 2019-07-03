@@ -10,7 +10,7 @@ import SendTransactionOne from './SendTransactionOne';
 import SendTransactionTwo from './SendTransactionTwo';
 import { Button } from '../../elements/Button';
 import tweb3 from '../../../service/tweb3';
-import { toUNIT } from '../../../utils/utils';
+import { toUNIT } from '../../../utils';
 import * as actions from '../../../store/actions/account';
 
 class SendTransaction extends PureComponent {

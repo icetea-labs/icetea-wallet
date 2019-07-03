@@ -11,7 +11,7 @@ import STOInput from './STOInput';
 import errorIc from '../../../assets/img/error-icon.png';
 import * as actions from '../../../store/actions/account';
 import tweb3 from '../../../service/tweb3';
-import { toTEA } from '../../../utils/utils';
+import { toTEA } from '../../../utils';
 
 const itemsMenu = [
   {

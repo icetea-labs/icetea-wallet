@@ -95,18 +95,18 @@ const Banner = styled.div`
     }
     img {
       @media (min-width: 1025px) {
-        height: 452px;
+        height: 350px;
         margin: 0 0 0 auto;
         display: block;
       }
-      @media (max-width: 768px) {
+      @media (max-width: 623px) {
         justify-content: flex-start;
         display: none;
       }
       @media (max-width: 1024px) and (min-width: 415px) {
         height: auto;
-        margin-left: 20px;
-        width: 300px;
+        margin-left: 60px;
+        width: 270px;
       }
     }
   }

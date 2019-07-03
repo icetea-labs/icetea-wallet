@@ -206,7 +206,7 @@ class BotStore extends Component {
       isRunBot: false,
       botAddress: '',
       current: 1,
-      pageSize: 10,
+      pageSize: 12,
     };
   }
 
@@ -246,7 +246,8 @@ class BotStore extends Component {
       botInfo.category = bots[bot].category;
       botInfo.icon = bots[bot].icon;
       botInfo.name = info.name;
-      botInfo.alias = bot.split('.', 2)[1];
+      const [, alias] = bot.split('.', 2);
+      botInfo.alias = alias;
       botInfo.description = info.description || '';
       resInfo.push(botInfo);
     }
@@ -368,15 +369,9 @@ class BotStore extends Component {
     return botsList;
   };
 
-  onChange = (current, pageSize) => {
+  onChange = current => {
     this.setState({
       current,
-    });
-  };
-
-  onShowSizeChange = (current, pageSize) => {
-    this.setState({
-      pageSize,
     });
   };
 
@@ -401,11 +396,10 @@ class BotStore extends Component {
                   <div className="botslist">{this.showBots()}</div>
                   <PaginationPro
                     selectComponentClass={Select}
-                    showQuickJumper
-                    showSizeChanger
+                    showQuickJumper={false}
+                    showSizeChanger={false}
                     defaultPageSize={pageSize}
                     defaultCurrent={current}
-                    onShowSizeChange={this.onShowSizeChange}
                     onChange={this.onChange}
                     total={total}
                   />
