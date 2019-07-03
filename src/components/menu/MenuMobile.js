@@ -49,6 +49,14 @@ class MenuMobile extends PureComponent {
               text: 'History',
               path: '/transactionHistory',
             },
+            {
+              text: 'Bot Store',
+              path: '/botStore',
+            },
+            {
+              text: 'Profile',
+              path: '/profile',
+            },
           ],
         },
         {

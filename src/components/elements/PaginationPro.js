@@ -137,11 +137,13 @@ const Wrapper2 = styled.div`
 class PaginationPro extends PureComponent {
   onShowSizeChange = (current, pageSize) => {
     const { onShowSizeChange } = this.props;
-    onShowSizeChange(current, pageSize);
+
+    onShowSizeChange && onShowSizeChange(current, pageSize);
   };
 
   onChange = (current, pageSize) => {
     const { onChange } = this.props;
+
     onChange(current, pageSize);
   };
 
@@ -172,7 +174,7 @@ PaginationPro.propTypes = {
   defaultCurrent: PropTypes.number,
   defaultPageSize: PropTypes.number,
   total: PropTypes.number,
-  onShowSizeChange: PropTypes.func,
+  onShowSizeChange: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   onChange: PropTypes.func,
 };
 
