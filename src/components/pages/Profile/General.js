@@ -11,7 +11,7 @@ import STOInput from '../Balances/STOInput';
 import {
   H2,
   TabWrapper,
-  MediaContent,
+  TabMediaContent,
   WrapperBlock,
   TapWrapperContent,
   WrapperTexinput,
@@ -90,17 +90,15 @@ class General extends PureComponent {
   };
 
   registerFaucetEvent = event => {
-    event.preventDefault();
-    const { address, privateKey, signers, setNeedAuth, setAuthEle } = this.props;
-    const opts = { from: address };
-    let privateKeyTMP = privateKey;
+    const { signers, setNeedAuth, setAuthEle } = this.props;
+    const { opts, privateKey, address } = this.beforeSubmit();
 
-    if (signers.isRepresent) {
-      privateKeyTMP = signers.privateKey;
-      opts.signers = signers.address;
+    if (!this.validateAddress(opts.signers || opts.from).isvalid) {
+      notifi.warn('Invalid account');
+      return;
     }
 
-    if (!privateKeyTMP) {
+    if (!privateKey) {
       setNeedAuth(true);
       setAuthEle(event.currentTarget);
     } else {
@@ -149,16 +147,15 @@ class General extends PureComponent {
 
   registerUpdateAliasEvent = event => {
     const { alias } = this.state;
-    const { address, privateKey, setNeedAuth, signers, setAuthEle } = this.props;
-    const opts = { from: address };
-    let privateKeyTMP = privateKey;
+    const { setNeedAuth, setAuthEle } = this.props;
+    const { opts, privateKey, address } = this.beforeSubmit();
 
-    if (signers.isRepresent) {
-      privateKeyTMP = signers.privateKey;
-      opts.signers = signers.address;
+    if (!this.validateAddress(opts.signers || opts.from).isvalid) {
+      notifi.warn('Invalid account');
+      return;
     }
 
-    if (!privateKeyTMP) {
+    if (!privateKey) {
       setNeedAuth(true);
       setAuthEle(event.currentTarget);
     } else {
@@ -192,19 +189,18 @@ class General extends PureComponent {
   };
 
   registerAddTagEvent = event => {
-    const { address, privateKey, signers, setNeedAuth, setAuthEle } = this.props;
+    const { setNeedAuth, setAuthEle } = this.props;
     const { tagsName, tagsValue } = this.state;
+    const { opts, privateKey, address } = this.beforeSubmit();
     const name = tagsName;
     const value = tagsValue;
-    const opts = { from: address };
-    let privateKeyTMP = privateKey;
 
-    if (signers.isRepresent) {
-      privateKeyTMP = signers.privateKey;
-      opts.signers = signers.address;
+    if (!this.validateAddress(opts.signers || opts.from).isvalid) {
+      notifi.warn('Invalid account');
+      return;
     }
 
-    if (!privateKeyTMP) {
+    if (!privateKey) {
       setNeedAuth(true);
       setAuthEle(event.currentTarget);
     } else {
@@ -260,7 +256,7 @@ class General extends PureComponent {
         width: '45%',
         sorter: true,
         dataIndex: 'name',
-        key: 'TxHash',
+        key: 'name',
         render: e => (
           <StyledText>
             <FontDin value={e.name} />
@@ -273,7 +269,7 @@ class General extends PureComponent {
         headerAlign: 'left',
         width: '45%',
         sorter: true,
-        key: 'Date',
+        key: 'value',
         render: e => (
           <StyledText>
             <FontDin value={e.value} />
@@ -305,6 +301,11 @@ class General extends PureComponent {
       opts.signers = signers.address;
     }
     // console.log('tag.currentTarget', event.currentTarget);
+    if (!this.validateAddress(opts.signers || opts.from).isvalid) {
+      notifi.warn('Invalid account');
+      return;
+    }
+
     if (!privateKeyTMP) {
       setNeedAuth(true);
       setAuthEle(event.currentTarget);
@@ -352,45 +353,60 @@ class General extends PureComponent {
         .map(key => ({ [key]: tagsList[key] }));
     }
 
-    const dataSource = newTagsList.map(key => {
+    const dataSource = newTagsList.map(item => {
+      const key = Object.keys(item)[0];
       return {
-        name: Object.keys(key)[0],
-        value: key[Object.keys(key)[0]],
-        remove: Object.keys(key)[0],
+        name: key,
+        value: item[key],
+        remove: key,
       };
     });
     return dataSource;
   };
 
-  render() {
-    const { alias, tagsName, tagsValue, tagsList, pageSize, current } = this.state;
-    const { address } = this.props;
-    const { balance } = this.state;
-    const total = Object.keys(tagsList).length;
-    const typeOfAccount = (() => {
-      try {
-        if (codec.isBankAddress(address)) {
-          return 'Bank account';
-        }
-        if (codec.isRegularAddress(address)) {
-          return 'Regular account';
-        }
-
-        return 'Invalid address';
-      } catch (e) {
-        return 'Invalid address';
+  validateAddress = address => {
+    try {
+      console.log('address', address);
+      if (codec.isBankAddress(address)) {
+        return { isvalid: true, type: 'Bank account' };
       }
-    })();
+      if (codec.isRegularAddress(address)) {
+        return { isvalid: true, type: 'Regular account' };
+      }
+      return { isvalid: false, type: 'Invalid account' };
+    } catch (e) {
+      return { isvalid: false, type: 'Invalid account' };
+    }
+  };
+
+  beforeSubmit = () => {
+    const { address, privateKey, signers } = this.props;
+    const opts = { from: address };
+    let privateKeyTMP = privateKey;
+
+    if (signers.isRepresent) {
+      privateKeyTMP = signers.privateKey;
+      opts.signers = signers.address;
+    }
+
+    return { opts, privateKey: privateKeyTMP, address };
+  };
+
+  render() {
+    const { balance, alias, tagsName, tagsValue, tagsList, pageSize, current } = this.state;
+    const { address } = this.props;
+    const total = Object.keys(tagsList).length;
+    const { type } = this.validateAddress(address);
 
     return (
       <TabWrapper>
-        <MediaContent>
+        <TabMediaContent>
           <WrapperBlock>
             <H2>Information</H2>
             <TapWrapperContent>
               <div className="row">
                 <p className="header">Type:</p>
-                <p> {typeOfAccount}</p>
+                <p> {type}</p>
               </div>
               <div className="row">
                 <p className="header">Balance:</p>
@@ -398,7 +414,7 @@ class General extends PureComponent {
               </div>
 
               <WrapperButton>
-                <Button width="170px" className="get-tea" onClick={this.registerFaucetEvent}>
+                <Button width="170px" onClick={this.registerFaucetEvent}>
                   <span>Get TEA from Faucet</span>
                 </Button>
               </WrapperButton>
@@ -413,7 +429,7 @@ class General extends PureComponent {
                 </WrapperTexinput>
 
                 <WrapperButton>
-                  <Button className="get-tea" onClick={this.registerUpdateAliasEvent}>
+                  <Button onClick={this.registerUpdateAliasEvent}>
                     <span>Set</span>
                   </Button>
                 </WrapperButton>
@@ -434,7 +450,7 @@ class General extends PureComponent {
                   <STOInput title="Value" type="text" defaultValue={tagsValue} onChange={this.handleTagsValue} />
                 </WrapperTexinput>
                 <WrapperButton>
-                  <Button className="get-tea" onClick={this.registerAddTagEvent}>
+                  <Button onClick={this.registerAddTagEvent}>
                     <span>Set</span>
                   </Button>
                 </WrapperButton>
@@ -455,7 +471,7 @@ class General extends PureComponent {
               </WrapperTable>
             </TapWrapperContent>
           </WrapperBlock>
-        </MediaContent>
+        </TabMediaContent>
       </TabWrapper>
     );
   }

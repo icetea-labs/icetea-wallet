@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
 `;
 export const MediaContent = styled.div`
   width: 1200px;
-  min-width: 960px;
+  min-width: 624px;
   @media (min-width: 320px) and (max-width: 623px) {
     /* display: none; */
   }
@@ -29,8 +29,10 @@ export const WrapperPageContent = styled.div`
   .rc-tabs-ink-bar {
     background-color: #15b5dd;
   }
-  .rc-select-selection__clear-icon {
+  .rc-select-selection__clear {
     font-size: 1.4em;
+    text-align: center;
+    width: 20px;
   }
 `;
 
@@ -121,9 +123,6 @@ export const RadioGroup = styled.div`
 `;
 export const WrapperCombox = styled.div`
   width: 450px;
-  /* margin-top: 30px; */
-  /* position: relative; */
-
   .title {
     color: #848e9c;
     line-height: 30px;
@@ -133,21 +132,6 @@ export const WrapperCombox = styled.div`
     height: 30px;
     outline: none;
     font-family: 'DIN';
-  }
-  #spin {
-    opacity: 0;
-  }
-  input::-webkit-inner-spin-button {
-    opacity: 0;
-  }
-  .textarea {
-    width: 95%;
-    outline: none;
-    height: 50px;
-    border: 1px solid #dfe2e7;
-  }
-  .amount-input {
-    padding-right: 150px;
   }
   @media (max-width: 768px) {
     width: 100%;
@@ -162,8 +146,14 @@ export const TabWrapper = styled.div`
 `;
 export const WrapperBlock = styled.div`
   padding-bottom: 10px;
-  width: 50%;
+  width: ${props => (props.width ? props.width : '50%')};
   min-width: 400px;
+`;
+export const TabMediaContent = styled.div`
+  width: 100%;
+  @media (min-width: 320px) and (max-width: 623px) {
+    /* display: none; */
+  }
 `;
 export const TapWrapperContent = styled.div`
   display: flex;
@@ -216,12 +206,18 @@ export const WrapperButton = styled.div`
 `;
 export const WrapperTexinput = styled.div`
   margin-right: 20px;
-  width: 100%;
+  width: ${props => (props.width ? props.width : '100%')};
   input {
     width: 90%;
     height: 30px;
     outline: none;
     font-family: 'DIN';
+  }
+  #spin {
+    opacity: 0;
+  }
+  input::-webkit-inner-spin-button {
+    opacity: 0;
   }
 `;
 
@@ -250,163 +246,28 @@ export const Button = styled(BtnActive)`
   }
 `;
 
-export const Table = styled.table`
-  /* width: 100%; */
-  border-collapse: sepnarate;
-  border-color: rgb(253, 253, 253);
-  border-spacing: 0px 5px;
-  margin-left: 40px;
-  tr {
-    padding: 10px 0px;
-  }
-`;
-export const THead = styled.thead`
-  background: 0% 0% / auto 100% rgb(253, 253, 253);
-  width: 100%;
-  display: table-row-group;
-  th {
-    background-color: rgb(253, 253, 253);
-    word-break: break-all;
-    cursor: pointer;
-    color: rgb(132, 142, 156);
-    height: 40px;
-    text-align: left;
-    text-decoration: underline;
-    line-height: 40px;
-    th:first-child {
-      text-indent: 10px;
-    }
-    tr {
-      color: rgb(72, 81, 93);
-      box-shadow: none;
-      border-width: initial;
-      border-style: none;
-      border-color: initial;
-      border-image: initial;
-    }
-  }
-`;
-
-export const TBody = styled.tbody`
-  display: table-row-group;
-  tr td {
-    position: relative;
-    background-color: rgb(255, 255, 255);
-    word-break: break-all;
-    cursor: pointer;
-    color: rgb(33, 40, 51);
-    text-align: left;
-    line-height: 40px;
-    width: 30%;
-    border-width: initial;
-    border-style: none;
-    border-color: initial;
-    border-image: initial;
-    span {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 13px;
-      height: 13px;
-      border-radius: 50%;
-      color: #15b5dd;
-      cursor: pointer;
-      margin-left: 5px;
-    }
-  }
-  tr {
-    box-shadow: rgba(90, 102, 124, 0.08) 0px 1px 20px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(255, 255, 255);
-    border-image: initial;
-    border-radius: 3px;
-    transition: all 0.2s ease-in 0s;
-  }
-  tr td:first-child {
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-    text-indent: 10px;
-    border-left: 1px solid rgb(255, 255, 255);
-  }
-  tr td:last-child {
-    /* styles */
-  }
-  tr:hover {
-    box-shadow: rgba(90, 102, 124, 0.2) 0px 1px 20px;
-  }
-`;
-
-export const OwnerAdd = styled.div`
-  /* width: 100%; */
-  padding: 20px 0px;
-  margin-left: 40px;
-  display: flex;
-  input {
-    width: 100%;
-    height: 30px;
-    outline: none;
-    font-family: 'DIN';
-  }
-  .ownerButton {
-    margin-left: 20px;
-    margin-top: 5px;
-  }
-`;
-
 export const Note = styled.div`
-  margin-left: 40px;
-  border: 2px solid #15b5dd;
+  margin: 10px 40px;
+  border: 1px solid #15b5dd;
   box-sizing: border-box;
   height: 100%;
-  width: 75%;
-  margin-top: 10px;
-  line-height: 40px;
   p {
-    margin-left: 40px;
+    margin-left: 20px;
   }
 `;
 
 export const Guide = styled.div`
-  margin-left: 40px;
-  margin-top: 20px;
-`;
-
-export const Owners = styled.div`
-  width: 100%;
-  margin-bottom: 0px;
-  font-size: 20px;
-  padding: 10px;
-  input {
-    height: 20px;
-    width: 20px;
-    vertical-align: middle;
-    :checked:after {
-      width: 15px;
-      height: 15px;
-      border-radius: 15px;
-      top: -2px;
-      left: -1px;
-      position: relative;
-      background-color: #15b5dd;
-      content: '';
-      display: inline-block;
-      visibility: visible;
-      border: 2px solid white;
-    }
+  margin: 2px 40px 15px;
+  a {
+    color: inherit;
   }
-`;
-
-export const OwnerList = styled.div`
-  position: relative;
 `;
 
 export const WarningText = styled.div`
   font-weight: bold;
-  font-size: 16px;
-  line-height: 16px;
-  margin-left: 40px;
-  margin-bottom: 10px;
+  line-height: 12px;
+  align-items: center;
+  margin-bottom: 40px;
   color: #48515d;
   display: flex;
   position: relative;

@@ -5,24 +5,25 @@ import STOInput from '../Balances/STOInput';
 import {
   H2,
   TabWrapper,
-  MediaContent,
+  TabMediaContent,
   TapWrapperContent,
   Button,
-  OwnerList,
-  Table,
-  THead,
-  TBody,
-  OwnerAdd,
   WarningText,
   WarningTooltip,
   RadioGroup,
+  WrapperBlock,
+  WrapperTexinput,
+  WrapperButton,
+  WrapperTable,
+  StyledText,
 } from './Styled';
+import { FontDin, Icon } from '../../elements/utils';
+import Table from '../../elements/TablePro';
 import nr from '../../../assets/img/nr.svg';
 import tweb3 from '../../../service/tweb3';
 import notifi from '../../elements/Notification';
 import * as actions from '../../../store/actions/account';
 import * as actionsGlobal from '../../../store/actions/globalData';
-import { Icon } from '../../elements/utils';
 
 class AccOwners extends PureComponent {
   constructor(props) {
@@ -36,6 +37,8 @@ class AccOwners extends PureComponent {
       weightErr: '',
       threshold: '',
       thresholdErr: '',
+      current: 1,
+      pageSize: 5,
     };
   }
 
@@ -173,8 +176,8 @@ class AccOwners extends PureComponent {
         .contract('system.did')
         .methods.setThreshold(address, +threshold)
         .sendCommit(opts)
-        .then(r => {
-          this.setState({ threshold: r.result });
+        .then(() => {
+          this.setState({ threshold });
           notifi.info('Set owner weight success!');
         })
         .catch(error => {
@@ -204,7 +207,7 @@ class AccOwners extends PureComponent {
 
       tweb3
         .contract('system.did')
-        .methods.removeOwner(address, owner)
+        .methods.removeOwner(address, owner.address)
         .sendCommit(opts)
         .then(() => {
           this.loadDid(address);
@@ -217,23 +220,106 @@ class AccOwners extends PureComponent {
     }
   };
 
-  render() {
-    const { ownerAdd, ownerErr, ownersList, radioValue, weight, weightErr, threshold, thresholdErr } = this.state;
-    const ownersListTBL = Object.keys(ownersList).map(key => (
-      <tr key={key}>
-        <td style={{ width: '30%' }}>{key}</td>
-        <td style={{ width: '20%' }}>{ownersList[key]}</td>
-        <td style={{ width: '20%' }}>
-          <span onClick={event => this._deleteOwner(key, event)}>
+  buildColumns = () => {
+    return [
+      {
+        title: 'Address (alias)',
+        headerAlign: 'left',
+        width: '65%',
+        sorter: true,
+        dataIndex: 'address',
+        key: 'address',
+        render: e => (
+          <StyledText>
+            <FontDin value={e.address} />
+          </StyledText>
+        ),
+      },
+      {
+        title: 'Weight',
+        dataIndex: 'weight',
+        headerAlign: 'left',
+        width: '25%',
+        sorter: true,
+        key: 'Weight',
+        render: e => (
+          <StyledText>
+            <FontDin value={e.weight} />
+          </StyledText>
+        ),
+      },
+      {
+        title: '',
+        dataIndex: 'remove',
+        headerAlign: 'left',
+        width: '10%',
+        key: '',
+        render: tag => (
+          <div onClick={event => this._deleteOwner(tag, event)} role="presentation">
             <Icon type="delete" color="#848E9C" hoverColor="#15b5dd" />
-          </span>
-        </td>
-      </tr>
-    ));
+          </div>
+        ),
+      },
+    ];
+  };
+
+  buildDataSource = () => {
+    const { ownersList, current, pageSize } = this.state;
+
+    const total = Object.keys(ownersList).length;
+    const from = (current - 1) * pageSize;
+    let to = from + pageSize;
+    let newList = [];
+
+    if (total > 0) {
+      if (to > total) to = total;
+      newList = Object.keys(ownersList)
+        .slice(from, to)
+        .map(key => ({ [key]: ownersList[key] }));
+    }
+
+    const dataSource = newList.map(item => {
+      const key = Object.keys(item)[0];
+      return {
+        address: key,
+        weight: item[key],
+        remove: key,
+      };
+    });
+    return dataSource;
+  };
+
+  paging = (current, pageSize) => {
+    if (pageSize) {
+      this.setState({
+        current,
+        pageSize,
+      });
+    } else {
+      this.setState({
+        current,
+      });
+    }
+  };
+
+  render() {
+    const {
+      ownerAdd,
+      ownerErr,
+      ownersList,
+      radioValue,
+      weight,
+      weightErr,
+      threshold,
+      thresholdErr,
+      current,
+      pageSize,
+    } = this.state;
+    const total = Object.keys(ownersList).length;
 
     return (
       <TabWrapper>
-        <MediaContent>
+        <TabMediaContent>
           <H2>Account Owners</H2>
           <TapWrapperContent>
             <RadioGroup>
@@ -255,71 +341,87 @@ class AccOwners extends PureComponent {
               </li>
             </RadioGroup>
             {radioValue === 'two' && (
-              <OwnerList>
-                <Table>
-                  <THead>
-                    <tr>
-                      <th style={{ width: '30%' }}>Address</th>
-                      <th style={{ width: '20%' }}>Weight</th>
-                      <th />
-                    </tr>
-                  </THead>
-                  <TBody>{ownersListTBL}</TBody>
-                </Table>
-                <OwnerAdd>
-                  <STOInput
-                    msgErr={ownerErr}
-                    title="Owner address or alias"
-                    width="37%"
-                    type="text"
-                    defaultValue={ownerAdd}
-                    onChange={this._ownerChange}
-                    autoFocus
-                  />
-                  <STOInput
-                    msgErr={weightErr}
-                    title="Weight"
-                    width="25%"
-                    type="number"
-                    defaultValue={weight}
-                    onChange={this._ownerWeightChange}
-                    onFocus={this._ownerWeightChange}
-                  />
-                  <div className="ownerButton">
-                    <Button onClick={this._addOwner}>
-                      <span>Add</span>
-                    </Button>
-                  </div>
-                </OwnerAdd>
-                <WarningText>
-                  <span>Require approval weight of at least (?):</span>
-                  <WarningTooltip>
-                    <img src={nr} alt="" />
-                    <div className="tips">
-                      For example, if approval weight is 2, a transaction from this address require approval of at least
-                      2 owners, each has weight of 1
+              <React.Fragment>
+                <WrapperBlock width="30%">
+                  <TapWrapperContent>
+                    <WarningText>
+                      <span>Require approval weight of at least (?):</span>
+                      <WarningTooltip>
+                        <img src={nr} alt="" />
+                        <div className="tips">
+                          For example, if approval weight is 2, a transaction from this address require approval of at
+                          least 2 owners, each has weight of 1
+                        </div>
+                      </WarningTooltip>
+                    </WarningText>
+                    <div className="alias">
+                      <WrapperTexinput>
+                        <STOInput
+                          msgErr={thresholdErr}
+                          title="Weight"
+                          type="number"
+                          defaultValue={threshold}
+                          onChange={this._ownerThresholdChange}
+                          onFocus={this._ownerThresholdChange}
+                        />
+                      </WrapperTexinput>
+                      <WrapperButton>
+                        <Button onClick={this._setOwnerWeight}>
+                          <span>Set</span>
+                        </Button>
+                      </WrapperButton>
                     </div>
-                  </WarningTooltip>
-                </WarningText>
-                <OwnerAdd>
-                  <STOInput
-                    msgErr={thresholdErr}
-                    title="Weight"
-                    type="number"
-                    defaultValue={threshold}
-                    onChange={this._ownerThresholdChange}
-                    onFocus={this._ownerThresholdChange}
-                  />
-                  <div className="ownerButton">
-                    <Button onClick={this._setOwnerWeight}>
-                      <span>Set</span>
-                    </Button>
-                  </div>
-                </OwnerAdd>
-              </OwnerList>
+                  </TapWrapperContent>
+                </WrapperBlock>
+                <WrapperBlock width="60%">
+                  <TapWrapperContent>
+                    <div className="alias">
+                      <WrapperTexinput>
+                        <STOInput
+                          msgErr={ownerErr}
+                          title="Owner address or alias"
+                          type="text"
+                          defaultValue={ownerAdd}
+                          onChange={this._ownerChange}
+                          autoFocus
+                        />
+                      </WrapperTexinput>
+                      <WrapperTexinput width="30%">
+                        <STOInput
+                          msgErr={weightErr}
+                          title="Weight"
+                          type="number"
+                          defaultValue={weight}
+                          onChange={this._ownerWeightChange}
+                          onFocus={this._ownerWeightChange}
+                        />
+                      </WrapperTexinput>
+                      <WrapperButton>
+                        <Button onClick={this._addOwner}>
+                          <span>Add</span>
+                        </Button>
+                      </WrapperButton>
+                    </div>
+                    <WrapperTable>
+                      <div className="table-cus">
+                        <Table
+                          columns={this.buildColumns()}
+                          dataSource={this.buildDataSource()}
+                          paging={this.paging}
+                          total={total}
+                          current={current}
+                          pageSize={pageSize}
+                          showQuickJumper={false}
+                          showSizeChanger={false}
+                        />
+                      </div>
+                    </WrapperTable>
+                  </TapWrapperContent>
+                </WrapperBlock>
+              </React.Fragment>
             )}
           </TapWrapperContent>
-        </MediaContent>
+        </TabMediaContent>
       </TabWrapper>
     );
   }

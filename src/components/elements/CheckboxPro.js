@@ -41,7 +41,7 @@ const Label = styled.label`
   & > span {
     display: inline-block;
     vertical-align: middle;
-    transform: translate3d(0px, 0px, 0px);
+    /* transform: translate3d(0px, 0px, 0px); */
     flex: 0 0 auto;
   }
   & > span:first-child::before {
@@ -85,7 +85,7 @@ const DivText = styled.div`
   }
 `;
 
-class WarningRecover extends PureComponent {
+class CheckboxPro extends PureComponent {
   static defaultProps = {
     defaultChecked: PropTypes.bool.isRequired,
     handleCheckChange: PropTypes.func.isRequired,
@@ -133,5 +133,5 @@ class WarningRecover extends PureComponent {
   }
 }
 
-export { WarningRecover };
-export default WarningRecover;
+export { CheckboxPro };
+export default CheckboxPro;

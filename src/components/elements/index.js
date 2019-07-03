@@ -1,5 +1,5 @@
 export * from './Button';
-export * from './WarningRecover.js';
+export * from './CheckboxPro.js';
 export * from './InputPassword.js';
 export * from './PuConfirm.js';
 export * from './PuShowPrivateKey.js';

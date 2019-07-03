@@ -62,16 +62,13 @@ const Banner = styled.div`
       /* max-width: 450px; */
       font-size: 18px;
       @media (min-width: 1025px) {
-        color: #506175;
-        line-height: 21px;
+        line-height: 22px;
       }
       @media (max-width: 414px) {
-        color: #506175;
+        line-height: 22px;
         margin-top: 17px;
         /* max-width: 325px; */
         height: 126px;
-        line-height: 21px;
-        font-size: 18px;
       }
     }
     @media (max-width: 1024px) and (min-width: 415px) {
@@ -146,13 +143,6 @@ const Card = styled.div`
     background-color: #05c0a5;
   }
 
-  &:hover {
-    -webkit-box-shadow: 0 5px 24px rgba(0, 0, 0, 0.15);
-    -webkit-font-smoothing: antialiased;
-    transition: width 2s;
-    box-shadow: 0 5px 24px rgba(0, 0, 0, 0.15);
-    top: -20px;
-  }
   @media (min-width: 1025px) {
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
@@ -160,19 +150,22 @@ const Card = styled.div`
     top: 0px;
     height: 100%;
     border-radius: 10px;
-    color: #fff;
     margin-bottom: 0;
     padding: 30px 40px;
+    &:hover {
+      -webkit-box-shadow: 0 5px 24px rgba(0, 0, 0, 0.15);
+      -webkit-font-smoothing: antialiased;
+      box-shadow: 0 5px 24px rgba(0, 0, 0, 0.15);
+      top: -10px;
+    }
   }
   @media (max-width: 1024px) and (min-width: 415px) {
     border-radius: 4px;
-    color: #fff;
     margin-bottom: 25px;
     padding: 30px 40px;
   }
   @media (max-width: 414px) {
     border-radius: 4px;
-    color: #fff;
     margin-bottom: 25px;
     padding: 11px;
     font-size: 18px;
@@ -199,39 +192,31 @@ const CardImage = styled.div`
 
 const CardContent = styled.div`
   color: #fff;
+  font-weight: 500;
   h2 {
     font-size: 24px;
-    font-weight: 500;
     margin-bottom: 5px;
 
     @media (max-width: 414px) {
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 600;
       margin-bottom: 0;
       text-align: center;
       display: block;
       line-height: 42px;
     }
-    .color-white {
-      color: #fff;
-      @media (max-width: 414px) {
-        height: 325;
-        width: 42px;
-      }
-    }
   }
   p {
     line-height: 19px;
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 20px;
     @media (max-width: 414px) {
       display: none;
     }
   }
   .button {
-    color: #fff;
     display: inline-block;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 500;
     @media (max-width: 414px) {
       display: none;
@@ -279,7 +264,7 @@ class Home extends Component {
                   <img src={newWallet} alt="" />
                 </CardImage>
                 <CardContent>
-                  <h2 className="color-white">Create A New Wallet</h2>
+                  <h2>Create A New Wallet</h2>
                   <p>
                     Obtain an mnemonic and generate your TEA address. Saving and safekeeping the mnemonic will be your
                     responsibility.

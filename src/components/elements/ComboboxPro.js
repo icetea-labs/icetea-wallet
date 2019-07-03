@@ -1,12 +1,43 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import Dropdown from 'rc-dropdown';
 import Menu, { Item as MenuItem } from 'rc-menu';
 // import 'rc-dropdown/assets/index.css'
-import '../../../assets/styles/dropdown.css';
-import { Icon } from '../../elements/utils';
-import { DropWrapper, DropItem } from './styled';
+import '../../assets/styles/dropdown.css';
+import { zIndex } from '../../constants/styles';
+import { Icon } from './utils';
 
-class SelectUnlockType extends Component {
+const DropWrapper = styled.div`
+  position: relative;
+  text-indent: 10px;
+  border-radius: ${props => (props.theme.mode === 'DARK' ? '3px' : '0')};
+  font-size: 12px;
+  color: #848e9c;
+  height: 22px;
+  line-height: 22px;
+  display: inline-block;
+  cursor: pointer;
+  background: ${props => props.theme.dropdownBg};
+  padding-bottom: 5px;
+  border-bottom: 1px solid ${props => props.theme.borderColor};
+  box-sizing: border-box;
+  z-index: ${zIndex.dropdown};
+  width: ${props => (props.width ? props.width : 'inherit')};
+`;
+
+const DropItem = styled.i`
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translate(0, -50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #666;
+`;
+
+class ComboboxPro extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,14 +71,9 @@ class SelectUnlockType extends Component {
   };
 
   _buildList = () => {
-    // console.log('Call buildList')
     const { state } = this;
     const { withSearchBox } = this.props;
-    const items = state.options.map((value, index) => {
-      return <MenuItem key={index}>{value.render ? value.render : value.text}</MenuItem>;
-    });
 
-    // console.log('items CK', items)
     return (
       <Menu onSelect={this._onSelect}>
         {withSearchBox && (
@@ -56,7 +82,9 @@ class SelectUnlockType extends Component {
             <input autoFocus placeholder="Search Asset" onChange={this._onSearch} />
           </MenuItem>
         )}
-        {items}
+        {state.options.map((value, index) => {
+          return <MenuItem key={index}>{value.render ? value.render : value.text}</MenuItem>;
+        })}
       </Menu>
     );
   };
@@ -74,7 +102,7 @@ class SelectUnlockType extends Component {
   render() {
     const { width, className } = this.props;
     const { value } = this.state;
-    // console.log('option1 CK', this.props.options)
+
     return (
       <DropWrapper width={width} className={'select '.concat(className || '')}>
         <Dropdown
@@ -94,7 +122,7 @@ class SelectUnlockType extends Component {
   }
 }
 
-SelectUnlockType.defaultProps = {
+ComboboxPro.defaultProps = {
   options: [
     {
       text: '',
@@ -104,7 +132,7 @@ SelectUnlockType.defaultProps = {
   defaultValue: null,
   onChange() {},
   width: '',
-  withSearchBox: true,
+  withSearchBox: false,
 };
 
-export default SelectUnlockType;
+export default ComboboxPro;
