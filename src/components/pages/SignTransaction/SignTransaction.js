@@ -8,7 +8,7 @@ import { utils } from '@iceteachain/common';
 import notifi from '../../elements/Notification';
 
 import { PuConfirm } from '../../elements/PuConfirm';
-import { toTEA } from '../../../utils/utils';
+import { toTEA } from '../../../utils';
 import * as actions from '../../../store/actions/account';
 
 const Wapper = styled.div`

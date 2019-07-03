@@ -349,6 +349,7 @@ class Inheritance extends PureComponent {
                     pageSize={pageSize}
                     showQuickJumper={false}
                     showSizeChanger={false}
+                    showHeaderNonData={false}
                   />
                 </div>
               </WrapperTable>
