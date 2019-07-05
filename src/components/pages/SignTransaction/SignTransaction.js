@@ -94,6 +94,7 @@ class SignTransaction extends PureComponent {
     super(props);
     this.state = {
       isShowSign: true,
+      isLoading: false,
       signer: '',
       method: '',
       tx: '',
@@ -134,6 +135,7 @@ class SignTransaction extends PureComponent {
       setNeedAuth(true);
       // this.setState({ isShowSign: false });
     } else {
+      this.setState({ isLoading: true });
       const txSigned = utils.signTransaction(tx, privateKey);
       console.log('txSigned', txSigned);
       notifi.info('Success');
@@ -154,7 +156,7 @@ class SignTransaction extends PureComponent {
   };
 
   render() {
-    const { isShowSign, method, tx } = this.state;
+    const { isShowSign, isLoading, method, tx } = this.state;
     const { childKey } = this.props;
 
     const Options = childKey.map(el => {
@@ -173,6 +175,7 @@ class SignTransaction extends PureComponent {
             okText="Approve"
             confirm={this.approveSignTransaction}
             cancel={this.rejectSignTransaction}
+            loading={isLoading}
           >
             <div>
               <H1>Signature Request</H1>
