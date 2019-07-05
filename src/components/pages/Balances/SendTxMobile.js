@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { ecc } from '@iceteachain/common';
 import tweb3 from '../../../service/tweb3';
-import { toTEA, toUNIT } from '../../../utils/utils';
+import { toTEA, toUNIT } from '../../../utils';
 
 import Layout from '../../layout';
 import STOInput from './STOInput';

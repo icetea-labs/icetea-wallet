@@ -175,6 +175,9 @@ export const TapWrapperContent = styled.div`
   }
   .alias {
     display: inline-flex;
+    @media (min-width: 320px) and (max-width: 768px) {
+      flex-direction: column;
+    }
   }
   .tags-note {
     font-size: 12px;
@@ -219,6 +222,9 @@ export const WrapperTexinput = styled.div`
   input::-webkit-inner-spin-button {
     opacity: 0;
   }
+  @media (min-width: 320px) and (max-width: 768px) {
+    margin: 10px 0;
+  }
 `;
 
 export const WrapperOwnerInput = styled.div`
@@ -246,8 +252,17 @@ export const Button = styled(BtnActive)`
   }
 `;
 
-export const Note = styled.div`
+export const WrapperNote = styled.div`
   margin: 10px 40px;
+  a {
+    color: inherit;
+  }
+  @media (min-width: 320px) and (max-width: 768px) {
+    margin: 0;
+  }
+`;
+
+export const Note = styled.div`
   border: 1px solid #15b5dd;
   box-sizing: border-box;
   height: 100%;
@@ -257,10 +272,7 @@ export const Note = styled.div`
 `;
 
 export const Guide = styled.div`
-  margin: 2px 40px 15px;
-  a {
-    color: inherit;
-  }
+  margin-top: 10px;
 `;
 
 export const WarningText = styled.div`

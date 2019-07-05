@@ -6,7 +6,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { codec, AccountType } from '@iceteachain/common';
 import tweb3 from '../../service/tweb3';
 import * as actions from '../../store/actions/account';
-import { utils, toTEA } from '../../utils/utils';
+import { utils, toTEA } from '../../utils';
 import selected from '../../assets/img/checked.png';
 import logo from '../../assets/img/logo.svg';
 import { explorer } from '../../config/networks';

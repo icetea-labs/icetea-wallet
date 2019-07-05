@@ -9,7 +9,7 @@ import SendTransaction from './SendTransaction';
 import tweb3 from '../../../service/tweb3';
 import TransactionHistory from '../Transaction';
 import { Icon, checkDevice, DivSelectWordBase, BtnActive } from '../../elements/utils';
-import { toTEA } from '../../../utils/utils';
+import { toTEA } from '../../../utils';
 import notifi from '../../elements/Notification';
 import SendTxMobile from './SendTxMobile';
 import * as actions from '../../../store/actions/account';

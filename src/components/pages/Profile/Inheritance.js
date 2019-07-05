@@ -9,6 +9,7 @@ import {
   TabMediaContent,
   TapWrapperContent,
   Button,
+  WrapperNote,
   Note,
   Guide,
   WrapperBlock,
@@ -287,19 +288,21 @@ class Inheritance extends PureComponent {
           <H2>Inheritance</H2>
           <WrapperBlock width="70%">
             <TapWrapperContent>
-              <Note>
-                <p>- Wait: how many days the inheritor has to wait before he/she can make inheritance claim</p>
-                <p>- Lock: how many days he/she is locked after a rejected inheritance claim</p>
-              </Note>
-              <Guide>
-                <span>
-                  Please check out &nbsp;
-                  <a target="_blank" href="https://docs.icetea.io/" rel="noopener noreferrer">
-                    Icetea documentation
-                  </a>
-                  &nbsp; about inheritance flow.
-                </span>
-              </Guide>
+              <WrapperNote>
+                <Note>
+                  <p>- Wait: how many days the inheritor has to wait before he/she can make inheritance claim</p>
+                  <p>- Lock: how many days he/she is locked after a rejected inheritance claim</p>
+                </Note>
+                <Guide>
+                  <span>
+                    Please check out &nbsp;
+                    <a target="_blank" href="https://docs.icetea.io/" rel="noopener noreferrer">
+                      Icetea documentation
+                    </a>
+                    &nbsp; about inheritance flow.
+                  </span>
+                </Guide>
+              </WrapperNote>
               <div className="alias">
                 <WrapperTexinput>
                   <STOInput
@@ -346,6 +349,7 @@ class Inheritance extends PureComponent {
                     pageSize={pageSize}
                     showQuickJumper={false}
                     showSizeChanger={false}
+                    showHeaderNonData={false}
                   />
                 </div>
               </WrapperTable>

@@ -362,7 +362,6 @@ class AccOwners extends PureComponent {
                           type="number"
                           defaultValue={threshold}
                           onChange={this._ownerThresholdChange}
-                          onFocus={this._ownerThresholdChange}
                         />
                       </WrapperTexinput>
                       <WrapperButton>
@@ -393,7 +392,6 @@ class AccOwners extends PureComponent {
                           type="number"
                           defaultValue={weight}
                           onChange={this._ownerWeightChange}
-                          onFocus={this._ownerWeightChange}
                         />
                       </WrapperTexinput>
                       <WrapperButton>
@@ -413,6 +411,7 @@ class AccOwners extends PureComponent {
                           pageSize={pageSize}
                           showQuickJumper={false}
                           showSizeChanger={false}
+                          showHeaderNonData={false}
                         />
                       </div>
                     </WrapperTable>
