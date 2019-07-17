@@ -146,7 +146,10 @@ class SignTransaction extends PureComponent {
   };
 
   rejectSignTransaction = () => {
-    window.close();
+    // window.close();
+    setTimeout(() => {
+      window.history.back();
+    }, 300);
   };
 
   selectOnChange = value => {
