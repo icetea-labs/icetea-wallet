@@ -108,9 +108,9 @@ class SignTransaction extends PureComponent {
     tx = JSON.parse(decodeURIComponent(tx)) || {};
     callbackURL = decodeURIComponent(callbackURL) || '';
     let method = 'transfer';
-    if (tx.op === 0) {
+    if (tx.data.op === 0) {
       method = 'deploy';
-    } else if (tx.op === 1) {
+    } else if (tx.data.op === 1) {
       method = 'call';
     }
     this.setState({ method, tx, callbackURL });
@@ -214,7 +214,7 @@ class SignTransaction extends PureComponent {
                   </div>
                 )}
                 <div className="row">
-                  <p className="tableHeader">value</p> <p className="tableContent">{toTEA(tx.value)} TEA</p>
+                  <p className="tableHeader">value</p> <p className="tableContent">{toTEA(tx.value) || 0} TEA</p>
                 </div>
                 <div className="row">
                   <p className="tableHeader">fee</p> <p className="tableContent">{toTEA(tx.fee) || 0} TEA</p>
