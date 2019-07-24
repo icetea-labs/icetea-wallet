@@ -231,6 +231,7 @@ class Balances extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      addr: props.addr,
       showSend: false,
       showTbl: [],
       showMbTbl: [],
@@ -239,14 +240,34 @@ class Balances extends Component {
     };
   }
 
-  componentWillMount = async () => {
-    checkDevice.isMobile() ? this.renderMobileTbl() : this.renderTbl();
-  };
+  // componentWillMount = async () => {
+  //   checkDevice.isMobile() ? this.renderMobileTbl() : this.renderTbl();
+  // };
 
-  componentWillReceiveProps(nextProps) {
+  // componentWillReceiveProps(nextProps) {
+  //   const { address } = this.props;
+  //   if (address !== nextProps.address) {
+  //     this.renderTbl(nextProps.address);
+  //   }
+  // }
+
+  componentDidMount() {
+    checkDevice.isMobile() ? this.renderMobileTbl() : this.renderTbl();
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.address !== prevState.addr) {
+      return {
+        addr: nextProps.address,
+      };
+    }
+    return null;
+  }
+
+  componentDidUpdate(prevProps) {
     const { address } = this.props;
-    if (address !== nextProps.address) {
-      this.renderTbl(nextProps.address);
+    if (address !== prevProps.address) {
+      this.renderTbl(address);
     }
   }
 
