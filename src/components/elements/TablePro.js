@@ -120,12 +120,21 @@ class TablePro extends PureComponent {
     };
   }
 
-  componentWillReceiveProps() {
-    const { columns } = this.props;
-    this.setState({
-      // data: dataSource,
-      columns,
-    });
+  // componentWillReceiveProps() {
+  //   const { columns } = this.props;
+  //   this.setState({
+  //     // data: dataSource,
+  //     columns,
+  //   });
+  // }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.columns !== prevState.columns) {
+      return {
+        columns: nextProps.columns,
+      };
+    }
+    return null;
   }
 
   renderTitle = item => {

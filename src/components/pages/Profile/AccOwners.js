@@ -39,18 +39,75 @@ class AccOwners extends PureComponent {
       thresholdErr: '',
       current: 1,
       pageSize: 5,
+      add: '',
     };
   }
 
   componentDidMount() {
-    const { address } = this.props;
-    address && this.loadDid(address);
+    this.loadDid();
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { address } = this.props;
-    // console.log('Add CK', nextProps.address);
-    if (!nextProps.address) {
+  // componentWillReceiveProps(nextProps) {
+  //   const { address } = this.props;
+  //   console.log('Next Add CK', nextProps.address);
+  //   console.log('This Add CK', address);
+  //   if (!nextProps.address) {
+  //     this.setState({
+  //       radioValue: 'one',
+  //       ownerAdd: '',
+  //       ownerErr: '',
+  //       ownersList: {},
+  //       weight: '',
+  //       weightErr: '',
+  //       threshold: '',
+  //       thresholdErr: '',
+  //     });
+  //   } else {
+  //     address !== nextProps.address && this.loadDid(nextProps.address);
+  //   }
+  // }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { address } = nextProps;
+    if (address !== prevState.add) {
+      return {
+        add: nextProps.address,
+      };
+    }
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { add } = this.state;
+    console.log('componentDidUpdate', add);
+    add !== prevState.add && this.loadDid();
+  }
+
+  loadDid = () => {
+    const { add } = this.state;
+    if (add) {
+      tweb3
+        .contract('system.did')
+        .methods.query(add)
+        .call()
+        .then(props => {
+          if (props) {
+            const { owners, threshold } = props;
+            if (threshold) {
+              this.setState({ weight: threshold, threshold });
+            } else {
+              this.setState({ weight: 1, threshold: 1 });
+            }
+            if (owners && Object.keys(owners).length) {
+              this.setState({ ownersList: Object.assign({}, owners) });
+            } else {
+              this.setState({ ownersList: {} });
+            }
+          } else {
+            this.setState({ weight: 1, threshold: 1, ownersList: {} });
+          }
+        });
+    } else {
       this.setState({
         radioValue: 'one',
         ownerAdd: '',
@@ -61,33 +118,7 @@ class AccOwners extends PureComponent {
         threshold: '',
         thresholdErr: '',
       });
-    } else {
-      address !== nextProps.address && this.loadDid(nextProps.address);
     }
-  }
-
-  loadDid = address => {
-    tweb3
-      .contract('system.did')
-      .methods.query(address)
-      .call()
-      .then(props => {
-        if (props) {
-          const { owners, threshold } = props;
-          if (threshold) {
-            this.setState({ weight: threshold, threshold });
-          } else {
-            this.setState({ weight: 1, threshold: 1 });
-          }
-          if (owners && Object.keys(owners).length) {
-            this.setState({ ownersList: Object.assign({}, owners) });
-          } else {
-            this.setState({ ownersList: {} });
-          }
-        } else {
-          this.setState({ weight: 1, threshold: 1, ownersList: {} });
-        }
-      });
   };
 
   radioOnChange = value => {

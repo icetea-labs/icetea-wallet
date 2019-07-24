@@ -57,7 +57,7 @@ class Profile extends PureComponent {
     // only combobox selected value change
     radioVal === 'one' && delete newObj.currentAddress;
     this.setState(newObj);
-    console.log('selectOnChange', value);
+    // console.log('selectOnChange', value);
   };
 
   tabOnChange = value => {
