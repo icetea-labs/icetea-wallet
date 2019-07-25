@@ -79,7 +79,7 @@ class AccOwners extends PureComponent {
 
   componentDidUpdate(prevProps, prevState) {
     const { add } = this.state;
-    console.log('componentDidUpdate', add);
+    // console.log('componentDidUpdate', add);
     add !== prevState.add && this.loadDid();
   }
 
@@ -117,6 +117,8 @@ class AccOwners extends PureComponent {
         weightErr: '',
         threshold: '',
         thresholdErr: '',
+        current: 1,
+        pageSize: 5,
       });
     }
   };

@@ -366,7 +366,7 @@ class General extends PureComponent {
 
   validateAddress = address => {
     try {
-      console.log('address', address);
+      // console.log('address', address);
       if (codec.isBankAddress(address)) {
         return { isvalid: true, type: 'Bank account' };
       }
