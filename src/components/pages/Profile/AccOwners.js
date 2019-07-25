@@ -43,43 +43,22 @@ class AccOwners extends PureComponent {
     };
   }
 
-  componentDidMount() {
-    this.loadDid();
-  }
-
-  // componentWillReceiveProps(nextProps) {
-  //   const { address } = this.props;
-  //   console.log('Next Add CK', nextProps.address);
-  //   console.log('This Add CK', address);
-  //   if (!nextProps.address) {
-  //     this.setState({
-  //       radioValue: 'one',
-  //       ownerAdd: '',
-  //       ownerErr: '',
-  //       ownersList: {},
-  //       weight: '',
-  //       weightErr: '',
-  //       threshold: '',
-  //       thresholdErr: '',
-  //     });
-  //   } else {
-  //     address !== nextProps.address && this.loadDid(nextProps.address);
-  //   }
-  // }
-
   static getDerivedStateFromProps(nextProps, prevState) {
     const { address } = nextProps;
     if (address !== prevState.add) {
       return {
-        add: nextProps.address,
+        add: address,
       };
     }
     return null;
   }
 
+  componentDidMount() {
+    this.loadDid();
+  }
+
   componentDidUpdate(prevProps, prevState) {
     const { add } = this.state;
-    // console.log('componentDidUpdate', add);
     add !== prevState.add && this.loadDid();
   }
 

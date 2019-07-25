@@ -41,37 +41,18 @@ class Inheritance extends PureComponent {
     };
   }
 
-  componentDidMount() {
-    this.loadDid();
-  }
-
-  // componentWillReceiveProps(nextProps) {
-  //   const { address } = this.props;
-  //   if (!nextProps.address) {
-  //     this.setState({
-  //       wait: '',
-  //       lock: '',
-  //       inheritor: '',
-  //       inheritorList: {},
-  //       inheErr: '',
-  //       waitErr: '',
-  //       lockErr: '',
-  //       current: 1,
-  //       pageSize: 5,
-  //     });
-  //   } else {
-  //     address !== nextProps.address && this.loadDid(nextProps.address);
-  //   }
-  // }
-
   static getDerivedStateFromProps(nextProps, prevState) {
     const { address } = nextProps;
-    if (address !== prevState.addInheritor) {
+    if (address !== prevState.addr) {
       return {
-        addr: nextProps.address,
+        addr: address,
       };
     }
     return null;
+  }
+
+  componentDidMount() {
+    this.loadDid();
   }
 
   componentDidUpdate(prevProps, prevState) {

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { codec } from '@iceteachain/common';
-// import Styled from 'styled-components';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import notifi from '../../elements/Notification';
 import tweb3 from '../../../service/tweb3';
@@ -27,58 +27,58 @@ class General extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      balance: props.balance,
+      balance: 0,
+      add: '',
+      signers: {},
       alias: '',
-      // aliasErr: '',
       tagsList: {},
       tagsValue: '',
-      // tagsNameErr: '',
-      // tagsValueErr: '',
       current: 1,
       pageSize: 5,
     };
   }
 
-  componentDidMount() {
-    const { address, signers, balance } = this.props;
-    address && this.onLoadData({ address, signers, balance });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { address, balance, signers } = nextProps;
+    let value = {};
+
+    if (address !== prevState.add) value = Object.assign({}, { add: address });
+    if (_.isEqual(signers, prevState.signers)) value = Object.assign({}, { signers });
+    if (balance !== prevState.balance) value = Object.assign({}, { balance });
+    if (value) return value;
+
+    return null;
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { address, balance } = this.props;
+  componentDidMount() {
+    this.onLoadData();
+  }
 
-    if (nextProps.balance) {
-      nextProps.balance !== balance && this.setState({ balance: nextProps.balance });
-    }
+  componentDidUpdate(prevProps, prevState) {
+    const { add } = this.state;
+    add !== prevState.add && this.onLoadData();
+  }
 
-    if (nextProps.address) {
-      nextProps.address !== address && this.onLoadData(nextProps);
-    } else {
+  onLoadData = () => {
+    const { add, signers, balance } = this.state;
+    if (!add) {
+      // notifi.warn('Please got to unlock wallet!');
       this.setState({
         balance: 0,
         alias: '',
-        // aliasErr: '',
         tagsList: {},
         tagsValue: '',
-        // tagsNameErr: '',
-        // tagsValueErr: '',
         current: 1,
         pageSize: 5,
       });
-    }
-  }
-
-  onLoadData = nextProps => {
-    if (!nextProps.address) {
-      notifi.warn('Please got to unlock wallet!');
       return;
     }
-    this.loadAlias(nextProps.address);
-    this.reLoadData(nextProps.address);
-    if (nextProps.signers.isRepresent) {
-      this.loadBalance(nextProps.address);
+    this.loadAlias(add);
+    this.reLoadData(add);
+    if (signers.isRepresent) {
+      this.loadBalance(add);
     } else {
-      this.setState({ balance: nextProps.balance });
+      this.setState({ balance });
     }
   };
 

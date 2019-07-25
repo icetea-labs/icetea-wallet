@@ -231,28 +231,13 @@ class Balances extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      addr: props.addr,
+      addr: '',
       showSend: false,
       showTbl: [],
       showMbTbl: [],
       showMobileCode: false,
       showSendMobi: false,
     };
-  }
-
-  // componentWillMount = async () => {
-  //   checkDevice.isMobile() ? this.renderMobileTbl() : this.renderTbl();
-  // };
-
-  // componentWillReceiveProps(nextProps) {
-  //   const { address } = this.props;
-  //   if (address !== nextProps.address) {
-  //     this.renderTbl(nextProps.address);
-  //   }
-  // }
-
-  componentDidMount() {
-    checkDevice.isMobile() ? this.renderMobileTbl() : this.renderTbl();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -264,10 +249,14 @@ class Balances extends Component {
     return null;
   }
 
-  componentDidUpdate(prevProps) {
-    const { address } = this.props;
-    if (address !== prevProps.address) {
-      this.renderTbl(address);
+  componentDidMount() {
+    checkDevice.isMobile() ? this.renderMobileTbl() : this.renderTbl();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { addr } = this.state;
+    if (addr !== prevState.addr) {
+      this.renderTbl(addr);
     }
   }
 
@@ -324,6 +313,7 @@ class Balances extends Component {
       if (!address) {
         return;
       }
+      // const { addr } = this.state;
       const result = await tweb3.getBalance(addr || address);
       const tblTmp = [
         {
@@ -423,8 +413,8 @@ class Balances extends Component {
 
   render() {
     const { props } = this;
-    const { showSend, sendingAsset, showTbl, showMobileCode, showMbTbl, showSendMobi } = this.state;
-    const { privateKey, address } = this.props;
+    const { showSend, sendingAsset, showTbl, showMobileCode, showMbTbl, showSendMobi, addr } = this.state;
+    const { privateKey } = this.props;
     return (
       <div>
         <MobileWrapper>
@@ -435,8 +425,8 @@ class Balances extends Component {
                   <Title>My Balances</Title>
                   <WrapSubTitle>
                     <DivSelectWordBase margin="10px 0 0 0" justify="space-between" align="center">
-                      <div className="address">{address}</div>
-                      <CopyToClipboard text={address} onCopy={this._copyAddress}>
+                      <div className="address">{addr}</div>
+                      <CopyToClipboard text={addr} onCopy={this._copyAddress}>
                         <div title="copy box" onClick={this._copyAddress}>
                           <Icon type="copy" size={14} />
                         </div>
@@ -448,7 +438,7 @@ class Balances extends Component {
                     {showMobileCode && (
                       <WrapperQRCode>
                         <div size="174" className="qrcode-box sc-iSDuPN iulYhq">
-                          <QRCode size={174} level="M" className="qrForm" value={address} />
+                          <QRCode size={174} level="M" className="qrForm" value={addr} />
                         </div>
                       </WrapperQRCode>
                     )}
@@ -479,7 +469,7 @@ class Balances extends Component {
                   <div>
                     <span>Balances</span>
                     <span className="text-address">
-                      <i id="copyText">{address}</i>
+                      <i id="copyText">{addr}</i>
                     </span>
                   </div>
                   <div className="sc-jDwBTQ cPxcHa">
@@ -487,12 +477,12 @@ class Balances extends Component {
                       <Icon type="qrcode" size={18} />
                       <div className="qrCode">
                         <div size="174" className="qrcode-box sc-iSDuPN iulYhq">
-                          <QRCode size={174} className="qrForm" value={address} />
+                          <QRCode size={174} className="qrForm" value={addr} />
                         </div>
                       </div>
                     </div>
                     <div className="sc-fATqzn cNStFF">
-                      <CopyToClipboard text={address} onCopy={this._copyAddress}>
+                      <CopyToClipboard text={addr} onCopy={this._copyAddress}>
                         <span title="copy address">
                           <Icon type="copy" size={18} />
                         </span>
@@ -525,7 +515,7 @@ class Balances extends Component {
                   privateKey={privateKey}
                   sendingAsset={sendingAsset}
                   // address={user.address}
-                  address={address}
+                  address={addr}
                   // account_number={user.account_number}
                   // sequence={parseInt(user.sequence, 10)}
                   close={this._closeSendModal}
