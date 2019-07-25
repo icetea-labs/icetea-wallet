@@ -178,7 +178,7 @@ function handleQueue(contract, defStateAccess) {
       { sendback: item.sendback }
     )
       .then(contractResult => {
-        console.log(contractResult);
+        // console.log(contractResult);
         return speak(contractResult.messages || contractResult).then(speakResult => {
           if (typeof speakResult === 'object') {
             speakResult.sendback = contractResult.sendback;

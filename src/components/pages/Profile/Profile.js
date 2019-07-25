@@ -20,44 +20,42 @@ class Profile extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      currentAddress: props.address,
-      radioVal: 'one',
+      currentAddress: '',
+      radioCurrentVal: 'one',
       comboBoxSelectedVal: '',
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { address } = this.props;
-    const { radioVal } = this.state;
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { address } = nextProps;
+    if (address !== prevState.currentAddress && prevState.radioCurrentVal === 'one') {
+      return {
+        currentAddress: address,
+      };
+    }
 
-    // change address in menu account
-    address !== nextProps.address &&
-      radioVal === 'one' &&
-      this.setState({
-        currentAddress: nextProps.address,
-      });
+    return null;
   }
 
   radioOnChange = value => {
-    const { radioVal, comboBoxSelectedVal } = this.state;
-    const { address } = this.props;
-
+    const { radioCurrentVal, comboBoxSelectedVal, currentAddress } = this.state;
+    // console.log('state', this.state, 'new: ', value);
     // change address when radio change
-    radioVal !== value &&
+    radioCurrentVal !== value &&
       this.setState({
-        radioVal: value,
-        currentAddress: value === 'one' ? address : comboBoxSelectedVal,
+        radioCurrentVal: value,
+        currentAddress: value === 'one' ? currentAddress : comboBoxSelectedVal,
       });
   };
 
   selectOnChange = value => {
-    const { radioVal } = this.state;
+    // console.log('selectOnChange', value);
+    const { radioCurrentVal } = this.state;
     const newObj = { comboBoxSelectedVal: value, currentAddress: value };
 
     // only combobox selected value change
-    radioVal === 'one' && delete newObj.currentAddress;
+    radioCurrentVal === 'one' && delete newObj.currentAddress;
     this.setState(newObj);
-    console.log('selectOnChange', value);
   };
 
   tabOnChange = value => {
@@ -65,13 +63,14 @@ class Profile extends PureComponent {
   };
 
   render() {
-    const { radioVal, currentAddress } = this.state;
+    const { radioCurrentVal, currentAddress } = this.state;
     const { address, privateKey, childKey } = this.props;
     const child = childKey.filter(el => {
       return currentAddress === el.address;
     })[0];
     const signers = { address, privateKey, isRepresent: currentAddress && !child };
 
+    // console.log('currentAddress', child);
     return (
       <Wrapper>
         <MediaContent>
@@ -80,7 +79,7 @@ class Profile extends PureComponent {
             <H2>Edit profile of</H2>
             <RadioGroup>
               <li
-                className={radioVal === 'one' ? 'on' : ''}
+                className={radioCurrentVal === 'one' ? 'on' : ''}
                 onClick={() => this.radioOnChange('one')}
                 role="presentation"
               >
@@ -88,7 +87,7 @@ class Profile extends PureComponent {
                 <span>Current account ( {address} )</span>
               </li>
               <li
-                className={radioVal === 'two' ? 'on' : ''}
+                className={radioCurrentVal === 'two' ? 'on' : ''}
                 onClick={() => this.radioOnChange('two')}
                 role="presentation"
               >

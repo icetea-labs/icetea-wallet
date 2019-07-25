@@ -6,7 +6,6 @@ import PuDetailTx from '../../elements/pu';
 import Table from '../../elements/TablePro';
 import * as actions from '../../../store/actions/transaction';
 import { iteaScanAddress } from '../../../config/networks';
-import Layout from '../../layout';
 // import TxHash from './TxHash';
 
 import {
@@ -39,34 +38,32 @@ class index extends PureComponent {
       detail: null,
       current: 1,
       pageSize: 10,
+      addr: '',
+      balance: 0,
     };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { address, balance } = nextProps;
+    let value = {};
+    if (address !== prevState.addr) value = Object.assign({}, { addr: address });
+    if (balance !== prevState.balance) value = Object.assign({}, { balance });
+    if (value) return value;
+    return null;
   }
 
   componentDidMount() {
     this.getHistory();
   }
 
-  componentWillReceiveProps(nextProps) {
-    // this.getHistory();
-    const { address, balance } = this.props;
-    // console.log('balance', balance, '--', nextProps.balance);
-    // console.log('address', address, '--', nextProps.address);
-    if (address !== nextProps.address || balance !== nextProps.balance) {
-      this.getHistory(nextProps.address);
-    }
+  componentDidUpdate(prevProps, prevState) {
+    const { addr, balance } = this.state;
+    addr !== prevState.addr || (balance !== prevState.balance && this.getHistory());
   }
 
-  componentDidUpdate() {
-    // var { txProps } = this.props;
-    // var { txState } = this.state.txs
-    // 0 === txState.length && txProps.length > 0 && this.setState({
-    //   txs: txState.concat(txProps)
-    // })
-    // this.getHistory();
-  }
-
-  getHistory = addr => {
+  getHistory = () => {
     const { address, getTxHistory } = this.props;
+    const { addr } = this.state;
 
     const params = {
       address: addr || address,
@@ -276,7 +273,7 @@ class index extends PureComponent {
             <WrapperTextFullHistory>
               Not every transaction is included below. For full history, please refer to
               <a href={iteaScanAddress.replace('{address}', address)} target="_blank" rel="noopener noreferrer">
-                here  
+                here
               </a>
               .
             </WrapperTextFullHistory>
