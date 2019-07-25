@@ -37,17 +37,50 @@ class Inheritance extends PureComponent {
       lockErr: '',
       current: 1,
       pageSize: 5,
+      addr: '',
     };
   }
 
-  componentDidMount() {
-    const { address } = this.props;
-    address && this.loadDid(address);
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { address } = nextProps;
+    if (address !== prevState.addr) {
+      return {
+        addr: address,
+      };
+    }
+    return null;
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { address } = this.props;
-    if (!nextProps.address) {
+  componentDidMount() {
+    this.loadDid();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { addr } = this.state;
+    // console.log('componentDidUpdate', addr);
+    addr !== prevState.addr && this.loadDid();
+  }
+
+  loadDid = () => {
+    const { addr } = this.state;
+    if (addr) {
+      tweb3
+        .contract('system.did')
+        .methods.query(addr)
+        .call()
+        .then(props => {
+          if (props) {
+            const { inheritors } = props;
+            if (inheritors && Object.keys(inheritors).length) {
+              this.setState({ inheritorList: Object.assign({}, inheritors) });
+            } else {
+              this.setState({ inheritorList: {} });
+            }
+          } else {
+            this.setState({ inheritorList: {} });
+          }
+        });
+    } else {
       this.setState({
         wait: '',
         lock: '',
@@ -59,28 +92,7 @@ class Inheritance extends PureComponent {
         current: 1,
         pageSize: 5,
       });
-    } else {
-      address !== nextProps.address && this.loadDid(nextProps.address);
     }
-  }
-
-  loadDid = address => {
-    tweb3
-      .contract('system.did')
-      .methods.query(address)
-      .call()
-      .then(props => {
-        if (props) {
-          const { inheritors } = props;
-          if (inheritors && Object.keys(inheritors).length) {
-            this.setState({ inheritorList: Object.assign({}, inheritors) });
-          } else {
-            this.setState({ inheritorList: {} });
-          }
-        } else {
-          this.setState({ inheritorList: {} });
-        }
-      });
   };
 
   _addInherit = event => {

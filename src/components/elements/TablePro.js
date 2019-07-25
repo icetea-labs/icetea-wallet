@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Select from 'rc-select';
@@ -120,12 +121,12 @@ class TablePro extends PureComponent {
     };
   }
 
-  componentWillReceiveProps() {
-    const { columns } = this.props;
-    this.setState({
-      // data: dataSource,
-      columns,
-    });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    let value = {};
+    const { columns } = nextProps;
+    if (_.isEqual(columns, prevState.columns)) value = Object.assign({}, { columns });
+    if (value) return value;
+    return null;
   }
 
   renderTitle = item => {

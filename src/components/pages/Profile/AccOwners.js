@@ -39,18 +39,54 @@ class AccOwners extends PureComponent {
       thresholdErr: '',
       current: 1,
       pageSize: 5,
+      add: '',
     };
   }
 
-  componentDidMount() {
-    const { address } = this.props;
-    address && this.loadDid(address);
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { address } = nextProps;
+    if (address !== prevState.add) {
+      return {
+        add: address,
+      };
+    }
+    return null;
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { address } = this.props;
-    // console.log('Add CK', nextProps.address);
-    if (!nextProps.address) {
+  componentDidMount() {
+    this.loadDid();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { add } = this.state;
+    add !== prevState.add && this.loadDid();
+  }
+
+  loadDid = () => {
+    const { add } = this.state;
+    if (add) {
+      tweb3
+        .contract('system.did')
+        .methods.query(add)
+        .call()
+        .then(props => {
+          if (props) {
+            const { owners, threshold } = props;
+            if (threshold) {
+              this.setState({ weight: threshold, threshold });
+            } else {
+              this.setState({ weight: 1, threshold: 1 });
+            }
+            if (owners && Object.keys(owners).length) {
+              this.setState({ ownersList: Object.assign({}, owners) });
+            } else {
+              this.setState({ ownersList: {} });
+            }
+          } else {
+            this.setState({ weight: 1, threshold: 1, ownersList: {} });
+          }
+        });
+    } else {
       this.setState({
         radioValue: 'one',
         ownerAdd: '',
@@ -60,34 +96,10 @@ class AccOwners extends PureComponent {
         weightErr: '',
         threshold: '',
         thresholdErr: '',
+        current: 1,
+        pageSize: 5,
       });
-    } else {
-      address !== nextProps.address && this.loadDid(nextProps.address);
     }
-  }
-
-  loadDid = address => {
-    tweb3
-      .contract('system.did')
-      .methods.query(address)
-      .call()
-      .then(props => {
-        if (props) {
-          const { owners, threshold } = props;
-          if (threshold) {
-            this.setState({ weight: threshold, threshold });
-          } else {
-            this.setState({ weight: 1, threshold: 1 });
-          }
-          if (owners && Object.keys(owners).length) {
-            this.setState({ ownersList: Object.assign({}, owners) });
-          } else {
-            this.setState({ ownersList: {} });
-          }
-        } else {
-          this.setState({ weight: 1, threshold: 1, ownersList: {} });
-        }
-      });
   };
 
   radioOnChange = value => {
