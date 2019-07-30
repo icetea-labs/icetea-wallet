@@ -124,7 +124,7 @@ class TablePro extends PureComponent {
   static getDerivedStateFromProps(nextProps, prevState) {
     let value = {};
     const { columns } = nextProps;
-    if (_.isEqual(columns, prevState.columns)) value = Object.assign({}, value, { columns });
+    if (_.isEqual(columns, prevState.columns)) value = Object.assign({}, { columns });
     if (value) return value;
     return null;
   }
