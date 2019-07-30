@@ -40,11 +40,12 @@ class General extends PureComponent {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const { address, balance, signers } = nextProps;
+
     let value = {};
 
-    if (address !== prevState.add) value = Object.assign({}, { add: address });
-    if (_.isEqual(signers, prevState.signers)) value = Object.assign({}, { signers });
-    if (balance !== prevState.balance) value = Object.assign({}, { balance });
+    if (address !== prevState.add) value = Object.assign({}, value, { add: address });
+    if (_.isEqual(signers, prevState.signers)) value = Object.assign({}, value, { signers });
+    if (balance !== prevState.balance) value = Object.assign({}, value, { balance });
     if (value) return value;
 
     return null;
