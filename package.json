@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@iceteachain/common": "github:TradaTech/icetea-common",
-    "@iceteachain/web3": "github:TradaTech/icetea-web3",
+    "@iceteachain/common": "^0.1.2",
+    "@iceteachain/web3": "^0.1.9",
     "antd": "^3.17.0",
     "bip39": "^3.0.1",
     "botui": "^0.3.9",
