@@ -1,4 +1,3 @@
-import { decodeTX } from '@iceteachain/web3/src/utils';
 import { ecc } from '@iceteachain/common';
 import dateFormat from 'dateformat';
 import tweb3 from '../service/tweb3';
@@ -11,7 +10,7 @@ const utils = {
       t.shash = t.hash; // this.fmtHex(t.hash)
       t.blockHeight = t.height;
 
-      const data = decodeTX(t.tx);
+      const data = t.tx; //decodeTX(t.tx);
       let { from } = data;
       if (!from) {
         const pubkey = data.evidence.pubkey || data.evidence[0].pubkey;
@@ -37,45 +36,28 @@ const utils = {
     });
     return txs.reverse();
   },
-  addTimeToTx: async transactions => {
-    const blocksInfo = [];
-    for (let i = 0; i < transactions.length; i += 1) {
-      const resp = await tweb3.getBlock({ height: transactions[i].height });
-      blocksInfo.push(resp.block_meta);
+  addTimeToTx: async txs => {
+    for (let i = 0; i < txs.length; i += 1) {
+      const { height } = txs[i];
+      const { block } = await tweb3.getBlock({ height });
+      const tm = block.header.time;
+      const d = typeof tm === 'number' ? tm * 1000 : Date.parse(tm);
+      txs[i].time = dateFormat(new Date(d), 'mm-dd  hh:MM:ss TT');
     }
-    // console.log(blocksInfo)
-    const blockTime = {};
-    blocksInfo.forEach(el => {
-      blockTime[el.header.height] = { time: utils.fmtTime(el.header.time) };
-    });
-    // console.log(blockTime)
-    transactions.forEach(el => {
-      if (blockTime[el.height]) {
-        el.time = blockTime[el.height].time;
-      } else {
-        console.log('el.height', el.height);
-      }
-    });
-
-    return transactions;
-  },
-  fmtTime: tm => {
-    const d = typeof tm === 'number' ? tm * 1000 : Date.parse(tm);
-    return dateFormat(new Date(d), 'mm-dd  hh:MM:ss TT');
+    return txs;
   },
 };
 
 const transaction = {
   getTxHistory(params) {
     return new Promise(async resolve => {
-      // const systemAddr = 'system';
-      const eventName = 'Transferred';
-      const conditionsByTo = `tx.to='${params.address}' AND tx.height > 0`;
-      const conditionsByFrom = `tx.from='${params.address}' AND tx.height > 0`;
+      const conditionsByTo = `system.to='${params.address}'`; //AND system._ev = 'transfer'`;
+      const conditionsByFrom = `system.from='${params.address}'`;
       // get by to address
-      const myTxsByTo = await tweb3.getPastEvents(eventName, conditionsByTo, params.options);
+      const myTxsByTo = await tweb3.searchTransactions(conditionsByTo, params.options);
       // get by from address
-      const myTxsByFrom = await tweb3.getPastEvents(eventName, conditionsByFrom, params.options);
+      const myTxsByFrom = await tweb3.searchTransactions(conditionsByFrom, params.options);
+      // console.log('myTxsByTo', myTxsByTo);
       const myTxs = myTxsByFrom.txs.concat(myTxsByTo.txs);
       let transactions = utils.fmtTxs(myTxs);
       transactions = await utils.addTimeToTx(transactions);

@@ -6,7 +6,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { codec, AccountType } from '@iceteachain/common';
 import tweb3 from '../../service/tweb3';
 import * as actions from '../../store/actions/account';
-import { utils, toTEA } from '../../utils';
+import { utils, toTEA, stringifyWithBigInt } from '../../utils';
 import selected from '../../assets/img/checked.png';
 import logo from '../../assets/img/logo.svg';
 import { explorer } from '../../config/networks';
@@ -66,7 +66,7 @@ class ManageAccounts extends PureComponent {
     for (let i = 0; i < childKey.length; i += 1) {
       const newChild = Object.assign({}, childKey[i]);
       const { balance } = await tweb3.getBalance(newChild.address);
-      newChild.balance = balance;
+      newChild.balance = Number(balance);
       childKeyTmp.push(newChild);
     }
     setAccount({ childKey: childKeyTmp });
@@ -81,13 +81,11 @@ class ManageAccounts extends PureComponent {
     notifi.info('copy success');
   };
 
-  _selectAccount = index => {
+  _switchAccount = index => {
     const { mnemonic, childKey, setAccount } = this.props;
     const selectedAddress = childKey[index].address;
     const selectedBalance = childKey[index].balance;
     let privateKey = '';
-    // console.log('childKey', childKey);
-    // console.log('aa', index, childKey[index].index);
     if (mnemonic) {
       privateKey = utils.getPrivateKeyFromMnemonic(mnemonic, childKey[index].index);
     }
@@ -104,13 +102,13 @@ class ManageAccounts extends PureComponent {
       current = JSON.parse(current);
       current.address = selectedAddress;
       current.balance = selectedBalance;
-      localStorage.setItem('user', JSON.stringify(current));
+      localStorage.setItem('user', stringifyWithBigInt(current));
     } else {
       current = sessionStorage.getItem('user');
       current = (current && JSON.parse(current)) || {};
       current.address = selectedAddress;
       current.balance = selectedBalance;
-      sessionStorage.setItem('user', JSON.stringify(current));
+      sessionStorage.setItem('user', stringifyWithBigInt(current));
     }
   };
 
@@ -170,7 +168,7 @@ class ManageAccounts extends PureComponent {
     const { balance } = await tweb3.getBalance(account.address);
     childKey.address = account.address;
     childKey.indexKey = account.index;
-    childKey.balance = balance;
+    childKey.balance = Number(balance);
     childKey.privateKey = utils.getPrivateKeyFromMnemonic(mnemonic, account.index);
 
     tweb3.wallet.importAccount(childKey.privateKey);
@@ -212,7 +210,7 @@ class ManageAccounts extends PureComponent {
 
     const Accounts = childKey.map((el, index) => {
       return (
-        <div className="account-item" key={index} onClick={() => this._selectAccount(index)}>
+        <div className="account-item" key={index} onClick={() => this._switchAccount(index)}>
           <div className="selected">{el.address === address && <img src={selected} alt="" />}</div>
           <div className="account-avt">
             <img src={logo} alt="" />

@@ -59,14 +59,14 @@ class SendTransaction extends PureComponent {
     const childKeyTmp = [];
     for (let i = 0; i < childKey.length; i += 1) {
       const { balance } = await tweb3.getBalance(childKey[i].address);
-      childKey[i].balance = balance;
+      childKey[i].balance = Number(balance);
       childKeyTmp.push(childKey[i]);
     }
     setBalanceChildKey(childKeyTmp);
 
     const blAfterTran = await tweb3.getBalance(address);
     // console.log('CK login balance After:', blAfterTran);
-    setAccount({ balance: blAfterTran.balance });
+    setAccount({ balance: Number(blAfterTran.balance) });
 
     props.onSendSuccess();
     props.close();

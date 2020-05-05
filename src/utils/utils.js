@@ -123,10 +123,19 @@ export const sendTranAmount = {
 export const decimal = 6;
 
 export function toTEA(unit) {
-  return unit / 10 ** decimal;
+  return Number(unit) / 10 ** decimal;
 }
 
 export function toUNIT(tea) {
   const resp = tea.toFixed(decimal);
   return resp * 10 ** decimal;
+}
+
+export function stringifyWithBigInt(obj) {
+  return JSON.stringify(obj, (key, value) => {
+    if (typeof value === 'bigint') { // eslint-disable-line
+      return value.toString();
+    }
+    return value;
+  });
 }
