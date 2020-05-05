@@ -32,11 +32,25 @@ const FooterUpper = styled.div`
   display: flex;
   align-items: center;
   padding-bottom: 8px;
-  a {
+  button {
+    color: #848484;
     padding: 0px 10px;
+    font-size: 100%;
   }
   .nav-link {
     position: relative;
+  }
+  .link-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline;
+  }
+
+  .link-button:hover,
+  .link-button:focus {
+    text-decoration: underline;
   }
 `;
 
@@ -51,7 +65,9 @@ class FooterCus extends PureComponent {
       <FooterWrapper>
         <FooterUpper className="nav">
           <div className="nav-link">
-            <a onClick={this.goHome}>Home</a>
+            <button type="button" className="link-button" onClick={this.goHome}>
+              Home
+            </button>
           </div>
         </FooterUpper>
         <p>

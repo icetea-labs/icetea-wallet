@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import QueueAnim from 'rc-queue-anim';
