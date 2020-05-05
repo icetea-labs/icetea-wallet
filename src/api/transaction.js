@@ -51,14 +51,20 @@ const utils = {
 const transaction = {
   getTxHistory(params) {
     return new Promise(async resolve => {
-      const conditionsByTo = `system.to='${params.address}'`; //AND system._ev = 'transfer'`;
-      const conditionsByFrom = `system.from='${params.address}'`;
-      // get by to address
-      const myTxsByTo = await tweb3.searchTransactions(conditionsByTo, params.options);
-      // get by from address
-      const myTxsByFrom = await tweb3.searchTransactions(conditionsByFrom, params.options);
+      const txFrom = await tweb3.searchTransactions(
+        `system.from='${params.address}' AND system._ev = 'tx'`,
+        params.options
+      );
+      const txTo = await tweb3.searchTransactions(
+        `system.to='${params.address}' AND system._ev = 'tx'`,
+        params.options
+      );
+      const txPayer = await tweb3.searchTransactions(
+        `system.payer='${params.address}' AND system._ev = 'tx'`,
+        params.options
+      );
       // console.log('myTxsByTo', myTxsByTo);
-      const myTxs = myTxsByFrom.txs.concat(myTxsByTo.txs);
+      const myTxs = txFrom.txs.concat(txTo.txs).concat(txPayer.txs);
       let transactions = utils.fmtTxs(myTxs);
       transactions = await utils.addTimeToTx(transactions);
       transactions.sort((a, b) => {
