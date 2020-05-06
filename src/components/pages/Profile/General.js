@@ -83,9 +83,8 @@ class General extends PureComponent {
   };
 
   loadBalance = address => {
-    tweb3.getBalance(address).then(value => {
-      // console.log('loadBalance', value);
-      this.setState(Number(value));
+    tweb3.getBalance(address).then(({ balance }) => {
+      this.setState({ balance: Number(balance) });
     });
   };
 

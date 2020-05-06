@@ -63,8 +63,11 @@ const transaction = {
         `system.payer='${params.address}' AND system._ev = 'tx'`,
         params.options
       );
-      // console.log('myTxsByTo', myTxsByTo);
-      const myTxs = txFrom.txs.concat(txTo.txs).concat(txPayer.txs);
+
+      let myTxs = txFrom.txs.concat(txTo.txs).concat(txPayer.txs);
+      // Remove duplicates tx
+      myTxs = Object.values(myTxs.reduce((txs, tx) => Object.assign(txs, { [tx.hash]: tx }), {}));
+
       let transactions = utils.fmtTxs(myTxs);
       transactions = await utils.addTimeToTx(transactions);
       transactions.sort((a, b) => {

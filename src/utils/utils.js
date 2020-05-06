@@ -131,11 +131,11 @@ export function toUNIT(tea) {
   return resp * 10 ** decimal;
 }
 
-export function stringifyWithBigInt(obj) {
-  return JSON.stringify(obj, (key, value) => {
-    if (typeof value === 'bigint') { // eslint-disable-line
-      return value.toString();
-    }
-    return value;
-  });
-}
+// export function stringifyWithBigInt(obj) {
+//   return JSON.stringify(obj, (key, value) => {
+//     if (typeof value === 'bigint') { // eslint-disable-line
+//       return value.toString();
+//     }
+//     return value;
+//   });
+// }

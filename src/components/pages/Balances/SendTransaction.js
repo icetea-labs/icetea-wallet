@@ -47,7 +47,7 @@ class SendTransaction extends PureComponent {
 
     tweb3.wallet.importAccount(privateKey);
     // console.log('privateKey', privateKey);
-    await tweb3.getBalance(address);
+    // await tweb3.getBalance(address);
     // console.log('CK login balance:', balanceofVip);
     const amountToUnit = toUNIT(parseFloat(amount));
     // console.log('CK amount:', amountToUnit);

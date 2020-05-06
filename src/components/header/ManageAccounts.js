@@ -2,11 +2,12 @@ import React, { PureComponent } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-
 import { codec, AccountType } from '@iceteachain/common';
+import JSONbig from 'json-bigint';
+
 import tweb3 from '../../service/tweb3';
 import * as actions from '../../store/actions/account';
-import { utils, toTEA, stringifyWithBigInt } from '../../utils';
+import { utils, toTEA } from '../../utils';
 import selected from '../../assets/img/checked.png';
 import logo from '../../assets/img/logo.svg';
 import { explorer } from '../../config/networks';
@@ -69,6 +70,7 @@ class ManageAccounts extends PureComponent {
       newChild.balance = Number(balance);
       childKeyTmp.push(newChild);
     }
+
     setAccount({ childKey: childKeyTmp });
   };
 
@@ -102,13 +104,13 @@ class ManageAccounts extends PureComponent {
       current = JSON.parse(current);
       current.address = selectedAddress;
       current.balance = selectedBalance;
-      localStorage.setItem('user', stringifyWithBigInt(current));
+      localStorage.setItem('user', JSONbig.stringify(current));
     } else {
       current = sessionStorage.getItem('user');
       current = (current && JSON.parse(current)) || {};
       current.address = selectedAddress;
       current.balance = selectedBalance;
-      sessionStorage.setItem('user', stringifyWithBigInt(current));
+      sessionStorage.setItem('user', JSONbig.stringify(current));
     }
   };
 
