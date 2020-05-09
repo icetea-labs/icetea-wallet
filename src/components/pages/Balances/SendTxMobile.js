@@ -289,11 +289,11 @@ class SendTxMobile extends PureComponent {
 
   _transfer = async () => {
     const { amount, to } = this.state;
-    const { privateKey, address } = this.props;
+    const { privateKey } = this.props;
 
     tweb3.wallet.importAccount(privateKey);
     // console.log('privateKey', privateKey);
-    const balanceofVip = await tweb3.getBalance(address);
+    // const balanceofVip = await tweb3.getBalance(address);
     // console.log('CK login balance:', balanceofVip);
     const amountToUnit = toUNIT(parseFloat(amount));
     // console.log('CK amount:', amountToUnit);

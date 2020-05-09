@@ -83,9 +83,8 @@ class General extends PureComponent {
   };
 
   loadBalance = address => {
-    tweb3.getBalance(address).then(value => {
-      // console.log('loadBalance', value);
-      this.setState(value);
+    tweb3.getBalance(address).then(({ balance }) => {
+      this.setState({ balance: Number(balance) });
     });
   };
 
@@ -117,7 +116,7 @@ class General extends PureComponent {
             for (let i = 0; i < childKey.length; i += 1) {
               const newChild = Object.assign({}, childKey[i]);
               const { balance } = await tweb3.getBalance(newChild.address);
-              newChild.balance = balance;
+              newChild.balance = Number(balance);
               childKeyTmp.push(newChild);
             }
             setAccount({ childKey: childKeyTmp });

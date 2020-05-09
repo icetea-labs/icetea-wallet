@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import Vue from 'vue';
 import BotUI from 'botui';
 import tweb3 from '../../../service/tweb3';
