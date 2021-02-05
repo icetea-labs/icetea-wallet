@@ -317,7 +317,7 @@ class Balances extends Component {
       const result = await tweb3.getBalance(addr || address);
       const tblTmp = [
         {
-          name: 'Icetea Native Token',
+          name: 'PolkaFoundry Native Token',
           symbo: 'TEA',
           totalBalance: toTEA(result.balance),
           availableBalance: toTEA(result.balance),
@@ -364,7 +364,7 @@ class Balances extends Component {
       const result = await tweb3.getBalance(address);
       const tblTmp = [
         {
-          name: 'Icetea Native Token',
+          name: 'PolkaFoundry Native Token',
           symbo: 'TEA',
           totalBalance: toTEA(result.balance),
           availableBalance: toTEA(result.balance),

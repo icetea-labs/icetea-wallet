@@ -1,0 +1,20 @@
+<svg width="600" height="99" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="101" width="602" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_1" fill-rule="evenodd" fill="none">
+   <g stroke="null" id="svg_2">
+    <circle stroke="null" id="svg_3" r="36.500046" cy="49.250003" cx="49.999996" fill="#15B5DD"/>
+    <rect stroke="null" id="svg_4" rx="2.56" height="16.997835" width="17.908419" y="54.106528" x="46.162478" fill="rgb(242,250,252)"/>
+    <rect stroke="null" id="svg_5" rx="2.56" height="22.354839" width="22.354839" y="76.661671" x="133.941" transform="matrix(0.4821128805285125,-0.6072544122975901,0.6397854015418618,0.4575990218296412,-59.78418397343147,93.29733387876057) " fill="rgb(242,250,252)"/>
+    <rect stroke="null" id="svg_6" rx="2.56" height="22.354839" width="22.354839" y="115.766617" x="47.602879" transform="matrix(0.7137836468359849,0.3451984423929538,-0.36369093349587783,0.6774900895244258,38.11356009022806,-44.399041173798075) " fill="rgb(242,250,252)"/>
+   </g>
+  </g>
+  <text stroke="#000" transform="matrix(27.944747924804688,0,0,2.4139535427093506,-3260.314498901367,-19.773256573826075) " xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_7" y="35.921875" x="124" stroke-width="0" fill="#000000"/>
+  <text style="cursor: move;" font-style="normal" font-weight="bold" stroke="#000" transform="matrix(2.2921281133313727,0,0,2.222222328186035,-163.80928662303387,-24.34896044433117) " xml:space="preserve" text-anchor="start" font-family="Euphoria, sans-serif" font-size="24" id="svg_8" y="41.509374" x="115.521337" stroke-opacity="null" stroke-width="0" fill="#15b6dd">ICETEA WALLET</text>
+ </g>
+</svg>

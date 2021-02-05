@@ -42,7 +42,7 @@ class SendTransactionTwo extends PureComponent {
       <div>
         <Title>
           <span className="name">TEA</span>
-          <span className="fullName">Icetea Native Token</span>
+          <span className="fullName">PolkaFoundry Native Token</span>
         </Title>
         <WrapperTwo>
           <div className="title">To:</div>

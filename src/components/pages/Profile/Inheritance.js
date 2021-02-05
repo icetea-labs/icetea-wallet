@@ -309,7 +309,7 @@ class Inheritance extends PureComponent {
                   <span>
                     Please check out &nbsp;
                     <a target="_blank" href="https://docs.icetea.io/" rel="noopener noreferrer">
-                      Icetea documentation
+                      PolkaFoundry documentation
                     </a>
                     &nbsp; about inheritance flow.
                   </span>
