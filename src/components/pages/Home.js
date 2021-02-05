@@ -245,11 +245,11 @@ class Home extends Component {
       <PageContainer>
         <Banner>
           <div className="banner-text">
-            <h1>Icetea Wallet</h1>
+            <h1>PolkaFoundry Wallet</h1>
             <p>
-              Icetea Wallet is a free, client-side interface helping you interact with the Icetea blockchain. Our
-              easy-to-use, open-source platform allows you to generate wallets, interact with smart contracts, and so
-              much more.
+              PolkaFoundry Wallet is a free, client-side interface helping you interact with the PolkaFoundry
+              blockchain. Our easy-to-use, open-source platform allows you to generate wallets, interact with smart
+              contracts, and so much more.
             </p>
           </div>
           <div className="banner-image">

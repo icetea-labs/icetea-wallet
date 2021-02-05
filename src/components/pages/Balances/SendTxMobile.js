@@ -353,7 +353,7 @@ class SendTxMobile extends PureComponent {
                   <div className="header">Confirm Transaction</div>
                   <div className="title">
                     <span className="name">TEA</span>
-                    <span className="fullName">Icetea Native Token</span>
+                    <span className="fullName">PolkaFoundry Native Token</span>
                   </div>
                   <div className="row">
                     <div className="title">To:</div>

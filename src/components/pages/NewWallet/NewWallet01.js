@@ -117,7 +117,7 @@ class NewWallet01 extends PureComponent {
   render() {
     const { agree, isPasswordValid, rePassErr, rePassword } = this.state;
     const textWarning =
-      'I understand that Icetea cannot recover or reset my password or the keystore file. ' +
+      'I understand that PolkaFoundry cannot recover or reset my password or the keystore file. ' +
       'I will make a backup of the keystore file/password, keep them secret,' +
       ' complete all wallet creation steps and agree to all the';
 
