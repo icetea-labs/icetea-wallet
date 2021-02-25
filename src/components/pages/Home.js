@@ -148,7 +148,7 @@ const Card = styled.div`
     transition: all 0.3s ease;
     box-shadow: 0 5px 24px rgba(0, 0, 0, 0.15);
     top: 0px;
-    height: 100%;
+    /* height: 100%; */
     border-radius: 10px;
     margin-bottom: 0;
     padding: 30px 40px;

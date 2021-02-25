@@ -117,8 +117,8 @@ class Footer extends PureComponent {
             <div className="footer-trada">
               <p>
                 &copy; 2019 &nbsp;
-                <a href="https://trada.tech/team.html" target="_blank" rel="noopener noreferrer">
-                  TradaTech
+                <a href="https://polkafoundry.com/" target="_blank" rel="noopener noreferrer">
+                  Icetea Foundation
                 </a>
               </p>
               <SocialFooter>

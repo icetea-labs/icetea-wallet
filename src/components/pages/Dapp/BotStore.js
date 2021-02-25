@@ -231,7 +231,7 @@ class BotStore extends Component {
   getBotInfo = async bots => {
     const resInfo = [];
     const keys = Object.keys(bots);
-    for (let i = 0; i < keys.length; i += 1) {
+    for (let i = 0; i < keys.length; i++) {
       const botInfo = {
         address: '',
         category: 'category',
@@ -240,8 +240,24 @@ class BotStore extends Component {
         description: 'description',
       };
       const bot = keys[i];
-      const contract = tweb3.contract(bot);
-      const info = await contract.methods.botInfo().callPure();
+      // const contract = tweb3.contract(bot);
+      const funcs = await tweb3.getMetadata(bot);
+      let info = {};
+      if (funcs.botInfo) {
+        const ct = tweb3.contract(bot);
+        if (funcs.botInfo.decorators[0] === 'view') {
+          info = await ct.methods
+            .botInfo()
+            .call()
+            .catch(console.error);
+        } else {
+          info = await ct.methods
+            .botInfo()
+            .callPure()
+            .catch(console.error);
+        }
+      }
+      // const info = await contract.methods.botInfo().callPure();
       botInfo.address = bot;
       botInfo.category = bots[bot].category;
       botInfo.icon = bots[bot].icon;
@@ -251,6 +267,7 @@ class BotStore extends Component {
       botInfo.description = info.description || '';
       resInfo.push(botInfo);
     }
+
     return resInfo;
   };
 
