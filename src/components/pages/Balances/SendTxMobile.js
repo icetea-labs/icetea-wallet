@@ -313,7 +313,7 @@ class SendTxMobile extends PureComponent {
         <React.Fragment>
           <Wrapper>
             <Title>
-              <div>TEA</div>
+              <div>PKF</div>
             </Title>
             <SendTxOne>
               <InputBox>
@@ -335,7 +335,7 @@ class SendTxMobile extends PureComponent {
                 <DivSelectWordBase align="center" justify="space-between">
                   <p className="fee">
                     Gas Limit
-                    <span>{`${transferFee} TEA`}</span>
+                    <span>{`${transferFee} PKF`}</span>
                   </p>
                   <p className="fee">
                     Available
@@ -352,7 +352,7 @@ class SendTxMobile extends PureComponent {
                 <SendTxTwoWrapper>
                   <div className="header">Confirm Transaction</div>
                   <div className="title">
-                    <span className="name">TEA</span>
+                    <span className="name">PKF</span>
                     <span className="fullName">PolkaFoundry Native Token</span>
                   </div>
                   <div className="row">
@@ -376,7 +376,7 @@ class SendTxMobile extends PureComponent {
                   <div className="row">
                     <div className="title">Gas Limit:</div>
                     <div className="value">
-                      <span>{`${transferFee}  TEA`}</span>
+                      <span>{`${transferFee}  PKF`}</span>
                     </div>
                   </div>
                 </SendTxTwoWrapper>

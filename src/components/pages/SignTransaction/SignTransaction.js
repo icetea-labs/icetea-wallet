@@ -217,10 +217,10 @@ class SignTransaction extends PureComponent {
                   </div>
                 )}
                 <div className="row">
-                  <p className="tableHeader">value</p> <p className="tableContent">{toTEA(tx.value) || 0} TEA</p>
+                  <p className="tableHeader">value</p> <p className="tableContent">{toTEA(tx.value) || 0} PKF</p>
                 </div>
                 <div className="row">
-                  <p className="tableHeader">fee</p> <p className="tableContent">{toTEA(tx.fee) || 0} TEA</p>
+                  <p className="tableHeader">fee</p> <p className="tableContent">{toTEA(tx.fee) || 0} PKF</p>
                 </div>
               </PUContents>
             </div>

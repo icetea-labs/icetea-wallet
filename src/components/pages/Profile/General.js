@@ -106,7 +106,7 @@ class General extends PureComponent {
         .methods.request(/* address */)
         .sendCommit(opts)
         .then(async r => {
-          notifi.info(`Faucet Success: ${toTEA(r.returnValue)} TEA`);
+          notifi.info(`Faucet Success: ${toTEA(r.returnValue)} PKF`);
           const { childKey, setAccount } = this.props;
 
           if (signers.isRepresent) {
@@ -409,12 +409,12 @@ class General extends PureComponent {
               </div>
               <div className="row">
                 <p className="header">Balance:</p>
-                <p> {toTEA(balance)} TEA</p>
+                <p> {toTEA(balance)} PKF</p>
               </div>
 
               <WrapperButton>
                 <Button width="170px" onClick={this.registerFaucetEvent}>
-                  <span>Get TEA from Faucet</span>
+                  <span>Get PKF from Faucet</span>
                 </Button>
               </WrapperButton>
             </TapWrapperContent>

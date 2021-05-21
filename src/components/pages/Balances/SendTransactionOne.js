@@ -15,7 +15,7 @@ import { toTEA } from '../../../utils';
 
 const itemsMenu = [
   {
-    text: 'TEA',
+    text: 'PKF',
     selected: true,
   },
 ];
@@ -239,7 +239,7 @@ class SendTransactionOne extends PureComponent {
             <Fee>
               <span className="fee-title">Gas Limit:</span>
               <span className="fee-value">0 </span>
-              <span>TEA</span>
+              <span>PKF</span>
             </Fee>
             <Ava>
               <span className="Available-title">Available:</span>

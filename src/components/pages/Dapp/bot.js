@@ -87,7 +87,7 @@ function fmtMicroTea(n) {
 }
 
 function confirmTransfer(amount) {
-  say(`ATTENTION: you are about to transfer <b>${fmtMicroTea(amount)}</b> TEA to this bot.`, {
+  say(`ATTENTION: you are about to transfer <b>${fmtMicroTea(amount)}</b> PKF to this bot.`, {
     type: 'html',
     cssClass: 'bot-confirm',
   });

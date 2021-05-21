@@ -266,7 +266,7 @@ class Home extends Component {
                 <CardContent>
                   <h2>Create A New Wallet</h2>
                   <p>
-                    Obtain an mnemonic and generate your TEA address. Saving and safekeeping the mnemonic will be your
+                    Obtain an mnemonic and generate your PKF address. Saving and safekeeping the mnemonic will be your
                     responsibility.
                   </p>
                   <p className="button">Get Started &gt;&gt;&gt;</p>
@@ -283,7 +283,7 @@ class Home extends Component {
                 <CardContent>
                   <h2>Access My Wallet</h2>
                   <p>
-                    Send or swap your TEA, interact with smart contracts, and more! This is where the magic happens..
+                    Send or swap your PKF, interact with smart contracts, and more! This is where the magic happens..
                   </p>
                   <p className="button">Access Now &gt;&gt;&gt;</p>
                 </CardContent>

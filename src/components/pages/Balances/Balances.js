@@ -318,7 +318,7 @@ class Balances extends Component {
       const tblTmp = [
         {
           name: 'PolkaFoundry Native Token',
-          symbo: 'TEA',
+          symbo: 'PKF',
           totalBalance: toTEA(result.balance),
           availableBalance: toTEA(result.balance),
         },
@@ -365,7 +365,7 @@ class Balances extends Component {
       const tblTmp = [
         {
           name: 'PolkaFoundry Native Token',
-          symbo: 'TEA',
+          symbo: 'PKF',
           totalBalance: toTEA(result.balance),
           availableBalance: toTEA(result.balance),
         },

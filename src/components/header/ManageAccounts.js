@@ -222,7 +222,7 @@ class ManageAccounts extends PureComponent {
             <div className="accout-balances">
               {codec.isAddressType(el.address, AccountType.REGULAR_ACCOUNT)
                 ? 'REGULAR ACCOUNT'
-                : `${toTEA(el.balance) || 0} TEA`}
+                : `${toTEA(el.balance) || 0} PKF`}
             </div>
           </div>
         </div>
