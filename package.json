@@ -12,7 +12,7 @@
     "json-bigint": "^0.3.0",
     "keythereum": "github:TradaTech/keythereum",
     "lodash": "^4.17.11",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "npm": "^6.9.0",
     "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
